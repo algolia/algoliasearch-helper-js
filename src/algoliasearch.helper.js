@@ -1,4 +1,7 @@
 "use strict";
+
+module.exports = AlgoliaSearchHelper;
+
 var extend = require( "./functions/extend" );
 
 function AlgoliaSearchHelper( client, index, options ) {
@@ -466,5 +469,3 @@ AlgoliaSearchHelper.prototype = {
     return facetFilters;
   }
 };
-
-module.exports = AlgoliaSearchHelper;
