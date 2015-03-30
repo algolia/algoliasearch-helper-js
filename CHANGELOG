@@ -3,6 +3,8 @@ CHANGELOG
 UNRELEASED
   * REFACTORING : constructor, now expose the defaults
   * TESTS : defaults test
+  * FEATURE: Allow .search(q, params, cb) "callback always last" convention
+    introduced by JavaScript client, also on the helper
 
 1.0.0
   * Extraction of the helper from the algolia-client-js v2.9.4
