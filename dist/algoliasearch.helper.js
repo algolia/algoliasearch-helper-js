@@ -59,6 +59,13 @@ AlgoliaSearchHelper.prototype = {
    *  content: the query answer with an extra 'disjunctiveFacets' attribute
    */
   search : function( q, searchCallback, searchParams ) {
+    // handle .search( q, searchParams, searchCallback )
+    if ( typeof searchParams === "function" ) {
+      var tmpCb = searchParams;
+      searchParams = searchCallback;
+      searchCallback = tmpCb;
+    }
+
     this.q = q;
     this.searchCallback = searchCallback;
     this.searchParams = searchParams || {};

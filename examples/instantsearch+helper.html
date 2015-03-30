@@ -3,7 +3,7 @@
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="algoliasearch.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
     <script src="/dist/algoliasearch.helper.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" />
@@ -36,9 +36,9 @@
       $(document).ready(function() {
         var $inputfield = $("#q");
         // Replace the following values by your ApplicationID and ApiKey.
-        var algolia = new AlgoliaSearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
+        var algolia = algoliasearch('latency', '6be0576ff61c053d5f9a3225e2a90f76');
         // Replace the following value by the name of the index you want to query.
-        var helper = new AlgoliaSearchHelper(algolia, 'bestbuy', {
+        var helper = algoliasearchHelper(algolia, 'bestbuy', {
           // conjunctive facets (link)
           facets: ['type', 'shipping'],
           // disjunctive facets (checkbox)
@@ -69,9 +69,9 @@
 
         search();
 
-        function searchCallback(success, content) {
-          if (!success) {
-            // error
+        function searchCallback(err, content) {
+          if (err) {
+            console.error(err);
             return;
           }
 

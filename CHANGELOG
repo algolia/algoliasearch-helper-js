@@ -1,6 +1,6 @@
 CHANGELOG
 
-UNRELEASED
+1.1.0
   * REFACTORING : constructor, now expose the defaults
   * TESTS : defaults test
   * FEATURE: Allow .search(q, params, cb) "callback always last" convention
