@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/algolia/algoliasearch-helper-js.png?label=ready&title=Ready)](https://waffle.io/algolia/algoliasearch-helper-js)
 # algoliasearch-helper-js
 
 This module is the companion of the algoliasearch-client-js. It helps you keep
