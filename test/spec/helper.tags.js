@@ -1,53 +1,54 @@
-"use strict";
-var test = require( "tape" );
-var algoliasearchHelper = require( "../../index" );
+'use strict'
+var test = require('tape')
+var algoliasearchHelper = require('../../index')
 
-test( "Tag filters : operations on tags list", function( t ) {
-  var helper = algoliasearchHelper( null, null, null );
-  helper.addTag( "tag" ).addTag( "tag2" );
-  t.deepEqual( helper.getTags(), [ "tag", "tag2" ], "should be [ tag, tag2 ]" );
-  helper.removeTag( "tag" );
-  t.deepEqual( helper.getTags(), [ "tag2" ], "should be [ tag2 ]" );
-  helper.toggleTag( "tag3" ).toggleTag( "tag2" ).toggleTag( "tag4" );
-  t.deepEqual( helper.getTags(), [ "tag3", "tag4" ], "should be [ tag3, tag4 ]" );
-  t.end();
-} );
+test('Tag filters: operations on tags list', function(t) {
+  var helper = algoliasearchHelper(null, null, null)
 
-test( "Tags filters : advanced query", function( t ) {
-  var helper = algoliasearchHelper( null, null, null );
+  helper.addTag('tag').addTag('tag2')
+  t.deepEqual(helper.getTags(), ['tag', 'tag2'], 'should be [ tag, tag2 ]')
+  helper.removeTag('tag')
+  t.deepEqual(helper.getTags(), ['tag2'], 'should be [ tag2 ]')
+  helper.toggleTag('tag3').toggleTag('tag2').toggleTag('tag4')
+  t.deepEqual(helper.getTags(), ['tag3', 'tag4'], 'should be [ tag3, tag4 ]')
+  t.end()
+})
 
-  var complexQuery = "( sea, city ), romantic, -mountain";
-  helper.setQueryParameter( "tagFilters", complexQuery );
+test('Tags filters: advanced query', function(t) {
+  var helper = algoliasearchHelper(null, null, null)
 
-  t.deepEqual( helper._getTagFilters(), complexQuery, "The complex query should be equal to the user input" );
+  var complexQuery = '(sea, city), romantic, -mountain'
 
-  t.end();
-} );
+  helper.setQueryParameter('tagFilters', complexQuery)
 
-test( "Tags filters : switching between advanced and simple API should be forbidden without clearing the refinements first", function( t ) {
-  var helper = algoliasearchHelper( null, null, null );
+  t.deepEqual(helper._getTagFilters(), complexQuery, 'The complex query should be equal to the user input')
 
-  helper.addTag( "tag" ).addTag( "tag2" );
-  t.deepEqual( helper._getTagFilters(), "tag,tag2", "should be [ tag, tag2 ]" );
+  t.end()
+})
 
-  var complexQuery = "( sea, city ), romantic, -mountain";
+test('Tags filters: switching between advanced and simple API should be forbidden without clearing the refinements first', function(t) {
+  var helper = algoliasearchHelper(null, null, null)
+
+  helper.addTag('tag').addTag('tag2')
+  t.deepEqual(helper._getTagFilters(), 'tag,tag2', 'should be [ tag, tag2 ]')
+
+  var complexQuery = '(sea, city), romantic, -mountain'
+
   try {
-    helper.setQueryParameter( "tagFilters", complexQuery );
-    t.fail( "Can't switch directly from the advanced API to the managed API" );
-  }
-  catch( e0 ) {
-    helper.clearTags().setQueryParameter( "tagFilters", complexQuery );
-    t.deepEqual( helper._getTagFilters(), complexQuery, "The complex should override the simple mode if cleared before" );
+    helper.setQueryParameter('tagFilters', complexQuery)
+    t.fail("Can't switch directly from the advanced API to the managed API")
+  } catch (e0) {
+    helper.clearTags().setQueryParameter('tagFilters', complexQuery)
+    t.deepEqual(helper._getTagFilters(), complexQuery, 'The complex should override the simple mode if cleared before')
 
     try {
-      helper.addTag( "tag" ).addTag( "tag2" );
-      t.fail( "Can't switch directly from the managed API to the advanced API" );
-    }
-    catch( e1 ) {
-      helper.setQueryParameter( "tagFilters", undefined ).addTag( "tag" ).addTag( "tag2" );
-      t.deepEqual( helper._getTagFilters(), "tag,tag2", "should be [ tag, tag2 ]" );
+      helper.addTag('tag').addTag('tag2')
+      t.fail("Can't switch directly from the managed API to the advanced API")
+    } catch (e1) {
+      helper.setQueryParameter('tagFilters', undefined).addTag('tag').addTag('tag2')
+      t.deepEqual(helper._getTagFilters(), 'tag,tag2', 'should be [ tag, tag2 ]')
 
-      t.end();
+      t.end()
     }
   }
-} );
+})

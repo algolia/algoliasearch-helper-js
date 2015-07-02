@@ -1,56 +1,58 @@
-"use strict";
+'use strict'
 
-var test = require( "tape" );
-var sinon = require( "sinon" );
-var algoliaSearchHelper = require( "../../index" );
+var test = require('tape')
+var sinon = require('sinon')
+var algoliaSearchHelper = require('../../index')
 
-test( "Change events should be emitted as soon as the state change, but search should be triggered (refactored)", function( t ) {
-  var helper = algoliaSearchHelper( undefined, "Index", {
-    disjunctiveFacets : ["city"],
-    facets : ["tower"]
-  } );
+test('Change events should be emitted as soon as the state change, but search should be triggered (refactored)', function(t) {
+  var helper = algoliaSearchHelper(undefined, 'Index', {
+    disjunctiveFacets: ['city'],
+    facets: ['tower']
+  })
 
-  var count = 0;
-  helper.on( "change", function() {
-    count++;
-  } );
-  var stubbedSearch = sinon.stub( helper, "_search" );
+  var count = 0
 
-  helper.setQuery( "" );
-  t.equal( count, 1, "search" );
-  t.equal( stubbedSearch.callCount, 0, "search" );
+  helper.on('change', function() {
+    count++
+  })
 
-  helper.clearRefinements();
-  t.equal( count, 2, "clearRefinements" );
-  t.equal( stubbedSearch.callCount, 0, "clearRefinements" );
+  var stubbedSearch = sinon.stub(helper, '_search')
 
-  helper.addDisjunctiveRefine( "city", "Paris" );
-  t.equal( count, 3, "addDisjunctiveRefine" );
-  t.equal( stubbedSearch.callCount, 0, "addDisjunctiveRefine" );
+  helper.setQuery('')
+  t.equal(count, 1, 'search')
+  t.equal(stubbedSearch.callCount, 0, 'search')
 
-  helper.removeDisjunctiveRefine( "city", "Paris" );
-  t.equal( count, 4, "removeDisjunctiveRefine" );
-  t.equal( stubbedSearch.callCount, 0, "removeDisjunctiveRefine" );
+  helper.clearRefinements()
+  t.equal(count, 2, 'clearRefinements')
+  t.equal(stubbedSearch.callCount, 0, 'clearRefinements')
 
-  helper.addExclude( "tower", "Empire State Building" );
-  t.equal( count, 5, "addExclude" );
-  t.equal( stubbedSearch.callCount, 0, "addExclude" );
+  helper.addDisjunctiveRefine('city', 'Paris')
+  t.equal(count, 3, 'addDisjunctiveRefine')
+  t.equal(stubbedSearch.callCount, 0, 'addDisjunctiveRefine')
 
-  helper.removeExclude( "tower", "Empire State Building" );
-  t.equal( count, 6, "removeExclude" );
-  t.equal( stubbedSearch.callCount, 0, "removeExclude" );
+  helper.removeDisjunctiveRefine('city', 'Paris')
+  t.equal(count, 4, 'removeDisjunctiveRefine')
+  t.equal(stubbedSearch.callCount, 0, 'removeDisjunctiveRefine')
 
-  helper.addRefine( "tower", "Empire State Building" );
-  t.equal( count, 7, "addRefine" );
-  t.equal( stubbedSearch.callCount, 0, "addRefine" );
+  helper.addExclude('tower', 'Empire State Building')
+  t.equal(count, 5, 'addExclude')
+  t.equal(stubbedSearch.callCount, 0, 'addExclude')
 
-  helper.removeRefine( "tower", "Empire State Building" );
-  t.equal( count, 8, "removeRefine" );
-  t.equal( stubbedSearch.callCount, 0, "removeRefine" );
+  helper.removeExclude('tower', 'Empire State Building')
+  t.equal(count, 6, 'removeExclude')
+  t.equal(stubbedSearch.callCount, 0, 'removeExclude')
 
-  helper.search();
-  t.equal( count, 8, "final search doesn't call the change" );
-  t.equal( stubbedSearch.callCount, 1, "final search triggers the search" );
+  helper.addRefine('tower', 'Empire State Building')
+  t.equal(count, 7, 'addRefine')
+  t.equal(stubbedSearch.callCount, 0, 'addRefine')
 
-  t.end();
-} );
+  helper.removeRefine('tower', 'Empire State Building')
+  t.equal(count, 8, 'removeRefine')
+  t.equal(stubbedSearch.callCount, 0, 'removeRefine')
+
+  helper.search()
+  t.equal(count, 8, "final search doesn't call the change")
+  t.equal(stubbedSearch.callCount, 1, 'final search triggers the search')
+
+  t.end()
+})
