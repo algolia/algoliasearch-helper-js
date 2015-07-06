@@ -1,11 +1,13 @@
 "use strict";
 
+var random = require( "lodash/number/random" );
 var test = require( "tape" );
-var algoliasearchHelper = require( "../../index" );
+var algoliasearchHelper = process.browser ? window.algoliasearchHelper : require( "../../" );
 var setup = require( "../integration-utils.js" ).setup;
 
 test( "[INT][HIGHLIGHT] The highlight should be consistent with the parameters", function( t ) {
-  var indexName = "helper_highlight";
+  var indexName = ( process.env.TRAVIS_BUILD_NUMBER ||
+    "helper-integration-tests-" ) + "helper_highlight" + random( 0, 5000 );
 
   setup( indexName, function( client, index ) {
     return index.addObjects( [
@@ -40,6 +42,9 @@ test( "[INT][HIGHLIGHT] The highlight should be consistent with the parameters",
         t.equal( content.hits[1]._highlightResult.facet[0].value,
                 "<em>f1</em>",
                 "should be hightlighted with em (default)" );
+        helper.setQueryParameter( "highlightPostTag", "</strong>" )
+              .setQueryParameter( "highlightPreTag", "<strong>" )
+              .search();
       }
       else if( calls === 2 ) {
         t.equal( content.hits[0]._highlightResult.facet[0].value,
@@ -48,14 +53,12 @@ test( "[INT][HIGHLIGHT] The highlight should be consistent with the parameters",
         t.equal( content.hits[1]._highlightResult.facet[0].value,
                 "<strong>f1</strong>",
                 "should be hightlighted with strong (setting)" );
+        client.deleteIndex( indexName );
         t.end();
       }
     } );
 
     helper.setQuery( "f1" )
-          .search()
-          .setQueryParameter( "highlightPostTag", "</strong>" )
-          .setQueryParameter( "highlightPreTag", "<strong>" )
           .search();
   } );
 } );

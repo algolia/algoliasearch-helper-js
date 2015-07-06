@@ -1,11 +1,13 @@
 "use strict";
 
+var random = require( "lodash/number/random" );
 var test = require( "tape" );
-var algoliasearchHelper = require( "../../index" );
+var algoliasearchHelper = process.browser ? window.algoliasearchHelper : require( "../../" );
 var setup = require( "../integration-utils.js" ).setup;
 
 test( "[INT][FILTERS] Should retrieve different values for multi facetted records", function( t ) {
-  var indexName = "helper_refinements";
+  var indexName = ( process.env.TRAVIS_BUILD_NUMBER ||
+    "helper-integration-tests-" ) + "helper_refinements" + random( 0, 5000 );
 
   setup( indexName, function( client, index ) {
     return index.addObjects( [
@@ -43,6 +45,7 @@ test( "[INT][FILTERS] Should retrieve different values for multi facetted record
           f2 : 1,
           f3 : 1
         } );
+        helper.addRefine( "facet", "f2" ).search();
       }
       if( calls === 2 ) {
         t.equal( content.hits.length, 1, "filter should result in one item" );
@@ -50,10 +53,12 @@ test( "[INT][FILTERS] Should retrieve different values for multi facetted record
           f1 : 1,
           f2 : 1
         } );
+        helper.toggleRefine( "facet", "f3" ).search();
       }
       if( calls === 3 ) {
         t.equal( content.hits.length, 0, "filter should result in 0 item" );
         t.equal( content.facets[ 0 ], undefined );
+        helper.removeRefine( "facet", "f2" ).search();
       }
       if( calls === 4 ) {
         t.equal( content.hits.length, 1, "filter should result in one item again" );
@@ -61,14 +66,12 @@ test( "[INT][FILTERS] Should retrieve different values for multi facetted record
           f1 : 1,
           f3 : 1
         } );
+        client.deleteIndex( indexName );
         t.end();
 
       }
     } );
 
     helper.addRefine( "facet", "f1" ).search();
-    helper.addRefine( "facet", "f2" ).search();
-    helper.toggleRefine( "facet", "f3" ).search();
-    helper.removeRefine( "facet", "f2" ).search();
   } );
 } );
