@@ -802,10 +802,28 @@ SearchParameters.prototype = {
 
     var mod = {};
 
-    // up one level:
-    // - `beer > IPA` => `beer` or
-    // - `beer` => ``
-    if (this.hierarchicalFacetsRefinements[facet] === value) {
+    var upOneOrMultipleLevel = this.hierarchicalFacetsRefinements[facet] !== undefined && (
+      // remove current refinement:
+      // refinement was 'beer > IPA', call is toggleRefine('beer > IPA'), refinement should be `beer`
+      this.hierarchicalFacetsRefinements[facet] === value ||
+      // remove a parent refinement:
+      //  - refinement was 'beer > IPA > Flying dog'
+      //  - call is toggleRefine('beer > IPA')
+      //  - refinement should be `beer`
+      value.length > 0 && value.length < this.hierarchicalFacetsRefinements[facet].length
+    );
+
+    if (upOneOrMultipleLevel) {
+      if (value.indexOf(separator) === -1) {
+        // go back to root level
+        mod[facet] = '';
+      } else {
+        mod[facet] = value.slice(0, value.lastIndexOf(separator));
+      }
+    } else if (this.hierarchicalFacetsRefinements[facet] === value) {
+      // up one level:
+      // - `beer > IPA` => `beer` or
+      // - `beer` => ``
       if (value.indexOf(separator) === -1) {
         // root level
         mod[facet] = '';
