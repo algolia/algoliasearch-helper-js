@@ -270,9 +270,9 @@ function SearchParameters(newParameters) {
    */
   this.attributesToSnippet = params.attributesToSnippet;
   /**
-   * Enable the ranking informations in the response
+   * Enable the ranking informations in the response, set to 1 to activate
    * @see https://www.algolia.com/doc#getRankingInfo
-   * @member {integer}
+   * @member {number}
    */
   this.getRankingInfo = params.getRankingInfo;
   /**
