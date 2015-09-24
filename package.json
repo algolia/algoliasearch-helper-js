@@ -82,6 +82,7 @@
     "qs": "5.1.0"
   },
   "peerDependencies": {
-    "algoliasearch": ">= 3.1 < 4"
+    "lodash": "3.10.0",
+    "lodash-compat": "3.10.0"
   }
 }
