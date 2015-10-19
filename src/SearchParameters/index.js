@@ -284,6 +284,12 @@ function SearchParameters(newParameters) {
    */
   this.aroundRadius = params.aroundRadius;
   /**
+   * Minimum radius of the geo search.
+   * @see https://www.algolia.com/doc#minimumAroundRadius
+   * @member {number}
+   */
+  this.minimumAroundRadius = params.minimumAroundRadius;
+  /**
    * Precision of the geo search.
    * @see https://www.algolia.com/doc#aroundPrecision
    * @member {number}
@@ -295,6 +301,12 @@ function SearchParameters(newParameters) {
    * @member {string}
    */
   this.insideBoundingBox = params.insideBoundingBox;
+  /**
+   * Geo search inside a polygon.
+   * @see https://www.algolia.com/doc/ruby#insidePolygon
+   * @member {string}
+   */
+  this.insidePolygon = params.insidePolygon;
 }
 
 /**

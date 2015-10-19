@@ -499,6 +499,18 @@ helper.setQueryParameter('hitsPerPage', 20).search();
     </tr>
     <tr>
       <td valign="top" class="td4">
+        <p class="p2"><span class="s2">minimumAroundRadius</span></p>
+      </td>
+      <td valign="top" class="td5">
+        <p class="p3"><span class="s1">number</span></p>
+      </td>
+      <td valign="top" class="td6">
+        <p class="p4"><span class="s1">Minimum radius of the geo search.</span></p>
+        <p class="p5"><span class="s1"><a href="https://www.algolia.com/doc#minimumAroundRadius">minimumAroundRadius on Algolia.com<span class="s3"></span></a></span></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" class="td4">
         <p class="p2"><span class="s2">attributesToHighlight</span></p>
       </td>
       <td valign="top" class="td5">
@@ -613,6 +625,18 @@ helper.setQueryParameter('hitsPerPage', 20).search();
       <td valign="top" class="td6">
         <p class="p4"><span class="s1">Geo search inside a box.</span></p>
         <p class="p5"><span class="s1"><a href="https://www.algolia.com/doc#insideBoundingBox">insideBoundingBox on Algolia.com<span class="s3"></span></a></span></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" class="td4">
+        <p class="p2"><span class="s2">insidePolygon</span></p>
+      </td>
+      <td valign="top" class="td5">
+        <p class="p3"><span class="s1">string</span></p>
+      </td>
+      <td valign="top" class="td6">
+        <p class="p4"><span class="s1">Geo search inside a polygon.</span></p>
+        <p class="p5"><span class="s1"><a href="https://www.algolia.com/doc#insidePolygon">insidePolygon on Algolia.com<span class="s3"></span></a></span></p>
       </td>
     </tr>
     <tr>
