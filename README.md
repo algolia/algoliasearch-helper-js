@@ -490,6 +490,31 @@ The available sort tokens are:
 - name
 - path
 
+##### Restrict results and hierarchical values to non-root level
+
+By default the hierarchical facet will need the root level
+If you don't want to show first n levels, you need to provide prefix path.
+
+You can specify an prefix path to filter the hierarchical values
+
+```
+var helper = algoliasearchHelper(client, indexName, {
+  hierarchicalFacets: [{
+    name: 'products',
+    attributes: ['categories.lvl1'],
+    sortBy: ['count:desc', 'name:asc'] // first show the most common values, then sort by name
+    prefixPath: 'fruits'
+  }],
+  facets:[
+    'categories.lvl0'
+  ]
+});
+
+helper.toggleRefine('categories.lvl0', 'fruits');
+
+```
+
+
 ##### Asking for the current breadcrumb
 
 ```js
