@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Module handling the shortened versions of the query
+ * string parameters
+ * @module algoliasearchHelper.url.shortener
+ */
+
 var invert = require('lodash/object/invert');
 var keys = require('lodash/object/keys');
 
@@ -59,13 +65,14 @@ var keys2Short = {
 };
 
 var short2Keys = invert(keys2Short);
+var ENCODED_PARAMETERS = keys(short2Keys);
 
 module.exports = {
   /**
    * All the keys of the state, encoded.
    * @const
    */
-  ENCODED_PARAMETERS: keys(short2Keys),
+  ENCODED_PARAMETERS: ENCODED_PARAMETERS,
   /**
    * Decode a shorten attribute
    * @param {string} shortKey the shorten attribute
@@ -81,5 +88,22 @@ module.exports = {
    */
   encode: function(key) {
     return keys2Short[key];
+  },
+  /**
+   * Set an attribute / short attribute pair
+   * @param {string} key the attribute
+   * @param {string} shortKey the shorten attribute
+   */
+  set: function(key, shortKey) {
+    var oldShort = keys2Short[key];
+    var idx = ENCODED_PARAMETERS.indexOf(oldShort);
+    if (idx === -1) {
+      ENCODED_PARAMETERS.push(shortKey);
+    } else {
+      ENCODED_PARAMETERS[idx] = shortKey;
+      delete short2Keys[oldShort];
+    }
+    keys2Short[key] = shortKey;
+    short2Keys[shortKey] = key;
   }
 };
