@@ -35,17 +35,22 @@ function recursiveEncode(input) {
   return input;
 }
 
-var refinementsParameters = ['dFR', 'fR', 'nR', 'hFR', 'tR'];
 var stateKeys = shortener.ENCODED_PARAMETERS;
-function sortQueryStringValues(prefixRegexp, a, b) {
+function sortQueryStringValues(
+  prefixRegexp,
+  queryParameter,
+  refinementsParameters,
+  a,
+  b
+) {
   if (prefixRegexp !== null) {
     a = a.replace(prefixRegexp, '');
     b = b.replace(prefixRegexp, '');
   }
 
   if (stateKeys.indexOf(a) !== -1 || stateKeys.indexOf(b) !== -1) {
-    if (a === 'q') return -1;
-    if (b === 'q') return 1;
+    if (a === queryParameter) return -1;
+    if (b === queryParameter) return 1;
 
     var isARefinements = refinementsParameters.indexOf(a) !== -1;
     var isBRefinements = refinementsParameters.indexOf(b) !== -1;
@@ -58,6 +63,12 @@ function sortQueryStringValues(prefixRegexp, a, b) {
 
   return a.localeCompare(b);
 }
+
+/**
+ * Shortener tools used inside this module
+ * @type {object}
+ */
+exports.shortener = shortener;
 
 /**
  * Read a query string and return an object containing the state
@@ -127,6 +138,14 @@ exports.getUnrecognizedParametersInQueryString = function(queryString, options) 
  *    won't be prefixed.
  * @return {string} the query string
  */
+
+var longRefinementsParameters = [
+  'disjunctiveFacetsRefinements',
+  'facetsRefinements',
+  'numericRefinements',
+  'hierarchicalFacetsRefinements',
+  'tagRefinements'
+];
 exports.getQueryStringFromState = function(state, options) {
   var moreAttributes = options && options.moreAttributes;
   var prefixForParameters = options && options.prefix || '';
@@ -141,7 +160,14 @@ exports.getQueryStringFromState = function(state, options) {
   );
 
   var prefixRegexp = prefixForParameters === '' ? null : new RegExp('^' + prefixForParameters);
-  var sort = bind(sortQueryStringValues, null, prefixRegexp);
+  var shortRefinementsParameters = map(longRefinementsParameters, shortener.encode);
+  var sort = bind(
+    sortQueryStringValues,
+    null,
+    prefixRegexp,
+    shortener.encode('query'),
+    shortRefinementsParameters
+  );
   if (moreAttributes) {
     var stateQs = qs.stringify(encodedState, {encode: false, sort: sort});
     var moreQs = qs.stringify(moreAttributes, {encode: false});
