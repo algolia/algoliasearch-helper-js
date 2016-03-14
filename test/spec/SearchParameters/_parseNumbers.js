@@ -33,3 +33,37 @@ test('_parseNumbers should convert to number all specified root keys', function(
 
   t.end();
 });
+
+test('_parseNumbers should convert numericRefinements values', function(t) {
+  var partialState = {
+    numericRefinements: {
+      foo: {
+        '>=': ['4.8', '15.16'],
+        '=': ['23.42']
+      }
+    }
+  };
+  var actual = SearchParameters._parseNumbers(partialState);
+
+  t.deepEqual(actual.numericRefinements.foo['>='], [4.8, 15.16], 'should convert foo >=');
+  t.deepEqual(actual.numericRefinements.foo['='], [23.42], 'should convert foo =');
+
+  t.end();
+});
+
+test('_parseNumbers should convert nested numericRefinements values', function(t) {
+  var partialState = {
+    numericRefinements: {
+      foo: {
+        '>=': [['4.8'], '15.16'],
+        '=': ['23.42']
+      }
+    }
+  };
+  var actual = SearchParameters._parseNumbers(partialState);
+
+  t.deepEqual(actual.numericRefinements.foo['>='], [[4.8], 15.16], 'should convert foo >=');
+  t.deepEqual(actual.numericRefinements.foo['='], [23.42], 'should convert foo =');
+
+  t.end();
+});
