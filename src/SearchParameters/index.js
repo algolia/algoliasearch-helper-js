@@ -1,10 +1,13 @@
-'use strict';
 
+'use strict';
 var keys = require('lodash/object/keys');
 var intersection = require('lodash/array/intersection');
 var forOwn = require('lodash/object/forOwn');
 var forEach = require('lodash/collection/forEach');
 var filter = require('lodash/collection/filter');
+var cloneDeep = require('lodash/lang/cloneDeep');
+var mapValues = require('lodash/object/mapValues');
+var includes = require('lodash/collection/includes');
 var map = require('lodash/collection/map');
 var reduce = require('lodash/collection/reduce');
 var omit = require('lodash/object/omit');
@@ -443,7 +446,7 @@ SearchParameters.PARAMETERS = keys(new SearchParameters());
  * @return {object} a new object with the number keys as number
  */
 SearchParameters._parseNumbers = function(partialState) {
-  var numbers = {};
+  var newState = cloneDeep(partialState);
 
   var numberKeys = [
     'aroundPrecision',
@@ -459,36 +462,33 @@ SearchParameters._parseNumbers = function(partialState) {
     'minProximity'
   ];
 
-  forEach(numberKeys, function(k) {
-    var value = partialState[k];
-    if (isString(value)) numbers[k] = parseFloat(partialState[k]);
+  // parse numeric root keys to floats
+  newState = mapValues(newState, function(value, key) {
+    if (!includes(numberKeys, key) || !isString(value)) {
+      return value;
+    }
+    return parseFloat(value);
   });
 
-  if (partialState.numericRefinements) {
-    var numericRefinements = {};
-    forEach(partialState.numericRefinements, function(operators, attribute) {
-      numericRefinements[attribute] = {};
-      forEach(operators, function(values, operator) {
-        var parsedValues = map(values, function(v) {
-          if (isArray(v)) {
-            return map(v, function(vPrime) {
-              if (isString(vPrime)) {
-                return parseFloat(vPrime);
-              }
-              return vPrime;
-            });
-          } else if (isString(v)) {
-            return parseFloat(v);
-          }
-          return v;
-        });
-        numericRefinements[attribute][operator] = parsedValues;
-      });
-    });
-    numbers.numericRefinements = numericRefinements;
+
+  // Parse input to float, act recursively on arrays
+  function recurseParseFloat(input) {
+    if (isArray(input)) {
+      return map(input, recurseParseFloat);
+    }
+    return parseFloat(input);
   }
 
-  return merge({}, partialState, numbers);
+  var numericRefinements = newState.numericRefinements;
+  if (numericRefinements) {
+    numericRefinements = mapValues(numericRefinements, function(refinements) {
+      return mapValues(refinements, recurseParseFloat);
+    });
+    newState.numericRefinements = numericRefinements;
+  }
+
+
+  return newState;
 };
 
 /**
