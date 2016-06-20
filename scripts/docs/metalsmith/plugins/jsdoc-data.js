@@ -18,7 +18,7 @@ module.exports = function(opts) {
       else {
         metadata.jsdoc = {};
         metadata.jsdoc[namespace] = keyBy(data, 'name');
-        console.log(JSON.stringify(metadata, null, 2));
+        // console.log(JSON.stringify(metadata, null, 2));
       }
       done();
     }
