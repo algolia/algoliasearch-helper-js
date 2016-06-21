@@ -4,4 +4,3 @@ title: algoliasearch - helper
 ---
 # Algolia JS Helper
 
-{{> method jsdoc.helper.hasTag }}
