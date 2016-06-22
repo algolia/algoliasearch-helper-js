@@ -66,8 +66,12 @@ For now, we'll implement a very basic display of the JSON response in the page.
 
 ```javascript
 helper.on('result', function(content) {
-  $('#container').html(JSON.stringify(content, null, 2));
+  renderHits(content);
 });
+
+function renderHits(content) {
+  $('#container').html(JSON.stringify(content, null, 2));
+}
 ```
 
 At this point, we have no results, yet. It's because we didn't trigger any search.
@@ -102,12 +106,16 @@ only the `name` of each product for now.
 
 ```javascript
 helper.on('result', function(content) {
+  renderHits(content);
+});
+
+function renderHits(content) {
   $('#container').html('').append(function() {
     return $.map(content.hits, function(hit) {
       return $('<li>').html(hit.name);
     });
   });
-});
+}
 ```
 
 Now that we have filtered the information displayed, let's add our search input:
@@ -121,8 +129,7 @@ and trigger a new search.
 
 ```javascript
 $('#search-box').on('keyup', function() {
-  var $this = $(this);
-  helper.setQuery($this.val())
+  helper.setQuery($(this).val())
         .search();
 });
 ```
@@ -137,50 +144,6 @@ with the input of new characters.
 
 ```javascript
 helper.on('result', function(content) {
-  $('#container').html('').append(function() {
-    return $.map(content.hits, function(hit) {
-      return $('<li>').html(hit._highlightResult.name.value);
-    });
-  });
-});
-```
-
-The object `_highlightResult` contains the all the attributes that may be highlighted
-(by default, all the searchable attributes).
-
-See this part [live in action on JSFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/80e20fcda7f3894ade08eb2c3759516b/).
-
-In this part, we've seen:
- - how to set the query of the search
- - how to trigger the search
- - how to display highlighting to help our users
- - how to plug all these to make an interactive search
-
-## Adding facets
-
-A facet is a filter that can be used to restrict the results to specific values
-of an attribute. For example, in our dataset we have an attribute `type`, with
-a facet we can restrict the results to only `movie`. This way the results returned
-by Algolia will only be those for which the attribute `type` has `movie` as a value.
-
-If you're using you're own data in this tutorial, you must add the attributes you
-want to facet in the [display configuration of your index](https://www.algolia.com/explorer#?tab=display).
-
-First we should that we want to use the attribute `type` as a facet. This is done
-during the initialization of the helper.
-
-```javascript
-var helper = algoliasearchHelper(client, index, {
-  facets: ['type']
-});
-```
-
-Let's move the rendering of the results into its own function and create a new one
-the list of facets.
-
-```javascript
-helper.on('result', function(content) {
-  renderFacetList(content); // not implemented yet
   renderHits(content);
 });
 
@@ -193,6 +156,36 @@ function renderHits(content) {
 }
 ```
 
+The object `_highlightResult` contains the all the attributes that may be highlighted
+(by default, all the searchable attributes).
+
+See this part [live in action on JSFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/80e20fcda7f3894ade08eb2c3759516b/).
+
+In this part, we havve seen:
+ - how to set the query of the search
+ - how to trigger the search
+ - how to display highlighting to help our users
+ - how to plug all these to make an interactive search
+
+## Adding facets
+
+A facet is a filter that can be used to restrict the results to specific values
+of an attribute. For example, in our records we have an attribute `type`, with
+a facet we can restrict the results to only `movie`. This way the results returned
+by Algolia will only be those for which the attribute `type` has `movie` as a value.
+
+If you're using you're own data in this tutorial, you must add the attributes you
+want to facet in the [display configuration of your index](https://www.algolia.com/explorer#?tab=display).
+
+First we should declare that we want to use the attribute `type` as a facet. This is done
+during the initialization of the helper.
+
+```javascript
+var helper = algoliasearchHelper(client, index, {
+  facets: ['type']
+});
+```
+
 The list of available facets is returned by the Algolia API. This list is dynamic
 and should be updated at each new results. So that's why we render this list each
 time we receive new results. This list also let our user select a value, so we should
@@ -202,7 +195,7 @@ also make it so it's possible using jQuery.
 $('#facet-list').on('click', function(e) {
   var facetValue = $(e.target).data('facet');  
   if(!facetValue) return;
-  helper.toggleFacetRefinement('type', facetValue)
+  helper.toggleRefinement('type', facetValue)
         .search();
 });
 
@@ -213,10 +206,66 @@ function renderFacetList(content) {
         .attr('data-facet', facet.name)
         .attr('id', 'fl-' + facet.name);
       if(facet.isRefined) checkbox.attr('checked', 'checked');
-      var label = $('<label>').html(facet.value).attr('for', 'fl-' + facet.name);
-      return $('<li>').append(checkbox);
+      var label = $('<label>').html(facet.name + ' (' + facet.count + ')')
+                              .attr('for', 'fl-' + facet.name);
+      return $('<li>').append(checkbox).append(label);
     });
   });
 }
 ```
 
+The methode `getFacetValues` returns the list of values usable to filter
+an attribute. The objet returned by this method contains three properties: 
+
+ - `name`: the value of the facet
+ - `count`: the number of items in the whole results
+ - `isRefined`: is this value already selected
+
+Let's add the rendering of the facet list into the `result` handler.
+
+```javascript
+helper.on('result', function(content) {
+  renderFacetList(content); // not implemented yet
+  renderHits(content);
+});
+```
+
+We now have a menu displaying the values that the user can choose from
+to filter the list of results. Those values are generated by Algolia
+based on the rest of the search, meaning that it won't provide facet
+values that are meaningful for the current other parameters. Try typing
+*apple* and the filter item *movie* will be removed.
+
+This kind of facets are called *conjunctive facets* but they are not the only
+kind of filtering that you can apply with the helper. You can also do:
+
+ - disjunctive facetting (for making multiple choices filters)
+ - hierarchical facetting (for making hierarchical navigations)
+ - numerical filtering
+ - tag filtering
+
+See this sample [live on jsFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/76884d7261e6cc06d0d23b1bd0a11c96/).
+
+In this part, we have seen:
+
+ - how to declare a facet in the configuration of the helper
+ - how to display the facet values computed by the API
+ - how to refine a facet
+
+## Going further
+
+Congratulations! You now know the basics of the Helper. You should,
+by now, have a better overview of the kind of features available in the
+Helper, as well as the mechanics involved.
+
+Here are some pointers on where to go next:
+
+ - [the instantsearch tutorial](https://www.algolia.com/doc/search/instant-search/algoliahelperjs), for a more in-depth UI/UX oriented tutorial
+ - [the reference documentation](reference.html), to see the whole possibilities of the Helper API
+ - [the examples](examples.html), to see how to implement common patterns using the Helper
+ - [the concepts](concepts.html), for a more high level presentation of the Helper API
+
+Last but not least, the Helper is an intermediate API on top of the client
+and it doesn't solve the UI complexity on its own. If you're looking for
+a more off-the-shelf solution, we created [instantsearch.js](https://community.algolia.com/instantsearch.js/) 
+which reuses the helper internally.
