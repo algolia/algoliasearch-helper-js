@@ -78,11 +78,15 @@ ordered according to the *custom ranking*. Let's see, how to trigger the search:
 helper.search();
 ```
 
-See this step [live on jsFiddle](http://jsfiddle.net/gh/gist/library/pure/0a8e77b2fd0694046e986e0138feb697/).
+The `search` method of the helper triggers the search with the current parameters
+saved in the helper. For the moment we have none, therefore the results contains
+the first records ordered by the *custom ranking*.
+
+See this step [live on jsFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/0a8e77b2fd0694046e986e0138feb697/).
 
 You now know:
- - how to initialize the helper
- - listen to the `result` event to read the results from Algolia
+ - how to instanciate the helper
+ - listen to the `result` event and read the results from Algolia
  - trigger a search to algolia
 
 ## Setting the query
@@ -106,7 +110,7 @@ helper.on('result', function(content) {
 });
 ```
 
-Now that we have filtered the information retrieved, let's add our search input:
+Now that we have filtered the information displayed, let's add our search input:
 
 ```html
 <input type="text" autocomplete="off" id="search-box"/>
@@ -127,7 +131,7 @@ When calling `setQuery`, we change the value of the query inside the helper.
 But this does not trigger the search, we need to trigger it manually, that's
 why we call `search` afterwards.
 
-To help our user to better understand the results, let's use the highlighted
+To help our users better understand the results, let's use the highlighted
 results returned by Algolia. This way the users can easily focus on what changed
 with the input of new characters.
 
@@ -142,7 +146,7 @@ helper.on('result', function(content) {
 ```
 
 The object `_highlightResult` contains the all the attributes that may be highlighted
-(all the searchable attributes, unless configured otherwise).
+(by default, all the searchable attributes).
 
 See this part [live in action on JSFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/80e20fcda7f3894ade08eb2c3759516b/).
 
@@ -215,6 +219,4 @@ function renderFacetList(content) {
   });
 }
 ```
-
-
 
