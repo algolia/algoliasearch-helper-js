@@ -1,6 +1,6 @@
 'use strict';
-var jsdoc2md = require('jsdoc-to-markdown');
 var path = require('path');
+var jsdocParse = require('jsdoc-parse');
 var collectJson = require('collect-json');
 var keyBy = require('lodash/keyBy');
 
@@ -10,15 +10,18 @@ module.exports = function(opts) {
   var namespace = opts.namespace;
 
   return function(files, metalsmith, done) {
-    jsdoc2md({src: src, json: true}).pipe(collectJson(dataReady));
+    jsdocParse({src: src, json: true}).pipe(collectJson(dataReady));
 
     function dataReady(data) {
+      var filteredData = data.filter(function(o) {return !o.deprecated;});
       var metadata = metalsmith.metadata();
-      if (!namespace) metadata.jsdoc = keyBy(data, 'longname');
+      if (!namespace) metadata.jsdoc = keyBy(filteredData, 'longname');
       else {
-        metadata.jsdoc = {};
-        metadata.jsdoc[namespace] = keyBy(data, 'name');
-        // console.log(JSON.stringify(metadata, null, 2));
+        metadata.jsdoc = metadata.jsdoc || {};
+        metadata.jsdoc[namespace] = keyBy(filteredData, 'name');
+        var map = require('lodash/map');
+        //console.log(JSON.stringify(map(metadata.jsdoc[namespace], 'id'), null, 2));
+        //console.log(JSON.stringify(metadata.jsdoc, null, 2));
       }
       done();
     }

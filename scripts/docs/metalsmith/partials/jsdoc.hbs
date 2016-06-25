@@ -1,0 +1,5 @@
+{{#switch kind}}
+{{#case "function"}}{{> method this}}{{/case}}
+{{#case "member"}}{{> member this}}{{/case}}
+{{#case "typedef"}}{{> typedef this}}{{/case}}
+{{/switch}}

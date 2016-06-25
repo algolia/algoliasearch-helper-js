@@ -42,7 +42,7 @@ html
         nav.sidebar
           ul
             each item in headings 
-              li
+              li(class='level-' + item.tag)
                 a(href='#' + item.id)= item.text
         .documentation-container
           | !{contents}

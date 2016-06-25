@@ -9,7 +9,7 @@ var gulp = require('gulp');
 var inPlace = require('metalsmith-in-place');
 var markdown = require('metalsmith-markdown');
 var jsdoc = require('./metalsmith/plugins/jsdoc-data.js');
-var partials = require('metalsmith-discover-partials');
+var registerHandleBarHelpers = require('./metalsmith/plugins/handlebars-helpers.js');
 var layouts = require('metalsmith-layouts');
 // var changed = require('metalsmith-changed');
 var headings = require('metalsmith-headings');
@@ -34,22 +34,24 @@ function makeMetalsmithBuilder() {
                 .clean(false)
                 .source(src.content)
                 .destination('../../documentation')
-                .use(partials({
-                  directory: src.partials,
-                  pattern: /\.hbs$/
-                }))
                 .use(jsdoc({
                   src: '../../../../src/algoliasearch.helper.js',
                   namespace: 'helper'
                 }))
+                .use(jsdoc({
+                  src: '../../../../src/SearchResults/index.js',
+                  namespace: 'results'
+                }))
                 .use(inPlace({
-                  engine: 'handlebars'
+                  engine: 'handlebars',
+                  partials: './metalsmith/partials',
+                  exposeConsolidate: registerHandleBarHelpers
                 }))
                 .use(metallic())
                 .use(markdown({
                   gfm: true
                 }))
-                .use(headings('h2'))
+                .use(headings('h2, h3'))
                 .use(layouts({
                   engine: 'jade',
                   directory: src.layouts
@@ -90,6 +92,8 @@ gulp.task('doc:all:watch', function() {
   gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
   gulp.watch(src.partials + '/**/*.hbs', ['doc:content:watch']);
   gulp.watch(src.layouts + '/**/*.jade', ['doc:content:watch']);
+  gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
+  gulp.watch('../../src/**/*.js', ['doc:content:watch']);
 });
 
 gulp.task('doc:server', function(done) {

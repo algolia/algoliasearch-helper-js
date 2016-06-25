@@ -69,12 +69,13 @@
     "http-server": "^0.9.0",
     "jade": "^1.11.0",
     "jsdoc": "bobylito/jsdoc#aecd558f1cd2640bea5348322839b7730165f530",
+    "jsdoc-parse": "^1.2.7",
     "jsdoc-to-markdown": "^1.3.6",
     "metalsmith": "^2.1.0",
     "metalsmith-changed": "^2.0.0",
     "metalsmith-discover-partials": "^0.1.0",
     "metalsmith-headings": "^0.1.0",
-    "metalsmith-in-place": "^1.4.4",
+    "metalsmith-in-place": "superwolff/metalsmith-in-place#7cb06e54142b8843f35178ceb5560946ae356049",
     "metalsmith-layouts": "^1.6.5",
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-metallic": "^1.0.0",
@@ -102,6 +103,7 @@
   "dependencies": {
     "events": "^1.1.0",
     "lodash": "^4.13.1",
+    "marked": "^0.3.5",
     "qs": "^5.2.0",
     "util": "^0.10.3"
   },

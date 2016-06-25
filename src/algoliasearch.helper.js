@@ -51,6 +51,7 @@ util.inherits(AlgoliaSearchHelper, events.EventEmitter);
  * @fires search
  * @fires result
  * @fires error
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.search = function() {
   this._search();
@@ -66,7 +67,7 @@ AlgoliaSearchHelper.prototype.search = function() {
  * plus the index
  * @param {function} [callback] optional callback executed when the response from the
  * server is back.
- * @return promise|undefined if a callback is passed the method returns undefined
+ * @return {promise|undefined} if a callback is passed the method returns undefined
  * otherwise it returns a promise containing an object with two keys :
  *  - content with a SearchResults
  *  - state with the state used for the query as a SearchParameters
@@ -96,6 +97,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @param  {string} q the user query
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.setQuery = function(q) {
   this.state = this.state.setQuery(q);
@@ -108,6 +110,7 @@ AlgoliaSearchHelper.prototype.setQuery = function(q) {
  * @param {string} [name] optional name of the facet / attribute on which we want to remove all refinements
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
   this.state = this.state.clearRefinements(name);
@@ -119,6 +122,7 @@ AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
  * Remove all the tag filtering
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.clearTags = function() {
   this.state = this.state.clearTags();
@@ -132,6 +136,7 @@ AlgoliaSearchHelper.prototype.clearTags = function() {
  * @param  {string} value the associated value (will be converted to string)
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.addDisjunctiveFacetRefinement = function(facet, value) {
   this.state = this.state.addDisjunctiveFacetRefinement(facet, value);
@@ -153,6 +158,7 @@ AlgoliaSearchHelper.prototype.addDisjunctiveRefine = function() {
  * @param  {number} value the value of the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.addNumericRefinement = function(attribute, operator, value) {
   this.state = this.state.addNumericRefinement(attribute, operator, value);
@@ -166,6 +172,7 @@ AlgoliaSearchHelper.prototype.addNumericRefinement = function(attribute, operato
  * @param  {string} value the associated value (will be converted to string)
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.addFacetRefinement = function(facet, value) {
   this.state = this.state.addFacetRefinement(facet, value);
@@ -187,6 +194,7 @@ AlgoliaSearchHelper.prototype.addRefine = function() {
  * @param  {string} value the associated value (will be converted to string)
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.addFacetExclusion = function(facet, value) {
   this.state = this.state.addExcludeRefinement(facet, value);
@@ -206,6 +214,7 @@ AlgoliaSearchHelper.prototype.addExclude = function() {
  * @param {string} tag the tag to add to the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.addTag = function(tag) {
   this.state = this.state.addTagRefinement(tag);
@@ -220,6 +229,7 @@ AlgoliaSearchHelper.prototype.addTag = function(tag) {
  * @param  {number} value the value of the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.removeNumericRefinement = function(attribute, operator, value) {
   this.state = this.state.removeNumericRefinement(attribute, operator, value);
@@ -233,6 +243,7 @@ AlgoliaSearchHelper.prototype.removeNumericRefinement = function(attribute, oper
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.removeDisjunctiveFacetRefinement = function(facet, value) {
   this.state = this.state.removeDisjunctiveFacetRefinement(facet, value);
@@ -253,6 +264,7 @@ AlgoliaSearchHelper.prototype.removeDisjunctiveRefine = function() {
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.removeFacetRefinement = function(facet, value) {
   this.state = this.state.removeFacetRefinement(facet, value);
@@ -273,6 +285,7 @@ AlgoliaSearchHelper.prototype.removeRefine = function() {
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.removeFacetExclusion = function(facet, value) {
   this.state = this.state.removeExcludeRefinement(facet, value);
@@ -292,6 +305,7 @@ AlgoliaSearchHelper.prototype.removeExclude = function() {
  * @param {string} tag tag to remove from the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.removeTag = function(tag) {
   this.state = this.state.removeTagRefinement(tag);
@@ -305,6 +319,7 @@ AlgoliaSearchHelper.prototype.removeTag = function(tag) {
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.toggleFacetExclusion = function(facet, value) {
   this.state = this.state.toggleExcludeFacetRefinement(facet, value);
@@ -324,8 +339,9 @@ AlgoliaSearchHelper.prototype.toggleExclude = function() {
  * @param  {string} facet the facet to refine
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
- * @throws will throw an error if the facet is not declared in the settings of the helper
+ * @throws Error will throw an error if the facet is not declared in the settings of the helper
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.toggleRefinement = function(facet, value) {
   this.state = this.state.toggleRefinement(facet, value);
@@ -346,6 +362,7 @@ AlgoliaSearchHelper.prototype.toggleRefine = function() {
  * @param {string} tag tag to remove or add
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.toggleTag = function(tag) {
   this.state = this.state.toggleTagRefinement(tag);
@@ -356,6 +373,8 @@ AlgoliaSearchHelper.prototype.toggleTag = function(tag) {
 /**
  * Go to next page
  * @return {AlgoliaSearchHelper}
+ * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.nextPage = function() {
   return this.setPage(this.state.page + 1);
@@ -363,12 +382,17 @@ AlgoliaSearchHelper.prototype.nextPage = function() {
 
 /**
  * Go to previous page
+ * @fires change
  * @return {AlgoliaSearchHelper}
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.previousPage = function() {
   return this.setPage(this.state.page - 1);
 };
 
+/**
+ * @private
+ */
 function setCurrentPage(page) {
   if (page < 0) throw new Error('Page requested below 0.');
 
@@ -383,14 +407,17 @@ function setCurrentPage(page) {
  * @param  {number} page The page number
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.setCurrentPage = setCurrentPage;
 
 /**
  * Change the current page
+ * @function
  * @param  {number} page The page number
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.setPage = setCurrentPage;
 
@@ -399,6 +426,7 @@ AlgoliaSearchHelper.prototype.setPage = setCurrentPage;
  * @param {string} name the index name
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.setIndex = function(name) {
   this.state = this.state.setIndex(name);
@@ -412,6 +440,7 @@ AlgoliaSearchHelper.prototype.setIndex = function(name) {
  * @param {any} value new value of the parameter
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.setQueryParameter = function(parameter, value) {
   var newState = this.state.setQueryParameter(parameter, value);
@@ -428,6 +457,7 @@ AlgoliaSearchHelper.prototype.setQueryParameter = function(parameter, value) {
  * @param {SearchParameters} newState the whole new state
  * @return {AlgoliaSearchHelper}
  * @fires change
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.setState = function(newState) {
   this.state = new SearchParameters(newState);
@@ -528,6 +558,7 @@ AlgoliaSearchHelper.prototype.setStateFromQueryString = function(queryString, op
  *    // This is naive though as you should check if the state is really defined etc.
  *    helper.overrideStateWithoutTriggeringChangeEvent(event.state).search()
  *  }
+ * @chainable
  */
 AlgoliaSearchHelper.prototype.overrideStateWithoutTriggeringChangeEvent = function(newState) {
   this.state = new SearchParameters(newState);
@@ -627,6 +658,7 @@ function getCurrentPage() {
 AlgoliaSearchHelper.prototype.getCurrentPage = getCurrentPage;
 /**
  * Get the currently selected page
+ * @function
  * @return {number} the current page
  */
 AlgoliaSearchHelper.prototype.getPage = getCurrentPage;

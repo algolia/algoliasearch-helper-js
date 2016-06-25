@@ -115,7 +115,7 @@ pre {
   overflow: hidden;
 }
 
-p code, li code, td code {
+p code, li code, td code, span > code{
   color: #666666;
   background: #fafafa;
   padding: 3px 6px;

@@ -1,0 +1,14 @@
+<div class="typedef">
+  <div class="summary">
+    <span class="name">{{name}}</span>
+  </div>
+  <div class="type-properties">
+  {{#each properties}}  
+    <div class="type-property">
+      <span class="param">{{name}}</span>
+      <span class="type">{{> types type}}</span>
+      <span class="description">{{#md}}{{description}}{{/md}}</span>
+    </div>
+  {{/each}}
+</div>
+</div>

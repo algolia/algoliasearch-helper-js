@@ -29,6 +29,13 @@ nav.sidebar {
       height: 32px;
       line-height: 32px;
 
+      &.level-h2 {}
+      &.level-h3 {
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+      }
+
       a {
         text-decoration: none;
         display: block;

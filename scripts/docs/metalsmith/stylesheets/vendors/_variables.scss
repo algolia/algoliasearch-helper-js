@@ -15,7 +15,7 @@ $bp-small: 768px;
 
 $max-width: 940px;
 $navigation-height: 50px;
-$sidebar-width: 160px;
+$sidebar-width: 180px;
 $margin: 16px;
 $offset-height: $navigation-height + 20;
 
@@ -41,14 +41,11 @@ $brand-primary: #1D96C7;
 $black: #0a1724;
 $white-75: rgba(white, 0.75);
 
-$hero-color: #484748;
-$accent-color: #47EBC1;
 
 // Fonts
 $font-name: "Raleway";
 $font-fallback: Helvetica Neue, helvetica;
 $font-settings:  $font-name, $font-fallback;
-
 
 
 
@@ -98,3 +95,12 @@ $white-75: rgba(white, 0.75);
 $font-name: "Raleway";
 $font-fallback: Helvetica Neue, helvetica;
 $font-settings:  $font-name, $font-fallback;
+
+$font-code: 'inconsolata', monospace;
+
+// Business variables
+
+$hero-color: #484748;
+$accent-color: #47EBC1;
+
+$border: $silver;

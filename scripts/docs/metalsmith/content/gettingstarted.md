@@ -6,7 +6,7 @@ title: Getting started with the helper
 ## Requirements
 
 You need an Algolia account and your search credentials:
- - Application ID (referred later as `appplicationID`)
+ - Application ID (referred later as `applicationID`)
  - Search API key (referred later as `apiKey`)
 
 If you don't have one, you can create a new account for free on [algolia.com](https://www.algolia.com/users/sign_up).
@@ -57,7 +57,7 @@ The first step toward searching in your index, is to initialize the client and p
 var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
 */
-var client = algoliasearch(appplicationID, apiKey);
+var client = algoliasearch(applicationID, apiKey);
 var helper = algoliasearchHelper(client, index);
 ```
 
@@ -161,7 +161,7 @@ The object `_highlightResult` contains the all the attributes that may be highli
 
 See this part [live in action on JSFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/80e20fcda7f3894ade08eb2c3759516b/).
 
-In this part, we havve seen:
+In this part, we have seen:
  - how to set the query of the search
  - how to trigger the search
  - how to display highlighting to help our users
@@ -225,7 +225,7 @@ Let's add the rendering of the facet list into the `result` handler.
 
 ```javascript
 helper.on('result', function(content) {
-  renderFacetList(content); // not implemented yet
+  renderFacetList(content);
   renderHits(content);
 });
 ```

@@ -527,6 +527,7 @@ function extractNormalizedFacetValues(results, attribute) {
 
 /**
  * Sort nodes of a hierarchical facet results
+ * @private
  * @param {HierarchicalFacet} node node to upon which we want to apply the sort
  */
 function recSort(sortFn, node) {
