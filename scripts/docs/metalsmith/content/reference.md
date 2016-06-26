@@ -5,6 +5,17 @@ title: Reference
 
 ## AlgoliaSearchHelper
 
+The `AlgoliaSearchHelper` is the main interface of the Helper library. It
+lets you set the parameters for the search and retrieve information
+during the search cycle with events:
+ - `change`: when a parameter is set or updated
+ - `search`: when the search is sent to Algolia
+ - `result`: when the results are retrieved from Algolia
+ - `error`: when Algolia sends back an error
+
+You can also read the current parameters of the search using the AlgoliaSearchHelper
+but it might not be the one you expect according to the last results received.
+
 ### Instanciate
 
 ### Search
@@ -73,7 +84,17 @@ title: Reference
 
 ### Events
 
+{{> jsdoc jsdoc/helper/event:change}}
+{{> jsdoc jsdoc/helper/event:search}}
+{{> jsdoc jsdoc/helper/event:result}}
+{{> jsdoc jsdoc/helper/event:error}}
+
 ## SearchResults
+
+The SearchResults is the interface to read the results received from
+Algolia search API. Most of the data is accessible directly through
+properties. The exception being the data used for the features that
+are implemented on top of Algolia API such as facetting.
 
 ### Results
 

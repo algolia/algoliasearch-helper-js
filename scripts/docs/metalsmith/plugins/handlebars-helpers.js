@@ -1,6 +1,9 @@
 'use strict';
 var Handlebars = require('handlebars');
 var marked = require('marked');
+marked.setOptions({
+  gfm: true
+});
 module.exports = function(requires) {
   requires.handlebars = Handlebars;
 
@@ -25,5 +28,9 @@ module.exports = function(requires) {
   Handlebars.registerHelper('type', function(options) {
     var match = arrayRegexp.exec(this);
     return options.fn(match ? match[1] + '[]' : this);
+  });
+
+  Handlebars.registerHelper('event', function(options) {
+    return options.fn(this).split(':')[1];
   });
 };

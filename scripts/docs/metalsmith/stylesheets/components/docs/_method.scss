@@ -1,15 +1,16 @@
 .badge {
   font-size: 14px;
+  line-height: 18px;
   padding: 2px 4px;
-  border-radius: 3px;
+  border-radius: 5px;
   display: inline;
   margin-top: 0.5em;
 
-  &.event { background: $powder-blue; }
-  &.chainable { background: $brand-primary; color: white; }
+  &.badge-event { background: $powder-blue; }
+  &.badge-chainable { background: $brand-primary; color: white; }
 }
 
-.method, .property, .typedef{
+.method, .property, .typedef, .event{
   margin: 10px 0;
   width: 100%;
   font-size:  16px;
@@ -31,7 +32,16 @@
           content:', ';
         }
         &:last-child:after {
-          content:'';
+          content: initial;
+        }
+        &.optional:before {
+          content: '['
+        }
+        &.optional:after {
+          content:'], ';
+        }
+        &.optional:last-child:after {
+          content:']';
         }
       }
     }
@@ -119,11 +129,11 @@
     font-size: 0.9em;
 
     span:after {
-      content: '|';
+      content: ' | ';
     }
 
     span:last-child:after {
-      content: '';
+      content: initial;
     }
   }
 
@@ -147,6 +157,12 @@
 
       .type {
         width: 35%;
+        span:after {
+          content: ' or ';
+        }
+        span:last-child:after {
+          content: initial;
+        }
       }
 
       .description {
