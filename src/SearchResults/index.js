@@ -28,7 +28,7 @@ var generateHierarchicalTree = require('./generate-hierarchical-tree');
  * @typedef SearchResults.Facet
  * @type {object}
  * @property {string} name name of the attribute in the record
- * @property {object.<string, number>} data the facetting data: value, number of entries
+ * @property {object} data the facetting data: value, number of entries
  * @property {object} stats undefined unless facet_stats is retrieved from algolia
  */
 
@@ -36,11 +36,11 @@ var generateHierarchicalTree = require('./generate-hierarchical-tree');
  * @typedef SearchResults.HierarchicalFacet
  * @type {object}
  * @property {string} name name of the current value given the hierarchical level, trimmed.
- *                         If root node, you get the facet name
- * @property {number} count number (integer) of objets matching this hierarchical value
+ * If root node, you get the facet name
+ * @property {number} count number of objets matching this hierarchical value
  * @property {string} path the current hierarchical value full path
- * @property {boolean} isRefined true if the current value was refined, false otherwise
- * @property {SearchResults.HierarchicalFacet[]} data sub values for the current level
+ * @property {boolean} isRefined `true` if the current value was refined, `false` otherwise
+ * @property {HierarchicalFacet[]} data sub values for the current level
  */
 
 /**
@@ -220,8 +220,11 @@ function SearchResults(state, algoliaResponse) {
    */
   this.parsedQuery = mainSubResponse.parsedQuery;
   /**
-   * all the records that match the search parameters. It also contains _highlightResult,
-   * which describe which and how the attributes are matched.
+   * all the records that match the search parameters. Each record is 
+   * augmented with a new attribute `_highlightResult` 
+   * which is an object keyed by attribute and with the following properties:
+   *  - `value` : the value of the facet highlighted (html)
+   *  - `matchLevel`: full, partial or none depending on how the query terms match
    * @member {object[]}
    */
   this.hits = mainSubResponse.hits;
@@ -552,8 +555,8 @@ function vanillaSortFn(order, data) {
  * (alphabetical order). The sort formula can overriden using either string based
  * predicates or a function.
  * @param {string} attribute attribute name
- * @param {object} options configuration options
- *                          - sortBy : function or array of string
+ * @param {object} opts configuration options. One attribute can be set
+ * `sortBy` which can be either a comparison function or an array of string
  * @return {FacetValue[]|HierarchicalFacet} depending on the type of facet of
  * the attribute requested (hierarchical, disjunctive or conjunctive)
  * @example

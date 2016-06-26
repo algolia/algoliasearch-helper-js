@@ -16,6 +16,52 @@ var trim = require('lodash/string/trim');
 var url = require('./url');
 
 /**
+ * Event triggered when a parameter is set or updated
+ * @event AlgoliaSearchHelper#event:change
+ * @property {SearchParameters} state the current parameters with the latest changes applied
+ * @property {SearchResults} lastResults the previous results received from Algolia. `null` before
+ * the first request
+ * @example
+ * helper.on('change', function(state, lastResults) {
+ *   console.log('The parameters have changed');
+ * });
+ */
+
+/**
+ * Event triggered when the search is sent to Algolia
+ * @event AlgoliaSearchHelper#event:search
+ * @property {SearchParameters} state the parameters used for this search
+ * @property {SearchResults} lastResults the results from the previous search. `null` if
+ * it is the first search.
+ * @example
+ * helper.on('search', function(state, lastResults) {
+ *   console.log('Search sent');
+ * });
+ */
+
+/**
+ * Event triggered when the results are retrieved from Algolia
+ * @event AlgoliaSearchHelper#event:result
+ * @property {SearchResults} results the results received from Algolia
+ * @property {SearchParameters} state the parameters used to query Algolia. Those might
+ * be different from the one in the helper instance (for example if the network is unreliable).
+ * @example
+ * helper.on('result', function(results, state) {
+ *   console.log('Search results received');
+ * });
+ */
+
+/**
+ * Event trigger when Algolia sends back an error
+ * @event AlgoliaSearchHelper#event:error
+ * @property {Error} error the error returned by the Algolia.
+ * @example
+ * helper.on('error', function(error) {
+ *   console.log('Houston we got a problem.');
+ * });
+ */
+
+/**
  * Initialize a new AlgoliaSearchHelper
  * @class
  * @classdesc The AlgoliaSearchHelper is a class that ease the management of the
@@ -23,6 +69,7 @@ var url = require('./url');
  *  - change: when the internal search state is changed.
  *    This event contains a {@link SearchParameters} object and the
  *    {@link SearchResults} of the last result if any.
+ *  - search: when a search is triggered using the `search()` method.
  *  - result: when the response is retrieved from Algolia and is processed.
  *    This event contains a {@link SearchResults} object and the
  *    {@link SearchParameters} corresponding to this answer.
@@ -46,7 +93,10 @@ function AlgoliaSearchHelper(client, index, options) {
 util.inherits(AlgoliaSearchHelper, events.EventEmitter);
 
 /**
- * Start the search with the parameters set in the state.
+ * Start the search with the parameters set in the state. When the
+ * method is called, it triggers a `search` event. The results will
+ * be available through the `result` event. If an error occcurs, an
+ * `error` will be fired instead.
  * @return {AlgoliaSearchHelper}
  * @fires search
  * @fires result
