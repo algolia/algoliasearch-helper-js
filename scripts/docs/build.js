@@ -11,14 +11,16 @@ var markdown = require('metalsmith-markdown');
 var jsdoc = require('./metalsmith/plugins/jsdoc-data.js');
 var registerHandleBarHelpers = require('./metalsmith/plugins/handlebars-helpers.js');
 var layouts = require('metalsmith-layouts');
-// var changed = require('metalsmith-changed');
 var headings = require('metalsmith-headings');
 var metallic = require('metalsmith-metallic');
 
 var sass = require('gulp-sass');
 var livereload = require('gulp-livereload');
+var webpack = require('webpack-stream');
 
 var st = require('st');
+
+var webpackConfig = require('./webpack.config.js');
 
 var src = {
   stylesheets: path.join(__dirname, './metalsmith/stylesheets/**/*.scss'),
@@ -81,12 +83,13 @@ gulp.task('doc:style:watch', function() {
   return gulpStyle().pipe(livereload());
 });
 
-gulp.task('doc:images', function() {
-  return gulp.src(path.join(__dirname, 'metalsmith/images/**/*.*'))
-             .pipe(gulp.dest(path.join(__dirname, '../../documentation/images')));
+gulp.task('doc:js', function() {
+  return gulp.src(path.join(__dirname, './metalsmith/js/main.js'))
+             .pipe(webpack(webpackConfig))
+             .pipe(gulp.dest('../../documentation/js'));
 });
 
-gulp.task('doc:all:watch', function() {
+gulp.task('doc:all:watch', ['doc:content'], function() {
   livereload.listen();
   gulp.watch(src.stylesheets, ['doc:style:watch']);
   gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
@@ -94,6 +97,7 @@ gulp.task('doc:all:watch', function() {
   gulp.watch(src.layouts + '/**/*.jade', ['doc:content:watch']);
   gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
   gulp.watch('../../src/**/*.js', ['doc:content:watch']);
+  gulp.watch('./metalsmith/**/*.js', ['doc:js']);
 });
 
 gulp.task('doc:server', function(done) {
@@ -102,5 +106,5 @@ gulp.task('doc:server', function(done) {
   ).listen(8083, done);
 });
 
-gulp.task('doc:watch', ['doc:server', 'doc:all:watch', 'doc:content:watch']);
-gulp.task('doc', ['doc:content', 'doc:style', 'doc:images']);
+gulp.task('doc:watch', ['doc:server', 'doc:all:watch']);
+gulp.task('doc', ['doc:content', 'doc:style', 'doc:js']);
