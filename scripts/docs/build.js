@@ -44,6 +44,10 @@ function makeMetalsmithBuilder() {
                   src: '../../../../src/SearchResults/index.js',
                   namespace: 'results'
                 }))
+                .use(jsdoc({
+                  src: '../../../../src/SearchParameters/index.js',
+                  namespace: 'state'
+                }))
                 .use(inPlace({
                   engine: 'handlebars',
                   partials: './metalsmith/partials',

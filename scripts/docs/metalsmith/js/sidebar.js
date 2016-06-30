@@ -6,34 +6,7 @@ export default function sidebar({headersContainer, sidebarContainer, headerStart
   list.classList.add('no-mobile');
   let currentList = list;
   let currentLevel = startLevel;
-/*
-  [...headers].forEach(header => {
-    const level = parseInt(header.tagName.split('')[1], 10);
-
-    if (level > currentLevel) {
-      // we enter a sublist
-      currentLevel = level;
-      currentList = currentList.lastChild.appendChild(document.createElement('ul'));
-    } else if (level < currentLevel) {
-      // we exit a sublit
-      currentLevel = level;
-      currentList = currentList.parentNode.parentNode;
-    }
-
-    const title = header.textContent;
-    const listItem = document.createElement('li');
-    const link = document.createElement('a');
-    link.setAttribute('href', `#${header.getAttribute('id')}`);
-    link.textContent = title;
-    listItem.appendChild(link);
-    currentList.appendChild(listItem);
-    const option = document.createElement('option');
-    option.setAttribute('value', link.getAttribute('href'));
-    option.textContent = `${spacer(currentLevel - startLevel)}${title}`;
-    select.classList.add('display-on-small');
-    select.appendChild(option);
-  });
-*/
+  
   //select.addEventListener('change', e => window.location = e.target.value);
   sidebarContainer.appendChild(list);
   //sidebarContainer.appendChild(select);
@@ -115,12 +88,6 @@ function activeLinks(sidebarContainer) {
       e.target.classList.add('active');
     }
   });
-}
-
-function spacer(n) {
-  if (n === 0) return '';
-  const arr = new Array(n + 1);
-  return `${arr.join('-')}> `;
 }
 
 function getPositionsKeyElements(sidebar) {

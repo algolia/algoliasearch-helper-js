@@ -82,6 +82,13 @@ but it might not be the one you expect according to the last results received.
 {{> jsdoc jsdoc/helper/hasTag}}
 {{> jsdoc jsdoc/helper/getTags}}
 
+### State management
+
+{{> jsdoc jsdoc/helper/getState}}
+{{> jsdoc jsdoc/helper/setState}}
+{{> jsdoc jsdoc/helper/overrideStateWithoutTriggeringChangeEvent}}
+{{> jsdoc jsdoc/helper/getStateAsQueryString}}
+
 ### Events
 
 {{> jsdoc jsdoc/helper/event:change}}
@@ -137,3 +144,69 @@ are implemented on top of Algolia API such as facetting.
 {{> jsdoc jsdoc/results/FacetValue}}
 
 ## SearchParameters
+
+The SearchParameters is the class that structure all the parameters
+that are needed to build a query to Algolia. It is usually reffered
+as the state of the search. This state is available when receiving 
+`change` and `search` events, and with `result` as a secondary
+parameter.
+
+SearchParameter is an immutable class. Each method that implies a
+change of the value is actually returning a new instance, and the
+previous is still the same as before the method call. The new
+instance contain the change implied by the method call.
+
+{{> jsdoc jsdoc/state/clearRefinements}}
+{{> jsdoc jsdoc/state/clearTags}}
+{{> jsdoc jsdoc/state/setQuery}}
+{{> jsdoc jsdoc/state/setPage}}
+{{> jsdoc jsdoc/state/setFacets}}
+{{> jsdoc jsdoc/state/setDisjunctiveFacets}}
+{{> jsdoc jsdoc/state/setHitsPerPage}}
+{{> jsdoc jsdoc/state/setTypoTolerance}}
+{{> jsdoc jsdoc/state/addNumericRefinement}}
+{{> jsdoc jsdoc/state/getConjunctiveRefinements}}
+{{> jsdoc jsdoc/state/getDisjunctiveRefinements}}
+{{> jsdoc jsdoc/state/getHierarchicalRefinement}}
+{{> jsdoc jsdoc/state/getExcludeRefinements}}
+{{> jsdoc jsdoc/state/removeNumericRefinement}}
+{{> jsdoc jsdoc/state/getNumericRefinements}}
+{{> jsdoc jsdoc/state/getNumericRefinement}}
+{{> jsdoc jsdoc/state/addFacetRefinement}}
+{{> jsdoc jsdoc/state/addExcludeRefinement}}
+{{> jsdoc jsdoc/state/addDisjunctiveFacetRefinement}}
+{{> jsdoc jsdoc/state/addTagRefinement}}
+{{> jsdoc jsdoc/state/removeFacetRefinement}}
+{{> jsdoc jsdoc/state/removeExcludeRefinement}}
+{{> jsdoc jsdoc/state/removeDisjunctiveFacetRefinement}}
+{{> jsdoc jsdoc/state/removeTagRefinement}}
+{{> jsdoc jsdoc/state/toggleRefinement}}
+{{> jsdoc jsdoc/state/toggleFacetRefinement}}
+{{> jsdoc jsdoc/state/toggleExcludeFacetRefinement}}
+{{> jsdoc jsdoc/state/toggleDisjunctiveFacetRefinement}}
+{{> jsdoc jsdoc/state/toggleHierarchicalFacetRefinement}}
+{{> jsdoc jsdoc/state/toggleTagRefinement}}
+{{> jsdoc jsdoc/state/isDisjunctiveFacet}}
+{{> jsdoc jsdoc/state/isHierarchicalFacet}}
+{{> jsdoc jsdoc/state/isConjunctiveFacet}}
+{{> jsdoc jsdoc/state/isFacetRefined}}
+{{> jsdoc jsdoc/state/isExcludeRefined}}
+{{> jsdoc jsdoc/state/isDisjunctiveFacetRefined}}
+{{> jsdoc jsdoc/state/isHierarchicalFacetRefined}}
+{{> jsdoc jsdoc/state/isNumericRefined}}
+{{> jsdoc jsdoc/state/isTagRefined}}
+{{> jsdoc jsdoc/state/getRefinedDisjunctiveFacets}}
+{{> jsdoc jsdoc/state/getRefinedHierarchicalFacets}}
+{{> jsdoc jsdoc/state/getUnrefinedDisjunctiveFacets}}
+{{> jsdoc jsdoc/state/getQueryParameter}}
+{{> jsdoc jsdoc/state/setQueryParameter}}
+{{> jsdoc jsdoc/state/setQueryParameters}}
+{{> jsdoc jsdoc/state/filter}}
+{{> jsdoc jsdoc/state/_getHierarchicalFacetSortBy}}
+{{> jsdoc jsdoc/state/_getHierarchicalFacetSeparator}}
+{{> jsdoc jsdoc/state/_getHierarchicalRootPath}}
+{{> jsdoc jsdoc/state/_getHierarchicalShowParentLevel}}
+{{> jsdoc jsdoc/state/getHierarchicalFacetByName}}
+{{> jsdoc jsdoc/state/make}}
+{{> jsdoc jsdoc/state/validate}}
+

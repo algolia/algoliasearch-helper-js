@@ -534,10 +534,13 @@ AlgoliaSearchHelper.prototype.getState = function(filters) {
  * Get part of the state as a query string. By default, the output keys will not
  * be prefixed and will only take the applied refinements and the query.
  * @param {object} [options] May contain the following parameters :
- *  - filters : possible values are all the keys of the {SearchParameters}, 'index' for the index,
- *    all the refinements with 'attribute:*' or for some specific attributes with 'attribute:theAttribute'
- *  - prefix : prefix in front of the keys
- *  - moreAttributes : more values to be added in the query string. Those values
+ *
+ * **filters** : possible values are all the keys of the [SearchParameters](#searchparameters), `index` for the index,
+ * all the refinements with `attribute:*` or for some specific attributes with `attribute:theAttribute`
+ *
+ * **prefix** : prefix in front of the keys
+ *
+ * **moreAttributes** : more values to be added in the query string. Those values
  *    won't be prefixed.
  * @return {string} the query string
  */

@@ -47,6 +47,9 @@
   "browser": {},
   "devDependencies": {
     "algoliasearch": "^3.13.0",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "browserify": "^12.0.1",
     "browzers": "^1.3.0",
     "bulk-require": "^0.2.1",
@@ -80,6 +83,9 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-metallic": "^1.0.0",
     "metalsmith-sass": "^1.3.0",
+    "metalsmith-serve": "0.0.7",
+    "metalsmith-watch": "^1.0.3",
+    "metalsmith-webpack": "^1.0.3",
     "minami": "algolia/minami#81c8243b73ed5224dc3ce9fd79aab8bbf8da0488",
     "mkdirp": "^0.5.1",
     "mversion": "^1.10.1",
@@ -97,6 +103,8 @@
     "uglify-js": "^2.6.2",
     "vinyl": "^1.1.1",
     "watchify": "^3.7.0",
+    "webpack": "^1.13.1",
+    "webpack-stream": "^3.2.0",
     "zuul": "^3.10.1",
     "zuul-ngrok": "3.0.0"
   },

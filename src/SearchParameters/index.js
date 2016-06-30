@@ -612,6 +612,12 @@ SearchParameters.prototype = {
       tagRefinements: []
     });
   },
+  /**
+   * Set the index.
+   * @method
+   * @param {string} index the index name
+   * @return {SearchParameters}
+   */
   setIndex: function setIndex(index) {
     if (index === this.index) return this;
 
@@ -1445,6 +1451,7 @@ SearchParameters.prototype = {
 
   /**
    * Helper function to get the hierarchicalFacet separator or the default one (`>`)
+   * @private
    * @param  {object} hierarchicalFacet
    * @return {string} returns the hierarchicalFacet.separator or `>` as default
    */
@@ -1454,6 +1461,7 @@ SearchParameters.prototype = {
 
   /**
    * Helper function to get the hierarchicalFacet prefix path or null
+   * @private
    * @param  {object} hierarchicalFacet
    * @return {string} returns the hierarchicalFacet.rootPath or null as default
    */
@@ -1463,6 +1471,7 @@ SearchParameters.prototype = {
 
   /**
    * Helper function to check if we show the parent level of the hierarchicalFacet
+   * @private
    * @param  {object} hierarchicalFacet
    * @return {string} returns the hierarchicalFacet.showParentLevel or true as default
    */
