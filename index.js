@@ -6,7 +6,8 @@ var SearchParameters = require('./src/SearchParameters');
 var SearchResults = require('./src/SearchResults');
 
 /**
- * The algoliasearchHelper module contains everything needed to use the Algoliasearch
+ * The algoliasearchHelper module is the function that will let its
+ * contains everything needed to use the Algoliasearch
  * Helper. It is a also a function that instanciate the helper.
  * To use the helper, you also need the Algolia JS client v3.
  * @example
@@ -22,6 +23,12 @@ var SearchResults = require('./src/SearchResults');
  * helper.toggleRefine('Movies & TV Shows')
  *       .toggleRefine('Free shipping')
  *       .search();
+ * @example
+ * // The helper is an event emitter using the node API
+ * helper.on('result', updateTheResults);
+ * helper.once('result', updateTheResults);
+ * helper.removeListener('result', updateTheResults);
+ * helper.removeAllListeners('result');
  * @module algoliasearchHelper
  * @param  {AlgoliaSearch} client an AlgoliaSearch client
  * @param  {string} index the name of the index to query

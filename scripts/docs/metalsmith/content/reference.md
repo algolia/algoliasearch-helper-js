@@ -22,6 +22,21 @@ but it might not be the one you expect according to the last results received.
 
 ### Search
 
+Like the client, the sole purpose of the helper is to make
+search query to Algolia.
+
+There are two ways to generate a query
+to Algolia.
+
+ - The first one, using `search`, triggers the events and
+all its parameters come directly from the internal search parameters
+inside the Helper.
+ - The second one, using `searchOnce`, is to be used
+for one-shot searches that won't influence the rest of the app. It lets
+you change the parameters before sending the query.
+
+Most of the searches will be done using the first method.
+
 {{> jsdoc jsdoc/helper/search}}
 {{> jsdoc jsdoc/helper/searchOnce}}
 
@@ -138,7 +153,6 @@ are implemented on top of Algolia API such as facetting.
 {{> jsdoc jsdoc/results/serverUsed}}
 {{> jsdoc jsdoc/results/timeoutCounts}}
 {{> jsdoc jsdoc/results/timeoutHits}}
-
 
 ## Types
 

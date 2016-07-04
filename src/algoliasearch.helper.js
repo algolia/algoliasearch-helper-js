@@ -121,6 +121,28 @@ AlgoliaSearchHelper.prototype.search = function() {
  * otherwise it returns a promise containing an object with two keys :
  *  - content with a SearchResults
  *  - state with the state used for the query as a SearchParameters
+ * @example
+ * // Changing the number of records returned per page to 1
+ * // This example uses the callback API
+ * var state = helper.searchOnce({hitsPerPage: 1},
+ *   function(error, content, state) {
+ *     // if an error occured it will be passed in error, otherwise its value is null
+ *     // content contains the results formatted as a SearchResults
+ *     // state is the instance of SearchParameters used for this search
+ *   });
+ * @example
+ * // Changing the number of records returned per page to 1
+ * // This example uses the promise API
+ * var state1 = helper.searchOnce({hitsPerPage: 1})
+ *                 .then(promiseHandler);
+ *
+ * function promiseHandler(res) {
+ *   // res contains
+ *   // {
+ *   //   content : SearchResults
+ *   //   state   : SearchParameters (the one used for this specific search)
+ *   // }
+ * }
  */
 AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   var tempState = this.state.setQueryParameters(options);
@@ -143,7 +165,9 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 };
 
 /**
- * Sets the query. Also sets the current page to 0.
+ * Sets the text query used for the search.
+ *
+ * This method resets the current page to 0.
  * @param  {string} q the user query
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -160,10 +184,23 @@ AlgoliaSearchHelper.prototype.setQuery = function(q) {
  * only the refinements of a specific attribute. For more advanced use case, you can
  * provide a function instead. This function should follow the
  * [clearCallback definition](#SearchParameters.clearCallback).
+ *
+ * This method resets the current page to 0.
  * @param {string} [name] optional name of the facet / attribute on which we want to remove all refinements
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
+ * @example
+ * // Removing all the refinements
+ * helper.clearRefinements().search();
+ * @example
+ * // Removing all the filters on a the category attribute.
+ * helper.clearRefinements('category').search();
+ * @example
+ * // Removing only the exclude filters on the category facet.
+ * helper.clearRefinements(function(value, attribute, type) {
+ *   return type === 'exclude' && attribute === 'category';
+ * }).search();
  */
 AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
   this.state = this.state.clearRefinements(name);
@@ -173,6 +210,8 @@ AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
 
 /**
  * Remove all the tag filtering
+ *
+ * This method resets the current page to 0.
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
@@ -184,7 +223,10 @@ AlgoliaSearchHelper.prototype.clearTags = function() {
 };
 
 /**
- * Ensure a facet refinement exists
+ * Adds a disjunctive filter to a facetted attribute with the `value` provided. If the
+ * filter is already set, it doesn't change the filters.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
  * @param  {string} value the associated value (will be converted to string)
  * @return {AlgoliaSearchHelper}
@@ -205,7 +247,10 @@ AlgoliaSearchHelper.prototype.addDisjunctiveRefine = function() {
 };
 
 /**
- * Add a numeric refinement on the given attribute
+ * Adds a an numeric filter to an attribute with the `operator` and `value` provided. If the
+ * filter is already set, it doesn't change the filters.
+ *
+ * This method resets the current page to 0.
  * @param  {string} attribute the attribute on which the numeric filter applies
  * @param  {string} operator the operator of the filter
  * @param  {number} value the value of the filter
@@ -220,7 +265,10 @@ AlgoliaSearchHelper.prototype.addNumericRefinement = function(attribute, operato
 };
 
 /**
- * Ensure a facet refinement exists
+ * Adds a filter to a facetted attribute with the `value` provided. If the
+ * filter is already set, it doesn't change the filters.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
  * @param  {string} value the associated value (will be converted to string)
  * @return {AlgoliaSearchHelper}
@@ -242,7 +290,10 @@ AlgoliaSearchHelper.prototype.addRefine = function() {
 
 
 /**
- * Ensure a facet exclude exists
+ * Adds a an exclusion filter to a facetted attribute with the `value` provided. If the
+ * filter is already set, it doesn't change the filters.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
  * @param  {string} value the associated value (will be converted to string)
  * @return {AlgoliaSearchHelper}
@@ -263,7 +314,10 @@ AlgoliaSearchHelper.prototype.addExclude = function() {
 };
 
 /**
- * Add a tag refinement
+ * Adds a tag filter with the `tag` provided. If the
+ * filter is already set, it doesn't change the filters.
+ *
+ * This method resets the current page to 0.
  * @param {string} tag the tag to add to the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -276,10 +330,19 @@ AlgoliaSearchHelper.prototype.addTag = function(tag) {
 };
 
 /**
- * Remove a numeric filter.
+ * Removes an numeric filter to an attribute with the `operator` and `value` provided. If the
+ * filter is not set, it doesn't change the filters.
+ *
+ * Some parameters are optionnals, triggering different behaviors:
+ *  - if the value is not provided, then all the numeric value will be removed for the
+ *  specified attribute/operator couple.
+ *  - if the operator is not provided either, then all the numeric filter on this attribute
+ *  will be removed.
+ *
+ * This method resets the current page to 0.
  * @param  {string} attribute the attribute on which the numeric filter applies
- * @param  {string} operator the operator of the filter
- * @param  {number} value the value of the filter
+ * @param  {string} [operator] the operator of the filter
+ * @param  {number} [value] the value of the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
@@ -291,9 +354,15 @@ AlgoliaSearchHelper.prototype.removeNumericRefinement = function(attribute, oper
 };
 
 /**
- * Ensure a facet refinement does not exist
+ * Removes a disjunctive filter to a facetted attribute with the `value` provided. If the
+ * filter is not set, it doesn't change the filters.
+ *
+ * If the value is omitted, then this method will remove all the filters for the
+ * attribute.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
- * @param  {string} value the associated value
+ * @param  {string} [value] the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
@@ -312,9 +381,15 @@ AlgoliaSearchHelper.prototype.removeDisjunctiveRefine = function() {
 };
 
 /**
- * Ensure a facet refinement does not exist
+ * Removes a filter to a facetted attribute with the `value` provided. If the
+ * filter is not set, it doesn't change the filters.
+ *
+ * If the value is omitted, then this method will remove all the filters for the
+ * attribute.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
- * @param  {string} value the associated value
+ * @param  {string} [value] the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
@@ -333,9 +408,15 @@ AlgoliaSearchHelper.prototype.removeRefine = function() {
 };
 
 /**
- * Ensure a facet exclude does not exist
+ * Removes an exclusion filter to a facetted attribute with the `value` provided. If the
+ * filter is not set, it doesn't change the filters.
+ *
+ * If the value is omitted, then this method will remove all the filters for the
+ * attribute.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
- * @param  {string} value the associated value
+ * @param  {string} [value] the associated value
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
@@ -354,7 +435,10 @@ AlgoliaSearchHelper.prototype.removeExclude = function() {
 };
 
 /**
- * Ensure that a tag is not filtering the results
+ * Removes a tag filter with the `tag` provided. If the
+ * filter is not set, it doesn't change the filters.
+ *
+ * This method resets the current page to 0.
  * @param {string} tag tag to remove from the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -367,7 +451,10 @@ AlgoliaSearchHelper.prototype.removeTag = function(tag) {
 };
 
 /**
- * Toggle refinement state of an exclude
+ * Adds or removes an exclusion filter to a facetted attribute with the `value` provided. If
+ * the value is set then it removes it, otherwise it adds the filter.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
@@ -388,7 +475,12 @@ AlgoliaSearchHelper.prototype.toggleExclude = function() {
 };
 
 /**
- * Toggle refinement state of a facet
+ * Adds or removes a filter to a facetted attribute with the `value` provided. If
+ * the value is set then it removes it, otherwise it adds the filter.
+ *
+ * This method can be used for conjunctive, disjunctive and hierarchical filters.
+ *
+ * This method resets the current page to 0.
  * @param  {string} facet the facet to refine
  * @param  {string} value the associated value
  * @return {AlgoliaSearchHelper}
@@ -411,7 +503,10 @@ AlgoliaSearchHelper.prototype.toggleRefine = function() {
 };
 
 /**
- * Toggle tag refinement
+ * Adds or removes a tag filter with the `value` provided. If
+ * the value is set then it removes it, otherwise it adds the filter.
+ *
+ * This method resets the current page to 0.
  * @param {string} tag tag to remove or add
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -424,20 +519,26 @@ AlgoliaSearchHelper.prototype.toggleTag = function(tag) {
 };
 
 /**
- * Go to next page
+ * Increments the page number by one.
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
+ * @example
+ * helper.setPage(0).nextPage().getPage();
+ * // returns 1
  */
 AlgoliaSearchHelper.prototype.nextPage = function() {
   return this.setPage(this.state.page + 1);
 };
 
 /**
- * Go to previous page
+ * Decrements the page number by one.
  * @fires change
  * @return {AlgoliaSearchHelper}
  * @chainable
+ * @example
+ * helper.setPage(1).previousPage().getPage();
+ * // returns 0
  */
 AlgoliaSearchHelper.prototype.previousPage = function() {
   return this.setPage(this.state.page - 1);
@@ -465,7 +566,7 @@ function setCurrentPage(page) {
 AlgoliaSearchHelper.prototype.setCurrentPage = setCurrentPage;
 
 /**
- * Change the current page
+ * Updates the current page.
  * @function
  * @param  {number} page The page number
  * @return {AlgoliaSearchHelper}
@@ -475,7 +576,9 @@ AlgoliaSearchHelper.prototype.setCurrentPage = setCurrentPage;
 AlgoliaSearchHelper.prototype.setPage = setCurrentPage;
 
 /**
- * Configure the underlying index name
+ * Updates the name of the index that will be targeted by the query.
+ *
+ * This method resets the current page to 0.
  * @param {string} name the index name
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -488,12 +591,21 @@ AlgoliaSearchHelper.prototype.setIndex = function(name) {
 };
 
 /**
- * Update any single parameter of the state/configuration (based on SearchParameters).
+ * Update a parameter of the search. This method reset the page 
+ *
+ * The complete list of parameters is available on the
+ * [Algolia website](https://www.algolia.com/doc/rest#query-an-index).
+ * The most commonly used parameters have their own [shortcuts](#query-parameters-shortcuts)
+ * or benefit from higher-level APIs (all the kind of filters and facets have their own API)
+ *
+ * This method resets the current page to 0.
  * @param {string} parameter name of the parameter to update
  * @param {any} value new value of the parameter
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
+ * @example
+ * helper.setQueryParameter('hitsPerPage', 20).search();
  */
 AlgoliaSearchHelper.prototype.setQueryParameter = function(parameter, value) {
   var newState = this.state.setQueryParameter(parameter, value);
@@ -525,6 +637,9 @@ AlgoliaSearchHelper.prototype.setState = function(newState) {
  * returned containing only the requested fields, otherwise return the unfiltered
  * state
  * @example
+ * // Get the complete state as stored in the helper
+ * helper.getState();
+ * @example
  * // Get a part of the state with all the refinements on attributes and the query
  * helper.getState(['query', 'attribute:category']);
  */
@@ -538,8 +653,9 @@ AlgoliaSearchHelper.prototype.getState = function(filters) {
  * be prefixed and will only take the applied refinements and the query.
  * @param {object} [options] May contain the following parameters :
  *
- * **filters** : possible values are all the keys of the [SearchParameters](#searchparameters), `index` for the index,
- * all the refinements with `attribute:*` or for some specific attributes with `attribute:theAttribute`
+ * **filters** : possible values are all the keys of the [SearchParameters](#searchparameters), `index` for
+ * the index, all the refinements with `attribute:*` or for some specific attributes with
+ * `attribute:theAttribute`
  *
  * **prefix** : prefix in front of the keys
  *
@@ -695,8 +811,11 @@ AlgoliaSearchHelper.prototype.isTagRefined = function() {
 
 
 /**
- * Get the underlying configured index name
+ * Get the name of the currently used index.
  * @return {string}
+ * @example
+ * helper.setIndex('highestPrice_products').getIndex();
+ * // returns 'highestPrice_products'
  */
 AlgoliaSearchHelper.prototype.getIndex = function() {
   return this.state.index;
@@ -728,9 +847,18 @@ AlgoliaSearchHelper.prototype.getTags = function() {
 };
 
 /**
- * Get a parameter of the search by its name
+ * Get a parameter of the search by its name. It is possible that a parameter is directly
+ * defined in the index dashboard, but it will be undefined using this method.
+ *
+ * The complete list of parameters is
+ * available on the
+ * [Algolia website](https://www.algolia.com/doc/rest#query-an-index).
+ * The most commonly used parameters have their own [shortcuts](#query-parameters-shortcuts)
+ * or benefit from higher-level APIs (all the kind of filters have their own API)
  * @param {string} parameterName the parameter name
  * @return {any} the parameter value
+ * @example
+ * var hitsPerPage = helper.getQueryParameter('hitsPerPage');
  */
 AlgoliaSearchHelper.prototype.getQueryParameter = function(parameterName) {
   return this.state.getQueryParameter(parameterName);

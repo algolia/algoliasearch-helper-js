@@ -800,7 +800,8 @@ SearchParameters.prototype = {
    * Remove all the numeric filter for a given (attribute, operator)
    * @method
    * @param {string} attribute attribute to set the filter on
-   * @param {string} operator operator of the filter (possible values: =, >, >=, <, <=, !=)
+   * @param {string} [operator] operator of the filter (possible values: =, >, >=, <, <=, !=)
+   * @param {number} [number] the value to be removed
    * @return {SearchParameters}
    */
   removeNumericRefinement: function(attribute, operator, paramValue) {
@@ -960,7 +961,7 @@ SearchParameters.prototype = {
    * values for the facetted attribute.
    * @method
    * @param {string} facet name of the attribute used for facetting
-   * @param {string} value value used to filter
+   * @param {string} [value] value used to filter
    * @return {SearchParameters}
    */
   removeFacetRefinement: function removeFacetRefinement(facet, value) {
