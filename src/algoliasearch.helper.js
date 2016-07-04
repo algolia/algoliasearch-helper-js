@@ -52,7 +52,7 @@ var url = require('./url');
  */
 
 /**
- * Event trigger when Algolia sends back an error
+ * Event triggered when Algolia sends back an error
  * @event AlgoliaSearchHelper#event:error
  * @property {Error} error the error returned by the Algolia.
  * @example
@@ -156,7 +156,10 @@ AlgoliaSearchHelper.prototype.setQuery = function(q) {
 };
 
 /**
- * Remove all refinements (disjunctive + conjunctive + hierarchical + excludes + numeric filters)
+ * Remove all the types of refinements except tags. A string can be provided to remove
+ * only the refinements of a specific attribute. For more advanced use case, you can
+ * provide a function instead. This function should follow the
+ * [clearCallback definition](#SearchParameters.clearCallback).
  * @param {string} [name] optional name of the facet / attribute on which we want to remove all refinements
  * @return {AlgoliaSearchHelper}
  * @fires change

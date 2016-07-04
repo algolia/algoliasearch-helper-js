@@ -1,5 +1,5 @@
 <div class="event">
-  <div class="summary"><span class="name">{{#event}}{{name}}{{/event}}</span></div>
+  <div class="summary"><span class="name"><a href="#{{id}}" id="{{id}}" class="api-entry">{{#event}}{{name}}{{/event}}</a></span></div>
   <div class="description">{{#md}}{{{description}}}{{/md}}</div>
   <ul class="parameters">
     {{#each properties}}

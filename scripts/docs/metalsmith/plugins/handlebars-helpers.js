@@ -24,10 +24,25 @@ module.exports = function(requires) {
     return new Handlebars.SafeString(marked(options.fn(this)));
   });
 
-  var arrayRegexp = /Array\.<(.+)>/;
+  var arrayRegexp = /^Array\.<(.+?)>$/;
+  var mapRegexp = /^Object\.<string, \(?(.+?)\)?>$/;
+  var unionRegexp = /([^|()]+)/gi;
+  function formatGenerics(type) {
+    var matchArray = arrayRegexp.exec(type);
+    if (matchArray) return formatGenerics(matchArray[1]) + '[]';
+    var matchMap = mapRegexp.exec(type);
+    if (matchMap) return '{ string: ' + formatGenerics(matchMap[1]) + ' }';
+    var union = [];
+    var m = unionRegexp.exec(type);
+    while (m) {
+      union.push(m[1]);
+      m = unionRegexp.exec(type);
+    }
+    if (union.length > 1) return '(' + union.map(formatGenerics).join('|') + ')';
+    return type;
+  }
   Handlebars.registerHelper('type', function(options) {
-    var match = arrayRegexp.exec(this);
-    return options.fn(match ? match[1] + '[]' : this);
+    return options.fn(formatGenerics(this));
   });
 
   Handlebars.registerHelper('event', function(options) {

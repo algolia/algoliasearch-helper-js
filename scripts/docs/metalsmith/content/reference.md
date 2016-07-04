@@ -18,6 +18,8 @@ but it might not be the one you expect according to the last results received.
 
 ### Instanciate
 
+{{> jsdoc jsdoc/main/algoliasearchHelper}}
+
 ### Search
 
 {{> jsdoc jsdoc/helper/search}}
@@ -38,7 +40,7 @@ but it might not be the one you expect according to the last results received.
 {{> jsdoc jsdoc/helper/previousPage}}
 {{> jsdoc jsdoc/helper/getPage}}
 
-### Facets
+### Conjunctive Facets
 
 {{> jsdoc jsdoc/helper/clearRefinements}}
 {{> jsdoc jsdoc/helper/addFacetRefinement}}
@@ -107,18 +109,23 @@ are implemented on top of Algolia API such as facetting.
 
 {{> jsdoc jsdoc/results/hits}}
 
-### Results metadata
+### Facets methods
 
-{{> jsdoc jsdoc/results/hitsPerPage}}
-{{> jsdoc jsdoc/results/nbHits}}
-{{> jsdoc jsdoc/results/nbPages}}
+{{> jsdoc jsdoc/results/getFacetValues}}
+{{> jsdoc jsdoc/results/getFacetStats}}
 
 ### Geolocation data
 
 {{> jsdoc jsdoc/results/aroundLatLng}}
 {{> jsdoc jsdoc/results/automaticRadius}}
 
-### Query parameters
+### Results metadata
+
+{{> jsdoc jsdoc/results/hitsPerPage}}
+{{> jsdoc jsdoc/results/nbHits}}
+{{> jsdoc jsdoc/results/nbPages}}
+
+### Parameters
 
 {{> jsdoc jsdoc/results/index}}
 {{> jsdoc jsdoc/results/query}}
@@ -132,16 +139,19 @@ are implemented on top of Algolia API such as facetting.
 {{> jsdoc jsdoc/results/timeoutCounts}}
 {{> jsdoc jsdoc/results/timeoutHits}}
 
-### Facets
 
-{{> jsdoc jsdoc/results/getFacetValues}}
-{{> jsdoc jsdoc/results/getFacetStats}}
+## Types
 
-### Types
+The helper structures the way the data is sent and retrieved
+from the Algolia API. Here is the list of those common structure
+that you might encounter in the documentation.
 
 {{> jsdoc jsdoc/results/Facet}}
 {{> jsdoc jsdoc/results/HierarchicalFacet}}
 {{> jsdoc jsdoc/results/FacetValue}}
+{{> jsdoc jsdoc/state/FacetList}}
+{{> jsdoc jsdoc/state/OperatorList}}
+{{> jsdoc jsdoc/state/clearCallback}}
 
 ## SearchParameters
 
@@ -202,11 +212,9 @@ instance contain the change implied by the method call.
 {{> jsdoc jsdoc/state/setQueryParameter}}
 {{> jsdoc jsdoc/state/setQueryParameters}}
 {{> jsdoc jsdoc/state/filter}}
-{{> jsdoc jsdoc/state/_getHierarchicalFacetSortBy}}
-{{> jsdoc jsdoc/state/_getHierarchicalFacetSeparator}}
-{{> jsdoc jsdoc/state/_getHierarchicalRootPath}}
-{{> jsdoc jsdoc/state/_getHierarchicalShowParentLevel}}
 {{> jsdoc jsdoc/state/getHierarchicalFacetByName}}
 {{> jsdoc jsdoc/state/make}}
 {{> jsdoc jsdoc/state/validate}}
+
+### General types
 

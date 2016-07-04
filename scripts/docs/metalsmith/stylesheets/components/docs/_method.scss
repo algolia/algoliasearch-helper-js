@@ -18,8 +18,20 @@
   border: 1px solid $border;
   border-radius: 5px;
 
+
   > * {
     padding: 0.5em;
+  }
+
+  .api-entry {
+    text-decoration: none;
+    color: black;
+    &:hover {
+      color: $accent-color;
+    }
+    &:focus {
+      outline: none;
+    }
   }
 
   .summary {

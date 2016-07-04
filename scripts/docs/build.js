@@ -30,27 +30,32 @@ var src = {
 };
 
 function makeMetalsmithBuilder() {
-  var builder = metalsmith(__dirname);
-  return builder.metadata({})
+  var project = require('../../package.json');
+  var builder = metalsmith(path.join(__dirname, '../..'));
+  return builder.metadata({pkg: project})
                 .ignore('.*')
                 .clean(false)
                 .source(src.content)
-                .destination('../../documentation')
+                .destination('documentation')
                 .use(jsdoc({
-                  src: '../../../../src/algoliasearch.helper.js',
+                  src: 'src/algoliasearch.helper.js',
                   namespace: 'helper'
                 }))
                 .use(jsdoc({
-                  src: '../../../../src/SearchResults/index.js',
+                  src: 'src/SearchResults/index.js',
                   namespace: 'results'
                 }))
                 .use(jsdoc({
-                  src: '../../../../src/SearchParameters/index.js',
+                  src: 'src/SearchParameters/index.js',
                   namespace: 'state'
+                }))
+                .use(jsdoc({
+                  src: 'index.js',
+                  namespace: 'main'
                 }))
                 .use(inPlace({
                   engine: 'handlebars',
-                  partials: './metalsmith/partials',
+                  partials: 'scripts/docs/metalsmith/partials',
                   exposeConsolidate: registerHandleBarHelpers
                 }))
                 .use(metallic())

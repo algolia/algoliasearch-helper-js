@@ -43,12 +43,15 @@ function findArray(array, searchedValue) {
 }
 
 /**
+ * The facet list is the structure used to store the list of values used to
+ * filter a single attribute.
  * @typedef {string[]} SearchParameters.FacetList
  */
 
 /**
- * Structure to store numeric filters with the operator as the key
- * @typedef {Object.<string, array.<number|number[]>>} SearchParameters.OperatorList
+ * Structure to store numeric filters with the operator as the key. The supported operators
+ * are `=`, `>`, `<`, `>=`, `<=` and `!=`.
+ * @typedef {Object.<string, Array.<number|number[]>>} SearchParameters.OperatorList
  */
 
 /**
@@ -581,7 +584,7 @@ SearchParameters.prototype = {
   /**
    * Remove all refinements (disjunctive + conjunctive + excludes + numeric filters)
    * @method
-   * @param {string|SearchParameters.clearCallback} [attribute] optionnal string or function
+   * @param {undefined|string|SearchParameters.clearCallback} [attribute] optionnal string or function
    * - If not given, means to clear all the filters.
    * - If `string`, means to clear all refinements for the `attribute` named filter.
    * - If `function`, means to clear all the refinements that return truthy values.
@@ -1498,10 +1501,10 @@ SearchParameters.prototype = {
 /**
  * Callback used for clearRefinement method
  * @callback SearchParameters.clearCallback
- * @param {OperatorList|FacetList} value
- * @param {string} key
- * @param {string} type numeric, disjunctiveFacet, conjunctiveFacet or exclude
+ * @param {OperatorList|FacetList} value the value of the filter
+ * @param {string} key the current attribute name
+ * @param {string} type `numeric`, `disjunctiveFacet`, `conjunctiveFacet`, `hierarchicalFacet` or `exclude`
  * depending on the type of facet
- * @return {boolean}
+ * @return {boolean} `true` if the element should be removed. `false` otherwise.
  */
 module.exports = SearchParameters;

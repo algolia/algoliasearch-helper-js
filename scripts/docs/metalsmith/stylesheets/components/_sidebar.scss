@@ -6,6 +6,7 @@ nav.sidebar {
   max-width: $sidebar-width;
   border-right: 1px solid #d8d8d8;
   padding-top: 120px;
+  overflow: auto;
 
   &.fixed {
     position: fixed;
