@@ -1,10 +1,10 @@
 'use strict';
 
-var forEach = require('lodash/collection/forEach');
-var map = require('lodash/collection/map');
-var reduce = require('lodash/collection/reduce');
-var merge = require('lodash/object/merge');
-var isArray = require('lodash/lang/isArray');
+var forEach = require('lodash/forEach');
+var map = require('lodash/map');
+var reduce = require('lodash/reduce');
+var merge = require('lodash/merge');
+var isArray = require('lodash/isArray');
 
 var requestBuilder = {
   /**

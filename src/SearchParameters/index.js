@@ -1,26 +1,26 @@
 'use strict';
 
-var keys = require('lodash/object/keys');
-var intersection = require('lodash/array/intersection');
-var forOwn = require('lodash/object/forOwn');
-var forEach = require('lodash/collection/forEach');
-var filter = require('lodash/collection/filter');
-var map = require('lodash/collection/map');
-var reduce = require('lodash/collection/reduce');
-var omit = require('lodash/object/omit');
-var indexOf = require('lodash/array/indexOf');
-var isNaN = require('lodash/lang/isNaN');
-var isArray = require('lodash/lang/isArray');
-var isEmpty = require('lodash/lang/isEmpty');
-var isEqual = require('lodash/lang/isEqual');
-var isUndefined = require('lodash/lang/isUndefined');
-var isString = require('lodash/lang/isString');
-var isFunction = require('lodash/lang/isFunction');
-var find = require('lodash/collection/find');
-var pluck = require('lodash/collection/pluck');
+var keys = require('lodash/keys');
+var intersection = require('lodash/intersection');
+var forOwn = require('lodash/forOwn');
+var forEach = require('lodash/forEach');
+var filter = require('lodash/filter');
+var map = require('lodash/map');
+var reduce = require('lodash/reduce');
+var omit = require('lodash/omit');
+var indexOf = require('lodash/indexOf');
+var isNaN = require('lodash/isNaN');
+var isArray = require('lodash/isArray');
+var isEmpty = require('lodash/isEmpty');
+var isEqual = require('lodash/isEqual');
+var isUndefined = require('lodash/isUndefined');
+var isString = require('lodash/isString');
+var isFunction = require('lodash/isFunction');
+var find = require('lodash/find');
 
-var defaults = require('lodash/object/defaults');
-var merge = require('lodash/object/merge');
+var defaults = require('lodash/defaults');
+var merge = require('lodash/merge');
+
 var warnOnce = require('../functions/warnOnce');
 var valToNumber = require('../functions/valToNumber');
 
@@ -1323,7 +1323,7 @@ SearchParameters.prototype = {
     return intersection(
       // enforce the order between the two arrays,
       // so that refinement name index === hierarchical facet index
-      pluck(this.hierarchicalFacets, 'name'),
+      map(this.hierarchicalFacets, 'name'),
       keys(this.hierarchicalFacetsRefinements)
     );
   },

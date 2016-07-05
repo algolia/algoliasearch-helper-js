@@ -35,8 +35,8 @@ test('previousPage should decrement the current page by one', function(t) {
 });
 
 test('pages should be reset if the mutation might change the number of pages', function(t) {
-  var bindAll = require('lodash/function/bindAll');
-  var partial = require('lodash/function/partial');
+  var bindAll = require('lodash/bindAll');
+  var partial = require('lodash/partial');
 
   var helper = algoliasearchHelper('', '', {
     facets: ['facet1', 'f2'],

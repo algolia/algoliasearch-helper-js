@@ -1,24 +1,24 @@
 'use strict';
 
-var forEach = require('lodash/collection/forEach');
-var compact = require('lodash/array/compact');
-var indexOf = require('lodash/array/indexOf');
-var findIndex = require('lodash/array/findIndex');
+var forEach = require('lodash/forEach');
+var compact = require('lodash/compact');
+var indexOf = require('lodash/indexOf');
+var findIndex = require('lodash/findIndex');
 
-var sum = require('lodash/collection/sum');
-var find = require('lodash/collection/find');
-var includes = require('lodash/collection/includes');
-var map = require('lodash/collection/map');
-var sortByOrder = require('lodash/collection/sortByOrder');
+var sum = require('lodash/sum');
+var find = require('lodash/find');
+var includes = require('lodash/includes');
+var map = require('lodash/map');
+var orderBy = require('lodash/orderBy');
 
-var defaults = require('lodash/object/defaults');
-var merge = require('lodash/object/merge');
+var defaults = require('lodash/defaults');
+var merge = require('lodash/merge');
 
-var isArray = require('lodash/lang/isArray');
-var isFunction = require('lodash/lang/isFunction');
+var isArray = require('lodash/isArray');
+var isFunction = require('lodash/isFunction');
 
-var partial = require('lodash/function/partial');
-var partialRight = require('lodash/function/partialRight');
+var partial = require('lodash/partial');
+var partialRight = require('lodash/partialRight');
 
 var formatSort = require('../functions/formatSort');
 
@@ -580,10 +580,10 @@ SearchResults.prototype.getFacetValues = function(attribute, opts) {
   if (isArray(options.sortBy)) {
     var order = formatSort(options.sortBy);
     if (isArray(facetValues)) {
-      return sortByOrder(facetValues, order[0], order[1]);
+      return orderBy(facetValues, order[0], order[1]);
     }
     // If facetValues is not an array, it's an object thus a hierarchical facet object
-    return recSort(partialRight(sortByOrder, order[0], order[1]), facetValues);
+    return recSort(partialRight(orderBy, order[0], order[1]), facetValues);
   } else if (isFunction(options.sortBy)) {
     if (isArray(facetValues)) {
       return facetValues.sort(options.sortBy);

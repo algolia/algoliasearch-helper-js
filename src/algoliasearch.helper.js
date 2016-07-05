@@ -7,11 +7,11 @@ var requestBuilder = require('./requestBuilder');
 var util = require('util');
 var events = require('events');
 
-var forEach = require('lodash/collection/forEach');
-var map = require('lodash/collection/map');
-var bind = require('lodash/function/bind');
-var isEmpty = require('lodash/lang/isEmpty');
-var trim = require('lodash/string/trim');
+var forEach = require('lodash/forEach');
+var map = require('lodash/map');
+var bind = require('lodash/bind');
+var isEmpty = require('lodash/isEmpty');
+var trim = require('lodash/trim');
 
 var url = require('./url');
 
@@ -591,7 +591,7 @@ AlgoliaSearchHelper.prototype.setIndex = function(name) {
 };
 
 /**
- * Update a parameter of the search. This method reset the page 
+ * Update a parameter of the search. This method reset the page
  *
  * The complete list of parameters is available on the
  * [Algolia website](https://www.algolia.com/doc/rest#query-an-index).
@@ -753,9 +753,27 @@ AlgoliaSearchHelper.prototype.isRefined = function(facet, value) {
 };
 
 /**
- * Check if the attribute has any numeric, conjunctive, disjunctive or hierarchical refinements
+ * Check if an attribute has any numeric, conjunctive, disjunctive or hierarchical filters.
  * @param {string} attribute the name of the attribute
  * @return {boolean} true if the attribute is filtered by at least one value
+ * @example
+ * // hasRefinements works with numeric, conjunctive, disjunctive and hierarchical filters
+ * helper.hasRefinements('price'); // false
+ * helper.addNumericRefinement('price', '>', 100);
+ * helper.hasRefinements('price'); // true
+ *
+ * helper.hasRefinements('color'); // false
+ * helper.addFacetRefinement('color', 'blue');
+ * helper.hasRefinements('color'); // true
+ *
+ * helper.hasRefinements('material'); // false
+ * helper.addDisjunctiveFacetRefinement('material', 'plastic');
+ * helper.hasRefinements('material'); // true
+ *
+ * helper.hasRefinements('categories'); // false
+ * helper.toggleRefinement('categories', 'kitchen > knife');
+ * helper.hasRefinements('categories'); // true
+ *
  */
 AlgoliaSearchHelper.prototype.hasRefinements = function(attribute) {
   if (!isEmpty(this.state.getNumericRefinements(attribute))) {
@@ -794,7 +812,7 @@ AlgoliaSearchHelper.prototype.isDisjunctiveRefined = function(facet, value) {
 };
 
 /**
- * Check if the string is a currently filtering tag
+ * Check if the string is a currently filtering tag.
  * @param {string} tag tag to check
  * @return {boolean}
  */
@@ -865,10 +883,21 @@ AlgoliaSearchHelper.prototype.getQueryParameter = function(parameterName) {
 };
 
 /**
- * Get the list of refinements for a given attribute.
+ * Get the list of refinements for a given attribute. This method works with
+ * conjunctive, disjunctive, excluding and numerical filters.
+ *
  * @param {string} facetName attribute name used for facetting
  * @return {Refinement[]} All Refinement are objects that contain a value, and
  * a type. Numeric also contains an operator.
+ * @example
+ * helper.addNumericRefinement('price', '>', 100);
+ * helper.getRefinements('price');
+ * @example
+ * helper.addFacetRefinement('color', 'blue');
+ * helper.addFacetExclusion('color', 'red');
+ * helper.getRefinements('color');
+ * @example
+ * helper.addDisjunctiveFacetRefinement('material', 'plastic');
  */
 AlgoliaSearchHelper.prototype.getRefinements = function(facetName) {
   var refinements = [];

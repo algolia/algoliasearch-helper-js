@@ -44,7 +44,6 @@
       "dist/"
     ]
   },
-  "browser": {},
   "devDependencies": {
     "algoliasearch": "^3.13.0",
     "babel-core": "^6.10.4",
