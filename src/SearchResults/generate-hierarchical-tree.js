@@ -8,7 +8,7 @@ var reduce = require('lodash/reduce');
 var orderBy = require('lodash/orderBy');
 var trim = require('lodash/trim');
 var find = require('lodash/find');
-var pick = require('lodash/pick');
+var pickBy = require('lodash/pickBy');
 
 var prepareHierarchicalFacetSortBy = require('../functions/formatSort');
 
@@ -75,7 +75,7 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
 
       parent.data = orderBy(
         map(
-          pick(hierarchicalFacetResult.data, onlyMatchingValuesFn),
+          pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn),
           formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)
         ),
         sortBy[0], sortBy[1]

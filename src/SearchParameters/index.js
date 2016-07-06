@@ -420,9 +420,10 @@ function SearchParameters(newParameters) {
   this.offset = params.offset;
   this.length = params.length;
 
+  var self = this;
   forOwn(params, function checkForUnknownParameter(paramValue, paramName) {
     if (SearchParameters.PARAMETERS.indexOf(paramName) === -1) {
-      this[paramName] = paramValue;
+      self[paramName] = paramValue;
 
       var message =
         'Unknown SearchParameter: `' +
@@ -431,7 +432,7 @@ function SearchParameters(newParameters) {
 
       warnOnce(message);
     }
-  }, this);
+  });
 }
 
 /**
@@ -446,6 +447,9 @@ SearchParameters.PARAMETERS = keys(new SearchParameters());
  * @return {object} a new object with the number keys as number
  */
 SearchParameters._parseNumbers = function(partialState) {
+  // Do not reparse numbers in SearchParameters, they ought to be parsed already
+  if (partialState instanceof SearchParameters) return partialState;
+
   var numbers = {};
 
   var numberKeys = [
