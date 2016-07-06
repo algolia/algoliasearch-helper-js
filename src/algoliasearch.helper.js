@@ -209,7 +209,7 @@ AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
 };
 
 /**
- * Remove all the tag filtering
+ * Remove all the tag filters.
  *
  * This method resets the current page to 0.
  * @return {AlgoliaSearchHelper}
@@ -795,10 +795,23 @@ AlgoliaSearchHelper.prototype.hasRefinements = function(attribute) {
 };
 
 /**
- * Check the exclude state of a facet
- * @param  {string}  facet the facet
- * @param  {string}  value the associated value
+ * Check if a value is excluded for a specific facetted attribute. If the value
+ * is omitted then the function checks if there is any excluding refinements.
+ *
+ * @param  {string}  facet name of the attribute for used for facetting
+ * @param  {string}  [value] optionnal value. If passed will test that this value
+   * is filtering the given facet.
  * @return {boolean} true if refined
+ * @example
+ * helper.isExcludeRefined('color'); // false
+ * helper.isExcludeRefined('color', 'blue') // false
+ * helper.isExcludeRefined('color', 'red') // false
+ *
+ * helper.addFacetExclusion('color', 'red');
+ *
+ * helper.isExcludeRefined('color'); // true
+ * helper.isExcludeRefined('color', 'blue') // false
+ * helper.isExcludeRefined('color', 'red') // true
  */
 AlgoliaSearchHelper.prototype.isExcluded = function(facet, value) {
   return this.state.isExcludeRefined(facet, value);
@@ -857,8 +870,9 @@ AlgoliaSearchHelper.prototype.getCurrentPage = getCurrentPage;
 AlgoliaSearchHelper.prototype.getPage = getCurrentPage;
 
 /**
- * Get all the filtering tags
- * @return {string[]}
+ * Get all the tags currently set to filters the results.
+ *
+ * @return {string[]} The list of tags currently set.
  */
 AlgoliaSearchHelper.prototype.getTags = function() {
   return this.state.tagRefinements;
@@ -887,17 +901,42 @@ AlgoliaSearchHelper.prototype.getQueryParameter = function(parameterName) {
  * conjunctive, disjunctive, excluding and numerical filters.
  *
  * @param {string} facetName attribute name used for facetting
- * @return {Refinement[]} All Refinement are objects that contain a value, and
+ * @return {Array.<FacetRefinement|NumericRefinement>} All Refinement are objects that contain a value, and
  * a type. Numeric also contains an operator.
  * @example
  * helper.addNumericRefinement('price', '>', 100);
  * helper.getRefinements('price');
+ * // [
+ * //   {
+ * //     "value": [
+ * //       100
+ * //     ],
+ * //     "operator": ">",
+ * //     "type": "numeric"
+ * //   }
+ * // ]
  * @example
  * helper.addFacetRefinement('color', 'blue');
  * helper.addFacetExclusion('color', 'red');
  * helper.getRefinements('color');
+ * // [
+ * //   {
+ * //     "value": "blue",
+ * //     "type": "conjunctive"
+ * //   },
+ * //   {
+ * //     "value": "red",
+ * //     "type": "exclude"
+ * //   }
+ * // ]
  * @example
  * helper.addDisjunctiveFacetRefinement('material', 'plastic');
+ * // [
+ * //   {
+ * //     "value": "plastic",
+ * //     "type": "disjunctive"
+ * //   }
+ * // ]
  */
 AlgoliaSearchHelper.prototype.getRefinements = function(facetName) {
   var refinements = [];
@@ -1042,5 +1081,20 @@ AlgoliaSearchHelper.prototype._change = function() {
   this.emit('change', this.state, this.lastResults);
 };
 
+/**
+ * @typedef AlgoliaSearchHelper.NumericRefinement
+ * @type {object}
+ * @property {number[]} value the numbers that are used for filtering this attribute with
+ * the operator specified.
+ * @property {string} operator the facetting data: value, number of entries
+ * @property {string} type will be 'numeric'
+ */
+
+/**
+ * @typedef AlgoliaSearchHelper.FacetRefinement
+ * @type {object}
+ * @property {string} value the string use to filter the attribute
+ * @property {string} type the type of filter: 'conjunctive', 'disjunctive', 'exclude'
+ */
 
 module.exports = AlgoliaSearchHelper;

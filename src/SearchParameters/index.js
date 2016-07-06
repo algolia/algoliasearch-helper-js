@@ -1208,10 +1208,11 @@ SearchParameters.prototype = {
   },
   /**
    * Returns true if the facet contains exclusions or if a specific value is
-   * excluded
+   * excluded.
+   *
    * @method
    * @param {string} facet name of the attribute for used for facetting
-   * @param {string} value, optionnal value. If passed will test that this value
+   * @param {string} [value] optionnal value. If passed will test that this value
    * is filtering the given facet.
    * @return {boolean} returns true if refined
    */

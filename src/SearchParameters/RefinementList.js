@@ -117,7 +117,7 @@ var lib = {
    * given attribute.
    * @param {RefinementList} refinementList the list of refinement
    * @param {string} attribute name of the attribute
-   * @param {string} refinementValue value of the filter/refinement
+   * @param {string} [refinementValue] value of the filter/refinement
    * @return {boolean}
    */
   isRefined: function isRefined(refinementList, attribute, refinementValue) {

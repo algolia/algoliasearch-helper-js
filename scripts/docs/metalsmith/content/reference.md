@@ -160,6 +160,8 @@ The helper structures the way the data is sent and retrieved
 from the Algolia API. Here is the list of those common structure
 that you might encounter in the documentation.
 
+{{> jsdoc jsdoc/helper/FacetRefinement}}
+{{> jsdoc jsdoc/helper/NumericRefinement}}
 {{> jsdoc jsdoc/results/Facet}}
 {{> jsdoc jsdoc/results/HierarchicalFacet}}
 {{> jsdoc jsdoc/results/FacetValue}}
