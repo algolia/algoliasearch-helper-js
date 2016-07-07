@@ -9,15 +9,16 @@ title: Helper core concepts
 
 The search flow is the cycle between the UI and the search engine.
 When a user updates a parameter in the UI, a new search is triggered,
-and new results appear. But not only these results are updated, but
-also all the filters available should be too.
+and new results appear along with updated available filters.
 
 ![The search flow](images/concepts/The search cycle.svg)
 
 ### The UI source of truth
 
 The Helper stores and keeps track of the successive filters applied in
-your search UI. It is the source of truth for your search parameters. This
+your search UI. It's a snapshot of all the parameters of the current search state.
+
+It's also the source of truth for your search parameters. This
 makes all the UI components that you use independent from each other while
 still being able to trigger the search. For example, the text search input
 will only set the `query` whereas the category list will only deal with
@@ -33,7 +34,19 @@ Taking the first schema for reference, the updates look like that:
 
 ## Managed parameters
 
-Most of the parameters on the Algolia Rest API are simple, a string, a number.
+Idea:
+---
+We need to name drop some managed parameters and non managed parameters in this
+section. To me it was hard to follow because ultimately what we want to say that all
+filtering features of the Algolia Engine (numeric, facets) are string or array string based
+and thus needs to be managed to allow easy manipulation like add, remove, toggle filter
+removing the need for the user to handle it himself.
+
+We can even give an example of clicking a facet value in a list with and without the helper.
+---
+
+Most of the parameters on the Algolia Rest API are simple: you just
+provide a string(?), a number (hitsPerPage).
 But some are trickier and delivers great expressivity. And because it's a
 REST API, all those are string based. And when it comes to deal with that
 kind of parameters it's usually more convenient to work with objects and
@@ -46,8 +59,8 @@ input the string parameters, but this interface (that we call 'raw')
 is exclusive with the higher level one (that we call 'managed').
 
 This layer on top of the Algolia API even let us create features that don't
-exist in the normal API. We have created some features that rely on multiple
-queries based on the pattern we found over time.
+exist in the raw Algolia API. We have created some features that rely on multiple
+queries based on the pattern we found over time like disjunctive and hierarchical faceting.
 
 On and on, the overall idea of those managed API's is to make the usage of
 Algolia filters as easy as possible. Some are mainly adaptation of the API,
@@ -56,7 +69,7 @@ bring new features.
 
 ### Numerical filters
 
-The numerical filters brings the ability to manage constraints over numerical
+The numerical filters brings the ability to manage constraints (exact match, ranges) over numerical
 attributes. For each attribute, you can combine sets of constraints. Those
 filters for any numerical data, but also with dates if converted to timestamps
 in the records.
@@ -99,20 +112,33 @@ will be created.
 The hierarchical facets extends the concepts used in the disjunctive facetting
 in order to be able to organize the values in a tree like fashion.
 
+Idea:
+---
+Provide a simple text based menu like
+```
+- Products (200)
+  - fruits (100)
+    - citrus
+  - electronic (100)
+```
+---
+
 When using the same high-tech e-shop example (see the previous paragraph about
 [disjunctive facetting](#disjunctive-facetting)), we can imagine that TV and video
 projectors are organized in a higher category called video hardware.
 
-The structure inside the record should contain all the variations per level. For a
+Since this is a feature built on top of the Algolia API, we expect the dataset
+to follow a hierachical notation (configurable).
+
+By default, the structure inside the record should contain all the variations per level. For a
 product in the TV category, the record will have a `lvl1` attribute that will contain
 `video hardware` and a `lvl2` that will contain `video hardware > TV`. With the
 hierarchicalf feature, you can facet values per level and you will be provided the correct
 hierarchy of facet values.
 
-## Special capabilities
+## API style
 
-What makes the special sauce of the Helper is a conjunction of patterns and
-smart tricks to help you make the best search UI.
+The helper is event based and is a chainable API much like jQuery.
 
 ### Event based
 
@@ -145,6 +171,12 @@ helper.setQuery('tv')
 ```
 
 ### Smart page behaviour
+
+---
+link to the issue
+https://github.com/algolia/algoliasearch-helper-js/issues/121
+:troll:
+---
 
 In a search engine, the most relevant results are always on the first page.
 And each new set of parameters sent to Algolia will return a new set of
