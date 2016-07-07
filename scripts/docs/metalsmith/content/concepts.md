@@ -31,12 +31,39 @@ Taking the first schema for reference, the updates look like that:
 
 ![Setting parameters](images/concepts/Setting Parameters.svg)
 
-## Advanced facetting
+## Managed parameters
 
-Algolia is by itself very flexible and fast. That speed let us implement
-advanced search features using a combination of requests with a merging
-strategy. Those advanced advanced features are directly available in the
-helper.
+Most of the parameters on the Algolia Rest API are simple, a string, a number.
+But some are trickier and delivers great expressivity. And because it's a
+REST API, all those are string based. And when it comes to deal with that
+kind of parameters it's usually more convenient to work with objects and
+methods rather than edit the strings.
+
+That's why several our filtering API when using the Helper is presented
+with methods on the Helper instance that will let you edit those filters
+rather than input the strings themselves. We still keep the ability to
+input the string parameters, but this interface (that we call 'raw')
+is exclusive with the higher level one (that we call 'managed').
+
+This layer on top of the Algolia API even let us create features that don't
+exist in the normal API. We have created some features that rely on multiple
+queries based on the pattern we found over time.
+
+On and on, the overall idea of those managed API's is to make the usage of
+Algolia filters as easy as possible. Some are mainly adaptation of the API,
+like Numerical, Facets and Excluding Facets, but others are more complex and
+bring new features.
+
+### Numerical filters
+
+The numerical filters brings the ability to manage constraints over numerical
+attributes. For each attribute, you can combine sets of constraints. Those
+filters for any numerical data, but also with dates if converted to timestamps
+in the records.
+
+### Conjunctive and excluding facets
+
+TODO
 
 ### Disjunctive facetting
 
