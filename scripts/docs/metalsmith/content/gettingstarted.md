@@ -48,9 +48,9 @@ In an NPM project, include the project with this command:
 
 ## First search
 
-For this example, we are going to use jQuery but the Helper can be used with any JS library / framework.
+For this example, we are going to use jQuery but the Helper can be used with any JS library/framework.
 
-The first step toward searching in your index, is to initialize the client and provide it to the helper factory.
+The first step toward searching in your index is to initialize the client and provide it to the helper factory.
 
 ```javascript
 /* if you use NPM, you also need to add the correct requirements
@@ -74,9 +74,9 @@ function renderHits(content) {
 }
 ```
 
-At this point, we have no results, yet. It's because we didn't trigger any search.
-For now, we will do an *empty search* on your $index. This will return the results
-ordered according to the *custom ranking*. Let's see, how to trigger the search:
+At this point, we have no results yet. It's because we didn't trigger any search.
+For now, we will do an *empty search* on your index. This will return the results
+ordered according to the *custom ranking*. Let's see how to trigger the search:
 
 ```javascript
 helper.search();
@@ -89,7 +89,7 @@ the first records ordered by the *custom ranking*.
 See this step [live on jsFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/0a8e77b2fd0694046e986e0138feb697/).
 
 You now know:
- - how to instanciate the helper
+ - how to instantiate the helper
  - listen to the `result` event and read the results from Algolia
  - trigger a search to algolia
 
@@ -100,7 +100,7 @@ is not what our users are looking for. They want to search in your data. Let's
 see how to add a search input to let our users do a textual search in the data.
 
 Before going further, let's customize a little bit the display of our results.
-We're going to focus on the actual results / records computed by Algolia. The
+We're going to focus on the actual results/records computed by Algolia. The
 records are returned in the `hits` attribute of the `content`. Let's display
 only the `name` of each product for now.
 
@@ -189,7 +189,7 @@ var helper = algoliasearchHelper(client, index, {
 The list of available facets is returned by the Algolia API. This list is dynamic
 and should be updated at each new results. So that's why we render this list each
 time we receive new results. This list also let our user select a value, so we should
-also make it so it's possible using jQuery.
+also make it so that it's possible using jQuery.
 
 ```javascript
 $('#facet-list').on('click', function(e) {
@@ -214,8 +214,8 @@ function renderFacetList(content) {
 }
 ```
 
-The methode `getFacetValues` returns the list of values usable to filter
-an attribute. The objet returned by this method contains three properties: 
+The method `getFacetValues` returns the list of values usable to filter
+an attribute. The object returned by this method contains three properties: 
 
  - `name`: the value of the facet
  - `count`: the number of items in the whole results
