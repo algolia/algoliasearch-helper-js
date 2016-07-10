@@ -26,17 +26,23 @@ var src = {
   stylesheets: path.join(__dirname, './metalsmith/stylesheets/**/*.scss'),
   content: path.join(__dirname, './metalsmith/content'),
   layouts: path.join(__dirname, './metalsmith/layouts'),
-  partials: path.join(__dirname, './metalsmith/partials')
+  partials: path.join(__dirname, './metalsmith/partials'),
+  js: path.join(__dirname, './metalsmith/js/main.js')
 };
 
+var projectRoot = path.join(__dirname, '..');
+var documentationRoot = path.join(projectRoot, 'documentation');
+var jsRoot = path.join(documentationRoot, 'js');
+var cssRoot = path.join(documentationRoot, 'css');
+
 function makeMetalsmithBuilder() {
-  var project = require('../../package.json');
-  var builder = metalsmith(path.join(__dirname, '../..'));
+  var project = require('../package.json');
+  var builder = metalsmith(projectRoot);
   return builder.metadata({pkg: project})
                 .ignore('.*')
                 .clean(false)
                 .source(src.content)
-                .destination('documentation')
+                .destination(documentationRoot)
                 .use(jsdoc({
                   src: 'src/algoliasearch.helper.js',
                   namespace: 'helper'
@@ -55,7 +61,7 @@ function makeMetalsmithBuilder() {
                 }))
                 .use(inPlace({
                   engine: 'handlebars',
-                  partials: 'scripts/docs/metalsmith/partials',
+                  partials: 'documentation-src/metalsmith/partials',
                   exposeConsolidate: registerHandleBarHelpers
                 }))
                 .use(metallic())
@@ -69,8 +75,11 @@ function makeMetalsmithBuilder() {
                 }));
 }
 gulp.task('doc:content', function(cb) {
-  makeMetalsmithBuilder().build(cb);
+  makeMetalsmithBuilder().build(function(err) {
+    cb(err);
+  });
 });
+
 gulp.task('doc:content:watch', function(cb) {
   makeMetalsmithBuilder().build(function(err, data) {
     forEach(data, (o, filename) => {
@@ -85,7 +94,7 @@ gulp.task('doc:content:watch', function(cb) {
 function gulpStyle() {
   return gulp.src(src.stylesheets)
              .pipe(sass().on('error', sass.logError))
-             .pipe(gulp.dest(path.join(__dirname, '../../documentation/css')));
+             .pipe(gulp.dest(cssRoot));
 }
 gulp.task('doc:style', gulpStyle);
 gulp.task('doc:style:watch', function() {
@@ -93,27 +102,37 @@ gulp.task('doc:style:watch', function() {
 });
 
 gulp.task('doc:js', function() {
-  return gulp.src(path.join(__dirname, './metalsmith/js/main.js'))
+  return gulp.src(src.js)
              .pipe(webpack(webpackConfig))
-             .pipe(gulp.dest('../../documentation/js'));
+             .pipe(gulp.dest(jsRoot));
 });
 
-gulp.task('doc:all:watch', ['doc:content'], function() {
+gulp.task('doc:js:watch', function() {
+  var configWithWatch = Object.assign({}, webpackConfig, {
+    watch: true,
+    devtool: 'eval-source-map'
+  });
+  return gulp.src(src.js)
+             .pipe(webpack(configWithWatch))
+             .pipe(gulp.dest(jsRoot));
+});
+
+gulp.task('doc:all:watch', ['doc:content', 'doc:js', 'doc:style'], function() {
   livereload.listen();
   gulp.watch(src.stylesheets, ['doc:style:watch']);
   gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
   gulp.watch(src.partials + '/**/*.hbs', ['doc:content:watch']);
   gulp.watch(src.layouts + '/**/*.jade', ['doc:content:watch']);
   gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
-  gulp.watch('../../src/**/*.js', ['doc:content:watch']);
-  gulp.watch('./metalsmith/**/*.js', ['doc:js']);
+  gulp.watch('../src/**/*.js', ['doc:content:watch']);
+  gulp.watch(src.js, ['doc:js']);
 });
 
 gulp.task('doc:server', function(done) {
   http.createServer(
-    st({path: path.join(__dirname, '../../documentation'), index: 'index.html', cache: false})
+    st({path: documentationRoot, index: 'index.html', cache: false})
   ).listen(8083, done);
 });
 
-gulp.task('doc:watch', ['doc:server', 'doc:all:watch']);
+gulp.task('doc:watch', ['doc:content', 'doc:js', 'doc:style', 'doc:server', 'doc:all:watch']);
 gulp.task('doc', ['doc:content', 'doc:style', 'doc:js']);

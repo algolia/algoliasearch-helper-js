@@ -12,9 +12,8 @@
     "lint:watch": "onchange 'src/**/*js' 'index.js' 'test/**/*js' '.eslintrc' -- npm run -s lint",
     "open": "sleep 1 && opn http://localhost:8080/examples",
     "examples": "npm run build & npm run open & http-server .",
-    "doc": "gulp --gulpfile scripts/docs/build.js doc",
-    "doc:jsdoc": "jsdoc -r src index.js -d docs -c .jsdoc --readme README.md",
-    "doc:watch": "gulp --gulpfile scripts/docs/build.js doc:watch",
+    "doc": "gulp --gulpfile documentation-src/build.gulp.js doc",
+    "doc:watch": "gulp --gulpfile documentation-src/build.gulp.js doc:watch",
     "doc:publish": "gh-pages-deploy",
     "readme:toc": "doctoc --notitle README.md --maxlevel 3",
     "test-ci": "scripts/test-ci.sh",
@@ -25,6 +24,7 @@
     "shrinkwrap": "npm-shrinkwrap --dev"
   },
   "gh-pages-deploy": {
+    "staticpath": "documentation",
     "prep": [
       "doc"
     ],
@@ -70,7 +70,6 @@
     "handlebars": "^4.0.5",
     "http-server": "^0.9.0",
     "jade": "^1.11.0",
-    "jsdoc": "bobylito/jsdoc#aecd558f1cd2640bea5348322839b7730165f530",
     "jsdoc-parse": "^1.2.7",
     "jsdoc-to-markdown": "^1.3.6",
     "metalsmith": "^2.1.0",
@@ -86,7 +85,6 @@
     "metalsmith-serve": "0.0.7",
     "metalsmith-watch": "^1.0.3",
     "metalsmith-webpack": "^1.0.3",
-    "minami": "algolia/minami#81c8243b73ed5224dc3ce9fd79aab8bbf8da0488",
     "mkdirp": "^0.5.1",
     "mversion": "^1.10.1",
     "npm-shrinkwrap": "^200.4.0",
