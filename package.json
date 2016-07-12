@@ -20,8 +20,7 @@
     "test": "scripts/test.sh",
     "test-node": "clear && node test/run",
     "test:watch": "onchange '{src,test}/**/*.js' 'index.js' -- npm run test-node",
-    "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release.js && npm run build",
-    "shrinkwrap": "npm-shrinkwrap --dev"
+    "release": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release.js && npm run build"
   },
   "gh-pages-deploy": {
     "staticpath": "documentation",
