@@ -33,20 +33,28 @@ Taking the first schema for reference, the updates look like that:
 
 ## Managed parameters
 
-Most of the parameters on the Algolia Rest API are simple, a string, a number.
-But some are trickier and delivers great expressivity. And because it's a
-REST API, all those are string based. And when it comes to deal with that
-kind of parameters it's usually more convenient to work with objects and
-methods rather than edit the strings.
+Most of the parameters on the Algolia Rest API are simple, strings (eg. `query`
+which is the fulltext input of the search), numbers (eg. `hitsPerPage` which
+configures the numbers of records returned per response). But some are trickier
+and delivers great expressivity. For example, you can specify ranges of values
+for numerical attributes. You can also define facets on string based attributes,
+which let you filter on specific values.
 
-That's why several our filtering API when using the Helper is presented
-with methods on the Helper instance that will let you edit those filters
-rather than input the strings themselves. We still keep the ability to
-input the string parameters, but this interface (that we call 'raw')
-is exclusive with the higher level one (that we call 'managed').
+Managing those kind of parameters is hard in a UI context because you need:
+
+ - to know the current state
+ - to manipulate specifically the part, the UI component is responsible for
+
+And of course, you don't want to manipulate a deep structure of arrays and
+objects by hand.
+
+That's why the filtering APIs are presented as methods on the Helper instance.
+These methods let you edit those filters rather than input the strings themselves.
+We still keep the ability to input the string parameters, but this interface
+(that we call **raw**) is exclusive with the higher level one (that we call **managed**)
 
 This layer on top of the Algolia API even let us create features that don't
-exist in the normal API. We have created some features that rely on multiple
+exist in the Rest API. We have created some features that rely on multiple
 queries based on the pattern we found over time.
 
 On and on, the overall idea of those managed API's is to make the usage of
@@ -63,7 +71,30 @@ in the records.
 
 ### Conjunctive and excluding facets
 
-TODO
+With facets, you can filter in or out the results based on the values that an
+attribute can take. Let's take an example: 
+
+```js
+[
+  { name: 'Paris',
+    type: ['city', 'capital'] },
+  { name: 'Marseille',
+    type: ['city'] },
+  { name: 'London',
+    type: ['city', 'capital']}
+]
+```
+
+These three records represent cities. If we facet `type`, Algolia will
+return the list of available values (city, capital) and will let us
+filter using those values.
+
+With conjunctive facets you express that you want two or more values
+combined with AND. With excluding facets, you express that you **DO NOT**
+want values.
+
+These facets need to be declared so that the values can be retrieved and
+then filtered through the UI ([see the configuration](reference.html#conjunctive-facets)).
 
 ### Disjunctive facetting
 
@@ -94,6 +125,9 @@ will be created.
 
 ![disjunctive facets](images/concepts/disjunctive facets.svg)
 
+These facets need to be declared so that the values can be retrieved and
+then filtered through the UI ([see the configuration](reference.html#disjunctive-facets)).
+
 ### Hierarchical facetting
 
 The hierarchical facets extends the concepts used in the disjunctive facetting
@@ -109,10 +143,25 @@ product in the TV category, the record will have a `lvl1` attribute that will co
 hierarchicalf feature, you can facet values per level and you will be provided the correct
 hierarchy of facet values.
 
+```markdown
+ - Video hardware
+   - TV
+   - DVR
+ - Kitchen
+```
+
+Since this is a feature built on top of the Algolia API, we expect the dataset to
+follow a hierachical notation ([see the configuration](reference.html#hierarchical-facets)).
+
 ## Special capabilities
 
 What makes the special sauce of the Helper is a conjunction of patterns and
-smart tricks to help you make the best search UI.
+smart tricks to help you make the best search UI:
+
+ - chainable API
+ - event-based
+ - immutable model
+ - smart page handling
 
 ### Event based
 

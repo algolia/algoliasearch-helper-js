@@ -3,22 +3,56 @@ layout: documentation.jade
 title: Getting started with the helper
 ---
 
-## Requirements
+## Before we start
 
-You need an Algolia account and your search credentials:
- - Application ID (referred later as `applicationID`)
- - Search API key (referred later as `apiKey`)
+The Helper has been made to create search-based applications. It will
+help you structure the search of your app with a rock solid
+foundation, and enhance it with advanced search features. Compared
+to the JS client, the Helper is focused on providing search only
+features, and provides an higher level API which will give you an
+easy access to advanced search filters.
 
-If you don't have one, you can create a new account for free on [algolia.com](https://www.algolia.com/users/sign_up).
+This **getting started** will show you how to:
 
-You also need an index filled with data. Keep the index name `index` as we will use it in the rest of the *getting started*.
+ - integrate the helper in a webpage
+ - build a complete search-as-you-type experience without a JS framework
+ - use advanced Algolia filtering
+ - build the according UI
 
-For the purpose of this tutorial, we'll use our ecommerce dataset:
- - applicationID: `latency`
- - apiKey: `249078a3d4337a8231f1665ec5a44966`
- - index: `bestbuy`
+The getting started will use jQuery for the sake of simplicity. However,
+the Helper is agnostic and can also be used with other frameworks or
+libraries.
 
-Feel free to tag along with your own data and adapt the steps to your use case. For now, let's see how to integrate the helper with your application / website.
+In order to follow this tutorial you need to have access to an Algolia index.
+The easiest way to follow this tutorial is by using the provided
+credentials, using our ecommerce dataset. You can also adapt it to
+your own dataset.
+
+### Using the provided dataset
+
+For the purpose of this tutorial, we'll use our ecommerce dataset. For further
+reference, here are the credentials that we're going to use:
+
+ - `applicationID`: `latency`
+ - `apiKey`: `249078a3d4337a8231f1665ec5a44966`
+ - `index`: `bestbuy`
+
+[Let's get started](#integrate)
+
+### Using your dataset
+
+You need an [Algolia account](https://www.algolia.com/users/sign_up). You also need
+to [upload a dataset](https://www.algolia.com/doc/indexing/import-synchronize-data/javascript#importing-data)
+and your [search credentials](https://www.algolia.com/api-keys). Here are
+the elements you need for the rest of the tutorial:
+
+ - the application ID (referred later as `applicationID`)
+ - the search API key (referred later as `apiKey`)
+ - the index name (referred later as `index`)
+
+You can still use the [provided Algolia index](#using-the-provided-dataset),
+if you prefer. Otherwise, let's proceed with the setup of the library
+in the application.
 
 ## Integrate 
 
@@ -47,8 +81,6 @@ In an NPM project, include the project with this command:
 `npm install --save algoliasearch-client algoliasearch-helper`
 
 ## First search
-
-For this example, we are going to use jQuery but the Helper can be used with any JS library/framework.
 
 The first step toward searching in your index is to initialize the client and provide it to the helper factory.
 
