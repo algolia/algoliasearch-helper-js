@@ -27,6 +27,48 @@ html
     link(rel='stylesheet', href='css/index.css')
   body(class=page_classes)
     include ./common/header.jade
-    .container
-      | !{contents}
+    section.hero-section.shrink
+      .container
+        .hero-container
+          .fl-left
+            a(href='https://www.algolia.com/?utm_medium=social-owned&utm_source=places%20website&utm_campaign=homepage', title='Algolia built this')
+              span#icon-algolia.icon.icon-algolia-small.no-mobile
+            span.display-on-small.small-illustration
+              img(src='images/svg/places-illustration-65745839.svg')
+            h1= title
+            h3= subtitle
+    section
+      .container
+        div
+          h2.title Build instant-search experiences your way!
+          p
+            | Algolia Helper provides rock solid foundations for making your own instantsearch UX with your tools.
+          p
+            | Used by 
+            a(href='https://community.algolia.com/instantsearch.js') instantsearch.js
+            | , its architecture lets you create advanced search
+            | with the speed of Algolia.
+          a.btn.btn-cta(href='gettingstarted.html') Get Started
+    hr
+    section.oddbg
+      .container
+        div
+          h2.title The right architecture for the right search experience
+          p
+            | The helper proposes a way to structure your search, so you can spent time on your users search
+          ul
+            li Parameters tracking - the helper is the search source of truth
+            li Event based - read and write operations can be decoupled
+            li High level features - easy access to advanced facetting techniques and more
+            li And more - smart behaviours, chainability...
+          a.btn.btn-cta(href='concepts.html') Learn more about the concepts
+    hr
+    section
+      .container
+        div
+          h2.title The helper is any-framework friendly
+          p
+            | The Algoliasearch Helper is first and foremost an agnostic library. It plays well
+            | with the big players in town, and we will always make sure that it is usable with your
+            | champion.
     include ./common/footer.jade

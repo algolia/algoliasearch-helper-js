@@ -1,6 +1,9 @@
 ---
 layout: main.jade
-title: algoliasearch - helper
+title: Algoliasearch Helper
+subtitle: The toolbox for creating instant-search experiences
 ---
-# Algolia JS Helper
 
+Don't sweat, the content of this file won't be read.
+
+It needs to be there so that we can render the layout.

@@ -9,7 +9,7 @@ title: Helper core concepts
 
 The search flow is the cycle between the UI and the search engine.
 When a user updates a parameter in the UI, a new search is triggered,
-and new results appear. But not only these results are updated, but
+and new results appear. Not only these results are updated, but
 also all the filters available should be too.
 
 ![The search flow](images/concepts/The search cycle.svg)
@@ -53,7 +53,7 @@ These methods let you edit those filters rather than input the strings themselve
 We still keep the ability to input the string parameters, but this interface
 (that we call **raw**) is exclusive with the higher level one (that we call **managed**)
 
-This layer on top of the Algolia API even let us create features that don't
+This layer on top of the Algolia API even lets us create features that don't
 exist in the Rest API. We have created some features that rely on multiple
 queries based on the pattern we found over time.
 
