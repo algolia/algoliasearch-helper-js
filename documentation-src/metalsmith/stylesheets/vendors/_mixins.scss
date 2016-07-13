@@ -104,14 +104,14 @@
 }
 
 %active-links {
-  color: $red-pink;
-  box-shadow: inset -2px 0 0 0 $red-pink;
+  color: $accent-color;
+  box-shadow: inset -2px 0 0 0 $accent-color;
 
   @include small-mq {
     font-weight: bold;
     box-shadow: none;
     color: #fff;
-    border-bottom: 2px solid $red-pink;
+    border-bottom: 2px solid $accent-color;
 
   }
 }

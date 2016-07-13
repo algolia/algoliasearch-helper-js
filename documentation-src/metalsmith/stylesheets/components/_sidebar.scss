@@ -26,13 +26,10 @@ nav.sidebar {
 
     li {
       width: 100%;
-      display: block;
-      height: 32px;
       line-height: 32px;
 
       &.level-h2 {}
       &.level-h3 {
-        height: 24px;
         line-height: 24px;
         font-size: 12px;
       }
@@ -41,7 +38,6 @@ nav.sidebar {
         text-decoration: none;
         display: block;
         width: 100%;
-        height: 100%;
         color: $charcoal-grey-75;
         font-weight: 400;
 

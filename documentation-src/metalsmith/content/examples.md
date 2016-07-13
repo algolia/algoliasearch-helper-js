@@ -16,7 +16,7 @@ This first sample shows you how to implement a search displaying results
 and how to make use of the highlighting provided by Algolia to display
 insights about the results to your users.
 
-{{#codepen "JKyQxx"}}{{/codepen}}
+{{{codepen "JKyQxx"}}}
 
 ### Facet list
 

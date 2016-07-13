@@ -1,7 +1,7 @@
 .btn {
-  background: $darkish-pink;
+  background: $accent-color-darkish;
   color: #fff;
-  border: 1px solid $red-pink;
+  border: 1px solid $accent-color;
   height: 40px;
   max-width: 140px;
   line-height: 40px;
@@ -19,7 +19,7 @@
 
   &:hover,
   &:active {
-    background: $red-pink
+    background: $accent-color
   }
 
   &.btn-cta {
@@ -63,11 +63,11 @@
     }
 
     &-pink {
-      color:  $red-pink;
+      color:  $accent-color;
 
       &:hover {
-        background: $red-pink;
-        border-color: $red-pink;
+        background: $accent-color;
+        border-color: $accent-color;
         color: #fff;
       }
     }

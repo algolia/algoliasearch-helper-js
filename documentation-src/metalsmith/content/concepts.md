@@ -96,9 +96,9 @@ want values.
 These facets need to be declared so that the values can be retrieved and
 then filtered through the UI ([see the configuration](reference.html#conjunctive-facets)).
 
-### Disjunctive facetting
+### Disjunctive faceting
 
-With Algolia you can retrieve for each facetted attribute the most used
+With Algolia you can retrieve for each faceted attribute the most used
 values in your results. This means that if a value is not in your
 results, you won't be aware of its existence. This can be inconvenient when
 you want your user to be able to select many values and combine them with an OR
@@ -116,7 +116,7 @@ category will only be TV.
 The purpose of the disjunctive facets is to be able to search further than
 a single facet filter. To do that, the helper implements a second request that
 will be specifically tailored to retrieve the other facet values possible for
-a specific facetted attribute.
+a specific faceted attribute.
 
 Going back to our example, the first request retrieves the results and a second
 one will retrieve the values for the category attribute. When the results come
@@ -128,19 +128,19 @@ will be created.
 These facets need to be declared so that the values can be retrieved and
 then filtered through the UI ([see the configuration](reference.html#disjunctive-facets)).
 
-### Hierarchical facetting
+### Hierarchical faceting
 
-The hierarchical facets extends the concepts used in the disjunctive facetting
+The hierarchical facets extends the concepts used in the disjunctive faceting
 in order to be able to organize the values in a tree like fashion.
 
 When using the same high-tech e-shop example (see the previous paragraph about
-[disjunctive facetting](#disjunctive-facetting)), we can imagine that TV and video
+[disjunctive faceting](#disjunctive-faceting)), we can imagine that TV and video
 projectors are organized in a higher category called video hardware.
 
 The structure inside the record should contain all the variations per level. For a
 product in the TV category, the record will have a `lvl1` attribute that will contain
 `video hardware` and a `lvl2` that will contain `video hardware > TV`. With the
-hierarchicalf feature, you can facet values per level and you will be provided the correct
+hierarchical feature, you can facet values per level and you will be provided the correct
 hierarchy of facet values.
 
 ```markdown
@@ -193,6 +193,30 @@ helper.setQuery('tv')
       .search();
 ```
 
+### Immutability of the search parameters
+
+An immutable object is an object which values cannot be modified after it is
+created. For example, in Javascript strings are immutable. This means that
+you can't direclty change the value and each write operation will return a new
+object.
+
+Inside the Helper, we use an immutable object to store the search parameters. The
+Helper write and read methods are proxies to the search parameters object.
+
+For example, when the setQuery method is called it is forwarded to the search
+parameters. This will create a new instance of the search parameters, which
+will replace the `state` property of the helper, and finally the helper will
+emit the `change` event.
+
+The immutability of the search parameters has some interesting usage:
+
+ - each search parameter is stored when the request is sent to Algolia, and
+provided back when the `result` event is fired.
+ - if we want to create urls with different parameters, we can reuse the search
+parameters object and its api to create new states that we can serialize.
+
+![Search states](images/concepts/State is immutable.svg)
+
 ### Smart page behaviour
 
 In a search engine, the most relevant results are always on the first page.
@@ -218,26 +242,18 @@ helper.toggleTag(tag)
 To avoid this kind of repetition, all the write methods will set the page to 0 with
 the exception of `setPage`.
 
-### Immutability of the search parameters
+## Final words and where to go next
 
-An immutable object is an object which values cannot be modified after it is
-created. For example, in Javascript strings are immutable. This means that
-you can't direclty change the value and each write operation will return a new
-object.
+Congratulations for reading our high level presentation of the Helper. We hope that
+you have now a better understanding of what makes the Helper very useful when building
+instantsearch UI's.
 
-Inside the Helper, we use an immutable object to store the search parameters. The
-Helper write and read methods are proxies to the search parameters object.
+If you haven't already, we suggest that you have a look at the
+[getting started](gettingstarted.html) to quickly start your very own search. If you
+are more interested in going in-depth the helper, be sure to check out:
 
-For example, when the setQuery method is called it is forwarded to the search
-parameters. This will create a new instance of the search parameters, which
-will replace the `state` property of the helper, and finally the helper will
-emit the `change` event.
+ - [The reference API](reference.html)
+ - [The examples](examples.html)
 
-The immutability of the search parameters has some interesting usage:
-
- - each search parameters is stored when the request is sent to Algolia, and
-provided back when the `result` event is fired.
- - if we want to create urls with different parameters, we can reuse the search
-parameters object and its api to create new states that we can serialize.
-
-![Search states](images/concepts/State is immutable.svg)
+If after all, you think that you need a more comprehensive and widget-based library,
+we made [instantsearch.js](https://community.algolia.com/instantsearch.js/) for that.

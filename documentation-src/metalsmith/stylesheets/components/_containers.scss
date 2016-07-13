@@ -33,7 +33,7 @@ section {
   }
 
   &.hero-section {
-    background: $denim-blue;
+    background: $hero-color;
     color: #fff;
     padding-top: $navigation-height*1.5;
 
@@ -81,7 +81,7 @@ section {
 
     h3 {
       font-size: 20px;
-      color: $powder-blue;
+      color: $pale-grey;
       font-weight: 400;
       padding: 8px 0;
     }

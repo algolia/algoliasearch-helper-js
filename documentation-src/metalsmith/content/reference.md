@@ -118,7 +118,7 @@ Most of the searches will be done using the first method.
 The SearchResults is the interface to read the results received from
 Algolia search API. Most of the data is accessible directly through
 properties. The exception being the data used for the features that
-are implemented on top of Algolia API such as facetting.
+are implemented on top of Algolia API such as faceting.
 
 ### Results
 

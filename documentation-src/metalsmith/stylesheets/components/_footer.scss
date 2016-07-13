@@ -85,7 +85,7 @@
 
   .ac-footer-link-item {
     font-size: 12px;
-    color: $red-pink;
+    color: $accent-color;
     font-weight: 400;
     margin-left: $margin;
     text-decoration: none;
@@ -203,7 +203,7 @@
     color:  $red-pink;
 
     &:hover {
-      background: $red-pink;
+      background: $darkish-pink;
       border-color: $red-pink;
       color: #FFFFFF;
     }
@@ -280,11 +280,9 @@
     box-shadow: 0 0 0 0 rgba($red-pink, .4);
   }
   70% {
-
     box-shadow: 0 0 0 30px rgba($red-pink, 0);
   }
   100% {
-
     box-shadow: 0 0 0 0 rgba($red-pink, 0);
   }
 }

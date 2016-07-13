@@ -24,8 +24,8 @@ $offset-height: $navigation-height + 20;
 =====================*/
 
 $denim-blue: #3a5395;
-$darkish-pink: #e7486b;
 $red-pink: #fb366e;
+$darkish-pink: #e7486b;
 $charcoal-grey: #4a4a4c;
 $charcoal-grey-75: rgba(74, 74, 76, 0.75);
 $greyish-brown: #4a4a4a;
@@ -86,7 +86,6 @@ $navigation-height: 50px;
 $margin: 16px;
 
 // Colors
-$red-pink: #fb366e;
 $steel: #788795;
 $black: #0a1724;
 $white-75: rgba(white, 0.75);
@@ -102,5 +101,7 @@ $font-code: 'inconsolata', monospace;
 
 $hero-color: #484748;
 $accent-color: #47EBC1;
+$accent-color-darkish: #19e6b3;
+$bg-pale-accent: #f7fcf8;
 
 $border: $silver;

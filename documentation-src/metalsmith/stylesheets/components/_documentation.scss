@@ -95,6 +95,12 @@
     white-space: nowrap;
   }
 
+  .chapter-summary {
+    background: $bg-pale-accent;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
   .documentation-container {
     float: left;
     position: relative;
@@ -246,7 +252,7 @@
 
     h2, h3, .api-entry {
       .anchor {
-        color: $red-pink;
+        color: $accent-color;
         text-decoration: none;
       }
 

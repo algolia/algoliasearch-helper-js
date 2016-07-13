@@ -118,12 +118,16 @@ The `search` method of the helper triggers the search with the current parameter
 saved in the helper. For the moment we have none, therefore the results contains
 the first records ordered by the *custom ranking*.
 
-See this step [live on jsFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/0a8e77b2fd0694046e986e0138feb697/).
+{{{codepen "AXbmEX" 300}}}
 
+<div class='chapter-summary'>
+{{#md}}
 You now know:
- - how to instantiate the helper
- - listen to the `result` event and read the results from Algolia
- - trigger a search to algolia
+ - how to **instantiate** the helper
+ - **listen** to the `result` event and **read the results** from Algolia
+ - **trigger a search** to algolia
+{{/md}}
+</div>
 
 ## Setting the query
 
@@ -191,13 +195,17 @@ function renderHits(content) {
 The object `_highlightResult` contains the all the attributes that may be highlighted
 (by default, all the searchable attributes).
 
-See this part [live in action on JSFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/80e20fcda7f3894ade08eb2c3759516b/).
+{{{codepen "VjAVjX" 300}}}
 
+<div class='chapter-summary'>
+{{#md}}
 In this part, we have seen:
- - how to set the query of the search
- - how to trigger the search
- - how to display highlighting to help our users
+ - how to **set the query** of the search
+ - how to **trigger the search**
+ - how to **display highlighting** to help our users
  - how to plug all these to make an interactive search
+{{/md}}
+</div>
 
 ## Adding facets
 
@@ -276,13 +284,17 @@ kind of filtering that you can apply with the helper. You can also do:
  - numerical filtering
  - tag filtering
 
-See this sample [live on jsFiddle](http://jsfiddle.net/gh/gist/jquery/2.2.4/76884d7261e6cc06d0d23b1bd0a11c96/).
+{{{codepen "ZOamyB" 300}}}
 
+<div class='chapter-summary'>
+{{#md}}
 In this part, we have seen:
 
- - how to declare a facet in the configuration of the helper
- - how to display the facet values computed by the API
- - how to refine a facet
+ - how to **declare a facet** in the configuration of the helper
+ - how to **display the facet values** computed by the API
+ - how to **refine a facet**
+{{/md}}
+</div>
 
 ## Going further
 

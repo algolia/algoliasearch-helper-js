@@ -49,8 +49,9 @@ module.exports = function(requires) {
     return options.fn(this).split(':')[1];
   });
 
-  Handlebars.registerHelper('codepen', function(hash) {
-    var copedenContent = '<p data-height="790" style="height:790px" data-theme-id="light" data-slug-hash="' + hash + '" data-default-tab="result" data-user="Algolia" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/Algolia/pen/JKyQxx/">Results with highlighting and no results message.</a> by Algolia (<a href="http://codepen.io/Algolia">@Algolia</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
+  Handlebars.registerHelper('codepen', function(hash, height) {
+    var h = typeof height === 'number' ? height : 790;
+    var copedenContent = '<p data-height="' + h + '" style="' + h + 'px" data-theme-id="light" data-slug-hash="' + hash + '" data-default-tab="result" data-user="Algolia" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/Algolia/pen/JKyQxx/">Results with highlighting and no results message.</a> by Algolia (<a href="http://codepen.io/Algolia">@Algolia</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
     var downloadLink = '<a href=="http://codepen.io/Algolia/share/zip/' + hash + '/">Download this example.</a>';
     return new Handlebars.SafeString(downloadLink + copedenContent);
   });
