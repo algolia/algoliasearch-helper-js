@@ -27,7 +27,7 @@ var src = {
   content: path.join(__dirname, './metalsmith/content'),
   layouts: path.join(__dirname, './metalsmith/layouts'),
   partials: path.join(__dirname, './metalsmith/partials'),
-  js: path.join(__dirname, './metalsmith/js/main.js')
+  js: path.join(__dirname, './metalsmith/js/')
 };
 
 var projectRoot = path.join(__dirname, '..');
@@ -102,19 +102,20 @@ gulp.task('doc:style:watch', function() {
 });
 
 gulp.task('doc:js', function() {
-  return gulp.src(src.js)
+  return gulp.src(src.js + 'main.js')
              .pipe(webpack(webpackConfig))
              .pipe(gulp.dest(jsRoot));
 });
 
 gulp.task('doc:js:watch', function() {
   var configWithWatch = Object.assign({}, webpackConfig, {
-    watch: true,
+    // watch: true,
     devtool: 'eval-source-map'
   });
-  return gulp.src(src.js)
+  return gulp.src(src.js + 'main.js')
              .pipe(webpack(configWithWatch))
-             .pipe(gulp.dest(jsRoot));
+             .pipe(gulp.dest(jsRoot))
+             .pipe(livereload());
 });
 
 gulp.task('doc:all:watch', ['doc:content', 'doc:js', 'doc:style'], function() {
@@ -125,7 +126,7 @@ gulp.task('doc:all:watch', ['doc:content', 'doc:js', 'doc:style'], function() {
   gulp.watch(src.layouts + '/**/*.jade', ['doc:content:watch']);
   gulp.watch(src.content + '/**/*.md', ['doc:content:watch']);
   gulp.watch('../src/**/*.js', ['doc:content:watch']);
-  gulp.watch(src.js, ['doc:js']);
+  gulp.watch(src.js + '**/*.js', ['doc:js:watch']);
 });
 
 gulp.task('doc:server', function(done) {

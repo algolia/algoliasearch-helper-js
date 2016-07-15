@@ -8,11 +8,12 @@ nav.sidebar {
   padding-top: 120px;
   overflow: auto;
 
-  &.fixed {
+  & ul.fixed {
     position: fixed;
     top: $navigation-height;
     z-index: 9;
     padding-top: 0;
+    max-width: $sidebar-width;
   }
 
 

@@ -1,4 +1,7 @@
-export default function sidebar({headersContainer, sidebarContainer, headerStartLevel}) {
+export default function sidebar(options) {
+  const {headersContainer, sidebarContainer, headerStartLevel} = options;
+  listenToChanges(options);
+
   const headers = headersContainer.querySelectorAll('h2, h3');
   //const select = document.createElement('select');
   const list = document.createElement('ul');
@@ -10,9 +13,14 @@ export default function sidebar({headersContainer, sidebarContainer, headerStart
   //select.addEventListener('change', e => window.location = e.target.value);
   sidebarContainer.appendChild(list);
   //sidebarContainer.appendChild(select);
-  sidebarFollowScroll(sidebarContainer);
+  sidebarFollowScroll(sidebarContainer.firstChild);
   activeLinks(sidebarContainer);
   scrollSpy(sidebarContainer, headersContainer);
+}
+
+function listenToChanges(originalParameters) {
+  const {headersContainer, sidebarContainer, headerStartLevel} = originalParameters;
+
 }
 
 function sidebarFollowScroll(sidebarContainer) {
@@ -91,7 +99,7 @@ function activeLinks(sidebarContainer) {
 }
 
 function getPositionsKeyElements(sidebar) {
-  const sidebarBBox = sidebar.firstChild.getBoundingClientRect();
+  const sidebarBBox = sidebar.getBoundingClientRect();
   const bodyBBox = document.body.getBoundingClientRect();
   const sidebarTop = sidebarBBox.top - bodyBBox.top;
   const footer = document.querySelector('.ac-footer');
