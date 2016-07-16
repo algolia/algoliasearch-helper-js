@@ -56,13 +56,11 @@ in the application.
 
 ## Integrate 
 
-The helper is available on different platforms. You can use it as a script, via bower or NPM.
-
-Because the helper extends the client, it also needs to be included in your project.
+The helper is available on different platforms. You can use it as a script, via bower or NPM. As the helper extends the client, therefore it also needs to be included in your project.
 
 ### Script tag
 
-Include the following line in the header of your project:
+The following script tag will import both the client and the Helper with a single request to the CDN.
 
 ```html
 <script src="https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2"></script>`
