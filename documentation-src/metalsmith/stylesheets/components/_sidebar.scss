@@ -8,21 +8,21 @@ nav.sidebar {
   padding-top: 120px;
   overflow: auto;
 
-  & ul.fixed {
-    position: fixed;
-    top: $navigation-height;
-    z-index: 9;
-    padding-top: 0;
-    max-width: $sidebar-width;
-  }
-
-
   ul {
     list-style: none;
     width: 100%;
-    padding: 10px 0;
+    max-width: $sidebar-width;
+    padding: 0;
     margin: 0;
     float: left;
+
+    &.fixed {
+      position: fixed;
+      top: $navigation-height;
+      z-index: 9;
+      max-height: calc(100vh - #{$navigation-height});
+      overflow: auto;
+    }
 
 
     li {

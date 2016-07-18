@@ -40,12 +40,11 @@ Most of the searches will be done using the first method.
 {{> jsdoc jsdoc/helper/search}}
 {{> jsdoc jsdoc/helper/searchOnce}}
 
-### Query parameters
-
-{{> jsdoc jsdoc/helper/setQueryParameter}}
-{{> jsdoc jsdoc/helper/getQueryParameter}}
-
 ### Query parameters shortcuts
+
+Some query parameters are more used than others. That's why some of them have
+their dedicated methods. The other parameters can still be set and get
+with the [generic query parameters methods](#query-parameters).
 
 {{> jsdoc jsdoc/helper/setQuery}}
 {{> jsdoc jsdoc/helper/setIndex}}
@@ -55,7 +54,54 @@ Most of the searches will be done using the first method.
 {{> jsdoc jsdoc/helper/previousPage}}
 {{> jsdoc jsdoc/helper/getPage}}
 
+### Query parameters
+
+Those methods let you set any query parameters from Algolia. See the full
+list of parameters that can be in the [rest API
+documentation](https://www.algolia.com/doc/rest#query-an-index).
+
+Before using those methods, be sure to check [the shortcuts](query-parameters-shortcuts).
+
+{{> jsdoc jsdoc/helper/setQueryParameter}}
+{{> jsdoc jsdoc/helper/getQueryParameter}}
+
+
 ### Conjunctive Facets
+
+Conjunctive facets are used to filter values from a facetted
+attribute. The filters set on an attribute are combined using
+an `and`, hence the conjunctive adjective.
+
+If we have a dataset of movies, and we have an array of genre for
+each movie, we can then do the following:
+
+```javascript
+// helper is already configured
+helper.addFacetRefinement('film-genre', 'comedy');
+helper.addFacetRefinement('film-genre', 'science-fiction');
+
+// the filters are equals to
+// film-genre = comedy AND film-genre = science-fiction
+```
+
+#### Configuration
+
+The conjunctive facets that will be used in the implementation
+need to be declared at the initialization of the helper, this
+way:
+
+```javascript
+var helper = AlgoliasearchHelper(client, indexName, {
+  facets: ['nameOfTheAttribute']
+});
+```
+
+The values that can be used for filtering are retrieved with
+the answer from Algolia. They are accesisble using the
+[getFacetValues](#SearchResults#getFacetValues) methods on the
+[SearchResults](#SearchResults) object.
+
+#### Methods
 
 {{> jsdoc jsdoc/helper/clearRefinements}}
 {{> jsdoc jsdoc/helper/addFacetRefinement}}
@@ -66,6 +112,42 @@ Most of the searches will be done using the first method.
 
 ### Disjunctive facets
 
+Disjunctive facets are used to filter values from a facetted
+attribute. The filters set on an attribute are combined using
+an `or`, hence the disjunctive adjective.
+
+If we have a dataset of TV's, and we have an attribute that
+defines the kind of tech used, we can then do the following:
+
+```javascript
+// helper is already configured
+helper.addFacetRefinement('tech', 'crt');
+helper.addFacetRefinement('tech', 'led');
+helper.addFacetRefinement('tech', 'plasma');
+
+// the filters are equals to
+// tech = crt OR tech = led OR tech = plasma
+```
+
+#### Configuration
+
+The disjunctive facets that will be used in the implementation
+need to be declared at the initialization of the helper, this
+way:
+
+```javascript
+var helper = AlgoliasearchHelper(client, indexName, {
+  disjunctiveFacets: ['nameOfTheAttribute']
+});
+```
+
+The values that can be used for filtering are retrieved with
+the answer from Algolia. They are accesisble using the
+[getFacetValues](#SearchResults#getFacetValues) methods on the
+[SearchResults](#SearchResults) object.
+
+#### Methods
+
 {{> jsdoc jsdoc/helper/clearRefinements}}
 {{> jsdoc jsdoc/helper/addDisjunctiveFacetRefinement}}
 {{> jsdoc jsdoc/helper/removeDisjunctiveFacetRefinement}}
@@ -73,10 +155,214 @@ Most of the searches will be done using the first method.
 
 ### Hierarchical facets
 
+Hierarchical facets are useful to build such navigation menus:
+
+```sh
+| products
+  > fruits
+    > citrus
+    | strawberries
+    | peaches
+    | apples
+```
+
+Here, we refined the search this way:
+- click on fruits
+- click on citrus
+
+#### Usage
+
+To build such menu, you need to use hierarchical faceting:
+
+```javascript
+var helper = algoliasearchHelper(client, indexName, {
+  hierarchicalFacets: [{
+    name: 'products',
+    attributes: ['categories.lvl0', 'categories.lvl1']
+  }]
+});
+```
+
+Given your objects looks like this:
+
+```json
+{
+  "objectID": "123",
+  "name": "orange",
+  "categories": {
+    "lvl0": "fruits",
+    "lvl1": "fruits > citrus"
+  }
+}
+```
+
+And you refine `products`:
+
+```js
+helper.toggleRefinement('products', 'fruits > citrus');
+```
+
+You will get a hierarchical presentation of your facet values: a navigation menu
+of your facet values.
+
+```js
+helper.on('result', function(data){
+  console.log(data.hierarchicalFacets[0]);
+  // {
+  //   'name': 'products',
+  //   'count': null,
+  //   'isRefined': true,
+  //   'path': null,
+  //   'data': [{
+  //     'name': 'fruits',
+  //     'path': 'fruits',
+  //     'count': 1,
+  //     'isRefined': true,
+  //     'data': [{
+  //       'name': 'citrus',
+  //       'path': 'fruits > citrus',
+  //       'count': 1,
+  //       'isRefined': true,
+  //       'data': null
+  //     }]
+  //   }]
+  // }
+});
+```
+
+To ease navigation, we always:
+- provide the root level categories
+- provide the current refinement sub categories (`fruits > citrus > *`: n + 1)
+- provide the parent refinement (`fruits > citrus` => `fruits`: n -1) categories
+- refine the search using the current hierarchical refinement
+
+#### Multiple values per level
+
+Your records can also share multiple categories between one another by using arrays inside your object:
+
+```json
+{
+  "objectID": "123",
+  "name": "orange",
+  "categories": {
+    "lvl0": ["fruits", "color"],
+    "lvl1": ["fruits > citrus", "color > orange"]
+  }
+},
+{
+  "objectID": "456",
+  "name": "grapefruit",
+  "categories": {
+    "lvl0": ["fruits", "color", "new"],
+    "lvl1": ["fruits > citrus", "color > yellow", "new > citrus"]
+  }
+}
+```
+
+#### Specifying another separator
+
+```js
+var helper = algoliasearchHelper(client, indexName, {
+  hierarchicalFacets: [{
+    name: 'products',
+    attributes: ['categories.lvl0', 'categories.lvl1'],
+    separator: '|'
+  }]
+});
+
+helper.toggleRefinement('products', 'fruits|citrus');
+```
+
+Would mean that your objects look like so:
+
+```json
+{
+  "objectID": "123",
+  "name": "orange",
+  "categories": {
+    "lvl0": "fruits",
+    "lvl1": "fruits|citrus"
+  }
+}
+```
+
+#### Specifying a different sort order for values
+
+The default sort for the hierarchical facet view is: `isRefined:desc (first show refined), name:asc (then sort by name)`.
+
+You can specify a different sort order by using:
+
+```js
+var helper = algoliasearchHelper(client, indexName, {
+  hierarchicalFacets: [{
+    name: 'products',
+    attributes: ['categories.lvl0', 'categories.lvl1'],
+    sortBy: ['count:desc', 'name:asc'] // first show the most common values, then sort by name
+  }]
+});
+```
+
+The available sort tokens are:
+- count
+- isRefined
+- name
+- path
+
+#### Restrict results and hierarchical values to non-root level
+
+Let's say you have a lot of levels:
+
+```
+- fruits
+  - yellow
+    - citrus
+      - spicy
+```
+
+But you only want to get the values starting at "citrus", you can use `rootPath`
+
+You can specify an root path to filter the hierarchical values
+
+```
+var helper = algoliasearchHelper(client, indexName, {
+  hierarchicalFacets: [{
+    name: 'products',
+    attributes: ['categories.lvl0', 'categories.lvl1', 'categories.lvl2', 'categories.lvl3'],
+    rootPath: 'fruits > yellow > citrus'
+  }]
+});
+```
+
+Having a rootPath will refine the results on it **automatically**.
+
+#### Hide parent level of current parent level
+
+By default the hierarchical facet is going to return the child and parent facet values of the current refinement.
+
+If you do not want to get the parent facet values you can set showParentLevel to false
+
+```js
+var helper = algoliasearchHelper(client, indexName, {
+  hierarchicalFacets: [{
+    name: 'products',
+    attributes: ['categories.lvl0', 'categories.lvl1'],
+    showParentLevel: false
+  }]
+});
+```
+
+#### Methods 
+
 {{> jsdoc jsdoc/helper/toggleRefinement}}
 {{> jsdoc jsdoc/helper/getHierarchicalFacetBreadcrumb}}
 
 ### Facet exclusions
+
+The facet exclusions are not a type of facets by themselves,
+they are conjunctive facets. The following set of methods let
+you specify wich value not to keep in the results. See the
+[conjunctive facets](#conjunctive-facets) for more information
+on how to configure them.
 
 {{> jsdoc jsdoc/helper/addFacetExclusion}}
 {{> jsdoc jsdoc/helper/removeFacetExclusion}}
@@ -86,11 +372,19 @@ Most of the searches will be done using the first method.
 
 ### Numeric filters
 
+The numeric filters don't require any configuration. However
+they require that the attribute is stored as a number in
+Algolia.
+
 {{> jsdoc jsdoc/helper/addNumericRefinement}}
 {{> jsdoc jsdoc/helper/removeNumericRefinement}}
 {{> jsdoc jsdoc/helper/getNumericRefinement}}
 
 ### Tag filters
+
+The tag filters don't require any configuration. However,
+they require to be stored in the `_tags` attribute in
+Algolia.
 
 {{> jsdoc jsdoc/helper/clearTags}}
 {{> jsdoc jsdoc/helper/addTag}}
@@ -231,6 +525,3 @@ instance contain the change implied by the method call.
 {{> jsdoc jsdoc/state/getHierarchicalFacetByName}}
 {{> jsdoc jsdoc/state/make}}
 {{> jsdoc jsdoc/state/validate}}
-
-### General types
-
