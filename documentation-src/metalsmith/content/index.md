@@ -1,7 +1,7 @@
 ---
 layout: main.jade
 title: Algoliasearch Helper
-subtitle: The toolbox for creating instant-search experiences
+subtitle: The toolbox for creating advanced search experiences
 ---
 
 Don't sweat, the content of this file won't be read.
