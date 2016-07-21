@@ -41,6 +41,7 @@ function AlgoliaSearchHelper(client, index, options) {
   this.lastResults = null;
   this._queryId = 0;
   this._lastQueryIdReceived = -1;
+  this._middlewares = [];
 }
 
 util.inherits(AlgoliaSearchHelper, events.EventEmitter);
@@ -72,7 +73,9 @@ AlgoliaSearchHelper.prototype.search = function() {
  *  - state with the state used for the query as a SearchParameters
  */
 AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
-  var tempState = this.state.setQueryParameters(options);
+  var tempState = this._applyMiddlewares(
+    this.state.setQueryParameters(options)
+  );
   var queries = requestBuilder._getQueries(tempState.index, tempState);
   if (cb) {
     return this.client.search(
@@ -89,6 +92,25 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
         state: tempState
       };
     });
+};
+
+/**
+ * Register a middleware function to change the parameters set in the state
+ * before every search. Note that the helper state will not be mutated, and that
+ * the new state returned by the middleware will be thrown away once the search
+ * has completed.
+ * Middlewares are called in order of registration, and the result of each
+ * middleware call is passed down the chain to the next middleware, starting
+ * with the initial state of the helper before the search.
+ * @param {function} middleware takes in a SearchParameters and returns a new SearchParameters
+ * @return {function} the function to call to unregister the middleware
+ */
+AlgoliaSearchHelper.prototype.registerMiddleware = function(middleware) {
+  var middlewares = this._middlewares;
+  middlewares.push(middleware);
+  return function unregisterMiddleware() {
+    middlewares.splice(middlewares.indexOf(middleware), 1);
+  };
 };
 
 /**
@@ -736,7 +758,7 @@ AlgoliaSearchHelper.prototype.getHierarchicalFacetBreadcrumb = function(facetNam
  * @fires error
  */
 AlgoliaSearchHelper.prototype._search = function() {
-  var state = this.state;
+  var state = this._applyMiddlewares(this.state);
   var queries = requestBuilder._getQueries(state.index, state);
 
   this.emit('search', state, this.lastResults);
@@ -745,6 +767,18 @@ AlgoliaSearchHelper.prototype._search = function() {
       this,
       state,
       this._queryId++));
+};
+
+/**
+ * Apply the middleware chain to the given SearchParameters.
+ * @private
+ * @param {SearchParameters} initialState state on which to apply middlewares
+ * @return {SearchParameters} new state
+ */
+AlgoliaSearchHelper.prototype._applyMiddlewares = function(initialState) {
+  return this._middlewares.reduce(function(currentState, middleware) {
+    return middleware(currentState);
+  }, initialState);
 };
 
 /**
