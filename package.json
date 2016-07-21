@@ -3,6 +3,7 @@
   "version": "2.10.0",
   "description": "Helper for implementing advanced search features with algolia",
   "main": "index.js",
+  "homepage": "https://community.algolia.com/algoliasearch-helper-js/",
   "scripts": {
     "watch": "watchify index.js -v -s algoliasearchHelper -o dist/algoliasearch.helper.js",
     "build": "./scripts/build.sh",
