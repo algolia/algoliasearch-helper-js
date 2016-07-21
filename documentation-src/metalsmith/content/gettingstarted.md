@@ -35,7 +35,7 @@ reference, here are the credentials that we're going to use:
 
  - `applicationID`: `latency`
  - `apiKey`: `249078a3d4337a8231f1665ec5a44966`
- - `index`: `bestbuy`
+ - `indexName`: `bestbuy`
 
 [Let's get started](#integrate)
 
@@ -48,7 +48,7 @@ the elements you need for the rest of the tutorial:
 
  - the application ID (referred later as `applicationID`)
  - the search API key (referred later as `apiKey`)
- - the index name (referred later as `index`)
+ - the index name (referred later as `indexName`)
 
 You can still use the [provided Algolia index](#using-the-provided-dataset),
 if you prefer. Otherwise, let's proceed with the setup of the library
@@ -56,7 +56,7 @@ in the application.
 
 ## Integrate 
 
-The helper is available on different platforms. You can use it as a script, via bower or NPM. As the helper extends the client, therefore it also needs to be included in your project.
+The helper is available on different platforms. You can use it as a script, via bower or NPM. As the helper extends the client, we need to import both of them.
 
 ### Script tag
 
@@ -88,7 +88,7 @@ var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
 */
 var client = algoliasearch(applicationID, apiKey);
-var helper = algoliasearchHelper(client, index);
+var helper = algoliasearchHelper(client, indexName);
 ```
 
 Once you've added those lines, you need to listen to the results coming from Algolia.
@@ -106,7 +106,7 @@ function renderHits(content) {
 
 At this point, we have no results yet. It's because we didn't trigger any search.
 For now, we will do an *empty search* on your index. This will return the results
-ordered according to the *custom ranking*. Let's see how to trigger the search:
+ordered according to the [custom ranking](https://www.algolia.com/doc/guides/relevance/ranking#custom-ranking). Let's see how to trigger the search:
 
 ```javascript
 helper.search();
@@ -114,7 +114,7 @@ helper.search();
 
 The `search` method of the helper triggers the search with the current parameters
 saved in the helper. For the moment we have none, therefore the results contains
-the first records ordered by the *custom ranking*.
+the first records ordered by the [custom ranking](https://www.algolia.com/doc/guides/relevance/ranking#custom-ranking).
 
 {{{codepen "AXbmEX" 300}}}
 
@@ -134,8 +134,8 @@ is not what our users are looking for. They want to search in your data. Let's
 see how to add a search input to let our users do a textual search in the data.
 
 Before going further, let's customize a little bit the display of our results.
-We're going to focus on the actual results/records computed by Algolia. The
-records are returned in the `hits` attribute of the `content`. Let's display
+We're going to focus on the actual results computed by Algolia. The
+results are returned in the `hits` attribute of the `content`. Let's display
 only the `name` of each product for now.
 
 ```javascript
@@ -144,9 +144,9 @@ helper.on('result', function(content) {
 });
 
 function renderHits(content) {
-  $('#container').html('').append(function() {
+  $('#container').html(function() {
     return $.map(content.hits, function(hit) {
-      return $('<li>').html(hit.name);
+      return '<li>' + hit.name + '</li>';
     });
   });
 }
@@ -182,15 +182,15 @@ helper.on('result', function(content) {
 });
 
 function renderHits(content) {
-  $('#container').html('').append(function() {
+  $('#container').html(function() {
     return $.map(content.hits, function(hit) {
-      return $('<li>').html(hit._highlightResult.name.value);
+      return '<li>' + hit._highlightResult.name.value + '</li>';
     });
   });
 }
 ```
 
-The object `_highlightResult` contains the all the attributes that may be highlighted
+The object `_highlightResult` contains all the attributes that may be highlighted
 (by default, all the searchable attributes).
 
 {{{codepen "VjAVjX" 300}}}
@@ -214,12 +214,14 @@ by Algolia will only be those for which the attribute `type` has `movie` as a va
 
 If you're using your own data in this tutorial, you must add the attributes you
 want to facet in the [display configuration of your index](https://www.algolia.com/explorer#?tab=display).
+By the way, we also have a complete documentation
+[on this subject](https://www.algolia.com/doc/guides/search/filtering-faceting#faceting).
 
 First we should declare that we want to use the attribute `type` as a facet. This is done
 during the initialization of the helper.
 
 ```javascript
-var helper = algoliasearchHelper(client, index, {
+var helper = algoliasearchHelper(client, indexName, {
   facets: ['type']
 });
 ```
@@ -230,18 +232,17 @@ time we receive new results. This list also lets our user select a value, so we 
 also make it so that it's possible using jQuery.
 
 ```javascript
-$('#facet-list').on('click', function(e) {
-  var facetValue = $(e.target).data('facet');  
-  if(!facetValue) return;
+$('#facet-list').on('click', 'input[type=checkbox]', function(e) {
+  var facetValue = $(this).data('facet');  
   helper.toggleRefinement('type', facetValue)
         .search();
 });
 
 function renderFacetList(content) {
-  $('#facet-list').html('').append(function() {
+  $('#facet-list').html(function() {
     return $.map(content.getFacetValues('type'), function(facet) {
       var checkbox = $('<input type=checkbox>')
-        .attr('data-facet', facet.name)
+        .data('facet', facet.name)
         .attr('id', 'fl-' + facet.name);
       if(facet.isRefined) checkbox.attr('checked', 'checked');
       var label = $('<label>').html(facet.name + ' (' + facet.count + ')')
@@ -252,7 +253,7 @@ function renderFacetList(content) {
 }
 ```
 
-The method `getFacetValues` returns the list of values usable to filter
+The method [getFacetValues](reference.html#SearchResults#getFacetValues) returns the list of values usable to filter
 an attribute. The object returned by this method contains three properties: 
 
  - `name`: the value of the facet

@@ -26,6 +26,7 @@
   .api-entry {
     text-decoration: none;
     color: black;
+    font-weight: 500;
     &:hover {
       color: $accent-color;
     }
@@ -191,4 +192,9 @@
       font-size: 1.2em;
     }
   }
+}
+
+.signature .type {
+  font-family: $font-settings; 
+  font-size: 1em;
 }

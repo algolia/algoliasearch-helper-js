@@ -1,6 +1,6 @@
 ---
 layout: main.jade
-title: Algoliasearch Helper
+title: Algolia JS Helper
 subtitle: The toolbox for creating advanced search experiences
 ---
 
