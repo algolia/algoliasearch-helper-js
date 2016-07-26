@@ -1020,7 +1020,7 @@ SearchParameters.prototype = {
       return this;
     }
 
-    return this.setQueryParameters({
+    return this.clearRefinements(facet).setQueryParameters({
       facets: filter(this.facets, function(f) {
         return f !== facet;
       })
@@ -1038,7 +1038,7 @@ SearchParameters.prototype = {
       return this;
     }
 
-    return this.setQueryParameters({
+    return this.clearRefinements(facet).setQueryParameters({
       disjunctiveFacets: filter(this.disjunctiveFacets, function(f) {
         return f !== facet;
       })
@@ -1056,7 +1056,7 @@ SearchParameters.prototype = {
       return this;
     }
 
-    return this.setQueryParameters({
+    return this.clearRefinements(facet).setQueryParameters({
       hierarchicalFacets: filter(this.hierarchicalFacets, function(f) {
         return f.name !== facet;
       })

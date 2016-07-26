@@ -17,6 +17,13 @@ test('removeFacet should remove a facet from the facets list', function(t) {
 
   t.deepEquals(state.facets, []);
 
+  state = SearchParameters.make({})
+    .addFacet('facet')
+    .addFacetRefinement('facet', 'value')
+    .removeFacet('facet');
+
+  t.deepEquals(state.facetsRefinements, {});
+
   t.end();
 });
 
@@ -35,6 +42,13 @@ test('removeDisjunctiveFacet should remove a facet from the disjunctiveFacets li
 
   t.deepEquals(state.disjunctiveFacets, []);
 
+  state = SearchParameters.make({})
+    .addDisjunctiveFacet('facet')
+    .addDisjunctiveFacetRefinement('facet', 'value')
+    .removeDisjunctiveFacet('facet');
+
+  t.deepEquals(state.disjunctiveFacetsRefinements, {});
+
   t.end();
 });
 
@@ -52,6 +66,13 @@ test('removeHierarchicalFacet should remove a facet from the hierarchicalFacets 
     .removeHierarchicalFacet('facet');
 
   t.deepEquals(state.hierarchicalFacets, []);
+
+  state = SearchParameters.make({})
+    .addHierarchicalFacet({name: 'facet'})
+    .toggleHierarchicalFacetRefinement('facet', 'value')
+    .removeHierarchicalFacet('facet');
+
+  t.deepEquals(state.hierarchicalFacetsRefinements, {});
 
   t.end();
 });
