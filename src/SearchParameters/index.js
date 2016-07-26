@@ -1020,10 +1020,10 @@ SearchParameters.prototype = {
       return this;
     }
 
-    const newFacets = this.facets.slice();
-    newFacets.splice(newFacets.indexOf(facet), 1);
     return this.setQueryParameters({
-      facets: newFacets
+      facets: filter(this.facets, function(f) {
+        return f !== facet;
+      })
     });
   },
   /**
@@ -1038,10 +1038,10 @@ SearchParameters.prototype = {
       return this;
     }
 
-    const newFacets = this.disjunctiveFacets.slice();
-    newFacets.splice(newFacets.indexOf(facet), 1);
     return this.setQueryParameters({
-      disjunctiveFacets: newFacets
+      disjunctiveFacets: filter(this.disjunctiveFacets, function(f) {
+        return f !== facet;
+      })
     });
   },
   /**
@@ -1056,10 +1056,10 @@ SearchParameters.prototype = {
       return this;
     }
 
-    const newFacets = this.hierarchicalFacets.slice();
-    newFacets.splice(findIndex(newFacets, {name: facet}));
     return this.setQueryParameters({
-      hierarchicalFacets: newFacets
+      hierarchicalFacets: filter(this.hierarchicalFacets, function(f) {
+        return f.name !== facet;
+      })
     });
   },
   /**
