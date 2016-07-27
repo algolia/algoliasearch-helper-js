@@ -17,7 +17,6 @@ var isUndefined = require('lodash/isUndefined');
 var isString = require('lodash/isString');
 var isFunction = require('lodash/isFunction');
 var find = require('lodash/find');
-var findIndex = require('lodash/findIndex');
 
 var defaults = require('lodash/defaults');
 var merge = require('lodash/merge');
