@@ -1045,8 +1045,8 @@ SearchParameters.prototype = {
     });
   },
   /**
-   * Add a hierarchical facet to the hierarchicalFacets attribute of the helper
-   * configuration, if it isn't already present.
+   * Remove a hierarchical facet from the hierarchicalFacets attribute of the
+   * helper configuration, if it is present.
    * @method
    * @param {string} facet hierarchical facet name to remove
    * @return {SearchParameters}
