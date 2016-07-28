@@ -76,14 +76,6 @@ test('[No changes] removeDisjunctiveFacet', function(t) {
   t.end();
 });
 
-test('[No changes] addHierarchicalFacet', function(t) {
-  var state = SearchParameters.make({}).addHierarchicalFacet({name: 'facet'});
-
-  t.equal(state.addHierarchicalFacet({name: 'facet'}), state, 'addHierarchicalFacet should return the same instance');
-
-  t.end();
-});
-
 test('[No changes] removeHierarchicalFacet', function(t) {
   var state = SearchParameters.make({});
 

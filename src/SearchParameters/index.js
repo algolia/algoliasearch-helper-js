@@ -921,14 +921,15 @@ SearchParameters.prototype = {
   },
   /**
    * Add a hierarchical facet to the hierarchicalFacets attribute of the helper
-   * configuration, if it isn't already present.
+   * configuration.
    * @method
    * @param {object} hierarchicalFacet hierarchical facet to add
    * @return {SearchParameters}
+   * @throws will throw an error if a hierarchical facet with the same name was already declared
    */
   addHierarchicalFacet: function addHierarchicalFacet(hierarchicalFacet) {
     if (this.isHierarchicalFacet(hierarchicalFacet.name)) {
-      return this;
+      throw new Error('Cannot declare two hierarchical facets with the same name: `' + hierarchicalFacet.name + '`');
     }
 
     return this.setQueryParameters({

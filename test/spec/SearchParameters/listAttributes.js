@@ -60,6 +60,16 @@ test('addHierarchicalFacet should add a facet to the hierarchicalFacets list', f
   t.end();
 });
 
+test('addHierarchicalFacet should throw when a facet with the same name is already declared', function(t) {
+  t.throws(function() {
+    SearchParameters
+      .make({hierarchicalFacets: [{name: 'facet'}]})
+      .addHierarchicalFacet({name: 'facet'});
+  });
+
+  t.end();
+});
+
 test('removeHierarchicalFacet should remove a facet from the hierarchicalFacets list', function(t) {
   var state = SearchParameters.make({})
     .addHierarchicalFacet({name: 'facet'})
