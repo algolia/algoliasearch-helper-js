@@ -2,14 +2,16 @@
 
 var SearchParameters = require('./SearchParameters');
 var SearchResults = require('./SearchResults');
+var DerivedHelper = require('./DerivedHelper');
 var requestBuilder = require('./requestBuilder');
 
 var util = require('util');
 var events = require('events');
 
+var flatten = require('lodash/flatten');
 var forEach = require('lodash/forEach');
-var bind = require('lodash/bind');
 var isEmpty = require('lodash/isEmpty');
+var map = require('lodash/map');
 
 var url = require('./url');
 
@@ -87,6 +89,7 @@ function AlgoliaSearchHelper(client, index, options) {
   this.lastResults = null;
   this._queryId = 0;
   this._lastQueryIdReceived = -1;
+  this.derivedHelpers = [];
 }
 
 util.inherits(AlgoliaSearchHelper, events.EventEmitter);
@@ -161,18 +164,18 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
       queries,
       function(err, content) {
         if (err) cb(err, null, tempState);
-        else cb(null, new SearchResults(tempState, content), tempState);
-      });
+        else cb(err, new SearchResults(tempState, content.results), tempState);
+      }
+    );
   }
 
-  return this.client.search(queries).then(
-    function(content) {
-      return {
-        content: new SearchResults(tempState, content),
-        state: tempState,
-        _originalResponse: content
-      };
-    });
+  return this.client.search(queries).then(function(content) {
+    return {
+      content: new SearchResults(tempState, content.results),
+      state: tempState,
+      _originalResponse: content
+    };
+  });
 };
 
 /**
@@ -1086,15 +1089,51 @@ AlgoliaSearchHelper.prototype.getHierarchicalFacetBreadcrumb = function(facetNam
  * @fires error
  */
 AlgoliaSearchHelper.prototype._search = function() {
+  var mainHelper = this;
   var state = this.state;
-  var queries = requestBuilder._getQueries(state.index, state);
+  var mainQueries = requestBuilder._getQueries(state.index, state);
+
+  var states = [[state, mainQueries, this]];
 
   this.emit('search', state, this.lastResults);
-  this.client.search(queries,
-    bind(this._handleResponse,
-      this,
-      state,
-      this._queryId++));
+
+  var derivedQueries = map(this.derivedHelpers, function(derivedHelper) {
+    var derivedState = derivedHelper.getModifiedState(state);
+    var queries = requestBuilder._getQueries(derivedState.index, derivedState);
+    states.push([derivedState, queries, derivedHelper]);
+    derivedHelper.emit('search', derivedState, derivedHelper.lastResults);
+    return queries;
+  });
+
+  var queries = mainQueries.concat(flatten(derivedQueries));
+  var queryId = this._queryId++;
+
+  this.client.search(queries, function(err, content) {
+    if (queryId < mainHelper._lastQueryIdReceived) {
+      // Outdated answer
+      return;
+    }
+
+    mainHelper._lastQueryIdReceived = queryId;
+
+    if (err) {
+      mainHelper.emit('error', err);
+      return;
+    }
+
+    var allResults = content.results;
+    forEach(states, function(s) {
+      var currentState = s[0];
+      var currentQueries = s[1];
+      var helper = s[2];
+
+      var numberOfQueries = currentQueries.length;
+      var specificResults = allResults.splice(0, numberOfQueries);
+
+      var formattedResponse = helper.lastResults = new SearchResults(currentState, specificResults);
+      helper.emit('result', formattedResponse, currentState);
+    });
+  });
 };
 
 /**
@@ -1152,6 +1191,21 @@ AlgoliaSearchHelper.prototype._change = function() {
  */
 AlgoliaSearchHelper.prototype.clearCache = function() {
   this.client.clearCache();
+};
+
+/**
+ * Creates an derived instance of the Helper. A derived helper
+ * is a placeholder for creating requests based on the main helper
+ * but with modifications that can be set using the function passed
+ * to this method. The returned eventEmitter is synchronised with
+ * the main instance.
+ * @param {function} fn SearchParameters -> SearchParameters
+ * @return {DerivedHelper}
+ */
+AlgoliaSearchHelper.prototype.derive = function(fn) {
+  var derivedHelper = new DerivedHelper(this, fn);
+  this.derivedHelpers.push(derivedHelper);
+  return derivedHelper;
 };
 
 /**

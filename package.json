@@ -18,7 +18,6 @@
     "doc:publish": "gh-pages-deploy",
     "readme:toc": "doctoc --notitle README.md --maxlevel 3",
     "test-ci": "scripts/test-ci.sh",
-    "test-phantom": "scripts/test-phantom.sh",
     "test": "scripts/test.sh",
     "test-node": "clear && node test/run",
     "test:watch": "onchange '{src,test}/**/*.js' 'index.js' -- npm run test-node",

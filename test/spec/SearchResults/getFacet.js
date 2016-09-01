@@ -6,7 +6,7 @@ var SearchResults = require('../../../src/SearchResults');
 test('getFacetByName should return a given facet be it disjunctive or conjunctive', function(t) {
   var data = require('../search.testdata');
 
-  var result = new SearchResults(data.searchParams, data.response);
+  var result = new SearchResults(data.searchParams, data.response.results);
 
   var cityFacet = result.getFacetByName('city');
 
