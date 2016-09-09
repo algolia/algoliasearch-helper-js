@@ -1089,18 +1089,25 @@ AlgoliaSearchHelper.prototype.getHierarchicalFacetBreadcrumb = function(facetNam
  * @fires error
  */
 AlgoliaSearchHelper.prototype._search = function() {
-  var mainHelper = this;
   var state = this.state;
   var mainQueries = requestBuilder._getQueries(state.index, state);
 
-  var states = [[state, mainQueries, this]];
+  var states = [{
+    state: state,
+    queriesCount: mainQueries.length,
+    helper: this
+  }];
 
   this.emit('search', state, this.lastResults);
 
   var derivedQueries = map(this.derivedHelpers, function(derivedHelper) {
     var derivedState = derivedHelper.getModifiedState(state);
     var queries = requestBuilder._getQueries(derivedState.index, derivedState);
-    states.push([derivedState, queries, derivedHelper]);
+    states.push({
+      state: derivedState,
+      queriesCount: queries.length,
+      helper: derivedHelper
+    });
     derivedHelper.emit('search', derivedState, derivedHelper.lastResults);
     return queries;
   });
@@ -1108,45 +1115,22 @@ AlgoliaSearchHelper.prototype._search = function() {
   var queries = mainQueries.concat(flatten(derivedQueries));
   var queryId = this._queryId++;
 
-  this.client.search(queries, function(err, content) {
-    if (queryId < mainHelper._lastQueryIdReceived) {
-      // Outdated answer
-      return;
-    }
-
-    mainHelper._lastQueryIdReceived = queryId;
-
-    if (err) {
-      mainHelper.emit('error', err);
-      return;
-    }
-
-    var allResults = content.results;
-    forEach(states, function(s) {
-      var currentState = s[0];
-      var currentQueries = s[1];
-      var helper = s[2];
-
-      var numberOfQueries = currentQueries.length;
-      var specificResults = allResults.splice(0, numberOfQueries);
-
-      var formattedResponse = helper.lastResults = new SearchResults(currentState, specificResults);
-      helper.emit('result', formattedResponse, currentState);
-    });
-  });
+  this.client.search(queries, this._dispatchAlgoliaResponse.bind(this, states, queryId));
 };
 
 /**
- * Transform the response as sent by the server and transform it into a user
- * usable objet that merge the results of all the batch requests.
+ * Transform the responses as sent by the server and transform them into a user
+ * usable objet that merge the results of all the batch requests. It will dispatch
+ * over the different helper + derived helpers (when there are some).
  * @private
- * @param {SearchParameters} state state used for to generate the request
+ * @param {array.<{SearchParameters, AlgoliaQueries, AlgoliaSearchHelper}>}
+ *  state state used for to generate the request
  * @param {number} queryId id of the current request
  * @param {Error} err error if any, null otherwise
  * @param {object} content content of the response
  * @return {undefined}
  */
-AlgoliaSearchHelper.prototype._handleResponse = function(state, queryId, err, content) {
+AlgoliaSearchHelper.prototype._dispatchAlgoliaResponse = function(states, queryId, err, content) {
   if (queryId < this._lastQueryIdReceived) {
     // Outdated answer
     return;
@@ -1159,9 +1143,17 @@ AlgoliaSearchHelper.prototype._handleResponse = function(state, queryId, err, co
     return;
   }
 
-  var formattedResponse = this.lastResults = new SearchResults(state, content);
+  var results = content.results;
+  forEach(states, function(s) {
+    var state = s.state;
+    var queriesCount = s.queriesCount;
+    var helper = s.helper;
 
-  this.emit('result', formattedResponse, state);
+    var specificResults = results.splice(0, queriesCount);
+
+    var formattedResponse = helper.lastResults = new SearchResults(state, specificResults);
+    helper.emit('result', formattedResponse, state);
+  });
 };
 
 AlgoliaSearchHelper.prototype.containsRefinement = function(query, facetFilters, numericFilters, tagFilters) {
@@ -1188,17 +1180,29 @@ AlgoliaSearchHelper.prototype._change = function() {
 
 /**
  * Clears the cache of the underlying Algolia client.
+ * @return {AlgoliaSearchHelper}
  */
 AlgoliaSearchHelper.prototype.clearCache = function() {
   this.client.clearCache();
+  return this;
 };
 
 /**
  * Creates an derived instance of the Helper. A derived helper
- * is a placeholder for creating requests based on the main helper
- * but with modifications that can be set using the function passed
- * to this method. The returned eventEmitter is synchronised with
- * the main instance.
+ * is a way to request other indices synchronised with the lifecycle
+ * of the main Helper. This mechanism uses the multiqueries feature
+ * of Algolia to aggregate all the requests in a single network call.
+ *
+ * This method takes a function that is used to create a new SearchParameter
+ * that will be used to create requests to Algolia. Those new requests
+ * are created just before the `search` event. The signature of the function
+ * is `SearchParameters -> SearchParameters`.
+ *
+ * This method returns a new DerivedHelper which is an EventEmitter
+ * that fires the same `search`, `results` and `error` events. Those
+ * events, however, will receive data specific to this DerivedHelper
+ * and the SearchParameters that is returned by the call of the
+ * parameter function.
  * @param {function} fn SearchParameters -> SearchParameters
  * @return {DerivedHelper}
  */
@@ -1206,6 +1210,19 @@ AlgoliaSearchHelper.prototype.derive = function(fn) {
   var derivedHelper = new DerivedHelper(this, fn);
   this.derivedHelpers.push(derivedHelper);
   return derivedHelper;
+};
+
+/**
+ * This method detaches a derived Helper from the main one. Prefer using the one from the
+ * derived helper itself, to remove the event listeners too.
+ * @private
+ * @return {undefined}
+ * @throws Error
+ */
+AlgoliaSearchHelper.prototype.detachDerivedHelper = function(derivedHelper) {
+  var pos = this.derivedHelpers.indexOf(derivedHelper);
+  if (pos === -1) throw new Error('Derived helper already detached');
+  this.derivedHelpers.splice(pos, 1);
 };
 
 /**
