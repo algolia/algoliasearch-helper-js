@@ -61,7 +61,7 @@
     "envify": "^3.4.0",
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "0.0.8",
-    "eslint-config-algolia": "^3.0.0",
+    "eslint-config-algolia": "^5.5.1",
     "gh-pages-deploy": "^0.4.2",
     "gulp": "^3.9.1",
     "gulp-cli": "^1.2.1",
