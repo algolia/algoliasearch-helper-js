@@ -150,7 +150,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
     return this.client.search(
       queries,
       function(err, content) {
-        cb(err, new SearchResults(tempState, content), tempState);
+        cb(err, !err ? new SearchResults(tempState, content) : null, tempState);
       });
   }
 
