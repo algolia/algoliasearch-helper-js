@@ -108,11 +108,11 @@ AlgoliaSearchHelper.prototype.search = function() {
 };
 
 /**
- * Gets the search parameters that would be sent to the Algolia Client
+ * Gets the search query parameters that would be sent to the Algolia Client
  * for the hits
- * @return {object} Search Parameters
+ * @return {object} Query Parameters
  */
-AlgoliaSearchHelper.prototype.getSearchParameters = function() {
+AlgoliaSearchHelper.prototype.getQuery = function() {
   var state = this.state;
   return requestBuilder._getHitsSearchParams(state);
 };

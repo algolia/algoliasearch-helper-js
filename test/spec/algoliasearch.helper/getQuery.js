@@ -3,7 +3,7 @@
 var test = require('tape');
 var algoliaSearchHelper = require('../../../index.js');
 
-test('getSearchParameters', function(t) {
+test('getQuery', function(t) {
   var helper = algoliaSearchHelper(null, 'IndexName', {
     disjunctiveFacets: ['df1', 'df2', 'df3'],
     disjunctiveFacetsRefinements: {
@@ -19,7 +19,7 @@ test('getSearchParameters', function(t) {
     ignorePlurals: true
   });
 
-  t.deepEqual(helper.getSearchParameters(), {
+  t.deepEqual(helper.getQuery(), {
     query: '',
     page: 0,
     minWordSizefor1Typo: 8,
