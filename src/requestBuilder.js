@@ -288,6 +288,13 @@ var requestBuilder = {
 
     var parentLevel = hierarchicalRefinement.split(separator).length - 1;
     return hierarchicalFacet.attributes.slice(0, parentLevel + 1);
+  },
+
+  getSearchForFacetQuery: function(query, facetName, state) {
+    return merge(requestBuilder._getHitsSearchParams(state), {
+      facetQuery: query,
+      facetName: facetName
+    });
   }
 };
 
