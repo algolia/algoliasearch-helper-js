@@ -290,7 +290,7 @@ var requestBuilder = {
     return hierarchicalFacet.attributes.slice(0, parentLevel + 1);
   },
 
-  getSearchForFacetQuery: function(query, facetName, state) {
+  getSearchForFacetQuery: function(facetName, query, state) {
     return merge(requestBuilder._getHitsSearchParams(state), {
       facetQuery: query,
       facetName: facetName

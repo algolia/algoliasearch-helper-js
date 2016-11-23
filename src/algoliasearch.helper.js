@@ -185,7 +185,9 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  */
 AlgoliaSearchHelper.prototype.searchForFacetValues = function(query, facet) {
   var index = this.client.initIndex(this.state.index);
-  return index.searchFacet(requestBuilder.getSearchForFacetQuery(query, facet));
+  var algoliaQuery = requestBuilder.getSearchForFacetQuery(query, facet, this.state);
+  console.log(algoliaQuery);
+  return index.searchFacet(algoliaQuery);
 };
 
 /**
