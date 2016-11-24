@@ -17,14 +17,16 @@ var indexName = '_travis-algoliasearch-helper-js-' +
   'helper_searchonce' + random(0, 5000);
 
 var dataset = [
-  {objectID: '1', facet: ['f1', 'f2'], f2: ['a']},
-  {objectID: '2', facet: ['f1', 'f3'], f2: ['b']},
-  {objectID: '3', facet: ['f2', 'f3'], f2: ['c']}
+  {objectID: '1', f: 'ba', f2: ['b']},
+  {objectID: '2', f: 'ba', f2: ['c', 'x']},
+  {objectID: '3', f: 'ba', f2: ['d']},
+  {objectID: '4', f: 'bb', f2: ['b']},
+  {objectID: '5', f: 'bb', f2: ['c', 'y']}
 ];
 
 var config = {
-  attributesToIndex: ['facet'],
-  attributesForFaceting: ['facet', 'f2']
+  searchableAttributes: ['f', 'f2'],
+  attributesForFaceting: ['f', 'f2']
 };
 
 test(
@@ -33,42 +35,41 @@ test(
     setup(indexName, dataset, config).
     then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {
-        facets: ['facet', 'f2']
+        facets: ['f', 'f2']
       });
 
-      helper.searchForFacetValues('facet', 'a').then(function(content) {
+      helper.searchForFacetValues('f', 'a').then(function(content) {
         t.ok(content, 'should get some content');
         t.equal(content.facetHits.length, 0, 'should get 0 results');
 
-        return helper.searchForFacetValues('facet', 'f');
+        return helper.searchForFacetValues('f', 'b');
       }).then(function(content) {
         t.ok(content, 'should get some content');
 
         t.deepEqual(content.facetHits, [
-          {value: 'f1', highlighted: '<em>f</em>1', count: 2},
-          {value: 'f2', highlighted: '<em>f</em>2', count: 2},
-          {value: 'f3', highlighted: '<em>f</em>3', count: 2}
+          {value: 'ba', highlighted: '<em>b</em>a', count: 3, isRefined: false},
+          {value: 'bb', highlighted: '<em>b</em>b', count: 2, isRefined: false}
         ]);
 
-        helper.addFacetRefinement('facet', 'f2');
-        return helper.searchForFacetValues('facet', 'f');
+        helper.addFacetRefinement('f2', 'c');
+        return helper.searchForFacetValues('f', 'b');
       }).then(function(content) {
         t.ok(content, 'should get some content');
 
         t.deepEqual(content.facetHits, [
-          {value: 'f2', highlighted: '<em>f</em>2', count: 2},
-          {value: 'f1', highlighted: '<em>f</em>1', count: 1},
-          {value: 'f3', highlighted: '<em>f</em>3', count: 1}
+          {value: 'ba', highlighted: '<em>b</em>a', count: 1, isRefined: false},
+          {value: 'bb', highlighted: '<em>b</em>b', count: 1, isRefined: false}
         ]);
 
-        helper.clearRefinements().addFacetRefinement('f2', 'a');
-        return helper.searchForFacetValues('facet', 'f');
+        helper.clearRefinements().addFacetRefinement('f2', 'c');
+        return helper.searchForFacetValues('f2', '');
       }).then(function(content) {
         t.ok(content, 'should get some content');
 
         t.deepEqual(content.facetHits, [
-          {value: 'f1', highlighted: '<em>f</em>1', count: 1},
-          {value: 'f2', highlighted: '<em>f</em>2', count: 1}
+          {value: 'c', highlighted: 'c', count: 2, isRefined: true},
+          {value: 'x', highlighted: 'x', count: 1, isRefined: false},
+          {value: 'y', highlighted: 'y', count: 1, isRefined: false}
         ]);
 
         t.end();
@@ -84,43 +85,42 @@ test(
     setup(indexName, dataset, config).
     then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {
-        disjunctiveFacets: ['facet', 'f2']
+        disjunctiveFacets: ['f', 'f2']
       });
 
-      helper.searchForFacetValues('facet', 'a').then(function(content) {
+      helper.searchForFacetValues('f', 'a').then(function(content) {
         t.ok(content, 'should get some content');
         t.equal(content.facetHits.length, 0, 'should get 0 results');
 
-        return helper.searchForFacetValues('facet', 'f');
+        return helper.searchForFacetValues('f', 'b');
       }).then(function(content) {
         t.ok(content, 'should get some content');
 
         t.deepEqual(content.facetHits, [
-          {value: 'f1', highlighted: '<em>f</em>1', count: 2},
-          {value: 'f2', highlighted: '<em>f</em>2', count: 2},
-          {value: 'f3', highlighted: '<em>f</em>3', count: 2}
+          {value: 'ba', highlighted: '<em>b</em>a', count: 3, isRefined: false},
+          {value: 'bb', highlighted: '<em>b</em>b', count: 2, isRefined: false}
         ]);
 
-        helper.addDisjunctiveFacetRefinement('facet', 'f2');
-        return helper.searchForFacetValues('facet', 'f');
+        helper.addDisjunctiveFacetRefinement('f2', 'd');
+        return helper.searchForFacetValues('f', 'b');
       }).then(function(content) {
         t.ok(content, 'should get some content');
 
         t.deepEqual(content.facetHits, [
-          {value: 'f1', highlighted: '<em>f</em>1', count: 2},
-          {value: 'f2', highlighted: '<em>f</em>2', count: 2},
-          {value: 'f3', highlighted: '<em>f</em>3', count: 2}
+          {value: 'ba', highlighted: '<em>b</em>a', count: 1, isRefined: false}
         ]);
 
-        helper.clearRefinements().addDisjunctiveFacetRefinement('f2', 'a');
-        return helper.searchForFacetValues('facet', 'f');
+        helper.addDisjunctiveFacetRefinement('f2', 'c');
+        return helper.searchForFacetValues('f2', '');
       }).then(function(content) {
         t.ok(content, 'should get some content');
 
         t.deepEqual(content.facetHits, [
-          {value: 'f1', highlighted: '<em>f</em>1', count: 2},
-          {value: 'f2', highlighted: '<em>f</em>2', count: 2},
-          {value: 'f3', highlighted: '<em>f</em>3', count: 2}
+          {value: 'b', highlighted: 'b', count: 2, isRefined: false},
+          {value: 'c', highlighted: 'c', count: 1, isRefined: false},
+          {value: 'x', highlighted: 'x', count: 1, isRefined: false},
+          {value: 'd', highlighted: 'd', count: 1, isRefined: false},
+          {value: 'y', highlighted: 'y', count: 1, isRefined: false}
         ]);
 
         t.end();

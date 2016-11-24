@@ -183,11 +183,18 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @param {string} facet the name of the facetted attribute for which to search for a value
  * @return {promise<FacetSearchResult>} the results of the search
  */
-AlgoliaSearchHelper.prototype.searchForFacetValues = function(query, facet) {
+AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query) {
+  var state = this.state;
   var index = this.client.initIndex(this.state.index);
-  var algoliaQuery = requestBuilder.getSearchForFacetQuery(query, facet, this.state);
-  console.log(algoliaQuery);
-  return index.searchFacet(algoliaQuery);
+  var isDisjunctive = state.isDisjunctiveFacet(facet);
+  var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, this.state);
+  return index.searchFacet(algoliaQuery).then(function addIsRefined(content) {
+    content.facetHits = forEach(content.facetHits, function(f) {
+      f.isRefined = isDisjunctive ? state.isDisjunctiveFacetRefined(facet, f.value) : state.isFacetRefined(facet, f.value);
+    });
+
+    return content;
+  });
 };
 
 /**

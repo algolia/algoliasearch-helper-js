@@ -291,10 +291,14 @@ var requestBuilder = {
   },
 
   getSearchForFacetQuery: function(facetName, query, state) {
-    return merge(requestBuilder._getHitsSearchParams(state), {
+    var stateForSearchForFacetValues = state.isDisjunctiveFacet(facetName) ?
+      state.clearRefinements(facetName) :
+      state;
+    var queries = merge(requestBuilder._getHitsSearchParams(stateForSearchForFacetValues), {
       facetQuery: query,
       facetName: facetName
     });
+    return queries;
   }
 };
 
