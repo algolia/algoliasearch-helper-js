@@ -176,11 +176,11 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 };
 
 /**
- * Search for a facet value based on an query and the name of the facetted attribute. This
+ * Search for facet values based on an query and the name of a facetted attribute. This
  * triggers a search and will retrun a promise. On top of using the query, it also sends
  * the parameters from the state so that the search is narrowed to only the possible values.
  * @param {string} query the string query for the search
- * @param {string} facet the name of the facetted attribute for which to search for a value
+ * @param {string} facet the name of the facetted attribute
  * @return {promise<FacetSearchResult>} the results of the search
  */
 AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query) {
