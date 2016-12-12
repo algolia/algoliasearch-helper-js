@@ -44,7 +44,6 @@ This is the library you will need to easily build a good search UX like our [ins
     - [Query](#query)
     - [Filtering results](#filtering-results)
     - [Facet utilities](#facet-utilities)
-    - [Tags](#tags)
     - [Pagination](#pagination)
     - [Index](#index)
     - [One time query](#one-time-query)
@@ -655,28 +654,6 @@ helper.on('result', function(result) {
 });
 ```
 
-### Tags
-
-Tags are an easy way to do filtering. They are based on a special attribute in the records named `_tags`, which can be a single string value or an array of strings.
-
-#### Add a tag filter for the value "landscape"
-
-```js
-helper.addTag('landscape').search();
-```
-
-#### Remove a tag filter for the value "landscape"
-
-```js
-helper.removeTag('landscape').search();
-```
-
-#### Clear all the tags filters
-
-```js
-helper.clearTags().search();
-```
-
 ### Pagination
 
 #### Get the current page
@@ -1198,18 +1175,6 @@ helper.setQueryParameter('hitsPerPage', 20).search();
       <td valign="top" class="td6">
         <p class="p4"><span class="s1">Enable the synonyms</span></p>
         <p class="p5"><span class="s1"><a href="https://www.algolia.com/doc/ruby#param-synonyms">synonyms on Algolia.com<span class="s3"></span></a></span></p>
-      </td>
-    </tr>
-    <tr>
-      <td valign="top" class="td4">
-        <p class="p2"><span class="s2">tagFilters</span></p>
-      </td>
-      <td valign="top" class="td5">
-        <p class="p3"><span class="s1">string</span></p>
-      </td>
-      <td valign="top" class="td6">
-        <p class="p4"><span class="s1">Contains the tag filters in the raw format of the Algolia API. Setting this parameter is not compatible with the of the add/remove/toggle methods of the tag api.</span></p>
-        <p class="p5"><span class="s1"><a href="https://www.algolia.com/doc/ruby#param-tagFilters">tagFilters on Algolia.com<span class="s3"></span></a></span></p>
       </td>
     </tr>
     <tr>
