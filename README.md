@@ -203,10 +203,6 @@ helper.search();
 
 // Let's search for "landscape"
 helper.setQuery('landscape').search();
-
-// Let's add a category "photo"
-// Will make a search with "photo" tag and "landscape" as the query
-helper.addTag('photo').search();
 ```
 
 ### Events
@@ -685,7 +681,6 @@ helper.getPage(); // 0
 
 Non exhaustive list of operations that trigger a reset:
  - refinements (conjunctive, exclude, disjunctive, hierarchical, numeric)
- - tags 
  - index (setIndex)
  - setQuery
  - setHitsPerPage

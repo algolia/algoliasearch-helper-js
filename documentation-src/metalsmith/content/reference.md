@@ -382,19 +382,6 @@ Algolia.
 {{> jsdoc jsdoc/helper/removeNumericRefinement}}
 {{> jsdoc jsdoc/helper/getNumericRefinement}}
 
-### Tag filters
-
-The tag filters don't require any configuration. However,
-they require to be stored in the `_tags` attribute in
-Algolia.
-
-{{> jsdoc jsdoc/helper/clearTags}}
-{{> jsdoc jsdoc/helper/addTag}}
-{{> jsdoc jsdoc/helper/removeTag}}
-{{> jsdoc jsdoc/helper/toggleTag}}
-{{> jsdoc jsdoc/helper/hasTag}}
-{{> jsdoc jsdoc/helper/getTags}}
-
 ### State management
 
 {{> jsdoc jsdoc/helper/getState}}
@@ -502,7 +489,6 @@ All the attributes specific to the helper are described below:
 {{> jsdoc jsdoc/state/hierarchicalFacets}}
 {{> jsdoc jsdoc/state/hierarchicalFacetsRefinements}}
 {{> jsdoc jsdoc/state/numericRefinements}}
-{{> jsdoc jsdoc/state/tagRefinements}}
 
 ### Methods
 
@@ -514,9 +500,7 @@ All the attributes specific to the helper are described below:
 {{> jsdoc jsdoc/state/addHierarchicalFacet}}
 {{> jsdoc jsdoc/state/addHierarchicalFacetRefinement}}
 {{> jsdoc jsdoc/state/addNumericRefinement}}
-{{> jsdoc jsdoc/state/addTagRefinement}}
 {{> jsdoc jsdoc/state/clearRefinements}}
-{{> jsdoc jsdoc/state/clearTags}}
 {{> jsdoc jsdoc/state/filter}}
 {{> jsdoc jsdoc/state/getConjunctiveRefinements}}
 {{> jsdoc jsdoc/state/getDisjunctiveRefinements}}
@@ -538,7 +522,6 @@ All the attributes specific to the helper are described below:
 {{> jsdoc jsdoc/state/isHierarchicalFacetRefined}}
 {{> jsdoc jsdoc/state/isHierarchicalFacet}}
 {{> jsdoc jsdoc/state/isNumericRefined}}
-{{> jsdoc jsdoc/state/isTagRefined}}
 {{> jsdoc jsdoc/state/make}}
 {{> jsdoc jsdoc/state/removeExcludeRefinement}}
 {{> jsdoc jsdoc/state/removeFacet}}
@@ -547,7 +530,6 @@ All the attributes specific to the helper are described below:
 {{> jsdoc jsdoc/state/removeDisjunctiveFacetRefinement}}
 {{> jsdoc jsdoc/state/removeHierarchicalFacet}}
 {{> jsdoc jsdoc/state/removeHierarchicalFacetRefinement}}
-{{> jsdoc jsdoc/state/removeTagRefinement}}
 {{> jsdoc jsdoc/state/setDisjunctiveFacets}}
 {{> jsdoc jsdoc/state/setFacets}}
 {{> jsdoc jsdoc/state/setHitsPerPage}}
@@ -561,7 +543,6 @@ All the attributes specific to the helper are described below:
 {{> jsdoc jsdoc/state/toggleFacetRefinement}}
 {{> jsdoc jsdoc/state/toggleHierarchicalFacetRefinement}}
 {{> jsdoc jsdoc/state/toggleRefinement}}
-{{> jsdoc jsdoc/state/toggleTagRefinement}}
 {{> jsdoc jsdoc/state/validate}}
 
 ## URL

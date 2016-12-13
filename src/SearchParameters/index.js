@@ -188,6 +188,7 @@ function SearchParameters(newParameters) {
    *
    * When querying algolia, the values stored in this attribute will
    * be translated into the `tagFilters` attribute.
+   * @deprecated
    * @member {string[]}
    */
   this.tagRefinements = params.tagRefinements || [];
@@ -219,6 +220,7 @@ function SearchParameters(newParameters) {
    * Contains the tag filters in the raw format of the Algolia API. Setting this
    * parameter is not compatible with the of the add/remove/toggle methods of the
    * tag api.
+   * @deprecated
    * @see https://www.algolia.com/doc/rest#param-tagFilters
    * @member {string}
    */
@@ -226,6 +228,7 @@ function SearchParameters(newParameters) {
 
   /**
    * Contains the optional tag filters in the raw format of the Algolia API.
+   * @deprecated
    * @see https://www.algolia.com/doc/rest#param-tagFilters
    * @member {string}
    */
@@ -233,6 +236,7 @@ function SearchParameters(newParameters) {
 
   /**
    * Contains the optional facet filters in the raw format of the Algolia API.
+   * @deprecated
    * @see https://www.algolia.com/doc/rest#param-tagFilters
    * @member {string}
    */
@@ -631,6 +635,7 @@ SearchParameters.prototype = {
   /**
    * Remove all the refined tags from the SearchParameters
    * @method
+   * @deprecated
    * @return {SearchParameters}
    */
   clearTags: function clearTags() {
@@ -1007,6 +1012,7 @@ SearchParameters.prototype = {
   },
   /**
    * addTagRefinement adds a tag to the list used to filter the results
+   * @deprecated
    * @param {string} tag tag to be added
    * @return {SearchParameters}
    */
@@ -1131,6 +1137,7 @@ SearchParameters.prototype = {
   /**
    * Remove a tag from the list of tag refinements
    * @method
+   * @deprecated
    * @param {string} tag the tag to remove
    * @return {SearchParameters}
    */
@@ -1295,6 +1302,7 @@ SearchParameters.prototype = {
   /**
    * Switch the tag refinement
    * @method
+   * @deprecated
    * @param {string} tag the tag to remove or add
    * @return {SearchParameters}
    */
@@ -1434,6 +1442,7 @@ SearchParameters.prototype = {
   /**
    * Returns true if the tag refined, false otherwise
    * @method
+   * @deprecated
    * @param {string} tag the tag to check
    * @return {boolean}
    */
