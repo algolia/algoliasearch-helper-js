@@ -225,12 +225,13 @@ you can:
  - query two indices at the same time.
  - search in the same index with different parameters.
 
-The virtual helpers are created by calling the [derive](reference.html#AlgoliaSearchHelper#derive) method with a derivation
-function. The derivation function is called when a search is triggered and
-it creates a new state that will be sent to Algolia. Like the main Helper
-you, those new helpers are eventEmitters.
+The virtual helpers are created by calling the [derive](reference.html#AlgoliaSearchHelper#derive) method with a *derivation
+function*. The derivation function is used when `search` is called. For each
+derivated Helper, it will derive a new state from the main. All of those requests
+will be sent together along the main helper request. When Algolia answers come back,
+the results will be dispatched to each helper via events (`error` or `result`).
 
-Here a schematic view of the process that happens during a search:
+Here is a schematic view of the process happening during a search with derivated helpers:
 
 <img src="images/concepts/derive-simplified.svg" alt="derivation" style="max-width: 100%;margin: 0 5%;">
 
