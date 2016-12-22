@@ -16,6 +16,7 @@
     "doc": "gulp --gulpfile documentation-src/build.gulp.js doc",
     "doc:watch": "gulp --gulpfile documentation-src/build.gulp.js doc:watch",
     "doc:publish": "gh-pages-deploy",
+    "doc:staging": "scripts/staging-doc.sh",
     "readme:toc": "doctoc --notitle README.md --maxlevel 3",
     "test-ci": "scripts/test-ci.sh",
     "test": "scripts/test.sh",
