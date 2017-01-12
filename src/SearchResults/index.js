@@ -660,7 +660,7 @@ function getFacetStatsIfAvailable(facetList, facetName) {
 }
 
 /**
- * Returns all refinements for all filters + tags. It also provides
+ * Returns all refinements for all filters. It also provides
  * additional information: count and exhausistivity for each filter.
  *
  * See the [refinement type](#Refinement) for an exhaustive view of the available

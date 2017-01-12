@@ -245,7 +245,7 @@ AlgoliaSearchHelper.prototype.setQuery = function(q) {
 };
 
 /**
- * Remove all the types of refinements except tags. A string can be provided to remove
+ * Remove all the types of refinements. A string can be provided to remove
  * only the refinements of a specific attribute. For more advanced use case, you can
  * provide a function instead. This function should follow the
  * [clearCallback definition](#SearchParameters.clearCallback).
@@ -277,6 +277,7 @@ AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
  * Remove all the tag filters.
  *
  * This method resets the current page to 0.
+ * @deprecated
  * @return {AlgoliaSearchHelper}
  * @fires change
  * @chainable
@@ -402,6 +403,7 @@ AlgoliaSearchHelper.prototype.addExclude = function() {
  * filter is already set, it doesn't change the filters.
  *
  * This method resets the current page to 0.
+ * @deprecated
  * @param {string} tag the tag to add to the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -538,6 +540,7 @@ AlgoliaSearchHelper.prototype.removeExclude = function() {
  * filter is not set, it doesn't change the filters.
  *
  * This method resets the current page to 0.
+ * @deprecated
  * @param {string} tag tag to remove from the filter
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -606,6 +609,7 @@ AlgoliaSearchHelper.prototype.toggleRefine = function() {
  * the value is set then it removes it, otherwise it adds the filter.
  *
  * This method resets the current page to 0.
+ * @deprecated
  * @param {string} tag tag to remove or add
  * @return {AlgoliaSearchHelper}
  * @fires change
@@ -973,6 +977,7 @@ AlgoliaSearchHelper.prototype.getPage = getCurrentPage;
 /**
  * Get all the tags currently set to filters the results.
  *
+ * @deprecated
  * @return {string[]} The list of tags currently set.
  */
 AlgoliaSearchHelper.prototype.getTags = function() {
