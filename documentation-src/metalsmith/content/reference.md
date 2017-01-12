@@ -578,7 +578,7 @@ All the attributes specific to the helper are described below:
 {{> jsdoc jsdoc/state/setTypoTolerance}}
 {{> jsdoc jsdoc/state/toggleDisjunctiveFacetRefinement}}
 {{> jsdoc jsdoc/state/toggleExcludeFacetRefinement}}
-{{> jsdoc jsdoc/state/_toggleFacetRefinement}}
+{{> jsdoc jsdoc/state/toggleConjunctiveFacetRefinement}}
 {{> jsdoc jsdoc/state/toggleHierarchicalFacetRefinement}}
 {{> jsdoc jsdoc/state/toggleFacetRefinement}}
 {{> jsdoc jsdoc/state/toggleTagRefinement}}

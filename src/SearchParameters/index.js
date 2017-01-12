@@ -1155,7 +1155,7 @@ SearchParameters.prototype = {
     if (this.isHierarchicalFacet(facet)) {
       return this.toggleHierarchicalFacetRefinement(facet, value);
     } else if (this.isConjunctiveFacet(facet)) {
-      return this._toggleFacetRefinement(facet, value);
+      return this.toggleConjunctiveFacetRefinement(facet, value);
     } else if (this.isDisjunctiveFacet(facet)) {
       return this.toggleDisjunctiveFacetRefinement(facet, value);
     }
@@ -1170,7 +1170,7 @@ SearchParameters.prototype = {
    * @param {value} value value used for filtering
    * @return {SearchParameters}
    */
-  _toggleFacetRefinement: function _toggleFacetRefinement(facet, value) {
+  toggleConjunctiveFacetRefinement: function toggleConjunctiveFacetRefinement(facet, value) {
     if (!this.isConjunctiveFacet(facet)) {
       throw new Error(facet + ' is not defined in the facets attribute of the helper configuration');
     }
