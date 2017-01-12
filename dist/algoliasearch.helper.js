@@ -10623,8 +10623,8 @@ var lib = {
    * @param {string} value the value of the refinement
    * @return {RefinementList} a new and updated list
    */
-  toggleFacetRefinement: function toggleFacetRefinement(refinementList, attribute, value) {
-    if (isUndefined(value)) throw new Error('toggleFacetRefinement should be used with a value');
+  toggleRefinement: function toggleRefinement(refinementList, attribute, value) {
+    if (isUndefined(value)) throw new Error('toggleRefinement should be used with a value');
 
     if (lib.isRefined(refinementList, attribute, value)) {
       return lib.removeRefinement(refinementList, attribute, value);
@@ -11946,7 +11946,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      facetsRefinements: RefinementList.toggleFacetRefinement(this.facetsRefinements, facet, value)
+      facetsRefinements: RefinementList.toggleRefinement(this.facetsRefinements, facet, value)
     });
   },
   /**
@@ -11962,7 +11962,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      facetsExcludes: RefinementList.toggleFacetRefinement(this.facetsExcludes, facet, value)
+      facetsExcludes: RefinementList.toggleRefinement(this.facetsExcludes, facet, value)
     });
   },
   /**
@@ -11979,7 +11979,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      disjunctiveFacetsRefinements: RefinementList.toggleFacetRefinement(
+      disjunctiveFacetsRefinements: RefinementList.toggleRefinement(
         this.disjunctiveFacetsRefinements, facet, value)
     });
   },

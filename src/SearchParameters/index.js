@@ -1187,7 +1187,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      facetsRefinements: RefinementList.toggleFacetRefinement(this.facetsRefinements, facet, value)
+      facetsRefinements: RefinementList.toggleRefinement(this.facetsRefinements, facet, value)
     });
   },
   /**
@@ -1203,7 +1203,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      facetsExcludes: RefinementList.toggleFacetRefinement(this.facetsExcludes, facet, value)
+      facetsExcludes: RefinementList.toggleRefinement(this.facetsExcludes, facet, value)
     });
   },
   /**
@@ -1220,7 +1220,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      disjunctiveFacetsRefinements: RefinementList.toggleFacetRefinement(
+      disjunctiveFacetsRefinements: RefinementList.toggleRefinement(
         this.disjunctiveFacetsRefinements, facet, value)
     });
   },
