@@ -1150,7 +1150,7 @@ SearchParameters.prototype = {
    * @param  {string} value the associated value
    * @return {SearchParameters}
    * @throws will throw an error if the facet is not declared in the settings of the helper
-   * @deprecated since version 2.19.0, see {@link AlgoliaSearchHelper#toggleFacetRefinement}
+   * @deprecated since version 2.19.0, see {@link SearchParameters#toggleFacetRefinement}
    */
   toggleRefinement: function toggleRefinement(facet, value) {
     return this.toggleFacetRefinement(facet, value);
