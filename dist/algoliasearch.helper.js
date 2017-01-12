@@ -10622,7 +10622,6 @@ var lib = {
    * @param {string} attribute the attribute to refine
    * @param {string} value the value of the refinement
    * @return {RefinementList} a new and updated list
-   * @deprecated since version 2.19.0, see {@link AlgoliaSearchHelper#toggleConjunctiveFacetRefinement}
    */
   toggleFacetRefinement: function toggleFacetRefinement(refinementList, attribute, value) {
     if (isUndefined(value)) throw new Error('toggleFacetRefinement should be used with a value');
@@ -11902,6 +11901,17 @@ SearchParameters.prototype = {
     };
 
     return this.setQueryParameters(modification);
+  },
+  /**
+   * Generic toggle refinement method to use with facet, disjunctive facets
+   * and hierarchical facets
+   * @param  {string} facet the facet to refine
+   * @param  {string} value the associated value
+   * @return {SearchParameters}
+   * @deprecated since version 2.19.0, see {@link AlgoliaSearchHelper#toggleConjunctiveFacetRefinement}
+   */
+  toggleRefinement: function toggleRefinement(facet, value) {
+    return this.toggleFacetRefinement(facet, value);
   },
   /**
    * Generic toggle refinement method to use with facet, disjunctive facets

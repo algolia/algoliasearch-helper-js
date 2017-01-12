@@ -73,10 +73,9 @@ var lib = {
    * @param {string} attribute the attribute to refine
    * @param {string} value the value of the refinement
    * @return {RefinementList} a new and updated list
-   * @deprecated since version 2.19.0, see {@link AlgoliaSearchHelper#toggleConjunctiveFacetRefinement}
    */
-  toggleFacetRefinement: function toggleFacetRefinement(refinementList, attribute, value) {
-    if (isUndefined(value)) throw new Error('toggleFacetRefinement should be used with a value');
+  toggleRefinement: function toggleRefinement(refinementList, attribute, value) {
+    if (isUndefined(value)) throw new Error('toggleRefinement should be used with a value');
 
     if (lib.isRefined(refinementList, attribute, value)) {
       return lib.removeRefinement(refinementList, attribute, value);
