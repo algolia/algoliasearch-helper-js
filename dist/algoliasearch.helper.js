@@ -10623,8 +10623,8 @@ var lib = {
    * @param {string} value the value of the refinement
    * @return {RefinementList} a new and updated list
    */
-  toggleRefinement: function toggleRefinement(refinementList, attribute, value) {
-    if (isUndefined(value)) throw new Error('toggleRefinement should be used with a value');
+  toggleFacetRefinement: function toggleFacetRefinement(refinementList, attribute, value) {
+    if (isUndefined(value)) throw new Error('toggleFacetRefinement should be used with a value');
 
     if (lib.isRefined(refinementList, attribute, value)) {
       return lib.removeRefinement(refinementList, attribute, value);
@@ -11910,11 +11910,11 @@ SearchParameters.prototype = {
    * @return {SearchParameters}
    * @throws will throw an error if the facet is not declared in the settings of the helper
    */
-  toggleRefinement: function toggleRefinement(facet, value) {
+  toggleFacetRefinement: function toggleFacetRefinement(facet, value) {
     if (this.isHierarchicalFacet(facet)) {
       return this.toggleHierarchicalFacetRefinement(facet, value);
     } else if (this.isConjunctiveFacet(facet)) {
-      return this.toggleFacetRefinement(facet, value);
+      return this._toggleFacetRefinement(facet, value);
     } else if (this.isDisjunctiveFacet(facet)) {
       return this.toggleDisjunctiveFacetRefinement(facet, value);
     }
@@ -11929,13 +11929,13 @@ SearchParameters.prototype = {
    * @param {value} value value used for filtering
    * @return {SearchParameters}
    */
-  toggleFacetRefinement: function toggleFacetRefinement(facet, value) {
+  _toggleFacetRefinement: function _toggleFacetRefinement(facet, value) {
     if (!this.isConjunctiveFacet(facet)) {
       throw new Error(facet + ' is not defined in the facets attribute of the helper configuration');
     }
 
     return this.setQueryParameters({
-      facetsRefinements: RefinementList.toggleRefinement(this.facetsRefinements, facet, value)
+      facetsRefinements: RefinementList.toggleFacetRefinement(this.facetsRefinements, facet, value)
     });
   },
   /**
@@ -11951,7 +11951,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      facetsExcludes: RefinementList.toggleRefinement(this.facetsExcludes, facet, value)
+      facetsExcludes: RefinementList.toggleFacetRefinement(this.facetsExcludes, facet, value)
     });
   },
   /**
@@ -11968,7 +11968,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      disjunctiveFacetsRefinements: RefinementList.toggleRefinement(
+      disjunctiveFacetsRefinements: RefinementList.toggleFacetRefinement(
         this.disjunctiveFacetsRefinements, facet, value)
     });
   },
@@ -13996,18 +13996,18 @@ AlgoliaSearchHelper.prototype.toggleExclude = function() {
  * @fires change
  * @chainable
  */
-AlgoliaSearchHelper.prototype.toggleRefinement = function(facet, value) {
-  this.state = this.state.setPage(0).toggleRefinement(facet, value);
+AlgoliaSearchHelper.prototype.toggleFacetRefinement = function(facet, value) {
+  this.state = this.state.setPage(0).toggleFacetRefinement(facet, value);
 
   this._change();
   return this;
 };
 
 /**
- * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#toggleRefinement}
+ * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#toggleFacetRefinement}
  */
 AlgoliaSearchHelper.prototype.toggleRefine = function() {
-  return this.toggleRefinement.apply(this, arguments);
+  return this.toggleFacetRefinement.apply(this, arguments);
 };
 
 /**
@@ -14281,7 +14281,7 @@ AlgoliaSearchHelper.prototype.isRefined = function(facet, value) {
  * helper.hasRefinements('material'); // true
  *
  * helper.hasRefinements('categories'); // false
- * helper.toggleRefinement('categories', 'kitchen > knife');
+ * helper.toggleFacetRefinement('categories', 'kitchen > knife');
  * helper.hasRefinements('categories'); // true
  *
  */

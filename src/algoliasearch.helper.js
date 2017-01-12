@@ -587,18 +587,18 @@ AlgoliaSearchHelper.prototype.toggleExclude = function() {
  * @fires change
  * @chainable
  */
-AlgoliaSearchHelper.prototype.toggleRefinement = function(facet, value) {
-  this.state = this.state.setPage(0).toggleRefinement(facet, value);
+AlgoliaSearchHelper.prototype.toggleFacetRefinement = function(facet, value) {
+  this.state = this.state.setPage(0).toggleFacetRefinement(facet, value);
 
   this._change();
   return this;
 };
 
 /**
- * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#toggleRefinement}
+ * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#toggleFacetRefinement}
  */
 AlgoliaSearchHelper.prototype.toggleRefine = function() {
-  return this.toggleRefinement.apply(this, arguments);
+  return this.toggleFacetRefinement.apply(this, arguments);
 };
 
 /**
@@ -872,7 +872,7 @@ AlgoliaSearchHelper.prototype.isRefined = function(facet, value) {
  * helper.hasRefinements('material'); // true
  *
  * helper.hasRefinements('categories'); // false
- * helper.toggleRefinement('categories', 'kitchen > knife');
+ * helper.toggleFacetRefinement('categories', 'kitchen > knife');
  * helper.hasRefinements('categories'); // true
  *
  */

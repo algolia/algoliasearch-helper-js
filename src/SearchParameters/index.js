@@ -1151,11 +1151,11 @@ SearchParameters.prototype = {
    * @return {SearchParameters}
    * @throws will throw an error if the facet is not declared in the settings of the helper
    */
-  toggleRefinement: function toggleRefinement(facet, value) {
+  toggleFacetRefinement: function toggleFacetRefinement(facet, value) {
     if (this.isHierarchicalFacet(facet)) {
       return this.toggleHierarchicalFacetRefinement(facet, value);
     } else if (this.isConjunctiveFacet(facet)) {
-      return this.toggleFacetRefinement(facet, value);
+      return this._toggleFacetRefinement(facet, value);
     } else if (this.isDisjunctiveFacet(facet)) {
       return this.toggleDisjunctiveFacetRefinement(facet, value);
     }
@@ -1170,13 +1170,13 @@ SearchParameters.prototype = {
    * @param {value} value value used for filtering
    * @return {SearchParameters}
    */
-  toggleFacetRefinement: function toggleFacetRefinement(facet, value) {
+  _toggleFacetRefinement: function _toggleFacetRefinement(facet, value) {
     if (!this.isConjunctiveFacet(facet)) {
       throw new Error(facet + ' is not defined in the facets attribute of the helper configuration');
     }
 
     return this.setQueryParameters({
-      facetsRefinements: RefinementList.toggleRefinement(this.facetsRefinements, facet, value)
+      facetsRefinements: RefinementList.toggleFacetRefinement(this.facetsRefinements, facet, value)
     });
   },
   /**
@@ -1192,7 +1192,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      facetsExcludes: RefinementList.toggleRefinement(this.facetsExcludes, facet, value)
+      facetsExcludes: RefinementList.toggleFacetRefinement(this.facetsExcludes, facet, value)
     });
   },
   /**
@@ -1209,7 +1209,7 @@ SearchParameters.prototype = {
     }
 
     return this.setQueryParameters({
-      disjunctiveFacetsRefinements: RefinementList.toggleRefinement(
+      disjunctiveFacetsRefinements: RefinementList.toggleFacetRefinement(
         this.disjunctiveFacetsRefinements, facet, value)
     });
   },

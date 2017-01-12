@@ -74,8 +74,8 @@ var lib = {
    * @param {string} value the value of the refinement
    * @return {RefinementList} a new and updated list
    */
-  toggleRefinement: function toggleRefinement(refinementList, attribute, value) {
-    if (isUndefined(value)) throw new Error('toggleRefinement should be used with a value');
+  toggleFacetRefinement: function toggleFacetRefinement(refinementList, attribute, value) {
+    if (isUndefined(value)) throw new Error('toggleFacetRefinement should be used with a value');
 
     if (lib.isRefined(refinementList, attribute, value)) {
       return lib.removeRefinement(refinementList, attribute, value);
