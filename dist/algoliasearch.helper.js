@@ -11909,6 +11909,7 @@ SearchParameters.prototype = {
    * @param  {string} value the associated value
    * @return {SearchParameters}
    * @throws will throw an error if the facet is not declared in the settings of the helper
+   * @deprecated since version 2.19.0, see {@link AlgoliaSearchHelper#toggleConjunctiveFacetRefinement}
    */
   toggleFacetRefinement: function toggleFacetRefinement(facet, value) {
     if (this.isHierarchicalFacet(facet)) {
