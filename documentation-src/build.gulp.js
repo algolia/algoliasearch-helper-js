@@ -50,7 +50,8 @@ customMarkedRenderer.heading = function(text, level) {
 var header = a.communityHeader({
   menu:{
     project: {
-      label: "algoliasearch-helper"
+      label: "algoliasearch-helper",
+      url: "/algoliasearch-helper-js/"
     }
   },
   sideMenu: [
