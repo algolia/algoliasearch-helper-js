@@ -65,9 +65,9 @@ var version = require('./version');
 
 /**
  * Event triggered when the queue of queries have been depleted (with any result or outdated queries)
- * @event AlgoliaSearchHelper#event:noMoreSearch
+ * @event AlgoliaSearchHelper#event:searchQueueEmpty
  * @example
- * helper.on('noMoreSearch', function() {
+ * helper.on('searchQueueEmpty', function() {
  *   console.log('No more search pending');
  *   // This is received before the result event if we're not expecting new results
  * });
@@ -185,7 +185,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
       queries,
       function(err, content) {
         self._currentNbQueries--;
-        if (self._currentNbQueries === 0) self.emit('noMoreSearch');
+        if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
         if (err) cb(err, null, tempState);
         else cb(err, new SearchResults(tempState, content.results), tempState);
       }
@@ -194,7 +194,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 
   return this.client.search(queries).then(function(content) {
     self._currentNbQueries--;
-    if (self._currentNbQueries === 0) self.emit('noMoreSearch');
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     return {
       content: new SearchResults(tempState, content.results),
       state: tempState,
@@ -202,7 +202,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
     };
   }, function(e) {
     self._currentNbQueries--;
-    if (self._currentNbQueries === 0) self.emit('noMoreSearch');
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     throw e;
   });
 };
@@ -250,7 +250,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
 
   return index.searchForFacetValues(algoliaQuery).then(function addIsRefined(content) {
     self._currentNbQueries--;
-    if (self._currentNbQueries === 0) self.emit('noMoreSearch');
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     content.facetHits = forEach(content.facetHits, function(f) {
       f.isRefined = isDisjunctive ?
         state.isDisjunctiveFacetRefined(facet, f.value) :
@@ -260,7 +260,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
     return content;
   }, function(e) {
     self._currentNbQueries--;
-    if (self._currentNbQueries === 0) self.emit('noMoreSearch');
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     throw e;
   });
 };
@@ -1223,7 +1223,7 @@ AlgoliaSearchHelper.prototype._dispatchAlgoliaResponse = function(states, queryI
   }
 
   this._currentNbQueries -= (queryId - this._lastQueryIdReceived);
-  if (this._currentNbQueries === 0) this.emit('noMoreSearch');
+  if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
 
   this._lastQueryIdReceived = queryId;
 
@@ -1341,7 +1341,7 @@ AlgoliaSearchHelper.prototype.detachDerivedHelper = function(derivedHelper) {
  * This method returns if there is currently at least one on-going search.
  * @return {boolean} true if there is a search pending
  */
-AlgoliaSearchHelper.prototype.isSearchPending = function() {
+AlgoliaSearchHelper.prototype.hasPendingRequests = function() {
   return this._currentNbQueries > 0;
 };
 

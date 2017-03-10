@@ -131,7 +131,7 @@ test('When helper.search(), isSearchPending is true', function(t) {
   triggerCb();
 });
 
-test.only('When helper.search() and one request is discarded, isSearchPending is true unless all come back', function(t) {
+test('When helper.search() and one request is discarded, isSearchPending is true unless all come back', function(t) {
   var testData = require('../search.testdata');
   var client = algoliaSearch('dsf', 'dsfdf');
 
