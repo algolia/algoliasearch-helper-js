@@ -74,7 +74,7 @@
     "jsdoc-to-markdown": "^1.3.6",
     "marked": "^0.3.6",
     "metalsmith": "^2.1.0",
-    "metalsmith-changed": "^2.0.0",
+    "metalsmith-changed": "^3.0.0",
     "metalsmith-discover-partials": "^0.1.0",
     "metalsmith-headings": "^0.1.0",
     "metalsmith-in-place": "superwolff/metalsmith-in-place#7cb06e54142b8843f35178ceb5560946ae356049",
