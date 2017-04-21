@@ -58,7 +58,7 @@
     "dmd": "^1.4.1",
     "doctoc": "^1.2.0",
     "download": "^5.0.2",
-    "envify": "^3.4.0",
+    "envify": "^4.0.0",
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "0.0.8",
     "eslint-config-algolia": "^3.0.0",
