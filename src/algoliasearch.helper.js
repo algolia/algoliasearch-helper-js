@@ -1223,14 +1223,15 @@ AlgoliaSearchHelper.prototype._dispatchAlgoliaResponse = function(states, queryI
   }
 
   this._currentNbQueries -= (queryId - this._lastQueryIdReceived);
-  if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
-
   this._lastQueryIdReceived = queryId;
 
   if (err) {
     this.emit('error', err);
+    if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
     return;
   }
+
+  if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
 
   var results = content.results;
   forEach(states, function(s) {
