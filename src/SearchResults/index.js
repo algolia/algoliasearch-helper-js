@@ -269,7 +269,11 @@ function SearchResults(state, results) {
    * current page
    * @member {number}
    */
-  this.page = mainSubResponse.page;
+  if (state.startPage && /\d/.test(state.startPage) && state.startPage !== 0) {
+    this.page = mainSubResponse.page - parseInt(state.startPage, 10);
+  } else {
+    this.page = mainSubResponse.page;
+  }
   /**
    * sum of the processing time of all the queries
    * @member {number}

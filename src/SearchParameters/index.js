@@ -259,6 +259,11 @@ function SearchParameters(newParameters) {
    */
   this.page = params.page || 0;
   /**
+   * The start page number
+   * @member {number}
+   */
+  this.startPage = params.startPage || 0;
+  /**
    * How the query should be treated by the search engine.
    * Possible values: prefixAll, prefixLast, prefixNone
    * @see https://www.algolia.com/doc/rest#param-queryType
@@ -1499,7 +1504,7 @@ SearchParameters.prototype = {
   },
 
   managedParameters: [
-    'index',
+    'index', 'startPage',
     'facets', 'disjunctiveFacets', 'facetsRefinements',
     'facetsExcludes', 'disjunctiveFacetsRefinements',
     'numericRefinements', 'tagRefinements', 'hierarchicalFacets', 'hierarchicalFacetsRefinements'
@@ -1514,6 +1519,10 @@ SearchParameters.prototype = {
         queryParams[paramName] = paramValue;
       }
     });
+
+    if (/\d/.test(this.startPage) && this.startPage !== 0) {
+      queryParams.page = queryParams.page + parseInt(this.startPage, 10);
+    }
 
     return queryParams;
   },
