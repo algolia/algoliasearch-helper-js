@@ -14,7 +14,7 @@ during the search cycle with events:
  - `error`: when Algolia sends back an error
  - `searchQueueEmpty`: when there is no more on going searches
  - `searchForFacetValues`: when a search is sent to Algolia using `searchForFacetValues`
- - `searchOnce`: when a search is sent to Algolia `searchOnce`
+ - `searchOnce`: when a search is sent to Algolia using `searchOnce`
 
 You can also read the current parameters of the search using the AlgoliaSearchHelper
 but it might not be the one you expect according to the last results received.
