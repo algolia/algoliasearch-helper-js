@@ -12,7 +12,7 @@ during the search cycle with events:
  - `search`: when the search is sent to Algolia
  - `result`: when the results are retrieved from Algolia
  - `error`: when Algolia sends back an error
- - `searchQueueEmpty`: when there is no more on going searches
+ - `searchQueueEmpty`: when there is no more pending searches
  - `searchForFacetValues`: when a search is sent to Algolia using `searchForFacetValues`
  - `searchOnce`: when a search is sent to Algolia using `searchOnce`
 
