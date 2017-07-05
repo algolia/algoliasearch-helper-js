@@ -45,9 +45,11 @@ var version = require('./version');
  * @event AlgoliaSearchHelper#event:searchForFacetValues
  * @property {SearchParameters} state the parameters used for this search
  * it is the first search.
+ * @property {string} facet the facet searched into
+ * @property {string} query the query used to search in the facets
  * @example
- * helper.on('searchForFacetValues', function(state, lastResults) {
- *   console.log('Search sent');
+ * helper.on('searchForFacetValues', function(state, facet, query) {
+ *   console.log('searchForFacetValues sent');
  * });
  */
 
@@ -57,8 +59,8 @@ var version = require('./version');
  * @property {SearchParameters} state the parameters used for this search
  * it is the first search.
  * @example
- * helper.on('searchOnce', function(state, lastResults) {
- *   console.log('Search sent');
+ * helper.on('searchOnce', function(state) {
+ *   console.log('searchOnce sent');
  * });
  */
 
@@ -202,7 +204,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 
   this._currentNbQueries++;
 
-  this.emit('searchOnce');
+  this.emit('searchOnce', tempState);
 
   if (cb) {
     return this.client.search(
@@ -272,7 +274,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
   this._currentNbQueries++;
   var self = this;
 
-  this.emit('searchForFacetValues');
+  this.emit('searchForFacetValues', state, facet, query);
   return index.searchForFacetValues(algoliaQuery).then(function addIsRefined(content) {
     self._currentNbQueries--;
     if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
