@@ -28,6 +28,11 @@ The easiest way to follow this tutorial is by using the provided
 credentials, using our ecommerce dataset. You can also adapt it to
 your own dataset.
 
+ > In order to use the full power of Algolia in the most efficient manner
+ > we have created [InstantSearch.js](https://community.algolia.com/instantsearch.js/v2/) and
+ > [react-instantsearch](https://community.algolia.com/react-instantsearch/) to
+ > quickly build search UIs.
+
 ### Using the provided dataset
 
 For the purpose of this tutorial, we'll use our ecommerce dataset. For further
