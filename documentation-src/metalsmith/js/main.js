@@ -2,7 +2,7 @@ import sidebar from './sidebar.js';
 import * as algolia from 'algolia-components/javascripts'
 
 window.addEventListener('load',() => {
-  algolia.communityHeader()
+  var header = new algolia.communityHeader()
 })
 
 var container = document.querySelector('.documentation-container')

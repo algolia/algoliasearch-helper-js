@@ -59,7 +59,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	window.addEventListener('load', function () {
-	  algolia.communityHeader();
+	  var header = new algolia.communityHeader();
 	});
 
 	var container = document.querySelector('.documentation-container');
@@ -231,137 +231,78 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	
 	/**
 	 * Main header function with docsearch
 	 * @param  {Object} docSearch config
 	 */
-	const communityHeader = (docSearch) => {
 
-	  const hasDocSearchRendered = document.querySelector('.algc-navigation .algc-search__input--docsearch');
-	  let enableDocSearch = (docSearch && docSearch.apiKey && docSearch.indexName && docSearch.inputSelector) ? true : false;
+	class communityHeader {
 
-	  let searchIcon,
-	      cancelIcon,
-	      searchContainer,
-	      searchInput;
+	  constructor(docSearchCredentials, docSearch) {
+	    this.docSearchCredentials = docSearchCredentials;
+	    this.docSearch = docSearch || null;
 
-	  if (!enableDocSearch && hasDocSearchRendered) {
-	    throw new Error('You need to pass docSearch: { apiKey, indexName, inputSelector } to communityHeader function in order to initialise docSearch');
-	  } else if(enableDocSearch && hasDocSearchRendered){
-	    searchIcon = document.querySelector('#search');
-	    cancelIcon = document.querySelector('#cancel');
-	    searchContainer = document.querySelector('.algc-search__input').parentNode;
-	    searchInput = document.querySelector(docSearch.inputSelector);
-	  }
-
-	  const navRoot = document.querySelector('.algc-dropdownroot');
-	  const dropdownRoot = document.querySelector('.algc-navigation__dropdown-holder');
-	  const navItems = document.querySelectorAll('a[data-enabledropdown="true"]');
-	  const navContainer = document.querySelector('.algc-dropdownroot__dropdowncontainer');
-
-	  const menuContainer = document.querySelector('.algc-navigation__container');
-	  const navBg = document.querySelector('.algc-dropdownroot__dropdownbg');
-	  const navArrow = document.querySelector('.algc-dropdownroot__dropdownarrow');
-	  const dropDownContainer = document.querySelector('.algc-dropdownroot__dropdowncontainer');
-	  const menuTriggers = document.querySelectorAll('[data-enabledropdown="true"]');
-
-	  const mobileMenuButton = document.querySelector('.algc-openmobile ');
-	  const mobileMenu = document.querySelector('.algc-mobilemenu');
-
-	  const subList = document.querySelectorAll('.algc-menu--hassublist .algc-menu--sublistlink');
-	  const subListHolders = [...subList].map(node => node.parentNode);
-
-	  // State of menus
-	  const state = {
-	    isOpen: false,
-	    isOpenMobile: false
-	  }
-
-	  let menuDropdowns = {};
-
-	  [].forEach.call(document.querySelectorAll('[data-dropdown-content]'), (item) => {
-	    menuDropdowns[item.dataset.dropdownContent] = {
-	      parent: item.parentNode,
-	      content: item
-	    }
-	  });
-
-	  const INIT_VAL = {
-	    WIDTH: 490,
-	    HEIGHT: 360
-	  }
-
-	  let disableTransitionTimeout;
-
-	  const triggerMenu = (event) => {
-
-	    const dropdown = event.target.dataset.dropdown;
-	    const newTarget = menuDropdowns[dropdown].content;
-	    const newContent = menuDropdowns[dropdown].parent;
-
-	    const navItem = _utils.calculatePosition(event.target);
-	    const newTargetCoordinates = _utils.calculatePosition(newTarget);
-	    const menuContainerOffset = _utils.calculatePosition(menuContainer);
-	    let leftDistance;
-
-	    const scaleFactors = {
-	      X: newTargetCoordinates.realWidth / INIT_VAL.WIDTH,
-	      Y: newTargetCoordinates.realHeight / INIT_VAL.HEIGHT
+	    this.menuState = {
+	      isOpen: false,
+	      isOpenMobile: false
 	    }
 
-	    if(navItem.center < (menuContainerOffset.center/2)){
-	      leftDistance = "calc(50% - 36px)";
-	    } else {
-	      leftDistance = (navItem.center - menuContainerOffset.left)+"px";
+	    this.INIT_VAL = {
+	      WIDTH: 490,
+	      HEIGHT: 360
 	    }
 
-	    if(window.innerWidth < 576){
-	      leftDistance = "0"
-	    }
+	    this.disableTransitionTimeout;
 
-	    navBg.style.cssText = `
-	      transform: translateX(${leftDistance}) scale(${scaleFactors.X}, ${scaleFactors.Y})`;
+	    this.searchIcon = document.querySelector('#search');
+	    this.cancelIcon = document.querySelector('#cancel');
+	    this.searchInputContainer = document.querySelector('.algc-search__input');
+	    this.searchContainer = this.searchInputContainer ? this.searchInputContainer.parentNode : null;
+	    this.navRoot = document.querySelector('.algc-dropdownroot');
+	    this.dropdownRoot = document.querySelector('.algc-navigation__dropdown-holder');
+	    this.navItems = document.querySelectorAll('a[data-enabledropdown="true"]');
+	    this.navContainer = document.querySelector('.algc-dropdownroot__dropdowncontainer');
+	    this.menuContainer = document.querySelector('.algc-navigation__container');
+	    this.navBg = document.querySelector('.algc-dropdownroot__dropdownbg');
+	    this.navArrow = document.querySelector('.algc-dropdownroot__dropdownarrow');
+	    this.dropDownContainer = document.querySelector('.algc-dropdownroot__dropdowncontainer');
+	    this.menuTriggers = document.querySelectorAll('[data-enabledropdown="true"]');
+	    this.mobileMenuButton = document.querySelector('.algc-openmobile ');
+	    this.mobileMenu = document.querySelector('.algc-mobilemenu');
+	    this.subList = document.querySelectorAll('.algc-menu--sublistlink');
+	    this.subListHolders = [...this.subList].map(node => node.parentNode);
+	    this.menuDropdowns = {};
 
-	    navArrow.style.cssText = `
-	      transform: translateX(${leftDistance}) rotate(45deg)`;
-
-	    dropDownContainer.style.cssText = `
-	      transform: translateX(${leftDistance});
-	      width: ${newTargetCoordinates.realWidth}px;
-	      height: ${newTargetCoordinates.realHeight + 10}px;`;
-
-	    dropdownRoot.style.pointerEvents = "auto";
-
-	    Object.keys(menuDropdowns).forEach(key => {
-	      if (key === dropdown) {
-	        menuDropdowns[key].parent.classList.add('active');
-	      } else {
-	        menuDropdowns[key].parent.classList.remove('active');
+	    [].forEach.call(document.querySelectorAll('[data-dropdown-content]'), (item) => {
+	      this.menuDropdowns[item.dataset.dropdownContent] = {
+	        parent: item.parentNode,
+	        content: item
 	      }
-	    })
+	    });
 
-	    if (!state.isOpen) {
-	      setTimeout(() => {
-	        navRoot.className = "algc-dropdownroot activeDropdown";
-	      }, 50);
-	    }
+	    this.shouldInitDocSearch = this.shouldInitDocSearch.bind(this);
+	    this.docSearchInit = this.checkDocSearch(docSearch);
+	    this.enableDocSearch = this.verifyDocSearchParams(docSearchCredentials);
+	    this.hasDocSearchRendered = document.querySelector('.algc-navigation .algc-search__input--docsearch');
+	    this.triggerMenu = this.triggerMenu.bind(this);
+	    this.shouldTriggerMenu = this.shouldTriggerMenu.bind(this);
+	    this.closeMenu = this.closeMenu.bind(this);
+	    this.toggleMobileMenu = this.toggleMobileMenu.bind(this);
+	    this.docSearchToggling = this.docSearchToggling.bind(this);
+	    this.initDocSearchStrategy = this.initDocSearchStrategy.bind(this);
+	    this.openSublist = this.openSublist.bind(this);
+	    this.closeSubLists = this.closeSubLists.bind(this);
+	    this.bindListeners = this.bindListeners.bind(this);
 
-	    window.clearTimeout(disableTransitionTimeout);
-	    state.isOpen = true;
+	    this.calculatePosition = this.calculatePosition.bind(this);
+
+	    this.verifyDocSearchParams();
+	    this.shouldInitDocSearch();
+	    this.initDocSearchStrategy();
+	    this.bindListeners();
 	  }
 
-	  const closeMenu = (event) => {
-	    state.isOpen = false;
-	    disableTransitionTimeout = setTimeout(() => {
-	      dropdownRoot.style.pointerEvents = "none";
-	      navRoot.className = "algc-dropdownroot notransition"
-	    }, 50);
-	  }
-
-	  const _utils = {};
-
-	  _utils.calculatePosition = (sourceNode) => {
+	  calculatePosition(sourceNode) {
 	    const box = sourceNode.getBoundingClientRect();
 	    const realWidth = sourceNode.offsetWidth;
 	    const realHeight = sourceNode.offsetHeight;
@@ -377,129 +318,196 @@
 	    }
 	  }
 
-	  _utils.setClassNames = (id) => {
-	    const nodeCount = Object.keys(refs);
-	    nodeCount.forEach((ref, index) => {
-	      const node = refs[ref].nodes[1];
-	      if (index < id) {
-	        node.className = 'algc-dropdownroot__section left';
-	      } else if (index === id) {
-	        node.className = 'algc-dropdownroot__section active';
+	  shouldInitDocSearch() {
+	    if (!this.enableDocSearch && this.hasDocSearchRendered) {
+	      throw new Error('You need to pass docSearch: { apiKey, indexName, inputSelector } to communityHeader function in order to initialise docSearch');
+	    }
+	  }
+
+	  checkDocSearch(docSearch = false) {
+	    if (docSearch) return docSearch;
+
+	    if (typeof window.docsearch === "function" || typeof docsearch === "function") {
+	      return docsearch;
+	    }
+	  }
+
+	  verifyDocSearchParams(docSearchCredentials) {
+	    return (docSearchCredentials &&
+	      docSearchCredentials.apiKey &&
+	      docSearchCredentials.indexName &&
+	      docSearchCredentials.inputSelector) ? true : false;
+	  }
+
+	  triggerMenu(event) {
+
+	    const dropdown = event.target.dataset.dropdown;
+	    const newTarget = this.menuDropdowns[dropdown].content;
+	    const newContent = this.menuDropdowns[dropdown].parent;
+
+	    const navItem = this.calculatePosition(event.target);
+	    const newTargetCoordinates = this.calculatePosition(newTarget);
+	    const menuContainerOffset = this.calculatePosition(this.menuContainer);
+	    let leftDistance;
+
+	    const scaleFactors = {
+	      X: newTargetCoordinates.realWidth / this.INIT_VAL.WIDTH,
+	      Y: newTargetCoordinates.realHeight / this.INIT_VAL.HEIGHT
+	    }
+
+	    leftDistance = (navItem.center - menuContainerOffset.left) + "px";
+
+	    if(menuContainerOffset.left < 20){
+	      leftDistance = "calc(50% - 36px)"
+	    }
+
+	    this.navBg.style.cssText = `
+	      transform: translateX(${leftDistance}) scale(${scaleFactors.X}, ${scaleFactors.Y})`;
+
+	    this.navArrow.style.cssText = `
+	      transform: translateX(${leftDistance}) rotate(45deg)`;
+
+	    this.dropDownContainer.style.cssText = `
+	      transform: translateX(${leftDistance});
+	      width: ${newTargetCoordinates.realWidth}px;
+	      height: ${newTargetCoordinates.realHeight + 10}px;`;
+
+	    this.dropdownRoot.style.pointerEvents = "auto";
+
+	    Object.keys(this.menuDropdowns).forEach(key => {
+	      if (key === dropdown) {
+	        this.menuDropdowns[key].parent.classList.add('active');
 	      } else {
-	        node.className = 'algc-dropdownroot__section right';
+	        this.menuDropdowns[key].parent.classList.remove('active');
 	      }
-	    });
+	    })
+
+	    if (!this.menuState.isOpen) {
+	      setTimeout(() => {
+	        this.navRoot.className = "algc-dropdownroot activeDropdown";
+	      }, 50);
+	    }
+
+	    window.clearTimeout(this.disableTransitionTimeout);
+	    this.menuState.isOpen = true;
 	  }
 
-	  _utils.getCoordinates = (target) => {
-	    const box = target.getBoundingClientRect();
+	  shouldTriggerMenu(event) {
+	    if(this.menuState.isOpen) { 
+	      this.triggerMenu(event);
+	    } else {
+	      this.triggerMenuTimeout = setTimeout(()=>{
+	        this.triggerMenu(event);
+	      }, 200);
+	    }
 	  }
 
-	  const toggleMobileMenu = (event) => {
-	    mobileMenuButton.classList.toggle('algc-openmobile--open');
-	    mobileMenu.classList.toggle('algc-mobilemenu--open');
+	  closeMenu(event) {
+	    window.clearTimeout(this.triggerMenuTimeout);
+	    this.menuState.isOpen = false;
+	    this.disableTransitionTimeout = setTimeout(() => {
+	      this.dropdownRoot.style.pointerEvents = "none";
+	      this.navRoot.className = "algc-dropdownroot notransition"
+	    }, 50);
+	  }
+
+	  toggleMobileMenu(event) {
+	    this.mobileMenuButton.classList.toggle('algc-openmobile--open');
+	    this.mobileMenu.classList.toggle('algc-mobilemenu--open');
 	  }
 
 	  // Search
-	  const docSearchToggling = () => {
-	    function openSearchInput() {
-	      searchContainer.classList.add('open');
-	      searchInput.focus();
+	  docSearchToggling() {
+	    this.searchInput = document.querySelector(this.docSearchCredentials.inputSelector);
+	    const openSearchInput = () => {
+	      this.searchContainer.classList.add('open');
+	      this.searchInput.focus();
 	    }
 
-	    function closeSearchInput() {
-	      searchInput.blur();
-	      searchContainer.classList.remove('open');
+	    const closeSearchInput = () => {
+	      this.searchInput.blur();
+	      this.searchContainer.classList.remove('open');
 	    }
 
-	    function emptySearchInput() {
-	      if (searchInput.value !== '') {
-	        searchInput.value = '';
+	    const emptySearchInput = () => {
+	      if (this.searchInput.value !== '') {
+	        this.searchInput.value = '';
 	      } else {
 	        closeSearchInput();
 	      }
 	    }
-	    searchInput.setAttribute('value', '');
-	    searchIcon.addEventListener('click', openSearchInput);
-	    cancelIcon.addEventListener('click', emptySearchInput);
+	    this.searchInput.setAttribute('value', '');
+	    this.searchIcon.addEventListener('click', openSearchInput);
+	    this.cancelIcon.addEventListener('click', emptySearchInput);
 	  };
 
-	  // If the user type :"s" or "/", open the searchbox
-	  const catchSearchShortcuts = () => {
-	    let keyPressed = {};
+	  initDocSearch() {
+	    this.docSearchToggling();
+	    this.docSearchInit(this.docSearchCredentials);
+	  }
 
-	    document.addEventListener('keydown', e => {
-	      keyPressed[e.keyCode] = true;
-	    }, false);
-	    document.addEventListener('keyup', e => {
-	      keyPressed[e.keyCode] = false;
-	    }, false);
+	  initDocSearchStrategy() {
+	    if (this.enableDocSearch && typeof this.docSearchInit === "function") {
+	      this.initDocSearch();
 
-	    const searchLoop = (event) => {
-	      if (keyPressed['83'] || keyPressed['191']) {
-	        document.querySelector('.algc-search__input').parentNode.classList.add('open');
-	        searchInput.focus();
+	    } else if (this.docSearch === "lazy") {
 
-	        setTimeout(() => {
-	          keyPressed = {};
-	        }, 500);
-	      } else if (keyPressed['27']) {
-	        document.querySelector('.algc-search__input').parentNode.classList.remove('open');
-	        searchInput.blur();
+	      const docSearchScript = document.createElement('script');
+	      docSearchScript.type = 'text/javascript';
+	      docSearchScript.async = true;
+	      document.body.appendChild(docSearchScript);
 
-	        setTimeout(() => {
-	          keyPressed = {};
-	        }, 500);
-	      }
-	      setTimeout(searchLoop, 5);
+	      docSearchScript.onload = () => {
+	        this.docSearchInit = docsearch;
+	        this.initDocSearch();
+	      };
+
+	      docSearchScript.src = "https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js";
 	    }
-
-	    searchLoop();
 	  }
 
-	  if (enableDocSearch) {
-	    docSearchToggling();
-	    catchSearchShortcuts();
-
-	    docsearch(docSearch);
-	  }
-
-	  function openSubList(event){
-	    event.preventDefault();
-	    event.stopPropagation();
-	    subListHolders.forEach(holder => {
-	      if(holder.classList.contains('open') && holder === event.target.parentNode){
-	        holder.classList.remove('open');
-	      } else {
+	  openSublist(node) {
+	    const parent = node.parentNode;
+	    this.subListHolders.forEach(holder => {
+	      if (holder === parent && !parent.classList.contains('open')) {
 	        holder.classList.add('open');
+	      } else {
+	        holder.classList.remove('open');
 	      }
 	    })
 	  }
 
-	  function closeSubLists(event){
-	    subListHolders.forEach(holder => holder.classList.remove('open'));
+	  closeSubLists(event) {
+	    this.subListHolders.forEach(holder => holder.classList.remove('open'));
 	  }
 
-	  subList.forEach(link => link.addEventListener('click', openSubList));
+	  bindListeners() {
+	    var that = this;
+	    this.subList.forEach(link => {
+	      link.addEventListener('click', function(event){
+	        event.preventDefault();
+	        event.stopPropagation();
+	        that.openSublist(this);
+	      });
+	    });
 
-	  // Assign event listeners
-	  menuTriggers.forEach(item => {
-	    item.addEventListener('mouseenter', triggerMenu);
-	    item.addEventListener('focus', triggerMenu);
-	  });
+	    this.menuTriggers.forEach(item => {
+	      item.addEventListener('mouseenter', this.shouldTriggerMenu);
+	      item.addEventListener('focus', this.triggerMenu);
+	    });
 
-	  navItems.forEach(item => {
-	    item.addEventListener('mouseleave', closeMenu);
-	  });
+	    this.navItems.forEach(item => {
+	      item.addEventListener('mouseleave', this.closeMenu);
+	    });
 
-	  navContainer.addEventListener('mouseenter', () => {
-	    clearTimeout(disableTransitionTimeout);
-	  });
+	    this.navContainer.addEventListener('mouseenter', () => {
+	      clearTimeout(this.disableTransitionTimeout);
+	    });
 
-	  document.addEventListener('click', closeSubLists);
-	  document.querySelector('.algc-dropdownroot__dropdowncontainer').addEventListener('mouseleave', closeMenu);
-
-	  mobileMenuButton.addEventListener('click', toggleMobileMenu);
+	    this.mobileMenuButton.addEventListener('click', this.toggleMobileMenu);
+	    document.addEventListener('click', this.closeSubLists);
+	    document.querySelector('.algc-dropdownroot__dropdowncontainer').addEventListener('mouseleave', this.closeMenu);
+	  }
 	}
 
 	module.exports = communityHeader

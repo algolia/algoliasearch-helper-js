@@ -1,12 +1,13 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,600,700|Open+Sans:400,600,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
 
 * {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :root {
-  font-size: 14px;
-  font-family: "Raleway", Helvetica Neue, helvetica;
+  font-family: "Open Sans",Helvetica Neue,helvetica,sans-serif;
 }
 
 hr {
