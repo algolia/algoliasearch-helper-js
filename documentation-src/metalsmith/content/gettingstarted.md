@@ -60,23 +60,22 @@ The helper is available on different platforms. You can use it as a script, via 
 
 ### Script tag
 
-The following script tag will import both the client and the Helper with a single request to the CDN.
+Using scripts, you can import the helper directly in your webpage. You will also need to import the [Algolia JS client](https://github.com/algolia/algoliasearch-client-js). To import the libraries, add those lines in your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2"></script>`
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>`
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@{{pkg.version}}/dist/algoliasearch.helper.min.js"></script>`
 ```
-
-### Bower
-
-In a bower compatible project, add the Helper with this command :
-
-`bower install -S algoliasearch algoliasearch-helper`
 
 ### NPM
 
 In an NPM project, include the project with this command:
 
 `npm install --save algoliasearch algoliasearch-helper`
+
+You can also use Yarn:
+
+`yarn add algoliasearch algoliasearch-helper`
 
 ## First search
 
