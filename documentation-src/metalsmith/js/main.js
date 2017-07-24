@@ -1,5 +1,5 @@
 import sidebar from './sidebar.js';
-import * as algolia from 'algolia-components/javascripts'
+import * as algolia from 'algolia-frontend-components/javascripts'
 
 window.addEventListener('load',() => {
   var header = new algolia.communityHeader()

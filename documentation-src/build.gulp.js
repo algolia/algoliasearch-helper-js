@@ -21,7 +21,7 @@ var webpack = require('webpack-stream');
 
 var st = require('st');
 
-var a = require('algolia-components');
+var a = require('algolia-frontend-components');
 
 var webpackConfig = require('./webpack.config.js');
 
