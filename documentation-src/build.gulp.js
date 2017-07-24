@@ -51,20 +51,20 @@ var header = a.communityHeader({
   menu:{
     project: {
       label: "algoliasearch-helper",
-      url: "/algoliasearch-helper-js/"
+      url: "https://community.algolia.com/algoliasearch-helper-js/"
     }
   },
   sideMenu: [
-    { name: "Getting started", dropdownItems: null, url: "/algoliasearch-helper-js/gettingstarted.html" },
-    { name: "Concepts", url: "/algoliasearch-helper-js/concepts.html" },
-    { name: "Reference", url: "/algoliasearch-helper-js/reference.html" },
-    { name: "Examples", url: "/algoliasearch-helper-js/examples.html"}
+    { name: "Getting started", dropdownItems: null, url: "gettingstarted.html" },
+    { name: "Concepts", url: "concepts.html" },
+    { name: "Reference", url: "reference.html" },
+    { name: "Examples", url: "examples.html"}
   ],
   mobileMenu: [
-    { name: "Getting started", url: "/algoliasearch-helper-js/gettingstarted.html" },
-    { name: "Concepts", url: "/algoliasearch-helper-js/concepts.html" },
-    { name: "Reference", url: "/algoliasearch-helper-js/reference.html" },
-    { name: "Examples", url: "/algoliasearch-helper-js/examples.html"}
+    { name: "Getting started", url: "gettingstarted.html" },
+    { name: "Concepts", url: "concepts.html" },
+    { name: "Reference", url: "reference.html" },
+    { name: "Examples", url: "examples.html"}
   ],
   docSearch: null
 });
