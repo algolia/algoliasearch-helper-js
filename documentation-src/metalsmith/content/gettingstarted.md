@@ -28,6 +28,11 @@ The easiest way to follow this tutorial is by using the provided
 credentials, using our ecommerce dataset. You can also adapt it to
 your own dataset.
 
+ > In order to use the full power of Algolia in the most efficient manner
+ > we have created [InstantSearch.js](https://community.algolia.com/instantsearch.js/v2/) and
+ > [react-instantsearch](https://community.algolia.com/react-instantsearch/) to
+ > quickly build search UIs.
+
 ### Using the provided dataset
 
 For the purpose of this tutorial, we'll use our ecommerce dataset. For further
@@ -60,23 +65,22 @@ The helper is available on different platforms. You can use it as a script, via 
 
 ### Script tag
 
-The following script tag will import both the client and the Helper with a single request to the CDN.
+Using scripts, you can import the helper directly in your webpage. You will also need to import the [Algolia JS client](https://github.com/algolia/algoliasearch-client-js). To import the libraries, add those lines in your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/g/algoliasearch@3(algoliasearchLite.min.js),algoliasearch.helper@2"></script>`
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@{{pkg.version}}/dist/algoliasearch.helper.min.js"></script>
 ```
-
-### Bower
-
-In a bower compatible project, add the Helper with this command :
-
-`bower install -S algoliasearch algoliasearch-helper`
 
 ### NPM
 
 In an NPM project, include the project with this command:
 
 `npm install --save algoliasearch algoliasearch-helper`
+
+You can also use Yarn:
+
+`yarn add algoliasearch algoliasearch-helper`
 
 ## First search
 
@@ -278,8 +282,8 @@ values that are meaningful for the current other parameters. Try typing
 This kind of facets are called *conjunctive facets* but they are not the only
 kind of filtering that you can apply with the helper. You can also do:
 
- - disjunctive facetting (for making multiple choices filters)
- - hierarchical facetting (for making hierarchical navigations)
+ - disjunctive faceting (for making multiple choices filters)
+ - hierarchical faceting (for making hierarchical navigations)
  - numerical filtering
  - tag filtering
 

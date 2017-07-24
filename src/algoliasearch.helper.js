@@ -29,7 +29,7 @@ var version = require('./version');
  */
 
 /**
- * Event triggered when the search is sent to Algolia
+ * Event triggered when a main search is sent to Algolia
  * @event AlgoliaSearchHelper#event:search
  * @property {SearchParameters} state the parameters used for this search
  * @property {SearchResults} lastResults the results from the previous search. `null` if
@@ -37,6 +37,30 @@ var version = require('./version');
  * @example
  * helper.on('search', function(state, lastResults) {
  *   console.log('Search sent');
+ * });
+ */
+
+/**
+ * Event triggered when a search using `searchForFacetValues` is sent to Algolia
+ * @event AlgoliaSearchHelper#event:searchForFacetValues
+ * @property {SearchParameters} state the parameters used for this search
+ * it is the first search.
+ * @property {string} facet the facet searched into
+ * @property {string} query the query used to search in the facets
+ * @example
+ * helper.on('searchForFacetValues', function(state, facet, query) {
+ *   console.log('searchForFacetValues sent');
+ * });
+ */
+
+/**
+ * Event triggered when a search using `searchOnce` is sent to Algolia
+ * @event AlgoliaSearchHelper#event:searchOnce
+ * @property {SearchParameters} state the parameters used for this search
+ * it is the first search.
+ * @example
+ * helper.on('searchOnce', function(state) {
+ *   console.log('searchOnce sent');
  * });
  */
 
@@ -61,6 +85,18 @@ var version = require('./version');
  * helper.on('error', function(error) {
  *   console.log('Houston we got a problem.');
  * });
+ */
+
+/**
+ * Event triggered when the queue of queries have been depleted (with any result or outdated queries)
+ * @event AlgoliaSearchHelper#event:searchQueueEmpty
+ * @example
+ * helper.on('searchQueueEmpty', function() {
+ *   console.log('No more search pending');
+ *   // This is received before the result event if we're not expecting new results
+ * });
+ *
+ * helper.search();
  */
 
 /**
@@ -94,6 +130,7 @@ function AlgoliaSearchHelper(client, index, options) {
   this._queryId = 0;
   this._lastQueryIdReceived = -1;
   this.derivedHelpers = [];
+  this._currentNbQueries = 0;
 }
 
 util.inherits(AlgoliaSearchHelper, events.EventEmitter);
@@ -101,7 +138,7 @@ util.inherits(AlgoliaSearchHelper, events.EventEmitter);
 /**
  * Start the search with the parameters set in the state. When the
  * method is called, it triggers a `search` event. The results will
- * be available through the `result` event. If an error occcurs, an
+ * be available through the `result` event. If an error occurs, an
  * `error` will be fired instead.
  * @return {AlgoliaSearchHelper}
  * @fires search
@@ -142,7 +179,7 @@ AlgoliaSearchHelper.prototype.getQuery = function() {
  * // This example uses the callback API
  * var state = helper.searchOnce({hitsPerPage: 1},
  *   function(error, content, state) {
- *     // if an error occured it will be passed in error, otherwise its value is null
+ *     // if an error occurred it will be passed in error, otherwise its value is null
  *     // content contains the results formatted as a SearchResults
  *     // state is the instance of SearchParameters used for this search
  *   });
@@ -163,10 +200,18 @@ AlgoliaSearchHelper.prototype.getQuery = function() {
 AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   var tempState = !options ? this.state : this.state.setQueryParameters(options);
   var queries = requestBuilder._getQueries(tempState.index, tempState);
+  var self = this;
+
+  this._currentNbQueries++;
+
+  this.emit('searchOnce', tempState);
+
   if (cb) {
     return this.client.search(
       queries,
       function(err, content) {
+        self._currentNbQueries--;
+        if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
         if (err) cb(err, null, tempState);
         else cb(err, new SearchResults(tempState, content.results), tempState);
       }
@@ -174,11 +219,17 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   }
 
   return this.client.search(queries).then(function(content) {
+    self._currentNbQueries--;
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     return {
       content: new SearchResults(tempState, content.results),
       state: tempState,
       _originalResponse: content
     };
+  }, function(e) {
+    self._currentNbQueries--;
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
+    throw e;
   });
 };
 
@@ -189,7 +240,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @type {object}
  * @property {string} value the facet value
  * @property {string} highlighted the facet value highlighted with the query string
- * @property {number} count number of occurence of this facet value
+ * @property {number} count number of occurrence of this facet value
  * @property {boolean} isRefined true if the value is already refined
  */
 
@@ -198,27 +249,35 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * [`searchForFacetValues()`](reference.html#AlgoliaSearchHelper#searchForFacetValues)
  * promise.
  * @typedef FacetSearchResult
- * @type {objet}
+ * @type {object}
  * @property {FacetSearchHit} facetHits the results for this search for facet values
- * @property {number} processingTimeMS time taken by the query insde the engine
+ * @property {number} processingTimeMS time taken by the query inside the engine
  */
 
 /**
- * Search for facet values based on an query and the name of a facetted attribute. This
- * triggers a search and will retrun a promise. On top of using the query, it also sends
- * the parameters from the state so that the search is narrowed to only the possible values.
+ * Search for facet values based on an query and the name of a faceted attribute. This
+ * triggers a search and will return a promise. On top of using the query, it also sends
+ * the parameters from the state so that the search is narrowed down to only the possible values.
  *
  * See the description of [FacetSearchResult](reference.html#FacetSearchResult)
+ * @param {string} facet the name of the faceted attribute
  * @param {string} query the string query for the search
- * @param {string} facet the name of the facetted attribute
+ * @param {number} maxFacetHits the maximum number values returned. Should be > 0 and <= 100
  * @return {promise<FacetSearchResult>} the results of the search
  */
-AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query) {
+AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxFacetHits) {
   var state = this.state;
   var index = this.client.initIndex(this.state.index);
   var isDisjunctive = state.isDisjunctiveFacet(facet);
-  var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, this.state);
+  var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, maxFacetHits, this.state);
+
+  this._currentNbQueries++;
+  var self = this;
+
+  this.emit('searchForFacetValues', state, facet, query);
   return index.searchForFacetValues(algoliaQuery).then(function addIsRefined(content) {
+    self._currentNbQueries--;
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     content.facetHits = forEach(content.facetHits, function(f) {
       f.isRefined = isDisjunctive ?
         state.isDisjunctiveFacetRefined(facet, f.value) :
@@ -226,6 +285,10 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query) {
     });
 
     return content;
+  }, function(e) {
+    self._currentNbQueries--;
+    if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
+    throw e;
   });
 };
 
@@ -288,7 +351,7 @@ AlgoliaSearchHelper.prototype.clearTags = function() {
 };
 
 /**
- * Adds a disjunctive filter to a facetted attribute with the `value` provided. If the
+ * Adds a disjunctive filter to a faceted attribute with the `value` provided. If the
  * filter is already set, it doesn't change the filters.
  *
  * This method resets the current page to 0.
@@ -349,7 +412,7 @@ AlgoliaSearchHelper.prototype.addNumericRefinement = function(attribute, operato
 };
 
 /**
- * Adds a filter to a facetted attribute with the `value` provided. If the
+ * Adds a filter to a faceted attribute with the `value` provided. If the
  * filter is already set, it doesn't change the filters.
  *
  * This method resets the current page to 0.
@@ -374,7 +437,7 @@ AlgoliaSearchHelper.prototype.addRefine = function() {
 
 
 /**
- * Adds a an exclusion filter to a facetted attribute with the `value` provided. If the
+ * Adds a an exclusion filter to a faceted attribute with the `value` provided. If the
  * filter is already set, it doesn't change the filters.
  *
  * This method resets the current page to 0.
@@ -417,7 +480,7 @@ AlgoliaSearchHelper.prototype.addTag = function(tag) {
  * Removes an numeric filter to an attribute with the `operator` and `value` provided. If the
  * filter is not set, it doesn't change the filters.
  *
- * Some parameters are optionnals, triggering different behaviors:
+ * Some parameters are optional, triggering different behavior:
  *  - if the value is not provided, then all the numeric value will be removed for the
  *  specified attribute/operator couple.
  *  - if the operator is not provided either, then all the numeric filter on this attribute
@@ -438,7 +501,7 @@ AlgoliaSearchHelper.prototype.removeNumericRefinement = function(attribute, oper
 };
 
 /**
- * Removes a disjunctive filter to a facetted attribute with the `value` provided. If the
+ * Removes a disjunctive filter to a faceted attribute with the `value` provided. If the
  * filter is not set, it doesn't change the filters.
  *
  * If the value is omitted, then this method will remove all the filters for the
@@ -480,7 +543,7 @@ AlgoliaSearchHelper.prototype.removeHierarchicalFacetRefinement = function(facet
 };
 
 /**
- * Removes a filter to a facetted attribute with the `value` provided. If the
+ * Removes a filter to a faceted attribute with the `value` provided. If the
  * filter is not set, it doesn't change the filters.
  *
  * If the value is omitted, then this method will remove all the filters for the
@@ -507,7 +570,7 @@ AlgoliaSearchHelper.prototype.removeRefine = function() {
 };
 
 /**
- * Removes an exclusion filter to a facetted attribute with the `value` provided. If the
+ * Removes an exclusion filter to a faceted attribute with the `value` provided. If the
  * filter is not set, it doesn't change the filters.
  *
  * If the value is omitted, then this method will remove all the filters for the
@@ -550,7 +613,7 @@ AlgoliaSearchHelper.prototype.removeTag = function(tag) {
 };
 
 /**
- * Adds or removes an exclusion filter to a facetted attribute with the `value` provided. If
+ * Adds or removes an exclusion filter to a faceted attribute with the `value` provided. If
  * the value is set then it removes it, otherwise it adds the filter.
  *
  * This method resets the current page to 0.
@@ -574,7 +637,7 @@ AlgoliaSearchHelper.prototype.toggleExclude = function() {
 };
 
 /**
- * Adds or removes a filter to a facetted attribute with the `value` provided. If
+ * Adds or removes a filter to a faceted attribute with the `value` provided. If
  * the value is set then it removes it, otherwise it adds the filter.
  *
  * This method can be used for conjunctive, disjunctive and hierarchical filters.
@@ -593,7 +656,7 @@ AlgoliaSearchHelper.prototype.toggleRefinement = function(facet, value) {
 };
 
 /**
- * Adds or removes a filter to a facetted attribute with the `value` provided. If
+ * Adds or removes a filter to a faceted attribute with the `value` provided. If
  * the value is set then it removes it, otherwise it adds the filter.
  *
  * This method can be used for conjunctive, disjunctive and hierarchical filters.
@@ -750,7 +813,7 @@ AlgoliaSearchHelper.prototype.setState = function(newState) {
 
 /**
  * Get the current search state stored in the helper. This object is immutable.
- * @param {string[]} [filters] optionnal filters to retrieve only a subset of the state
+ * @param {string[]} [filters] optional filters to retrieve only a subset of the state
  * @return {SearchParameters|object} if filters is specified a plain object is
  * returned containing only the requested fields, otherwise return the unfiltered
  * state
@@ -822,7 +885,7 @@ AlgoliaSearchHelper.getForeignConfigurationInQueryString = url.getUnrecognizedPa
  * string.
  * @deprecated
  * @param {string} queryString the query string containing the informations to url the state
- * @param {object} options optionnal parameters :
+ * @param {object} options optional parameters :
  *  - prefix : prefix used for the algolia parameters
  *  - triggerChange : if set to true the state update will trigger a change event
  */
@@ -915,11 +978,11 @@ AlgoliaSearchHelper.prototype.hasRefinements = function(attribute) {
 };
 
 /**
- * Check if a value is excluded for a specific facetted attribute. If the value
+ * Check if a value is excluded for a specific faceted attribute. If the value
  * is omitted then the function checks if there is any excluding refinements.
  *
- * @param  {string}  facet name of the attribute for used for facetting
- * @param  {string}  [value] optionnal value. If passed will test that this value
+ * @param  {string}  facet name of the attribute for used for faceting
+ * @param  {string}  [value] optional value. If passed will test that this value
    * is filtering the given facet.
  * @return {boolean} true if refined
  * @example
@@ -1022,7 +1085,7 @@ AlgoliaSearchHelper.prototype.getQueryParameter = function(parameterName) {
  *
  * See also SearchResults#getRefinements
  *
- * @param {string} facetName attribute name used for facetting
+ * @param {string} facetName attribute name used for faceting
  * @return {Array.<FacetRefinement|NumericRefinement>} All Refinement are objects that contain a value, and
  * a type. Numeric also contains an operator.
  * @example
@@ -1161,12 +1224,14 @@ AlgoliaSearchHelper.prototype._search = function() {
   var queries = mainQueries.concat(flatten(derivedQueries));
   var queryId = this._queryId++;
 
+  this._currentNbQueries++;
+
   this.client.search(queries, this._dispatchAlgoliaResponse.bind(this, states, queryId));
 };
 
 /**
  * Transform the responses as sent by the server and transform them into a user
- * usable objet that merge the results of all the batch requests. It will dispatch
+ * usable object that merge the results of all the batch requests. It will dispatch
  * over the different helper + derived helpers (when there are some).
  * @private
  * @param {array.<{SearchParameters, AlgoliaQueries, AlgoliaSearchHelper}>}
@@ -1177,29 +1242,34 @@ AlgoliaSearchHelper.prototype._search = function() {
  * @return {undefined}
  */
 AlgoliaSearchHelper.prototype._dispatchAlgoliaResponse = function(states, queryId, err, content) {
+  // FIXME remove the number of outdated queries discarded instead of just one
+
   if (queryId < this._lastQueryIdReceived) {
     // Outdated answer
     return;
   }
 
+  this._currentNbQueries -= (queryId - this._lastQueryIdReceived);
   this._lastQueryIdReceived = queryId;
 
   if (err) {
     this.emit('error', err);
-    return;
+
+    if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
+  } else {
+    if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
+
+    var results = content.results;
+    forEach(states, function(s) {
+      var state = s.state;
+      var queriesCount = s.queriesCount;
+      var helper = s.helper;
+      var specificResults = results.splice(0, queriesCount);
+
+      var formattedResponse = helper.lastResults = new SearchResults(state, specificResults);
+      helper.emit('result', formattedResponse, state);
+    });
   }
-
-  var results = content.results;
-  forEach(states, function(s) {
-    var state = s.state;
-    var queriesCount = s.queriesCount;
-    var helper = s.helper;
-
-    var specificResults = results.splice(0, queriesCount);
-
-    var formattedResponse = helper.lastResults = new SearchResults(state, specificResults);
-    helper.emit('result', formattedResponse, state);
-  });
 };
 
 AlgoliaSearchHelper.prototype.containsRefinement = function(query, facetFilters, numericFilters, tagFilters) {
@@ -1295,11 +1365,19 @@ AlgoliaSearchHelper.prototype.detachDerivedHelper = function(derivedHelper) {
 };
 
 /**
+ * This method returns true if there is currently at least one on-going search.
+ * @return {boolean} true if there is a search pending
+ */
+AlgoliaSearchHelper.prototype.hasPendingRequests = function() {
+  return this._currentNbQueries > 0;
+};
+
+/**
  * @typedef AlgoliaSearchHelper.NumericRefinement
  * @type {object}
  * @property {number[]} value the numbers that are used for filtering this attribute with
  * the operator specified.
- * @property {string} operator the facetting data: value, number of entries
+ * @property {string} operator the faceting data: value, number of entries
  * @property {string} type will be 'numeric'
  */
 
