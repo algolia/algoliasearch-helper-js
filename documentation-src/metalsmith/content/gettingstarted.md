@@ -68,8 +68,8 @@ The helper is available on different platforms. You can use it as a script, via 
 Using scripts, you can import the helper directly in your webpage. You will also need to import the [Algolia JS client](https://github.com/algolia/algoliasearch-client-js). To import the libraries, add those lines in your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>`
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@{{pkg.version}}/dist/algoliasearch.helper.min.js"></script>`
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@{{pkg.version}}/dist/algoliasearch.helper.min.js"></script>
 ```
 
 ### NPM
