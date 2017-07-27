@@ -23,8 +23,7 @@
     "test-node": "clear && node test/run",
     "test:watch": "onchange '{src,test}/**/*.js' 'index.js' -- npm run test-node",
     "test:perf": "node ./test/perf/index.js",
-    "release.old": "git clean dist/ -f && git checkout dist/ && npm install && ./scripts/release.js && npm run build",
-    "release": "./scripts/prepare-release.js",
+    "release": "git checkout dist/ && rm -rf node_modules && yarn && ./scripts/release.js",
     "changelog:view-last": "conventional-changelog -u -n scripts/conventional-changelog/",
     "changelog:update": "conventional-changelog -i CHANGELOG -s -u -n scripts/conventional-changelog/"
   },
