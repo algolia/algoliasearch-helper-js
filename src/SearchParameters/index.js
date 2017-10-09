@@ -1676,6 +1676,10 @@ SearchParameters.prototype = {
     );
     var path = refinement.split(separator);
     return map(path, trim);
+  },
+
+  toString: function() {
+    return JSON.stringify(this, null, 2);
   }
 };
 
