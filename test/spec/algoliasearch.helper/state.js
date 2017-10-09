@@ -500,4 +500,6 @@ test('setState should set a default hierarchicalFacetRefinement when a rootPath 
   t.deepEquals(finalHelperState.hierarchicalFacetsRefinements, {
     'hierarchicalCategories.lvl0': ['Cameras & Camcorders']
   });
+
+  t.end();
 });
