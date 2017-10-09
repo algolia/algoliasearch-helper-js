@@ -515,8 +515,6 @@ function SearchResults(state, results) {
   this.facets = compact(this.facets);
   this.disjunctiveFacets = compact(this.disjunctiveFacets);
 
-
-
   this._state = state;
 }
 
