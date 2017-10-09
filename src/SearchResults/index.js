@@ -318,6 +318,13 @@ function SearchResults(state, results) {
    */
   this.exhaustiveNbHits = mainSubResponse.exhaustiveNbHits;
 
+
+  /**
+   * Contains the userData if they are set by a [query rule](https://www.algolia.com/doc/guides/query-rules/query-rules-overview/).
+   * @member {object[]}
+   */
+  this.userData = mainSubResponse.userData;
+
   /**
    * disjunctive facets results
    * @member {SearchResults.Facet[]}
@@ -507,6 +514,8 @@ function SearchResults(state, results) {
 
   this.facets = compact(this.facets);
   this.disjunctiveFacets = compact(this.disjunctiveFacets);
+
+
 
   this._state = state;
 }
