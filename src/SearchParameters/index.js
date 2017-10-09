@@ -620,13 +620,22 @@ SearchParameters.prototype = {
    */
   clearRefinements: function clearRefinements(attribute) {
     var clear = RefinementList.clearRefinement;
-    return this.setQueryParameters({
+    var patch = {
       numericRefinements: this._clearNumericRefinements(attribute),
       facetsRefinements: clear(this.facetsRefinements, attribute, 'conjunctiveFacet'),
       facetsExcludes: clear(this.facetsExcludes, attribute, 'exclude'),
       disjunctiveFacetsRefinements: clear(this.disjunctiveFacetsRefinements, attribute, 'disjunctiveFacet'),
       hierarchicalFacetsRefinements: clear(this.hierarchicalFacetsRefinements, attribute, 'hierarchicalFacet')
-    });
+    };
+    console.log(patch);
+    if (isEmpty(patch.numericRefinements) &&
+        isEmpty(patch.facetsRefinements) &&
+        isEmpty(patch.facetsExcludes) &&
+        isEmpty(patch.disjunctiveFacetsRefinements) &&
+        isEmpty(patch.hierarchicalFacetsRefinements)) {
+      return this;
+    }
+    return this.setQueryParameters(patch);
   },
   /**
    * Remove all the refined tags from the SearchParameters
