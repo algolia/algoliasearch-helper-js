@@ -627,12 +627,11 @@ SearchParameters.prototype = {
       disjunctiveFacetsRefinements: clear(this.disjunctiveFacetsRefinements, attribute, 'disjunctiveFacet'),
       hierarchicalFacetsRefinements: clear(this.hierarchicalFacetsRefinements, attribute, 'hierarchicalFacet')
     };
-    console.log(patch);
-    if (isEmpty(patch.numericRefinements) &&
-        isEmpty(patch.facetsRefinements) &&
-        isEmpty(patch.facetsExcludes) &&
-        isEmpty(patch.disjunctiveFacetsRefinements) &&
-        isEmpty(patch.hierarchicalFacetsRefinements)) {
+    if (patch.numericRefinements === this.numericRefinements &&
+        patch.facetsRefinements === this.facetsRefinements &&
+        patch.facetsExcludes === this.facetsExcludes &&
+        patch.disjunctiveFacetsRefinements === this.disjunctiveFacetsRefinements &&
+        patch.hierarchicalFacetsRefinements === this.hierarchicalFacetsRefinements) {
       return this;
     }
     return this.setQueryParameters(patch);
@@ -888,11 +887,14 @@ SearchParameters.prototype = {
    */
   _clearNumericRefinements: function _clearNumericRefinements(attribute) {
     if (isUndefined(attribute)) {
+      if (isEmpty(this.numericRefinements)) return this.numericRefinements;
       return {};
     } else if (isString(attribute)) {
+      if (isEmpty(this.numericRefinements[attribute])) return this.numericRefinements;
       return omit(this.numericRefinements, attribute);
     } else if (isFunction(attribute)) {
-      return reduce(this.numericRefinements, function(memo, operators, key) {
+      var hasChanged = false;
+      var newNumericRefinements = reduce(this.numericRefinements, function(memo, operators, key) {
         var operatorList = {};
 
         forEach(operators, function(values, operator) {
@@ -901,13 +903,20 @@ SearchParameters.prototype = {
             var predicateResult = attribute({val: value, op: operator}, key, 'numeric');
             if (!predicateResult) outValues.push(value);
           });
-          if (!isEmpty(outValues)) operatorList[operator] = outValues;
+          if (!isEmpty(outValues)) {
+            if (outValues.length !== values.length) hasChanged = hasChanged || true;
+            operatorList[operator] = outValues;
+          }
+          else hasChanged = hasChanged || true;
         });
 
         if (!isEmpty(operatorList)) memo[key] = operatorList;
 
         return memo;
       }, {});
+
+      if (hasChanged) return newNumericRefinements;
+      return this.numericRefinements;
     }
   },
   /**

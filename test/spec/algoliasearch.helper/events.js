@@ -11,7 +11,14 @@ var fakeClient = {
 test('Change events should be emitted as soon as the state change, but search should be triggered (refactored)', function(t) {
   var helper = algoliaSearchHelper(fakeClient, 'Index', {
     disjunctiveFacets: ['city'],
-    facets: ['tower']
+    disjunctiveFacetsRefinements: {city: ['Paris']},
+    facets: ['tower'],
+    facetsRefinements: {tower: ['Empire State Building']},
+    facetsExcludes: {tower: ['Empire State Building']},
+    hierarchicalFacets: [],
+    numericRefinements: {
+      price: {'>': [300]}
+    }
   });
 
   var changeEventCount = 0;
@@ -23,36 +30,36 @@ test('Change events should be emitted as soon as the state change, but search sh
   var stubbedSearch = sinon.stub(helper, '_search');
 
   helper.setQuery('a');
-  t.equal(changeEventCount, 1, 'search');
-  t.equal(stubbedSearch.callCount, 0, 'search');
+  t.equal(changeEventCount, 1, 'query - change');
+  t.equal(stubbedSearch.callCount, 0, 'query - search');
 
   helper.clearRefinements();
-  t.equal(changeEventCount, 2, 'clearRefinements');
-  t.equal(stubbedSearch.callCount, 0, 'clearRefinements');
+  t.equal(changeEventCount, 2, 'clearRefinements - change');
+  t.equal(stubbedSearch.callCount, 0, 'clearRefinements - search');
 
   helper.addDisjunctiveRefine('city', 'Paris');
-  t.equal(changeEventCount, 3, 'addDisjunctiveRefine');
-  t.equal(stubbedSearch.callCount, 0, 'addDisjunctiveRefine');
+  t.equal(changeEventCount, 3, 'addDisjunctiveRefine - change');
+  t.equal(stubbedSearch.callCount, 0, 'addDisjunctiveRefine - search');
 
   helper.removeDisjunctiveRefine('city', 'Paris');
-  t.equal(changeEventCount, 4, 'removeDisjunctiveRefine');
-  t.equal(stubbedSearch.callCount, 0, 'removeDisjunctiveRefine');
+  t.equal(changeEventCount, 4, 'removeDisjunctiveRefine - change');
+  t.equal(stubbedSearch.callCount, 0, 'removeDisjunctiveRefine - search');
 
   helper.addExclude('tower', 'Empire State Building');
-  t.equal(changeEventCount, 5, 'addExclude');
-  t.equal(stubbedSearch.callCount, 0, 'addExclude');
+  t.equal(changeEventCount, 5, 'addExclude - change');
+  t.equal(stubbedSearch.callCount, 0, 'addExclude - search');
 
   helper.removeExclude('tower', 'Empire State Building');
-  t.equal(changeEventCount, 6, 'removeExclude');
-  t.equal(stubbedSearch.callCount, 0, 'removeExclude');
+  t.equal(changeEventCount, 6, 'removeExclude - change');
+  t.equal(stubbedSearch.callCount, 0, 'removeExclude - search');
 
   helper.addRefine('tower', 'Empire State Building');
-  t.equal(changeEventCount, 7, 'addRefine');
-  t.equal(stubbedSearch.callCount, 0, 'addRefine');
+  t.equal(changeEventCount, 7, 'addRefine - change');
+  t.equal(stubbedSearch.callCount, 0, 'addRefine - search');
 
   helper.removeRefine('tower', 'Empire State Building');
-  t.equal(changeEventCount, 8, 'removeRefine');
-  t.equal(stubbedSearch.callCount, 0, 'removeRefine');
+  t.equal(changeEventCount, 8, 'removeRefine - change');
+  t.equal(stubbedSearch.callCount, 0, 'removeRefine - search');
 
   helper.search();
   t.equal(changeEventCount, 8, "final search doesn't call the change");
@@ -61,7 +68,7 @@ test('Change events should be emitted as soon as the state change, but search sh
   t.end();
 });
 
-test.only('Change events should only be emitted for meaningful changes', function(t) {
+test('Change events should only be emitted for meaningful changes', function(t) {
   var helper = algoliaSearchHelper(fakeClient, 'Index', {
     query: 'a',
     disjunctiveFacets: ['city'],
