@@ -76,7 +76,10 @@ test('Change events should only be emitted for meaningful changes', function(t) 
     facets: ['tower'],
     facetsRefinements: {tower: ['Empire State Building']},
     facetsExcludes: {tower: ['Empire State Building']},
-    hierarchicalFacets: [],
+    hierarchicalFacets: [{
+      name: 'hierarchicalFacet',
+      attributes: ['lvl1', 'lvl2']
+    }],
     numericRefinements: {
       price: {'>': [300]}
     }
@@ -109,8 +112,6 @@ test('Change events should only be emitted for meaningful changes', function(t) 
   helper.addNumericRefinement('price', '>', 300);
   t.equal(changeEventCount, 0, 'addNumericRefinement');
   t.equal(stubbedSearch.callCount, 0, 'addNumericRefinement');
-
-  console.log(helper.state.toString());
 
   // This is an actual change
   helper.clearRefinements();
