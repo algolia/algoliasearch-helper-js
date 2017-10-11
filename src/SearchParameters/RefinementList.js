@@ -110,10 +110,10 @@ var lib = {
         });
 
         if (!isEmpty(facetList)) {
-          if (facetList.length !== values.length) hasChanged = hasChanged || true;
+          if (facetList.length !== values.length) hasChanged = true;
           memo[key] = facetList;
         }
-        else hasChanged = hasChanged || true;
+        else hasChanged = true;
 
         return memo;
       }, {});

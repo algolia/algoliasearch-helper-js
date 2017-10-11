@@ -904,10 +904,10 @@ SearchParameters.prototype = {
             if (!predicateResult) outValues.push(value);
           });
           if (!isEmpty(outValues)) {
-            if (outValues.length !== values.length) hasChanged = hasChanged || true;
+            if (outValues.length !== values.length) hasChanged = true;
             operatorList[operator] = outValues;
           }
-          else hasChanged = hasChanged || true;
+          else hasChanged = true;
         });
 
         if (!isEmpty(operatorList)) memo[key] = operatorList;
