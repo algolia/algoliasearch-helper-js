@@ -1,8 +1,6 @@
 'use strict';
 
 var test = require('tape');
-// var algoliaSearch = require('algoliasearch');
-// var SearchParameters = require('../../../src/SearchParameters');
 
 var algoliasearchHelper = require('../../../index');
 
