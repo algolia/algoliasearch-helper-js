@@ -1,6 +1,5 @@
 'use strict';
 
-var reduce = require('lodash/reduce');
 var find = require('lodash/find');
 var startsWith = require('lodash/startsWith');
 
@@ -10,7 +9,7 @@ var startsWith = require('lodash/startsWith');
  * @return {array.<string[]>} array containing 2 elements : attributes, orders
  */
 module.exports = function formatSort(sortBy, defaults) {
-  return reduce(sortBy, function preparePredicate(out, sortInstruction) {
+  return sortBy.reduce(function preparePredicate(out, sortInstruction) {
     var sortInstructions = sortInstruction.split(':');
     if (defaults && sortInstructions.length === 1) {
       var similarDefault = find(defaults, function(predicate) {

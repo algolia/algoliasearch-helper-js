@@ -6,7 +6,6 @@ var forOwn = require('lodash/forOwn');
 var forEach = require('lodash/forEach');
 var filter = require('lodash/filter');
 var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var omit = require('lodash/omit');
 var indexOf = require('lodash/indexOf');
 var isNaN = require('lodash/isNaN');
@@ -893,7 +892,7 @@ SearchParameters.prototype = {
       return omit(this.numericRefinements, attribute);
     } else if (isFunction(attribute)) {
       var hasChanged = false;
-      var newNumericRefinements = reduce(this.numericRefinements, function(memo, operators, key) {
+      var newNumericRefinements = this.numericRefinements.reduce(function(memo, operators, key) {
         var operatorList = {};
 
         forEach(operators, function(values, operator) {

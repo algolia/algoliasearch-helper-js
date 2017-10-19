@@ -4,7 +4,6 @@ module.exports = generateTrees;
 
 var last = require('lodash/last');
 var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var orderBy = require('lodash/orderBy');
 var trim = require('lodash/trim');
 var find = require('lodash/find');
@@ -31,7 +30,7 @@ function generateTrees(state) {
       results = hierarchicalFacetResult.slice(hierarchicalRootPath.split(hierarchicalSeparator).length);
     }
 
-    return reduce(results, generateTreeFn, {
+    return results.reduce(generateTreeFn, {
       name: state.hierarchicalFacets[hierarchicalFacetIndex].name,
       count: null, // root level, no count
       isRefined: true, // root level, always refined
