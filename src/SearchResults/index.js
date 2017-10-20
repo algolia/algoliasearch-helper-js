@@ -2,7 +2,6 @@
 
 var forEach = require('lodash/forEach');
 var compact = require('lodash/compact');
-var indexOf = require('lodash/indexOf');
 var findIndex = require('lodash/findIndex');
 var get = require('lodash/get');
 
@@ -367,8 +366,8 @@ function SearchResults(state, results) {
         exhaustive: mainSubResponse.exhaustiveFacetsCount
       };
     } else {
-      var isFacetDisjunctive = indexOf(state.disjunctiveFacets, facetKey) !== -1;
-      var isFacetConjunctive = indexOf(state.facets, facetKey) !== -1;
+      var isFacetDisjunctive = state.disjunctiveFacets.indexOf(facetKey) !== -1;
+      var isFacetConjunctive = state.facets.indexOf(facetKey) !== -1;
       var position;
 
       if (isFacetDisjunctive) {
@@ -434,7 +433,7 @@ function SearchResults(state, results) {
           forEach(state.disjunctiveFacetsRefinements[dfacet], function(refinementValue) {
             // add the disjunctive refinements if it is no more retrieved
             if (!self.disjunctiveFacets[position].data[refinementValue] &&
-              indexOf(state.disjunctiveFacetsRefinements[dfacet], refinementValue) > -1) {
+              state.disjunctiveFacetsRefinements[dfacet].indexOf(refinementValue) > -1) {
               self.disjunctiveFacets[position].data[refinementValue] = 0;
             }
           });
@@ -508,7 +507,7 @@ function SearchResults(state, results) {
     });
   });
 
-  this.hierarchicalFacets = map(this.hierarchicalFacets, generateHierarchicalTree(state));
+  this.hierarchicalFacets = this.hierarchicalFacets.map(generateHierarchicalTree(state));
 
   this.facets = compact(this.facets);
   this.disjunctiveFacets = compact(this.disjunctiveFacets);
@@ -543,7 +542,7 @@ function extractNormalizedFacetValues(results, attribute) {
     var facet = find(results.facets, predicate);
     if (!facet) return [];
 
-    return map(facet.data, function(v, k) {
+    return facet.data.map(function(v, k) {
       return {
         name: k,
         count: v,
@@ -555,7 +554,7 @@ function extractNormalizedFacetValues(results, attribute) {
     var disjunctiveFacet = find(results.disjunctiveFacets, predicate);
     if (!disjunctiveFacet) return [];
 
-    return map(disjunctiveFacet.data, function(v, k) {
+    return disjunctiveFacet.data.map(function(v, k) {
       return {
         name: k,
         count: v,
@@ -576,7 +575,7 @@ function recSort(sortFn, node) {
   if (!node.data || node.data.length === 0) {
     return node;
   }
-  var children = map(node.data, partial(recSort, sortFn));
+  var children = node.data.map(partial(recSort, sortFn));
   var sortedChildren = sortFn(children);
   var newNode = merge({}, node, {data: sortedChildren});
   return newNode;
