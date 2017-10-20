@@ -14,7 +14,6 @@ var qs = require('qs');
 var bind = require('lodash/bind');
 var forEach = require('lodash/forEach');
 var pick = require('lodash/pick');
-var map = require('lodash/map');
 var mapKeys = require('lodash/mapKeys');
 var mapValues = require('lodash/mapValues');
 var isString = require('lodash/isString');
@@ -29,7 +28,7 @@ function recursiveEncode(input) {
     return mapValues(input, recursiveEncode);
   }
   if (Array.isArray(input)) {
-    return map(input, recursiveEncode);
+    return input.map(recursiveEncode);
   }
   if (isString(input)) {
     return encode(input);

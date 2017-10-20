@@ -1,7 +1,6 @@
 'use strict';
 
 var forEach = require('lodash/forEach');
-var map = require('lodash/map');
 var merge = require('lodash/merge');
 
 var requestBuilder = {
@@ -139,7 +138,7 @@ var requestBuilder = {
         if (facetName !== attribute) {
           forEach(values, function(value) {
             if (Array.isArray(value)) {
-              var vs = map(value, function(v) {
+              var vs = value.map(function(v) {
                 return attribute + operator + v;
               });
               numericFilters.push(vs);

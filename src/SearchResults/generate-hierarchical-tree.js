@@ -3,7 +3,6 @@
 module.exports = generateTrees;
 
 var last = require('lodash/last');
-var map = require('lodash/map');
 var orderBy = require('lodash/orderBy');
 var trim = require('lodash/trim');
 var find = require('lodash/find');
@@ -73,8 +72,7 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
         currentRefinement, hierarchicalSeparator, hierarchicalRootPath, hierarchicalShowParentLevel);
 
       parent.data = orderBy(
-        map(
-          pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn),
+        pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn).map(
           formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)
         ),
         sortBy[0], sortBy[1]

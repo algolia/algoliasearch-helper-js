@@ -9,7 +9,6 @@ var get = require('lodash/get');
 var sumBy = require('lodash/sumBy');
 var find = require('lodash/find');
 var includes = require('lodash/includes');
-var map = require('lodash/map');
 var orderBy = require('lodash/orderBy');
 
 var defaults = require('lodash/defaults');
@@ -333,7 +332,7 @@ function SearchResults(state, results) {
    * disjunctive facets results
    * @member {SearchResults.HierarchicalFacet[]}
    */
-  this.hierarchicalFacets = map(state.hierarchicalFacets, function initFutureTree() {
+  this.hierarchicalFacets = state.hierarchicalFacets.map(function initFutureTree() {
     return [];
   });
   /**

@@ -5,7 +5,6 @@ var intersection = require('lodash/intersection');
 var forOwn = require('lodash/forOwn');
 var forEach = require('lodash/forEach');
 var filter = require('lodash/filter');
-var map = require('lodash/map');
 var omit = require('lodash/omit');
 var indexOf = require('lodash/indexOf');
 var isNaN = require('lodash/isNaN');
@@ -516,9 +515,9 @@ SearchParameters._parseNumbers = function(partialState) {
     forEach(partialState.numericRefinements, function(operators, attribute) {
       numericRefinements[attribute] = {};
       forEach(operators, function(values, operator) {
-        var parsedValues = map(values, function(v) {
+        var parsedValues = values.map(function(v) {
           if (Array.isArray(v)) {
-            return map(v, function(vPrime) {
+            return v.map(function(vPrime) {
               if (isString(vPrime)) {
                 return parseFloat(vPrime);
               }
@@ -1497,7 +1496,7 @@ SearchParameters.prototype = {
     return intersection(
       // enforce the order between the two arrays,
       // so that refinement name index === hierarchical facet index
-      map(this.hierarchicalFacets, 'name'),
+      this.hierarchicalFacets.map('name'),
       keys(this.hierarchicalFacetsRefinements)
     );
   },
