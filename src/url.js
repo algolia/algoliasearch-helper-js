@@ -11,7 +11,6 @@ var SearchParameters = require('./SearchParameters');
 
 var qs = require('qs');
 
-var bind = require('lodash/bind');
 var forEach = require('lodash/forEach');
 var pick = require('lodash/pick');
 var mapKeys = require('lodash/mapKeys');
@@ -157,7 +156,7 @@ exports.getQueryStringFromState = function(state, options) {
   );
 
   var prefixRegexp = prefixForParameters === '' ? null : new RegExp('^' + prefixForParameters);
-  var sort = bind(sortQueryStringValues, null, prefixRegexp, invertedMapping);
+  var sort = sortQueryStringValues.bind(null, prefixRegexp, invertedMapping);
   if (!isEmpty(moreAttributes)) {
     var stateQs = qs.stringify(encodedState, {encode: safe, sort: sort});
     var moreQs = qs.stringify(moreAttributes, {encode: safe});
