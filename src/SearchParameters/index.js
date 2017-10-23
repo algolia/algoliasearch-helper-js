@@ -890,7 +890,8 @@ SearchParameters.prototype = {
       return omit(this.numericRefinements, attribute);
     } else if (isFunction(attribute)) {
       var hasChanged = false;
-      var newNumericRefinements = this.numericRefinements.reduce(function(memo, operators, key) {
+      var newNumericRefinements = Object.keys(this.numericRefinements).reduce(function(memo, key, numericRefinements) {
+        var operators = numericRefinements[key];
         var operatorList = {};
 
         forEach(operators, function(values, operator) {
