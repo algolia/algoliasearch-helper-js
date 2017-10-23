@@ -71,10 +71,13 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
       var onlyMatchingValuesFn = filterFacetValues(parent.path || hierarchicalRootPath,
         currentRefinement, hierarchicalSeparator, hierarchicalRootPath, hierarchicalShowParentLevel);
 
+      var _picked = Object.keys(pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn));
+      var picked = _picked.map(function(key) {
+        return formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)(_picked[key], key);
+      });
+
       parent.data = orderBy(
-        pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn).map(
-          formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)
-        ),
+        picked,
         sortBy[0], sortBy[1]
       );
     }

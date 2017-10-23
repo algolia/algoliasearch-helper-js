@@ -543,10 +543,10 @@ function extractNormalizedFacetValues(results, attribute) {
     var facet = find(results.facets, predicate);
     if (!facet) return [];
 
-    return facet.data.map(function(v, k) {
+    return Object.keys(facet.data).map(function(k) {
       return {
         name: k,
-        count: v,
+        count: facet.data[k],
         isRefined: results._state.isFacetRefined(attribute, k),
         isExcluded: results._state.isExcludeRefined(attribute, k)
       };
@@ -555,10 +555,10 @@ function extractNormalizedFacetValues(results, attribute) {
     var disjunctiveFacet = find(results.disjunctiveFacets, predicate);
     if (!disjunctiveFacet) return [];
 
-    return disjunctiveFacet.data.map(function(v, k) {
+    return Object.keys(disjunctiveFacet.data).map(function(k) {
       return {
         name: k,
-        count: v,
+        count: disjunctiveFacet.data[k],
         isRefined: results._state.isDisjunctiveFacetRefined(attribute, k)
       };
     });
