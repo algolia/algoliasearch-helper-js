@@ -1495,7 +1495,7 @@ SearchParameters.prototype = {
     return intersection(
       // enforce the order between the two arrays,
       // so that refinement name index === hierarchical facet index
-      this.hierarchicalFacets.map('name'),
+      this.hierarchicalFacets.map(function(_) { return _.name; }),
       keys(this.hierarchicalFacetsRefinements)
     );
   },
