@@ -2,16 +2,14 @@
 
 var forEach = require('lodash/forEach');
 var filter = require('lodash/filter');
-var map = require('lodash/map');
 var isEmpty = require('lodash/isEmpty');
-var indexOf = require('lodash/indexOf');
 
 function filterState(state, filters) {
   var partialState = {};
   var attributeFilters = filter(filters, function(f) { return f.indexOf('attribute:') !== -1; });
-  var attributes = map(attributeFilters, function(aF) { return aF.split(':')[1]; });
+  var attributes = attributeFilters.map(function(aF) { return aF.split(':')[1]; });
 
-  if (indexOf(attributes, '*') === -1) {
+  if (attributes.indexOf('*') === -1) {
     forEach(attributes, function(attr) {
       if (state.isConjunctiveFacet(attr) && state.isFacetRefined(attr)) {
         if (!partialState.facetsRefinements) partialState.facetsRefinements = {};

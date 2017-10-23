@@ -18,7 +18,6 @@ var isFunction = require('lodash/isFunction');
 var isEmpty = require('lodash/isEmpty');
 var defaults = require('lodash/defaults');
 
-var reduce = require('lodash/reduce');
 var filter = require('lodash/filter');
 var omit = require('lodash/omit');
 
@@ -104,13 +103,13 @@ var lib = {
     } else if (isFunction(attribute)) {
       var hasChanged = false;
 
-      var newRefinementList = reduce(refinementList, function(memo, values, key) {
-        var facetList = filter(values, function(value) {
+      var newRefinementList = Object.keys(refinementList).reduce(function(memo, key) {
+        var facetList = filter(refinementList[key], function(value) {
           return !attribute(value, key, refinementType);
         });
 
         if (!isEmpty(facetList)) {
-          if (facetList.length !== values.length) hasChanged = true;
+          if (facetList.length !== refinementList[key].length) hasChanged = true;
           memo[key] = facetList;
         }
         else hasChanged = true;
@@ -132,8 +131,6 @@ var lib = {
    * @return {boolean}
    */
   isRefined: function isRefined(refinementList, attribute, refinementValue) {
-    var indexOf = require('lodash/indexOf');
-
     var containsRefinements = !!refinementList[attribute] &&
       refinementList[attribute].length > 0;
 
@@ -143,7 +140,7 @@ var lib = {
 
     var refinementValueAsString = '' + refinementValue;
 
-    return indexOf(refinementList[attribute], refinementValueAsString) !== -1;
+    return refinementList[attribute].indexOf(refinementValueAsString) !== -1;
   }
 };
 

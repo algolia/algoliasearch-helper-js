@@ -1,10 +1,7 @@
 'use strict';
 
 var forEach = require('lodash/forEach');
-var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var merge = require('lodash/merge');
-var isArray = require('lodash/isArray');
 
 var requestBuilder = {
   /**
@@ -140,8 +137,8 @@ var requestBuilder = {
       forEach(operators, function(values, operator) {
         if (facetName !== attribute) {
           forEach(values, function(value) {
-            if (isArray(value)) {
-              var vs = map(value, function(v) {
+            if (Array.isArray(value)) {
+              var vs = value.map(function(v) {
                 return attribute + operator + v;
               });
               numericFilters.push(vs);
@@ -251,8 +248,7 @@ var requestBuilder = {
   _getHitsHierarchicalFacetsAttributes: function(state) {
     var out = [];
 
-    return reduce(
-      state.hierarchicalFacets,
+    return state.hierarchicalFacets.reduce(
       // ask for as much levels as there's hierarchical refinements
       function getHitsAttributesForHierarchicalFacet(allAttributes, hierarchicalFacet) {
         var hierarchicalRefinement = state.getHierarchicalRefinement(hierarchicalFacet.name)[0];

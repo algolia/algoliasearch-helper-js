@@ -3,8 +3,6 @@
 module.exports = generateTrees;
 
 var last = require('lodash/last');
-var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var orderBy = require('lodash/orderBy');
 var trim = require('lodash/trim');
 var find = require('lodash/find');
@@ -31,7 +29,7 @@ function generateTrees(state) {
       results = hierarchicalFacetResult.slice(hierarchicalRootPath.split(hierarchicalSeparator).length);
     }
 
-    return reduce(results, generateTreeFn, {
+    return results.reduce(generateTreeFn, {
       name: state.hierarchicalFacets[hierarchicalFacetIndex].name,
       count: null, // root level, no count
       isRefined: true, // root level, always refined
@@ -73,11 +71,13 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
       var onlyMatchingValuesFn = filterFacetValues(parent.path || hierarchicalRootPath,
         currentRefinement, hierarchicalSeparator, hierarchicalRootPath, hierarchicalShowParentLevel);
 
+      var _picked = Object.keys(pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn));
+      var picked = _picked.map(function(key) {
+        return formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)(_picked[key], key);
+      });
+
       parent.data = orderBy(
-        map(
-          pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn),
-          formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)
-        ),
+        picked,
         sortBy[0], sortBy[1]
       );
     }

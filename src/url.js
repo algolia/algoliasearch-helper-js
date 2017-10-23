@@ -11,15 +11,12 @@ var SearchParameters = require('./SearchParameters');
 
 var qs = require('qs');
 
-var bind = require('lodash/bind');
 var forEach = require('lodash/forEach');
 var pick = require('lodash/pick');
-var map = require('lodash/map');
 var mapKeys = require('lodash/mapKeys');
 var mapValues = require('lodash/mapValues');
 var isString = require('lodash/isString');
 var isPlainObject = require('lodash/isPlainObject');
-var isArray = require('lodash/isArray');
 var isEmpty = require('lodash/isEmpty');
 var invert = require('lodash/invert');
 
@@ -29,8 +26,8 @@ function recursiveEncode(input) {
   if (isPlainObject(input)) {
     return mapValues(input, recursiveEncode);
   }
-  if (isArray(input)) {
-    return map(input, recursiveEncode);
+  if (Array.isArray(input)) {
+    return input.map(recursiveEncode);
   }
   if (isString(input)) {
     return encode(input);
@@ -159,7 +156,7 @@ exports.getQueryStringFromState = function(state, options) {
   );
 
   var prefixRegexp = prefixForParameters === '' ? null : new RegExp('^' + prefixForParameters);
-  var sort = bind(sortQueryStringValues, null, prefixRegexp, invertedMapping);
+  var sort = sortQueryStringValues.bind(null, prefixRegexp, invertedMapping);
   if (!isEmpty(moreAttributes)) {
     var stateQs = qs.stringify(encodedState, {encode: safe, sort: sort});
     var moreQs = qs.stringify(moreAttributes, {encode: safe});

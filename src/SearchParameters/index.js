@@ -5,12 +5,8 @@ var intersection = require('lodash/intersection');
 var forOwn = require('lodash/forOwn');
 var forEach = require('lodash/forEach');
 var filter = require('lodash/filter');
-var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var omit = require('lodash/omit');
-var indexOf = require('lodash/indexOf');
 var isNaN = require('lodash/isNaN');
-var isArray = require('lodash/isArray');
 var isEmpty = require('lodash/isEmpty');
 var isEqual = require('lodash/isEqual');
 var isUndefined = require('lodash/isUndefined');
@@ -518,9 +514,9 @@ SearchParameters._parseNumbers = function(partialState) {
     forEach(partialState.numericRefinements, function(operators, attribute) {
       numericRefinements[attribute] = {};
       forEach(operators, function(values, operator) {
-        var parsedValues = map(values, function(v) {
-          if (isArray(v)) {
-            return map(v, function(vPrime) {
+        var parsedValues = values.map(function(v) {
+          if (Array.isArray(v)) {
+            return v.map(function(vPrime) {
               if (isString(vPrime)) {
                 return parseFloat(vPrime);
               }
@@ -894,7 +890,8 @@ SearchParameters.prototype = {
       return omit(this.numericRefinements, attribute);
     } else if (isFunction(attribute)) {
       var hasChanged = false;
-      var newNumericRefinements = reduce(this.numericRefinements, function(memo, operators, key) {
+      var newNumericRefinements = Object.keys(this.numericRefinements).reduce(function(memo, key, numericRefinements) {
+        var operators = numericRefinements[key];
         var operatorList = {};
 
         forEach(operators, function(values, operator) {
@@ -1342,7 +1339,7 @@ SearchParameters.prototype = {
    * @return {boolean}
    */
   isDisjunctiveFacet: function(facet) {
-    return indexOf(this.disjunctiveFacets, facet) > -1;
+    return this.disjunctiveFacets.indexOf(facet) > -1;
   },
   /**
    * Test if the facet name is from one of the hierarchical facets
@@ -1360,7 +1357,7 @@ SearchParameters.prototype = {
    * @return {boolean}
    */
   isConjunctiveFacet: function(facet) {
-    return indexOf(this.facets, facet) > -1;
+    return this.facets.indexOf(facet) > -1;
   },
   /**
    * Returns true if the facet is refined, either for a specific value or in
@@ -1430,7 +1427,7 @@ SearchParameters.prototype = {
       return refinements.length > 0;
     }
 
-    return indexOf(refinements, value) !== -1;
+    return refinements.indexOf(value) !== -1;
   },
   /**
    * Test if the triple (attribute, operator, value) is already refined.
@@ -1468,7 +1465,7 @@ SearchParameters.prototype = {
    * @return {boolean}
    */
   isTagRefined: function isTagRefined(tag) {
-    return indexOf(this.tagRefinements, tag) !== -1;
+    return this.tagRefinements.indexOf(tag) !== -1;
   },
   /**
    * Returns the list of all disjunctive facets refined
@@ -1499,7 +1496,7 @@ SearchParameters.prototype = {
     return intersection(
       // enforce the order between the two arrays,
       // so that refinement name index === hierarchical facet index
-      map(this.hierarchicalFacets, 'name'),
+      this.hierarchicalFacets.map(function(_) { return _.name; }),
       keys(this.hierarchicalFacetsRefinements)
     );
   },
@@ -1512,7 +1509,7 @@ SearchParameters.prototype = {
     var refinedFacets = this.getRefinedDisjunctiveFacets();
 
     return filter(this.disjunctiveFacets, function(f) {
-      return indexOf(refinedFacets, f) === -1;
+      return refinedFacets.indexOf(f) === -1;
     });
   },
 
@@ -1528,7 +1525,7 @@ SearchParameters.prototype = {
     var queryParams = {};
 
     forOwn(this, function(paramValue, paramName) {
-      if (indexOf(managedParameters, paramName) === -1 && paramValue !== undefined) {
+      if (managedParameters.indexOf(paramName) === -1 && paramValue !== undefined) {
         queryParams[paramName] = paramValue;
       }
     });
@@ -1693,7 +1690,7 @@ SearchParameters.prototype = {
       this.getHierarchicalFacetByName(facetName)
     );
     var path = refinement.split(separator);
-    return map(path, trim);
+    return path.map(trim);
   },
 
   toString: function() {
