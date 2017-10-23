@@ -103,13 +103,13 @@ var lib = {
     } else if (isFunction(attribute)) {
       var hasChanged = false;
 
-      var newRefinementList = refinementList.reduce(function(memo, values, key) {
-        var facetList = filter(values, function(value) {
+      var newRefinementList = Object.keys(refinementList).reduce(function(memo, key) {
+        var facetList = filter(refinementList[key], function(value) {
           return !attribute(value, key, refinementType);
         });
 
         if (!isEmpty(facetList)) {
-          if (facetList.length !== values.length) hasChanged = true;
+          if (facetList.length !== refinementList[key].length) hasChanged = true;
           memo[key] = facetList;
         }
         else hasChanged = true;
