@@ -40,6 +40,7 @@
   "files": [
     "dist",
     "src",
+    "index.js"
   ],
   "devDependencies": {
     "algolia-frontend-components": "^0.0.33",
