@@ -28,7 +28,7 @@ test(
     then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {clickAnalytics: true});
       helper.on('result', function(content) {
-        t.notEqual(content.queryID, undefined);
+        t.equal(typeof content.queryID, 'string');
         t.end();
       });
 
