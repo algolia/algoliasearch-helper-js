@@ -43,6 +43,8 @@ test('[Derivated helper] 1 derivatives, no modifications', function(t) {
       requests[1],
       'the helper generates the same query twice'
     );
+
+    return Promise.resolve();
   }
 });
 
@@ -73,5 +75,7 @@ test('[Derivated helper] no derivatives, modification', function(t) {
       requests[1],
       'Without the query the other parameters are identical'
     );
+
+    return Promise.resolve();
   }
 });

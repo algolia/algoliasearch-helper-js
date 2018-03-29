@@ -13,6 +13,7 @@ test('the queryid should keep increasing when new requests arrives', function(t)
     addAlgoliaAgent: function() {},
     search: function() {
       initialQueryID++;
+      return Promise.resolve();
     }
   };
   var helper = algoliasearchHelper(client, null, {});
