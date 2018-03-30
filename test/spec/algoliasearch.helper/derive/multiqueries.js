@@ -19,6 +19,8 @@ test('[Derivated helper] no derivatives', function(t) {
       1,
       'Without the derivatives and no filters, the helper generates a single query'
     );
+
+    return new Promise(function() {});
   }
 });
 
@@ -44,7 +46,7 @@ test('[Derivated helper] 1 derivatives, no modifications', function(t) {
       'the helper generates the same query twice'
     );
 
-    return Promise.resolve();
+    return new Promise(function() {});
   }
 });
 
@@ -76,6 +78,6 @@ test('[Derivated helper] no derivatives, modification', function(t) {
       'Without the query the other parameters are identical'
     );
 
-    return Promise.resolve();
+    return new Promise(function() {});
   }
 });

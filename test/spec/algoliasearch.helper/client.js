@@ -8,7 +8,7 @@ var algoliasearch = require('algoliasearch');
 
 function makeFakeClient() {
   var client = algoliasearch('what', 'wait', {});
-  client.search = sinon.spy();
+  client.search = sinon.stub().returns(new Promise(function() {}));
   return client;
 }
 

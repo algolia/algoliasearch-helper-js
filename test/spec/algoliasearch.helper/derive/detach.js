@@ -51,6 +51,6 @@ test('[Derivated helper] detach a derivative helper', function(t) {
       t.end();
     }
 
-    return Promise.resolve();
+    return new Promise(function() {});
   }
 });

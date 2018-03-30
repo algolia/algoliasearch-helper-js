@@ -13,7 +13,7 @@ test('the queryid should keep increasing when new requests arrives', function(t)
     addAlgoliaAgent: function() {},
     search: function() {
       initialQueryID++;
-      return Promise.resolve();
+      return new Promise(function() {});
     }
   };
   var helper = algoliasearchHelper(client, null, {});
@@ -48,13 +48,13 @@ test('the response handler should check that the query is not outdated', functio
     helper: helper
   }];
 
-  helper._dispatchAlgoliaResponse(states, helper._lastQueryIdReceived + 1, null, testData.response);
-  helper._dispatchAlgoliaResponse(states, helper._lastQueryIdReceived + 10, null, testData.response);
+  helper._dispatchAlgoliaResponse(states, helper._lastQueryIdReceived + 1, testData.response);
+  helper._dispatchAlgoliaResponse(states, helper._lastQueryIdReceived + 10, testData.response);
   t.equal(callCount, 2, 'the callback should have been called twice');
 
   shouldTriggerResult = false;
 
-  helper._dispatchAlgoliaResponse(states, helper._lastQueryIdReceived - 1, null, testData.response);
+  helper._dispatchAlgoliaResponse(states, helper._lastQueryIdReceived - 1, testData.response);
   t.equal(callCount, 2, "and shouldn't have been called if outdated");
 
   t.end();
