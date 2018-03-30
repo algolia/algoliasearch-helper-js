@@ -1202,8 +1202,11 @@ AlgoliaSearchHelper.prototype._search = function() {
   this._currentNbQueries++;
 
   this.client.search(queries)
-    .then(this._dispatchAlgoliaResponse.bind(this, states, queryId))
-    .catch(this._dispatchAlgoliaError.bind(this, queryId));
+  .then(this._dispatchAlgoliaResponse.bind(this, states, queryId))
+  .catch(this._dispatchAlgoliaError.bind(this, queryId))
+  .catch(function(err) {
+    console.error('error', err);
+  });
 };
 
 /**
