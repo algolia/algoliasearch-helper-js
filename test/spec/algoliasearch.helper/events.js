@@ -218,6 +218,8 @@ test('searchOnce event should be emitted once when the search is triggered using
       1,
       'When the client search function is called the searchOnce' +
       ' event should have been sent exactly once.');
+
+    return new Promise(function() {});
   };
 
   t.equal(count, 0, 'before search');
