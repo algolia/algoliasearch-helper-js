@@ -207,15 +207,26 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   this.emit('searchOnce', tempState);
 
   if (cb) {
-    return this.client.search(
-      queries,
-      function(err, content) {
+    this.client
+      .search(queries)
+      .then(function(content) {
         self._currentNbQueries--;
-        if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
-        if (err) cb(err, null, tempState);
-        else cb(err, new SearchResults(tempState, content.results), tempState);
-      }
-    );
+        if (self._currentNbQueries === 0) {
+          self.emit('searchQueueEmpty');
+        }
+
+        cb(null, new SearchResults(tempState, content.results), tempState);
+      })
+      .catch(function(err) {
+        self._currentNbQueries--;
+        if (self._currentNbQueries === 0) {
+          self.emit('searchQueueEmpty');
+        }
+
+        cb(err, null, tempState);
+      });
+
+    return undefined;
   }
 
   return this.client.search(queries).then(function(content) {
