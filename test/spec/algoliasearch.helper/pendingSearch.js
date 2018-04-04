@@ -10,8 +10,10 @@ test('When searchOnce with callback, hasPendingRequests is true', function(t) {
   var client = algoliaSearch('dsf', 'dsfdf');
 
   var triggerCb;
-  client.search = function(qs, cb) {
-    triggerCb = function() { cb(null, testData.response); };
+  client.search = function() {
+    return new Promise(function(done) {
+      triggerCb = function() { done(testData.response); };
+    });
   };
 
   var helper = algoliasearchHelper(client, 'test_hotels-node');
