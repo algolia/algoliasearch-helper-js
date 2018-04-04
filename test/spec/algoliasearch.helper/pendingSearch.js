@@ -5,6 +5,35 @@ var algoliaSearch = require('algoliasearch');
 
 var algoliasearchHelper = require('../../../index');
 
+test('When searchOnce with callback, hasPendingRequests is true', function(t) {
+  var testData = require('../search.testdata')();
+  var client = algoliaSearch('dsf', 'dsfdf');
+
+  var triggerCb;
+  client.search = function(qs, cb) {
+    triggerCb = function() { cb(null, testData.response); };
+  };
+
+  var helper = algoliasearchHelper(client, 'test_hotels-node');
+  var countNoMoreSearch = 0;
+  helper.on('searchQueueEmpty', function() {
+    countNoMoreSearch += 1;
+  });
+
+  t.equal(helper.hasPendingRequests(), false, 'before searchOnce');
+
+  helper.searchOnce(helper.state, function() {
+    t.equal(helper.hasPendingRequests(), false, 'after searchOnce');
+    t.equal(countNoMoreSearch, 1, 'No more search should have been called once after search results');
+    t.end();
+  });
+
+  t.equal(helper.hasPendingRequests(), true, 'during searchOnce');
+  t.equal(countNoMoreSearch, 0, 'No more search should not have been called yet');
+
+  triggerCb();
+});
+
 test('When searchOnce with promises, hasPendingRequests is true', function(t) {
   var testData = require('../search.testdata')();
   var client = algoliaSearch('dsf', 'dsfdf');
