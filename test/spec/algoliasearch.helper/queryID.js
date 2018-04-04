@@ -59,3 +59,29 @@ test('the response handler should check that the query is not outdated', functio
 
   t.end();
 });
+
+test('the error handler should check that the query is not outdated', function(t) {
+  var shouldTriggerError = true;
+  var callCount = 0;
+
+  var helper = algoliasearchHelper(fakeClient, null, {});
+
+  helper.on('error', function() {
+    callCount++;
+
+    if (!shouldTriggerError) {
+      t.fail('The id was outdated');
+    }
+  });
+
+  helper._dispatchAlgoliaError(helper._lastQueryIdReceived + 1, new Error());
+  helper._dispatchAlgoliaError(helper._lastQueryIdReceived + 10, new Error());
+  t.equal(callCount, 2, 'the callback should have been called twice');
+
+  shouldTriggerError = false;
+
+  helper._dispatchAlgoliaError(helper._lastQueryIdReceived - 1, new Error());
+  t.equal(callCount, 2, "and shouldn't have been called if outdated");
+
+  t.end();
+});
