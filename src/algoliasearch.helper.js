@@ -1217,6 +1217,7 @@ AlgoliaSearchHelper.prototype._search = function() {
       .then(this._dispatchAlgoliaResponse.bind(this, states, queryId))
       .catch(this._dispatchAlgoliaError.bind(this, queryId));
   } catch (err) {
+    // If we reach this part, we're in an internal error state
     this.emit('error', err);
   }
 };
