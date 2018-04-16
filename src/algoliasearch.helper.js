@@ -288,7 +288,11 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
   var self = this;
 
   this.emit('searchForFacetValues', state, facet, query);
-  return index.searchForFacetValues(algoliaQuery).then(function addIsRefined(content) {
+  var searchForFacetValuesPromise = this.client.searchForFacetValues
+    ? this.client.searchForFacetValues([algoliaQuery])
+    : index.searchForFacetValues(algoliaQuery);
+
+  return searchForFacetValuesPromise.then(function addIsRefined(content) {
     self._currentNbQueries--;
     if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     content.facetHits = forEach(content.facetHits, function(f) {
