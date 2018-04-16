@@ -177,8 +177,8 @@ test('client.searchForFacetValues can override the current search state', functi
     highlightPreTag: 'highlightTag'
   });
 
-  t.notOk(lastParameters[0].hasOwnProperty('query'));
   t.equal(lastParameters[0].indexName, 'index');
+  t.notOk(lastParameters[0].params.hasOwnProperty('query'));
   t.equal(lastParameters[0].params.facetQuery, 'query');
   t.equal(lastParameters[0].params.facetName, 'facet');
   t.equal(lastParameters[0].params.highlightPreTag, 'highlightTag');
