@@ -11,6 +11,7 @@ var events = require('events');
 var flatten = require('lodash/flatten');
 var forEach = require('lodash/forEach');
 var isEmpty = require('lodash/isEmpty');
+var isArray = require('lodash/isArray');
 var map = require('lodash/map');
 
 var url = require('./url');
@@ -294,6 +295,9 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
   return searchForFacetValuesPromise.then(function addIsRefined(content) {
     self._currentNbQueries--;
     if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
+
+    content = isArray(content) ? content[0] : content;
+
     content.facetHits = forEach(content.facetHits, function(f) {
       f.isRefined = isDisjunctive ?
         state.isDisjunctiveFacetRefined(facet, f.value) :
