@@ -9,7 +9,6 @@ var map = require('lodash/map');
 var reduce = require('lodash/reduce');
 var omit = require('lodash/omit');
 var indexOf = require('lodash/indexOf');
-var isNaN = require('lodash/isNaN');
 var isArray = require('lodash/isArray');
 var isEmpty = require('lodash/isEmpty');
 var isEqual = require('lodash/isEqual');
@@ -509,7 +508,7 @@ SearchParameters._parseNumbers = function(partialState) {
     var value = partialState[k];
     if (isString(value)) {
       var parsedValue = parseFloat(value);
-      numbers[k] = isNaN(parsedValue) ? value : parsedValue;
+      numbers[k] = Number.isNaN(parsedValue) ? value : parsedValue;
     }
   });
 
