@@ -1304,7 +1304,7 @@ AlgoliaSearchHelper.prototype._change = function(newState) {
  * @return {AlgoliaSearchHelper}
  */
 AlgoliaSearchHelper.prototype.clearCache = function() {
-  this.client.clearCache();
+  this.client.clearCache && this.client.clearCache();
   return this;
 };
 
