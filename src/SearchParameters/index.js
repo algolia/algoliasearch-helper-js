@@ -9,7 +9,6 @@ var map = require('lodash/map');
 var reduce = require('lodash/reduce');
 var omit = require('lodash/omit');
 var indexOf = require('lodash/indexOf');
-var isArray = require('lodash/isArray');
 var isEmpty = require('lodash/isEmpty');
 var isEqual = require('lodash/isEqual');
 var isUndefined = require('lodash/isUndefined');
@@ -528,7 +527,7 @@ SearchParameters._parseNumbers = function(partialState) {
       numericRefinements[attribute] = {};
       forEach(operators, function(values, operator) {
         var parsedValues = map(values, function(v) {
-          if (isArray(v)) {
+          if (Array.isArray(v)) {
             return map(v, function(vPrime) {
               if (isString(vPrime)) {
                 return parseFloat(vPrime);
