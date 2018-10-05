@@ -1,0 +1,144 @@
+'use strict';
+
+test('hierarchical facets: simple usage', function(done) {
+  var algoliasearch = require('algoliasearch');
+  var sinon = require('sinon');
+  var isArray = require('lodash/isArray');
+
+  var algoliasearchHelper = require('../../index.js');
+
+  var appId = 'hierarchical-toggleRefine-appId';
+  var apiKey = 'hierarchical-toggleRefine-apiKey';
+  var indexName = 'hierarchical-toggleRefine-indexName';
+
+  var client = algoliasearch(appId, apiKey);
+  var helper = algoliasearchHelper(client, indexName, {
+    hierarchicalFacets: [{
+      name: 'categories',
+      attributes: ['categories.lvl0', 'categories.lvl1', 'categories.lvl2', 'categories.lvl3']
+    }]
+  });
+
+  helper.toggleRefine('categories', 'beers > IPA > Flying dog');
+
+  var algoliaResponse = {
+    'results': [{
+      'query': 'a',
+      'index': indexName,
+      'hits': [{'objectID': 'one'}],
+      'nbHits': 3,
+      'page': 0,
+      'nbPages': 1,
+      'hitsPerPage': 20,
+      'facets': {
+        'categories.lvl0': {'beers': 3, 'sales': 3},
+        'categories.lvl1': {'beers > IPA': 3, 'sales > IPA': 3},
+        'categories.lvl2': {'beers > IPA > Flying dog': 3, 'sales > IPA > Flying dog': 3}
+      }
+    }, {
+      'query': 'a',
+      'index': indexName,
+      'hits': [{'objectID': 'one'}],
+      'nbHits': 1,
+      'page': 0,
+      'nbPages': 1,
+      'hitsPerPage': 1,
+      'facets': {
+        'categories.lvl0': {'beers': 9},
+        'categories.lvl1': {'beers > IPA': 9},
+        'categories.lvl2': {
+          'beers > IPA > Flying dog': 3,
+          'sales > IPA > Flying dog': 3,
+          'beers > IPA > Brewdog punk IPA': 6
+        }
+      }
+    }, {
+      'query': 'a',
+      'index': indexName,
+      'hits': [{'objectID': 'one'}],
+      'nbHits': 1,
+      'page': 0,
+      'nbPages': 1,
+      'hitsPerPage': 1,
+      'facets': {
+        'categories.lvl0': {'beers': 20, 'fruits': 5, 'sales': 20}
+      }
+    }]
+  };
+
+  var expectedHelperResponse = [{
+    'name': 'categories',
+    'count': null,
+    'isRefined': true,
+    'path': null,
+    'data': [{
+      'name': 'beers',
+      'path': 'beers',
+      'count': 9,
+      'isRefined': true,
+      'data': [{
+        'name': 'IPA',
+        'path': 'beers > IPA',
+        'count': 9,
+        'isRefined': true,
+        'data': [{
+          'name': 'Flying dog',
+          'path': 'beers > IPA > Flying dog',
+          'count': 3,
+          'isRefined': true,
+          'data': null
+        }, {
+          'name': 'Brewdog punk IPA',
+          'path': 'beers > IPA > Brewdog punk IPA',
+          'count': 6,
+          'isRefined': false,
+          'data': null
+        }]
+      }]
+    }, {
+      'name': 'fruits',
+      'path': 'fruits',
+      'count': 5,
+      'isRefined': false,
+      'data': null
+    }, {
+      'name': 'sales',
+      'path': 'sales',
+      'count': 20,
+      'isRefined': false,
+      'data': null
+    }]
+  }];
+
+  client.search = sinon
+    .stub()
+    .resolves(algoliaResponse);
+
+  helper.setQuery('a').search();
+
+  helper.once('result', function(content) {
+    var call = client.search.getCall(0);
+    var queries = call.args[0];
+    var hitsQuery = queries[0];
+    var parentValuesQuery = queries[1];
+    var rootValuesQuery = queries[2];
+
+    expect(queries.length).toBe(3);
+    expect(hitsQuery.params.facets).toEqual(
+      ['categories.lvl0', 'categories.lvl1', 'categories.lvl2', 'categories.lvl3']
+    );
+    expect(hitsQuery.params.facetFilters).toEqual([['categories.lvl2:beers > IPA > Flying dog']]);
+    expect(parentValuesQuery.params.facets).toEqual(['categories.lvl0', 'categories.lvl1', 'categories.lvl2']);
+    expect(parentValuesQuery.params.facetFilters).toEqual([['categories.lvl1:beers > IPA']]);
+    expect(rootValuesQuery.params.facets).toEqual(['categories.lvl0']);
+    expect(rootValuesQuery.params.facetFilters).toBe(undefined);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    expect(content.getFacetByName('categories')).toEqual(expectedHelperResponse[0]);
+
+    // we do not yet support multiple values for hierarchicalFacetsRefinements
+    // but at some point we may want to open multiple leafs of a hierarchical menu
+    // So we set this as an array so that we do not have to bump major to handle it
+    expect(isArray(helper.state.hierarchicalFacetsRefinements.categories)).toBeTruthy();
+    done();
+  });
+});
