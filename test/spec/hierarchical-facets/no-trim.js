@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: do not trim facetFilters values', function(t) {
+test('hierarchical facets: do not trim facetFilters values', function(done) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -101,17 +99,9 @@ test('hierarchical facets: do not trim facetFilters values', function(t) {
     var hitsQuery = queries[0];
     var parentValuesQuery = queries[1];
 
-    t.deepEqual(
-      hitsQuery.params.facetFilters,
-      [['categories.lvl1:  beers > IPA   ']],
-      'first query (hits) has our `categories.lvl1` refinement facet filter'
-    );
-    t.deepEqual(
-      parentValuesQuery.params.facetFilters,
-      [['categories.lvl0:  beers ']],
-      'second query (unrefined parent facet values) has `categories.lvl0` (parent level) refined'
-    );
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(hitsQuery.params.facetFilters).toEqual([['categories.lvl1:  beers > IPA   ']]);
+    expect(parentValuesQuery.params.facetFilters).toEqual([['categories.lvl0:  beers ']]);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });

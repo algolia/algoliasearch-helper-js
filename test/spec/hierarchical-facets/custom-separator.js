@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: custom separator', function(t) {
+test('hierarchical facets: custom separator', function(done) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -99,28 +97,12 @@ test('hierarchical facets: custom separator', function(t) {
     var hitsQuery = queries[0];
     var parentValuesQuery = queries[1];
 
-    t.ok(client.search.calledOnce, 'client.search was called once');
-    t.deepEqual(
-      hitsQuery.params.facets,
-      ['categories.lvl0', 'categories.lvl1'],
-      'first query (hits) has `categories.lvl0, categories.lvl1` as facets'
-    );
-    t.deepEqual(
-      hitsQuery.params.facetFilters,
-      [['categories.lvl1:beers | IPA']],
-      'first query (hits) has our `categories.lvl1` refinement facet filter'
-    );
-    t.deepEqual(
-      parentValuesQuery.params.facets,
-      ['categories.lvl0', 'categories.lvl1'],
-      'second query (unrefined parent facet values) has `categories.lvl1` as facets'
-    );
-    t.deepEqual(
-      parentValuesQuery.params.facetFilters,
-      [['categories.lvl0:beers']],
-      'second query (unrefined parent facet values) has `categories.lvl0` (parent level) refined'
-    );
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(client.search.calledOnce).toBeTruthy();
+    expect(hitsQuery.params.facets).toEqual(['categories.lvl0', 'categories.lvl1']);
+    expect(hitsQuery.params.facetFilters).toEqual([['categories.lvl1:beers | IPA']]);
+    expect(parentValuesQuery.params.facets).toEqual(['categories.lvl0', 'categories.lvl1']);
+    expect(parentValuesQuery.params.facetFilters).toEqual([['categories.lvl0:beers']]);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });

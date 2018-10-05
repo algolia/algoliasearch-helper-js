@@ -1,10 +1,8 @@
 'use strict';
 
-var test = require('tape');
-
 var algoliasearchHelper = require('../../../../index.js');
 
-test('[Derivated helper] detach a derivative helper', function(t) {
+test('[Derivated helper] detach a derivative helper', function(done) {
   var client = {
     search: searchTest
   };
@@ -20,34 +18,14 @@ test('[Derivated helper] detach a derivative helper', function(t) {
   function searchTest(requests) {
     nbRequest = nbRequest || 0;
     if (nbRequest === 0) {
-      t.equal(
-        requests.length,
-        2,
-        'the helper generates a two queries'
-      );
-      t.deepEqual(
-        requests[0],
-        requests[1],
-        'the helper generates the same query twice'
-      );
-      t.equal(
-        derivedHelper.listeners('result').length,
-        1,
-        'one listener is plugged to the derived helper'
-      );
+      expect(requests.length).toBe(2);
+      expect(requests[0]).toEqual(requests[1]);
+      expect(derivedHelper.listeners('result').length).toBe(1);
       nbRequest++;
     } else if (nbRequest === 1) {
-      t.equal(
-        requests.length,
-        1,
-        'the helper generates a two queries'
-      );
-      t.equal(
-        derivedHelper.listeners('result').length,
-        0,
-        'no listener on the derived helper'
-      );
-      t.end();
+      expect(requests.length).toBe(1);
+      expect(derivedHelper.listeners('result').length).toBe(0);
+      done();
     }
 
     return new Promise(function() {});

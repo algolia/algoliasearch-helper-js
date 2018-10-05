@@ -1,13 +1,12 @@
 'use strict';
 
-var test = require('tape');
 var algoliasearchHelper = require('../../../index');
 
 var _ = require('lodash');
 
 var fakeClient = {};
 
-test('helper.hasRefinements(attribute)', function(t) {
+test('helper.hasRefinements(attribute)', function() {
   var helper;
 
   // cannot be tested since there's no way to know that a numeric refinement

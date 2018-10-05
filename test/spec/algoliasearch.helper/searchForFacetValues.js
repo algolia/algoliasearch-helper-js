@@ -1,11 +1,9 @@
 'use strict';
 
-var test = require('tape');
-
 var algoliasearchHelper = require('../../../index');
 
-test('searchForFacetValues calls the client method over the index method', function(t) {
-  t.plan(2);
+test('searchForFacetValues calls the client method over the index method', function(done) {
+  expect.assertions(2);
 
   var indexSearchForFacetValuesCalled = 0;
   var clientSearchForFacetValuesCalled = 0;
@@ -28,15 +26,15 @@ test('searchForFacetValues calls the client method over the index method', funct
   var helper = algoliasearchHelper(fakeClient, 'index');
 
   helper.searchForFacetValues('facet', 'query', 1).then(function() {
-    t.equal(clientSearchForFacetValuesCalled, 1);
-    t.equal(indexSearchForFacetValuesCalled, 0);
+    expect(clientSearchForFacetValuesCalled).toBe(1);
+    expect(indexSearchForFacetValuesCalled).toBe(0);
 
-    t.end();
+    done();
   });
 });
 
-test('searchForFacetValues calls the index method if no client method', function(t) {
-  t.plan(1);
+test('searchForFacetValues calls the index method if no client method', function(done) {
+  expect.assertions(1);
 
   var indexSearchForFacetValuesCalled = 0;
 
@@ -54,13 +52,13 @@ test('searchForFacetValues calls the index method if no client method', function
   var helper = algoliasearchHelper(fakeClient, 'index');
 
   helper.searchForFacetValues('facet', 'query', 1).then(function() {
-    t.equal(indexSearchForFacetValuesCalled, 1);
-    t.end();
+    expect(indexSearchForFacetValuesCalled).toBe(1);
+    done();
   });
 });
 
-test('searchForFacetValues resolve with the correct response from client', function(t) {
-  t.plan(3);
+test('searchForFacetValues resolve with the correct response from client', function(done) {
+  expect.assertions(3);
 
   var fakeClient = {
     addAlgoliaAgent: function() {},
@@ -78,16 +76,16 @@ test('searchForFacetValues resolve with the correct response from client', funct
   var helper = algoliasearchHelper(fakeClient, 'index');
 
   helper.searchForFacetValues('facet', 'query', 1).then(function(content) {
-    t.equal(content.exhaustiveFacetsCount, true);
-    t.equal(content.facetHits.length, 0);
-    t.equal(content.processingTimeMS, 3);
+    expect(content.exhaustiveFacetsCount).toBe(true);
+    expect(content.facetHits.length).toBe(0);
+    expect(content.processingTimeMS).toBe(3);
 
-    t.end();
+    done();
   });
 });
 
-test('searchForFacetValues resolve with the correct response from initIndex', function(t) {
-  t.plan(3);
+test('searchForFacetValues resolve with the correct response from initIndex', function(done) {
+  expect.assertions(3);
 
   var fakeClient = {
     addAlgoliaAgent: function() {},
@@ -107,15 +105,15 @@ test('searchForFacetValues resolve with the correct response from initIndex', fu
   var helper = algoliasearchHelper(fakeClient, 'index');
 
   helper.searchForFacetValues('facet', 'query', 1).then(function(content) {
-    t.equal(content.exhaustiveFacetsCount, true);
-    t.equal(content.facetHits.length, 0);
-    t.equal(content.processingTimeMS, 3);
+    expect(content.exhaustiveFacetsCount).toBe(true);
+    expect(content.facetHits.length).toBe(0);
+    expect(content.processingTimeMS).toBe(3);
 
-    t.end();
+    done();
   });
 });
 
-test('index.searchForFacetValues should search for facetValues with the current state', function(t) {
+test('index.searchForFacetValues should search for facetValues with the current state', function() {
   var lastParameters = null;
   var fakeClient = {
     initIndex: function() {
@@ -137,16 +135,14 @@ test('index.searchForFacetValues should search for facetValues with the current 
 
   helper.searchForFacetValues('facet', 'query', 75);
 
-  t.equal(lastParameters[0].query, 'iphone');
-  t.equal(lastParameters[0].facetQuery, 'query');
-  t.equal(lastParameters[0].facetName, 'facet');
-  t.equal(lastParameters[0].highlightPreTag, 'HIGHLIGHT>');
-  t.equal(lastParameters[0].highlightPostTag, '<HIGHLIGHT');
-
-  t.end();
+  expect(lastParameters[0].query).toBe('iphone');
+  expect(lastParameters[0].facetQuery).toBe('query');
+  expect(lastParameters[0].facetName).toBe('facet');
+  expect(lastParameters[0].highlightPreTag).toBe('HIGHLIGHT>');
+  expect(lastParameters[0].highlightPostTag).toBe('<HIGHLIGHT');
 });
 
-test('index.searchForFacetValues can override the current search state', function(t) {
+test('index.searchForFacetValues can override the current search state', function() {
   var lastParameters = null;
   var fakeClient = {
     initIndex: function() {
@@ -171,16 +167,14 @@ test('index.searchForFacetValues can override the current search state', functio
     highlightPreTag: 'highlightTag'
   });
 
-  t.notOk(lastParameters[0].hasOwnProperty('query'));
-  t.equal(lastParameters[0].facetQuery, 'query');
-  t.equal(lastParameters[0].facetName, 'facet');
-  t.equal(lastParameters[0].highlightPreTag, 'highlightTag');
-  t.equal(lastParameters[0].highlightPostTag, '<HIGHLIGHT');
-
-  t.end();
+  expect(lastParameters[0].hasOwnProperty('query')).toBeFalsy();
+  expect(lastParameters[0].facetQuery).toBe('query');
+  expect(lastParameters[0].facetName).toBe('facet');
+  expect(lastParameters[0].highlightPreTag).toBe('highlightTag');
+  expect(lastParameters[0].highlightPostTag).toBe('<HIGHLIGHT');
 });
 
-test('client.searchForFacetValues should search for facetValues with the current state', function(t) {
+test('client.searchForFacetValues should search for facetValues with the current state', function() {
   var lastParameters = null;
   var fakeClient = {
     searchForFacetValues: function() {
@@ -197,17 +191,15 @@ test('client.searchForFacetValues should search for facetValues with the current
 
   helper.searchForFacetValues('facet', 'query', 75);
 
-  t.equal(lastParameters[0].indexName, 'index');
-  t.equal(lastParameters[0].params.query, 'iphone');
-  t.equal(lastParameters[0].params.facetQuery, 'query');
-  t.equal(lastParameters[0].params.facetName, 'facet');
-  t.equal(lastParameters[0].params.highlightPreTag, 'HIGHLIGHT>');
-  t.equal(lastParameters[0].params.highlightPostTag, '<HIGHLIGHT');
-
-  t.end();
+  expect(lastParameters[0].indexName).toBe('index');
+  expect(lastParameters[0].params.query).toBe('iphone');
+  expect(lastParameters[0].params.facetQuery).toBe('query');
+  expect(lastParameters[0].params.facetName).toBe('facet');
+  expect(lastParameters[0].params.highlightPreTag).toBe('HIGHLIGHT>');
+  expect(lastParameters[0].params.highlightPostTag).toBe('<HIGHLIGHT');
 });
 
-test('client.searchForFacetValues can override the current search state', function(t) {
+test('client.searchForFacetValues can override the current search state', function() {
   var lastParameters = null;
   var fakeClient = {
     searchForFacetValues: function() {
@@ -227,12 +219,10 @@ test('client.searchForFacetValues can override the current search state', functi
     highlightPreTag: 'highlightTag'
   });
 
-  t.equal(lastParameters[0].indexName, 'index');
-  t.notOk(lastParameters[0].params.hasOwnProperty('query'));
-  t.equal(lastParameters[0].params.facetQuery, 'query');
-  t.equal(lastParameters[0].params.facetName, 'facet');
-  t.equal(lastParameters[0].params.highlightPreTag, 'highlightTag');
-  t.equal(lastParameters[0].params.highlightPostTag, '<HIGHLIGHT');
-
-  t.end();
+  expect(lastParameters[0].indexName).toBe('index');
+  expect(lastParameters[0].params.hasOwnProperty('query')).toBeFalsy();
+  expect(lastParameters[0].params.facetQuery).toBe('query');
+  expect(lastParameters[0].params.facetName).toBe('facet');
+  expect(lastParameters[0].params.highlightPreTag).toBe('highlightTag');
+  expect(lastParameters[0].params.highlightPostTag).toBe('<HIGHLIGHT');
 });

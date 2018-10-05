@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: simple usage', function(t) {
+test('hierarchical facets: simple usage', function(done) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
   var isArray = require('lodash/isArray');
@@ -125,47 +123,22 @@ test('hierarchical facets: simple usage', function(t) {
     var parentValuesQuery = queries[1];
     var rootValuesQuery = queries[2];
 
-    t.equal(queries.length, 3, 'we made three queries');
-    t.deepEqual(
-      hitsQuery.params.facets,
-      ['categories.lvl0', 'categories.lvl1', 'categories.lvl2', 'categories.lvl3'],
-      'first query (hits) has `categories.lvl0, categories.lvl1, categories.lvl2, categories.lvl3` as facets'
+    expect(queries.length).toBe(3);
+    expect(hitsQuery.params.facets).toEqual(
+      ['categories.lvl0', 'categories.lvl1', 'categories.lvl2', 'categories.lvl3']
     );
-    t.deepEqual(
-      hitsQuery.params.facetFilters,
-      [['categories.lvl2:beers > IPA > Flying dog']],
-      'first query (hits) has our `categories.lvl2` refinement facet filter'
-    );
-    t.deepEqual(
-      parentValuesQuery.params.facets,
-      ['categories.lvl0', 'categories.lvl1', 'categories.lvl2'],
-      'second query (unrefined parent facet values) has `categories.lvl2` as facets'
-    );
-    t.deepEqual(
-      parentValuesQuery.params.facetFilters,
-      [['categories.lvl1:beers > IPA']],
-      'second query (unrefined parent facet values) has `categories.lvl1` (parent level) refined'
-    );
-    t.deepEqual(
-      rootValuesQuery.params.facets,
-      ['categories.lvl0'],
-      'second query (unrefined root facet values) has `categories.lvl0` as facets'
-    );
-    t.equal(
-      rootValuesQuery.params.facetFilters,
-      undefined,
-      'second query (unrefined root facet values) has no facet refinement'
-    );
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.deepEqual(content.getFacetByName('categories'), expectedHelperResponse[0]);
+    expect(hitsQuery.params.facetFilters).toEqual([['categories.lvl2:beers > IPA > Flying dog']]);
+    expect(parentValuesQuery.params.facets).toEqual(['categories.lvl0', 'categories.lvl1', 'categories.lvl2']);
+    expect(parentValuesQuery.params.facetFilters).toEqual([['categories.lvl1:beers > IPA']]);
+    expect(rootValuesQuery.params.facets).toEqual(['categories.lvl0']);
+    expect(rootValuesQuery.params.facetFilters).toBe(undefined);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    expect(content.getFacetByName('categories')).toEqual(expectedHelperResponse[0]);
 
     // we do not yet support multiple values for hierarchicalFacetsRefinements
     // but at some point we may want to open multiple leafs of a hierarchical menu
     // So we set this as an array so that we do not have to bump major to handle it
-    t.ok(
-      isArray(helper.state.hierarchicalFacetsRefinements.categories),
-      'state.hierarchicalFacetsRefinements is an array'
-    );
-    t.end();
+    expect(isArray(helper.state.hierarchicalFacetsRefinements.categories)).toBeTruthy();
+    done();
   });
 });

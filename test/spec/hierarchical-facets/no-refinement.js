@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: no refinement', function(t) {
+test('hierarchical facets: no refinement', function(done) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -65,19 +63,11 @@ test('hierarchical facets: no refinement', function(t) {
     var queries = call.args[0];
     var hitsQuery = queries[0];
 
-    t.equal(queries.length, 1, 'we made one query');
-    t.ok(client.search.calledOnce, 'client.search was called once');
-    t.deepEqual(
-      hitsQuery.params.facets,
-      ['categories.lvl0'],
-      'first query (hits) has `categories.lvl0` as facets'
-    );
-    t.equal(
-      hitsQuery.params.facetFilters,
-      undefined,
-      'first query (hits) has no facet refinement refinement'
-    );
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(queries.length).toBe(1);
+    expect(client.search.calledOnce).toBeTruthy();
+    expect(hitsQuery.params.facets).toEqual(['categories.lvl0']);
+    expect(hitsQuery.params.facetFilters).toBe(undefined);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });

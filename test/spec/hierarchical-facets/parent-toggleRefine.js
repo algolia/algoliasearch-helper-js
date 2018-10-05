@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: toggleRefine behavior', function(t) {
+test('hierarchical facets: toggleRefine behavior', function() {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -38,20 +36,11 @@ test('hierarchical facets: toggleRefine behavior', function(t) {
   var queries = call.args[0];
   var hitsQuery = queries[0];
 
-  t.deepEqual(
-    hitsQuery.params.facets,
-    ['categories.lvl0', 'categories.lvl1'],
-    'first query (hits) has `categories.lvl0, categories.lvl1` as facets'
-  );
-  t.deepEqual(
-    hitsQuery.params.facetFilters,
-    [['categories.lvl0:beers']],
-    'first query (hits) has our `categories.lvl0` refinement facet filter'
-  );
-  t.end();
+  expect(hitsQuery.params.facets).toEqual(['categories.lvl0', 'categories.lvl1']);
+  expect(hitsQuery.params.facetFilters).toEqual([['categories.lvl0:beers']]);
 });
 
-test('hierarchical facets: toggleRefine behavior when root level', function(t) {
+test('hierarchical facets: toggleRefine behavior when root level', function() {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -81,20 +70,11 @@ test('hierarchical facets: toggleRefine behavior when root level', function(t) {
   var queries = call.args[0];
   var hitsQuery = queries[0];
 
-  t.deepEqual(
-    hitsQuery.params.facets,
-    ['categories.lvl0'],
-    'first query (hits) has `categories.lvl0, categories.lvl1` as facets'
-  );
-  t.equal(
-    hitsQuery.params.facetFilters,
-    undefined,
-    'first query (hits) has our `categories.lvl0` refinement facet filter'
-  );
-  t.end();
+  expect(hitsQuery.params.facets).toEqual(['categories.lvl0']);
+  expect(hitsQuery.params.facetFilters).toBe(undefined);
 });
 
-test('hierarchical facets: toggleRefine behavior when different root level', function(t) {
+test('hierarchical facets: toggleRefine behavior when different root level', function() {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -124,15 +104,6 @@ test('hierarchical facets: toggleRefine behavior when different root level', fun
   var queries = call.args[0];
   var hitsQuery = queries[0];
 
-  t.deepEqual(
-    hitsQuery.params.facets,
-    ['categories.lvl0', 'categories.lvl1'],
-    'first query (hits) has `categories.lvl0, categories.lvl1` as facets'
-  );
-  t.deepEqual(
-    hitsQuery.params.facetFilters,
-    [['categories.lvl0:fruits']],
-    'first query (hits) has our `categories.lvl0` refinement facet filter'
-  );
-  t.end();
+  expect(hitsQuery.params.facets).toEqual(['categories.lvl0', 'categories.lvl1']);
+  expect(hitsQuery.params.facetFilters).toEqual([['categories.lvl0:fruits']]);
 });

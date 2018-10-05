@@ -2,7 +2,6 @@
 var path = require('path');
 var fs = require('fs');
 
-var test = require('tape');
 var Benchmark = require('benchmark');
 var download = require('download');
 
@@ -29,8 +28,8 @@ function rmReferenceBuild() {
 }
 
 function makeTestPerf(previousHelper, currentHelper, testFile) {
-  test(testFile + ' vs helper v.' + previousHelper.version, function(t) {
-    t.plan(1);
+  test(testFile + ' vs helper v.' + previousHelper.version, function(done) {
+    expect.assertions(1);
     var suite = new Benchmark.Suite;
     suite.add('current', require(testFile)(currentHelper))
          .add('previous', require(testFile)(previousHelper));
@@ -39,10 +38,8 @@ function makeTestPerf(previousHelper, currentHelper, testFile) {
       var currentStats = getStats(this['0']);
       var previousStats = getStats(this['1']);
 
-      if (currentStats.mean <= previousStats.mean) {
-        t.pass('Current build is at least as fast: ' + currentStats.mean + ' vs ' + previousStats.mean);
-      } else {
-        t.fail('Previous build is faster: ' + currentStats.mean + ' vs ' + previousStats.mean);
+      if (currentStats.mean <= previousStats.mean) {} else {
+        done.fail('Previous build is faster: ' + currentStats.mean + ' vs ' + previousStats.mean);
       }
       return;
     });

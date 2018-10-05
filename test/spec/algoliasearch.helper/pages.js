@@ -1,42 +1,38 @@
 'use strict';
 
-var test = require('tape');
 var algoliasearchHelper = require('../../../index');
 
 var fakeClient = {};
 
-test('setChange should change the current page', function(t) {
+test('setChange should change the current page', function() {
   var helper = algoliasearchHelper(fakeClient, null, null);
 
-  t.ok(helper.getCurrentPage() === 0, 'First page should be 0');
+  expect(helper.getCurrentPage() === 0).toBeTruthy();
   helper.setCurrentPage(3);
-  t.ok(helper.getCurrentPage() === 3, 'If page was changed to 3, getCurrentPage should return 3');
-  t.end();
+  expect(helper.getCurrentPage() === 3).toBeTruthy();
 });
 
-test('nextPage should increment the page by one', function(t) {
+test('nextPage should increment the page by one', function() {
   var helper = algoliasearchHelper(fakeClient, null, null);
 
-  t.ok(helper.getCurrentPage() === 0, 'First page should be 0');
+  expect(helper.getCurrentPage() === 0).toBeTruthy();
   helper.nextPage();
   helper.nextPage();
   helper.nextPage();
-  t.ok(helper.getCurrentPage() === 3, 'If page was increment 3 times, getCurrentPage should return 3');
-  t.end();
+  expect(helper.getCurrentPage() === 3).toBeTruthy();
 });
 
-test('previousPage should decrement the current page by one', function(t) {
+test('previousPage should decrement the current page by one', function() {
   var helper = algoliasearchHelper(fakeClient, null, null);
 
-  t.ok(helper.getCurrentPage() === 0, 'First page should be 0');
+  expect(helper.getCurrentPage() === 0).toBeTruthy();
   helper.setCurrentPage(3);
-  t.ok(helper.getCurrentPage() === 3, 'If page was changed to 3, getCurrentPage should return 3');
+  expect(helper.getCurrentPage() === 3).toBeTruthy();
   helper.previousPage();
-  t.ok(helper.getCurrentPage() === 2, 'must be 2 now');
-  t.end();
+  expect(helper.getCurrentPage() === 2).toBeTruthy();
 });
 
-test('pages should be reset if the mutation might change the number of pages', function(t) {
+test('pages should be reset if the mutation might change the number of pages', function() {
   var bind = require('lodash/bind');
 
   var helper = algoliasearchHelper(fakeClient, '', {
@@ -46,9 +42,9 @@ test('pages should be reset if the mutation might change the number of pages', f
 
   function testMutation(tester, text, testFn) {
     helper.setCurrentPage(10);
-    t.equal(helper.getCurrentPage(), 10, 'set the current page to 10' + text);
+    expect(helper.getCurrentPage()).toBe(10);
     testFn();
-    t.equal(helper.getCurrentPage(), 0, 'page resetted' + text);
+    expect(helper.getCurrentPage()).toBe(0);
   }
 
   testMutation(t, ' clearRefinements', bind(helper.clearRefinements, helper));
@@ -67,6 +63,4 @@ test('pages should be reset if the mutation might change the number of pages', f
 
   testMutation(t, ' toggleRefine', bind(helper.toggleRefine, helper, 'f1', 'v1'));
   testMutation(t, ' toggleExclude', bind(helper.toggleExclude, helper, 'facet1', '55'));
-
-  t.end();
 });

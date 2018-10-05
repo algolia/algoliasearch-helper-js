@@ -5,7 +5,6 @@ var setup = utils.setup;
 
 var algoliasearchHelper = require('../../');
 
-var test = require('tape');
 var bind = require('lodash/bind');
 var random = require('lodash/random');
 
@@ -18,8 +17,8 @@ var indexName = '_travis-algoliasearch-helper-js-' +
 
 test(
   '[INT][DERIVE] Query the same index twice with different query',
-  function(t) {
-    t.plan(5);
+  function() {
+    expect.assertions(5);
 
     setup(indexName, function(client, index) {
       return index.addObjects([
@@ -49,14 +48,14 @@ test(
       });
 
       helper.on('result', function(results, state) {
-        t.equal(state.query, '', 'No query should be used for this query');
-        t.equal(results.hits.length, 2, 'Should retrieve all the records');
+        expect(state.query).toBe('');
+        expect(results.hits.length).toBe(2);
       });
 
       helper2.on('result', function(results, state) {
-        t.equal(state.query, 'toto', 'The query `toto` should be used');
-        t.equal(results.hits.length, 1, 'Should retrieve one record');
-        t.equal(results.hits[0].objectID, '1', 'And it should be the record `1`');
+        expect(state.query).toBe('toto');
+        expect(results.hits.length).toBe(1);
+        expect(results.hits[0].objectID).toBe('1');
       });
 
       helper.search();

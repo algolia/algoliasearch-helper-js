@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: simple usage', function(t) {
+test('hierarchical facets: simple usage', function(done) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -64,7 +62,9 @@ test('hierarchical facets: simple usage', function(t) {
   helper.setQuery('badquery').search();
 
   helper.once('result', function(content) {
-    t.deepEqual(content.hierarchicalFacets, [{name: 'categories', count: null, isRefined: true, path: null, data: null}], 'Good facets values');
-    t.end();
+    expect(content.hierarchicalFacets).toEqual(
+      [{name: 'categories', count: null, isRefined: true, path: null, data: null}]
+    );
+    done();
   });
 });

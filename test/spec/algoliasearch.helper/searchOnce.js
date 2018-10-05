@@ -1,13 +1,12 @@
 'use strict';
 
-var test = require('tape');
 var sinon = require('sinon');
 var algoliaSearch = require('algoliasearch');
 var SearchParameters = require('../../../src/SearchParameters');
 
 var algoliasearchHelper = require('../../../index');
 
-test('searchOnce should call the algolia client according to the number of refinements and call callback with no error and with results when no error', function(t) {
+test('searchOnce should call the algolia client according to the number of refinements and call callback with no error and with results when no error', function(done) {
   var testData = require('../search.testdata')();
 
   var client = algoliaSearch('dsf', 'dsfdf');
@@ -25,14 +24,10 @@ test('searchOnce should call the algolia client according to the number of refin
     .addDisjunctiveFacetRefinement('city', 'New York');
 
   helper.searchOnce(parameters, function(err, data) {
-    t.equal(err, null, 'should be equal');
+    expect(err).toBe(null);
 
     // shame deepclone, to remove any associated methods coming from the results
-    t.deepEqual(
-      JSON.parse(JSON.stringify(data)),
-      JSON.parse(JSON.stringify(testData.responseHelper)),
-      'should be equal'
-    );
+    expect(JSON.parse(JSON.stringify(data))).toEqual(JSON.parse(JSON.stringify(testData.responseHelper)));
 
     var cityValues = data.getFacetValues('city');
     var expectedCityValues = [
@@ -41,11 +36,7 @@ test('searchOnce should call the algolia client according to the number of refin
       {name: 'San Francisco', count: 1, isRefined: false}
     ];
 
-    t.deepEqual(
-      cityValues,
-      expectedCityValues,
-      'Facet values for "city" should be correctly ordered using the default sort'
-    );
+    expect(cityValues).toEqual(expectedCityValues);
 
     var cityValuesCustom = data.getFacetValues('city', {sortBy: ['count:asc', 'name:asc']});
     var expectedCityValuesCustom = [
@@ -54,11 +45,7 @@ test('searchOnce should call the algolia client according to the number of refin
       {name: 'Paris', count: 3, isRefined: true}
     ];
 
-    t.deepEqual(
-      cityValuesCustom,
-      expectedCityValuesCustom,
-      'Facet values for "city" should be correctly ordered using a custom sort'
-    );
+    expect(cityValuesCustom).toEqual(expectedCityValuesCustom);
 
     var cityValuesFn = data.getFacetValues('city', {sortBy: function(a, b) { return a.count - b.count; }});
     var expectedCityValuesFn = [
@@ -67,25 +54,21 @@ test('searchOnce should call the algolia client according to the number of refin
       {name: 'Paris', count: 3, isRefined: true}
     ];
 
-    t.deepEqual(
-      cityValuesFn,
-      expectedCityValuesFn,
-      'Facet values for "city" should be correctly ordered using a sort function'
-    );
+    expect(cityValuesFn).toEqual(expectedCityValuesFn);
 
     var queries = mock.expectations.search[0].args[0][0];
     for (var i = 0; i < queries.length; i++) {
       var query = queries[i];
-      t.equal(query.query, undefined);
-      t.equal(query.params.query, '');
+      expect(query.query).toBe(undefined);
+      expect(query.params.query).toBe('');
     }
-    t.ok(mock.verify(), 'Mock constraints should be verified!');
+    expect(mock.verify()).toBeTruthy();
 
-    t.end();
+    done();
   });
 });
 
-test('searchOnce should call the algolia client according to the number of refinements and call callback with error and no results when error', function(t) {
+test('searchOnce should call the algolia client according to the number of refinements and call callback with error and no results when error', function(done) {
   var client = algoliaSearch('dsf', 'dsfdf');
   var mock = sinon.mock(client);
 
@@ -102,17 +85,17 @@ test('searchOnce should call the algolia client according to the number of refin
     .addDisjunctiveFacetRefinement('city', 'New York');
 
   helper.searchOnce(parameters, function(err, data) {
-    t.equal(err, error, 'should be equal');
-    t.equal(data, null, 'should be equal');
+    expect(err).toBe(error);
+    expect(data).toBe(null);
 
     var queries = mock.expectations.search[0].args[0][0];
     for (var i = 0; i < queries.length; i++) {
       var query = queries[i];
-      t.equal(query.query, undefined);
-      t.equal(query.params.query, '');
+      expect(query.query).toBe(undefined);
+      expect(query.params.query).toBe('');
     }
-    t.ok(mock.verify(), 'Mock constraints should be verified!');
+    expect(mock.verify()).toBeTruthy();
 
-    t.end();
+    done();
   });
 });

@@ -5,7 +5,6 @@ var setup = utils.setupSimple;
 
 var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : require('../../');
 
-var test = require('tape');
 var random = require('lodash/random');
 
 if (!utils.shouldRun) {
@@ -23,13 +22,13 @@ var config = {};
 
 test(
   '[INT][INSIGHTS] search with clickAnalytics should have a queryID',
-  function(t) {
+  function(done) {
     setup(indexName, dataset, config).
     then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {clickAnalytics: true});
       helper.on('result', function(content) {
-        t.equal(typeof content.queryID, 'string');
-        t.end();
+        expect(typeof content.queryID).toBe('string');
+        done();
       });
 
       helper.search();
@@ -39,13 +38,13 @@ test(
 
 test(
   '[INT][INSIGHTS] search without clickAnalytics should not have a queryID',
-  function(t) {
+  function(done) {
     setup(indexName, dataset, config).
     then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {});
       helper.on('result', function(content) {
-        t.equal(content.queryID, undefined);
-        t.end();
+        expect(content.queryID).toBe(undefined);
+        done();
       });
 
       helper.search();

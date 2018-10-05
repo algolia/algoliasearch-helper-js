@@ -1,6 +1,5 @@
 'use strict';
 
-var test = require('tape');
 var SearchParameters = require('../../../src/SearchParameters');
 
 var attribute = 'attribute';
@@ -10,23 +9,20 @@ var operator = '=';
 function testSameValue(t, value) {
   var state0 = new SearchParameters();
   var state1 = state0.addNumericRefinement(attribute, operator, value);
-  t.ok(state1.isNumericRefined(attribute, operator, value), 'Numeric value should be added');
+  expect(state1.isNumericRefined(attribute, operator, value)).toBeTruthy();
   var state2 = state1.removeNumericRefinement(attribute, operator, value);
-  t.notOk(state2.isNumericRefined(attribute, operator, value), 'Numeric value should not be refined anymore');
-  t.deepEqual(state2, state0, 'The final state should be equivalent to the first one');
+  expect(state2.isNumericRefined(attribute, operator, value)).toBeFalsy();
+  expect(state2).toEqual(state0);
 }
 
-test('Should be able to add remove strings', function(t) {
+test('Should be able to add remove strings', function() {
   testSameValue(t, '40');
-  t.end();
 });
 
-test('Should be able to add remove numbers', function(t) {
+test('Should be able to add remove numbers', function() {
   testSameValue(t, 40);
-  t.end();
 });
 
-test('Should be able to add remove arrays', function(t) {
+test('Should be able to add remove arrays', function() {
   testSameValue(t, [40, '30']);
-  t.end();
 });

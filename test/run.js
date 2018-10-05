@@ -1,7 +1,6 @@
 'use strict';
 
 var bulk = require('bulk-require');
-var test = require('tape');
 var algolia = require('algoliasearch');
 
 bulk(__dirname, ['spec/**/*.js']);

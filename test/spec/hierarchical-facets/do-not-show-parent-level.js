@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: do not show parent level', function(t) {
+test('hierarchical facets: do not show parent level', function(done) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -89,8 +87,8 @@ test('hierarchical facets: do not show parent level', function(t) {
 
   helper.setQuery('a').search();
   helper.once('result', function(content) {
-    t.ok(client.search.calledOnce, 'client.search was called once');
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(client.search.calledOnce).toBeTruthy();
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });

@@ -1,8 +1,6 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: objects with multiple categories', function(t) {
+test('hierarchical facets: objects with multiple categories', function(done) {
   var algoliasearch = require('algoliasearch');
 
   var sinon = require('sinon');
@@ -100,7 +98,7 @@ test('hierarchical facets: objects with multiple categories', function(t) {
 
   helper.setQuery('a').search();
   helper.once('result', function(content) {
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });
