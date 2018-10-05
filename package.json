@@ -7,8 +7,6 @@
   "scripts": {
     "watch": "watchify index.js -v -s algoliasearchHelper -o dist/algoliasearch.helper.js",
     "build": "./scripts/build.sh",
-    "dev": "DEBUG=zuul* zuul --no-coverage --local 8090 test/run.js",
-    "dev-coverage": "DEBUG=zuul* zuul --local 8090 test/run.js",
     "lint": "scripts/lint.sh",
     "lint:watch": "onchange 'src/**/*js' 'index.js' 'test/**/*js' '.eslintrc' -- npm run -s lint",
     "open": "sleep 1 && opn http://localhost:8080/examples",
@@ -106,9 +104,7 @@
     "vinyl": "1.2.0",
     "watchify": "3.7.0",
     "webpack": "1.15.0",
-    "webpack-stream": "3.2.0",
-    "zuul": "3.11.1",
-    "zuul-ngrok": "4.0.0"
+    "webpack-stream": "3.2.0"
   },
   "dependencies": {
     "events": "^1.1.1",
