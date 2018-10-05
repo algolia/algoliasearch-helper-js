@@ -34,7 +34,7 @@ function withDatasetAndConfig(indexName, dataset, config) {
   });
 }
 
-// some environements are not able to do indexing requests using
+// some environments are not able to do indexing requests using
 // PUT, like IE8 and IE9
 var shouldRun;
 
