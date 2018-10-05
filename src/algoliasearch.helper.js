@@ -280,8 +280,9 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @return {promise.<FacetSearchResult>} the results of the search
  */
 AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxFacetHits, userState) {
+  var clientHasSFFV = typeof this.client.searchForFacetValues === 'function';
   if (
-    typeof this.client.searchForFacetValues !== 'function' &&
+    !clientHasSFFV &&
     typeof this.client.initIndex !== 'function'
   ) {
     throw new Error(
@@ -296,7 +297,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
   var self = this;
 
   this.emit('searchForFacetValues', state, facet, query);
-  var searchForFacetValuesPromise = typeof this.client.searchForFacetValues === 'function'
+  var searchForFacetValuesPromise = clientHasSFFV
     ? this.client.searchForFacetValues([{indexName: state.index, params: algoliaQuery}])
     : this.client.initIndex(state.index).searchForFacetValues(algoliaQuery);
 

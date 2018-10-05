@@ -248,10 +248,7 @@ test('an error will be thrown if the client does not contain .searchForFacetValu
   });
 
   t.throws(function() {
-    helper.searchForFacetValues('facet', 'query', 75, {
-      query: undefined,
-      highlightPreTag: 'highlightTag'
-    });
+    helper.searchForFacetValues('facet', 'query');
   }, /searchable/);
   t.end();
 });
