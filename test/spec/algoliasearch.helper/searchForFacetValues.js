@@ -241,11 +241,7 @@ test('an error will be thrown if the client does not contain .searchForFacetValu
   var fakeClient = {
     search() { return Promise.resolve({}); }
   };
-  var helper = algoliasearchHelper(fakeClient, 'index', {
-    highlightPreTag: 'HIGHLIGHT>',
-    highlightPostTag: '<HIGHLIGHT',
-    query: 'iphone'
-  });
+  var helper = algoliasearchHelper(fakeClient, 'index');
 
   t.throws(function() {
     helper.searchForFacetValues('facet', 'query');
