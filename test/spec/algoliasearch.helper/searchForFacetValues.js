@@ -239,12 +239,21 @@ test('client.searchForFacetValues can override the current search state', functi
 
 test('an error will be thrown if the client does not contain .searchForFacetValues', function(t) {
   var fakeClient = {
-    search() { return Promise.resolve({}); }
+    search() {
+      return Promise.resolve({});
+    }
   };
   var helper = algoliasearchHelper(fakeClient, 'index');
 
-  t.throws(function() {
+  try {
     helper.searchForFacetValues('facet', 'query');
-  }, /searchable/);
+  } catch (e) {
+    t.equals(
+      e.message,
+      'search for facet values (searchable) was called, but this client does not have a function client.searchForFacetValues or client.initIndex(index).searchForFacetValues',
+      'throws an error guiding the user to add searchForFacetValues to client'
+    );
+  }
+
   t.end();
 });
