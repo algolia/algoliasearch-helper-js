@@ -39,7 +39,7 @@ For the purpose of this tutorial, we'll use our ecommerce dataset. For further
 reference, here are the credentials that we're going to use:
 
  - `applicationID`: `latency`
- - `apiKey`: `249078a3d4337a8231f1665ec5a44966`
+ - `apiKey`: `3d9875e51fbd20c7754e65422f7ce5e1`
  - `indexName`: `bestbuy`
 
 [Let's get started](#integrate)
