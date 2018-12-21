@@ -1,11 +1,10 @@
 language: node_js
-before_install: npm prune
-before_cache: npm prune
-install: npm install
+before_install: 
+install: yarn
 script:
-- npm run test-ci
-- npm run doc
-- npm run test:perf
+- yarn test-ci
+- yarn doc
+- yarn test:perf
 branches:
   only:
   - master
