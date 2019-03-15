@@ -9,7 +9,6 @@ var get = require('lodash/get');
 var sumBy = require('lodash/sumBy');
 var find = require('lodash/find');
 var includes = require('lodash/includes');
-var map = require('lodash/map');
 var orderBy = require('lodash/orderBy');
 
 var defaults = require('lodash/defaults');
@@ -79,6 +78,10 @@ function assignFacetStats(dest, facetStats, key) {
   }
 }
 
+/**
+ * @param {{name: string: attributes: string[]}[]} hierarchicalFacets
+ * @param {string} hierarchicalAttributeName
+ */
 function findMatchingHierarchicalFacetFromAttributeName(hierarchicalFacets, hierarchicalAttributeName) {
   return find(
     hierarchicalFacets,
@@ -340,7 +343,7 @@ function SearchResults(state, results) {
    * disjunctive facets results
    * @member {SearchResults.HierarchicalFacet[]}
    */
-  this.hierarchicalFacets = map(state.hierarchicalFacets, function initFutureTree() {
+  this.hierarchicalFacets = state.hierarchicalFacets.map(function initFutureTree() {
     return [];
   });
   /**
@@ -516,9 +519,18 @@ function SearchResults(state, results) {
     });
   });
 
-  this.hierarchicalFacets = map(this.hierarchicalFacets, generateHierarchicalTree(state));
+  /**
+   * @type {Array}
+   */
+  this.hierarchicalFacets = this.hierarchicalFacets.map(generateHierarchicalTree(state));
 
+  /**
+   * @type {Array}
+   */
   this.facets = compact(this.facets);
+  /**
+   * @type {Array}
+   */
   this.disjunctiveFacets = compact(this.disjunctiveFacets);
 
   this._state = state;
@@ -551,23 +563,23 @@ function extractNormalizedFacetValues(results, attribute) {
     var facet = find(results.facets, predicate);
     if (!facet) return [];
 
-    return map(facet.data, function(v, k) {
+    return Object.keys(facet.data).map(function(name) {
       return {
-        name: k,
-        count: v,
-        isRefined: results._state.isFacetRefined(attribute, k),
-        isExcluded: results._state.isExcludeRefined(attribute, k)
+        name: name,
+        count: facet.data[name],
+        isRefined: results._state.isFacetRefined(attribute, name),
+        isExcluded: results._state.isExcludeRefined(attribute, name)
       };
     });
   } else if (results._state.isDisjunctiveFacet(attribute)) {
     var disjunctiveFacet = find(results.disjunctiveFacets, predicate);
     if (!disjunctiveFacet) return [];
 
-    return map(disjunctiveFacet.data, function(v, k) {
+    return Object.keys(disjunctiveFacet.data).map(function(name) {
       return {
-        name: k,
-        count: v,
-        isRefined: results._state.isDisjunctiveFacetRefined(attribute, k)
+        name: name,
+        count: disjunctiveFacet.data[name],
+        isRefined: results._state.isDisjunctiveFacetRefined(attribute, name)
       };
     });
   } else if (results._state.isHierarchicalFacet(attribute)) {
@@ -584,7 +596,8 @@ function recSort(sortFn, node) {
   if (!node.data || node.data.length === 0) {
     return node;
   }
-  var children = map(node.data, partial(recSort, sortFn));
+
+  var children = node.data.map(partial(recSort, sortFn));
   var sortedChildren = sortFn(children);
   var newNode = merge({}, node, {data: sortedChildren});
   return newNode;
@@ -683,6 +696,10 @@ SearchResults.prototype.getFacetStats = function(attribute) {
   throw new Error(attribute + ' is not present in `facets` or `disjunctiveFacets`');
 };
 
+/**
+ * @param {{name: string}}[]} facetList (has more items, but enough for here)
+ * @param {string} facetName
+ */
 function getFacetStatsIfAvailable(facetList, facetName) {
   var data = find(facetList, {name: facetName});
   return data && data.stats;
@@ -747,6 +764,20 @@ SearchResults.prototype.getRefinements = function() {
   return res;
 };
 
+/**
+ * @typedef {Object} Facet
+ * @property {string} name
+ * @property {Object} data
+ * @property {boolean} exhaustive
+ */
+
+/**
+ * @param {*} state
+ * @param {*} type
+ * @param {string} attributeName
+ * @param {*} name
+ * @param {Facet[]} resultsFacets
+ */
 function getRefinement(state, type, attributeName, name, resultsFacets) {
   var facet = find(resultsFacets, {name: attributeName});
   var count = get(facet, 'data[' + name + ']');
@@ -766,6 +797,7 @@ function getHierarchicalRefinement(state, attributeName, name, resultsFacets) {
   var splitted = name.split(facetDeclaration.separator);
   var configuredName = splitted[splitted.length - 1];
   for (var i = 0; facet !== undefined && i < splitted.length; ++i) {
+    // @TODO: this is an object, but IE11 doesn't have find
     facet = find(facet.data, {name: splitted[i]});
   }
   var count = get(facet, 'count');
