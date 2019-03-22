@@ -1331,7 +1331,9 @@ AlgoliaSearchHelper.prototype.clearCache = function() {
 AlgoliaSearchHelper.prototype.setClient = function(newClient) {
   if (this.client === newClient) return this;
 
-  if (newClient.addAlgoliaAgent && !doesClientAgentContainsHelper(newClient)) newClient.addAlgoliaAgent('JS Helper (' + version + ')');
+  if (newClient.addAlgoliaAgent && !doesClientAgentContainsHelper(newClient)) {
+    newClient.addAlgoliaAgent('JS Helper (' + version + ')');
+  }
   this.client = newClient;
 
   return this;
