@@ -107,11 +107,15 @@ test(
 
     var refinements = result.getRefinements();
 
-    t.deepEqual(refinements, [{
-      attributeName: 'hierarchicalCategories', count: 0, exhaustive: false,
-      name: 'Best Buy Gift Cards > Entertainment Gift Cards', type: 'hierarchical'
-    }]);
-
+    t.deepEqual(refinements, [
+      {
+        attributeName: 'hierarchicalCategories',
+        count: 17,
+        exhaustive: false,
+        name: 'Entertainment Gift Cards',
+        type: 'hierarchical'
+      }
+    ]);
     t.end();
   });
 
