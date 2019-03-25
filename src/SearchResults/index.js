@@ -1,7 +1,6 @@
 'use strict';
 
 var compact = require('lodash/compact');
-var indexOf = require('lodash/indexOf');
 var findIndex = require('lodash/findIndex');
 
 var sumBy = require('lodash/sumBy');
@@ -394,8 +393,8 @@ function SearchResults(state, results) {
         exhaustive: mainSubResponse.exhaustiveFacetsCount
       };
     } else {
-      var isFacetDisjunctive = indexOf(state.disjunctiveFacets, facetKey) !== -1;
-      var isFacetConjunctive = indexOf(state.facets, facetKey) !== -1;
+      var isFacetDisjunctive = state.disjunctiveFacets.indexOf(facetKey) !== -1;
+      var isFacetConjunctive = state.facets.indexOf(facetKey) !== -1;
       var position;
 
       if (isFacetDisjunctive) {
@@ -463,7 +462,7 @@ function SearchResults(state, results) {
           state.disjunctiveFacetsRefinements[dfacet].forEach(function(refinementValue) {
             // add the disjunctive refinements if it is no more retrieved
             if (!self.disjunctiveFacets[position].data[refinementValue] &&
-              indexOf(state.disjunctiveFacetsRefinements[dfacet], refinementValue) > -1) {
+              state.disjunctiveFacetsRefinements[dfacet].indexOf(refinementValue) > -1) {
               self.disjunctiveFacets[position].data[refinementValue] = 0;
             }
           });
