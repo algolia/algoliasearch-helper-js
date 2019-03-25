@@ -527,9 +527,9 @@ SearchParameters._parseNumbers = function(partialState) {
     forEach(partialState.numericRefinements, function(operators, attribute) {
       numericRefinements[attribute] = {};
       forEach(operators, function(values, operator) {
-        var parsedValues = map(values, function(v) {
+        var parsedValues = values.map(function(v) {
           if (Array.isArray(v)) {
-            return map(v, function(vPrime) {
+            return v.map(function(vPrime) {
               if (isString(vPrime)) {
                 return parseFloat(vPrime);
               }
