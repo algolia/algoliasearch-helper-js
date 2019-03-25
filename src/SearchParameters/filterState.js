@@ -1,9 +1,6 @@
 'use strict';
 
-var forEach = require('lodash/forEach');
-var filter = require('lodash/filter');
 var isEmpty = require('lodash/isEmpty');
-var indexOf = require('lodash/indexOf');
 
 /**
  * @param {any[]} filters
@@ -13,8 +10,8 @@ function filterState(state, filters) {
   var attributeFilters = filters.filter(function(f) { return f.indexOf('attribute:') !== -1; });
   var attributes = attributeFilters.map(function(aF) { return aF.split(':')[1]; });
 
-  if (indexOf(attributes, '*') === -1) {
-    forEach(attributes, function(attr) {
+  if (attributes.indexOf('*') === -1) {
+    attributes.forEach(function(attr) {
       if (state.isConjunctiveFacet(attr) && state.isFacetRefined(attr)) {
         if (!partialState.facetsRefinements) partialState.facetsRefinements = {};
         partialState.facetsRefinements[attr] = state.facetsRefinements[attr];
@@ -49,19 +46,13 @@ function filterState(state, filters) {
     }
   }
 
-  var searchParameters = filter(
-    filters,
-    function(f) {
-      return f.indexOf('attribute:') === -1;
-    }
-  );
+  var searchParameters = filters.filter(function(f) {
+    return f.indexOf('attribute:') === -1;
+  });
 
-  forEach(
-    searchParameters,
-    function(parameterKey) {
-      partialState[parameterKey] = state[parameterKey];
-    }
-  );
+  searchParameters.forEach(function(parameterKey) {
+    partialState[parameterKey] = state[parameterKey];
+  });
 
   return partialState;
 }
