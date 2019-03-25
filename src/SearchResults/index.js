@@ -1,6 +1,5 @@
 'use strict';
 
-var forEach = require('lodash/forEach');
 var compact = require('lodash/compact');
 var indexOf = require('lodash/indexOf');
 var findIndex = require('lodash/findIndex');
@@ -83,7 +82,13 @@ function assignFacetStats(dest, facetStats, key) {
 }
 
 /**
- * @param {{name: string: attributes: string[]}[]} hierarchicalFacets
+ * @typedef {Object} HierarchicalFacet
+ * @property {string} name
+ * @property {string[]} attributes
+ */
+
+/**
+ * @param {HierarchicalFacet[]} hierarchicalFacets
  * @param {string} hierarchicalAttributeName
  */
 function findMatchingHierarchicalFacetFromAttributeName(
@@ -367,7 +372,12 @@ function SearchResults(state, results) {
   var self = this;
   // Since we send request only for disjunctive facets that have been refined,
   // we get the facets information from the first, general, response.
-  forEach(mainSubResponse.facets, function(facetValueObject, facetKey) {
+
+  var mainFacets = mainSubResponse.facets || {};
+
+  Object.keys(mainFacets).forEach(function(facetKey) {
+    var facetValueObject = mainFacets[facetKey];
+
     var hierarchicalFacet = findMatchingHierarchicalFacetFromAttributeName(
       state.hierarchicalFacets,
       facetKey
@@ -706,7 +716,12 @@ SearchResults.prototype.getFacetStats = function(attribute) {
 };
 
 /**
- * @param {{name: string}}[]} facetList (has more items, but enough for here)
+ * @typedef {Object} FacetListItem
+ * @property {string} name
+ */
+
+/**
+ * @param {FacetListItem[]} facetList (has more items, but enough for here)
  * @param {string} facetName
  */
 function getFacetStatsIfAvailable(facetList, facetName) {
