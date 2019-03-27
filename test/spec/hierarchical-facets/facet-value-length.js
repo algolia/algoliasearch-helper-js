@@ -2,7 +2,7 @@
 
 var test = require('tape');
 
-test.only('hierarchical facets: facet value called length', function(t) {
+test('hierarchical facets: facet value called length', function(t) {
   var algoliasearch = require('algoliasearch');
 
   var sinon = require('sinon');
