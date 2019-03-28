@@ -1,11 +1,9 @@
 'use strict';
 
-var isNumber = require('lodash/isNumber');
-var isString = require('lodash/isString');
 function valToNumber(v) {
-  if (isNumber(v)) {
+  if (typeof v === 'number') {
     return v;
-  } else if (isString(v)) {
+  } else if (typeof v === 'string') {
     return parseFloat(v);
   } else if (Array.isArray(v)) {
     return v.map(valToNumber);
