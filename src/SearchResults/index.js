@@ -5,7 +5,6 @@ var findIndex = require('lodash/findIndex');
 
 var sumBy = require('lodash/sumBy');
 var find = require('lodash/find');
-var includes = require('lodash/includes');
 var orderBy = require('lodash/orderBy');
 
 var defaults = require('lodash/defaults');
@@ -97,7 +96,8 @@ function findMatchingHierarchicalFacetFromAttributeName(
   return find(hierarchicalFacets, function facetKeyMatchesAttribute(
     hierarchicalFacet
   ) {
-    return includes(hierarchicalFacet.attributes, hierarchicalAttributeName);
+    var facets = hierarchicalFacet.attributes || [];
+    return facets.indexOf(hierarchicalAttributeName) > -1;
   });
 }
 
