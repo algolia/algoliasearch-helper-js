@@ -5,8 +5,7 @@ var SearchResults = require('./SearchResults');
 var DerivedHelper = require('./DerivedHelper');
 var requestBuilder = require('./requestBuilder');
 
-var util = require('util');
-var events = require('events');
+var mitt = require('mitt');
 
 var flatten = require('lodash/flatten');
 var forEach = require('lodash/forEach');
@@ -132,9 +131,41 @@ function AlgoliaSearchHelper(client, index, options) {
   this._lastQueryIdReceived = -1;
   this.derivedHelpers = [];
   this._currentNbQueries = 0;
+  this._emitter = mitt();
 }
 
-util.inherits(AlgoliaSearchHelper, events.EventEmitter);
+/**
+ * Invoke all handlers for the given type.
+ * If present, `"*"` handlers are invoked after type-matched handlers.
+ *
+ * @param {String} type The event type to invoke
+ * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
+ * @memberOf mitt
+ */
+AlgoliaSearchHelper.prototype.emit = function(type, data) {
+  this._emitter.emit(type, data);
+};
+
+/**
+ * Register an event handler for the given type.
+ *
+ * @param  {String} type Type of event to listen for, or `"*"` for all events
+ * @param  {Function} handler Function to call in response to given event
+ */
+AlgoliaSearchHelper.prototype.on = function(type, cb) {
+  this._emitter.on(type, cb);
+};
+
+/**
+ * Remove an event handler for the given type.
+ *
+ * @param  {String} type Type of event to unregister `handler` from, or `"*"`
+ * @param  {Function} handler Handler function to remove
+ */
+AlgoliaSearchHelper.prototype.off = function(type, cb) {
+  this._emitter.off(type, cb);
+};
+
 
 /**
  * Start the search with the parameters set in the state. When the
