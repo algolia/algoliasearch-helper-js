@@ -76,8 +76,8 @@ function generateHierarchicalTree(
         /**
          * @type {object[]]} hierarchical data
          */
-        var data = parent.data;
-        parent = parent && find(data, {isRefined: true});
+        var data = parent && Array.isArray(parent.data) ? parent.data : [];
+        parent = find(data, {isRefined: true});
         level++;
       }
     }
