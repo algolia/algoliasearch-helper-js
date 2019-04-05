@@ -91,14 +91,12 @@ test('hierarchical facets: two hierarchical facets', function(t) {
     'path': null,
     'count': null,
     'isRefined': true,
-    // really this should be `true`
     'exhaustive': true,
     'data': [{
       'name': 'oranges',
       'path': 'oranges',
       'count': 5,
       'isRefined': true,
-      // really this should be `true`
       'exhaustive': true,
       'data': null
     }, {
@@ -106,7 +104,6 @@ test('hierarchical facets: two hierarchical facets', function(t) {
       'path': 'apples',
       'count': 4,
       'isRefined': false,
-      // really this should be `true`
       'exhaustive': true,
       'data': null
     }]
