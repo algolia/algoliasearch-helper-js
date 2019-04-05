@@ -1,6 +1,5 @@
 'use strict';
 
-var keys = require('lodash/keys');
 var isNaN = require('lodash/isNaN');
 var isEqual = require('lodash/isEqual');
 var isUndefined = require('lodash/isUndefined');
@@ -193,7 +192,7 @@ function SearchParameters(newParameters) {
  * This doesn't contain any beta/hidden features.
  * @private
  */
-SearchParameters.PARAMETERS = keys(new SearchParameters());
+SearchParameters.PARAMETERS = Object.keys(new SearchParameters());
 
 /**
  * @private
@@ -1220,7 +1219,7 @@ SearchParameters.prototype = {
       }
     );
 
-    return keys(this.disjunctiveFacetsRefinements)
+    return Object.keys(this.disjunctiveFacetsRefinements)
       .concat(disjunctiveNumericRefinedFacets)
       .concat(this.getRefinedHierarchicalFacets());
   },
@@ -1328,9 +1327,7 @@ SearchParameters.prototype = {
     var parsedParams = SearchParameters._parseNumbers(params);
 
     return this.mutateMe(function mergeWith(newInstance) {
-      var ks = keys(params);
-
-      ks.forEach(function(k) {
+      Object.keys(params).forEach(function(k) {
         newInstance[k] = parsedParams[k];
       });
 
