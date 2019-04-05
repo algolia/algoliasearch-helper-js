@@ -29,7 +29,7 @@ var config = {
 };
 
 test(
-  '[INT][SEARCHFORCETVALUES] Should be able to search for facet values - conjunctive',
+  '[INT][SEARCHFORFACETVALUES] Should be able to search for facet values - conjunctive',
   function(t) {
     setup(indexName, dataset, config).
     then(function(client) {
@@ -79,7 +79,7 @@ test(
   });
 
 test(
-  '[INT][SEARCHFORCETVALUES] Should be able to search for facet values - disjunctive',
+  '[INT][SEARCHFORFACETVALUES] Should be able to search for facet values - disjunctive',
   function(t) {
     setup(indexName, dataset, config).
     then(function(client) {
@@ -131,7 +131,7 @@ test(
 
 
 test(
-  '[INT][SEARCHFORCETVALUES] Should be able to limit the number of returned items',
+  '[INT][SEARCHFORFACETVALUES] Should be able to limit the number of returned items',
   function(t) {
     setup(indexName, dataset, config).
     then(function(client) {
