@@ -544,11 +544,8 @@ function SearchResults(state, results) {
   /**
    * @type {Array}
    */
-  try {
   this.hierarchicalFacets = this.hierarchicalFacets.map(generateHierarchicalTree(state));
-  } catch (e) {
-    console.log('heheheh', e)
-  }
+
   /**
    * @type {Array}
    */
