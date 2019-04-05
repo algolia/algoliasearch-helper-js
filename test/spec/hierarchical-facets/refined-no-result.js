@@ -2,7 +2,7 @@
 
 var test = require('tape');
 
-test('hierarchical facets: no results', function(t) {
+test('hierarchical facets: simple usage', function(t) {
   var algoliasearch = require('algoliasearch');
   var sinon = require('sinon');
 
@@ -31,7 +31,6 @@ test('hierarchical facets: no results', function(t) {
       'page': 0,
       'nbPages': 0,
       'hitsPerPage': 6,
-      'exhaustiveFacetsCount': true,
       'facets': {}
     }, {
       'query': 'badquery',
@@ -65,20 +64,7 @@ test('hierarchical facets: no results', function(t) {
   helper.setQuery('badquery').search();
 
   helper.once('result', function(content) {
-    t.deepEqual(
-      content.hierarchicalFacets,
-      [
-        {
-          name: 'categories',
-          count: null,
-          isRefined: true,
-          path: null,
-          exhaustive: true,
-          data: null
-        }
-      ],
-      'Good facet values'
-    );
+    t.deepEqual(content.hierarchicalFacets, [{name: 'categories', count: null, isRefined: true, path: null, data: null}], 'Good facets values');
     t.end();
   });
 });

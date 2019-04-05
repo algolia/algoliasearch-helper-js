@@ -30,7 +30,6 @@ test('hierarchical facets: getFacetValues', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
-      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 2},
         'categories.lvl1': {'beers | IPA': 2}
@@ -66,21 +65,18 @@ test('hierarchical facets: getFacetValues', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
-    'exhaustive': true,
     'data': [
       {
         'name': 'beers',
         'path': 'beers',
         'count': 3,
         'isRefined': true,
-        'exhaustive': true,
         'data': [
           {
             'name': 'Belgian',
             'path': 'beers | Belgian',
             'count': 1,
             'isRefined': false,
-            'exhaustive': true,
             'data': null
           },
           {
@@ -88,7 +84,6 @@ test('hierarchical facets: getFacetValues', function(t) {
             'path': 'beers | IPA',
             'count': 2,
             'isRefined': true,
-            'exhaustive': true,
             'data': null
           }
         ]
@@ -105,6 +100,6 @@ test('hierarchical facets: getFacetValues', function(t) {
   t.deepEqual(
     results.getFacetValues('categories', {sortBy: function(a, b) { return a.count - b.count; }}),
     results.getFacetValues('categories', {sortBy: ['count:asc']}),
-    'Hierarchical facet values should be consistently sorted with string or function predicates');
+    'Hierarchical faet values should be consistentely sort with string or function predicates');
   t.end();
 });

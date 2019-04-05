@@ -27,12 +27,6 @@ function generateTrees(state) {
       state._getHierarchicalFacetSortBy(hierarchicalFacet)
     );
 
-    var rootExhaustive = Array.isArray(hierarchicalFacetResult)
-      ? hierarchicalFacetResult.every(function(facetResult) {
-        return facetResult.exhaustive;
-      })
-      : false;
-
     var generateTreeFn = generateHierarchicalTree(
       sortBy,
       hierarchicalSeparator,
@@ -54,7 +48,6 @@ function generateTrees(state) {
       count: null, // root level, no count
       isRefined: true, // root level, always refined
       path: null, // root level, no path
-      exhaustive: rootExhaustive,
       data: null
     });
   };
@@ -127,8 +120,7 @@ function generateHierarchicalTree(
             facetCount,
             facetValue,
             hierarchicalSeparator,
-            currentRefinement,
-            hierarchicalFacetResult.exhaustive
+            currentRefinement
           );
         }),
         sortBy[0],
@@ -183,8 +175,7 @@ function format(
   facetCount,
   facetValue,
   hierarchicalSeparator,
-  currentRefinement,
-  exhaustive
+  currentRefinement
 ) {
   var parts = facetValue.split(hierarchicalSeparator);
   return {
@@ -194,7 +185,6 @@ function format(
     isRefined:
       currentRefinement === facetValue ||
       currentRefinement.indexOf(facetValue + hierarchicalSeparator) === 0,
-    exhaustive: exhaustive,
     data: null
   };
 }

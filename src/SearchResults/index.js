@@ -831,6 +831,7 @@ function getHierarchicalRefinement(state, attributeName, name, resultsFacets) {
   var facetDeclaration = state.getHierarchicalFacetByName(attributeName);
   var separator = state._getHierarchicalFacetSeparator(facetDeclaration);
   var split = name.split(separator);
+  var configuredName = split[split.length - 1];
   var rootFacet = find(resultsFacets, {name: attributeName});
 
   var facet = split.reduce(function(intermediateFacet, part) {
@@ -841,12 +842,11 @@ function getHierarchicalRefinement(state, attributeName, name, resultsFacets) {
 
   var count = (facet && facet.count) || 0;
   var exhaustive = (facet && facet.exhaustive) || false;
-  var path = (facet && facet.path) || '';
 
   return {
     type: 'hierarchical',
     attributeName: attributeName,
-    name: path,
+    name: configuredName,
     count: count,
     exhaustive: exhaustive
   };

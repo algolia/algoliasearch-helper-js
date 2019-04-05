@@ -29,7 +29,6 @@ test('hierarchical facets: no refinement', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
-      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 2, 'fruits': 3}
       }
@@ -41,20 +40,17 @@ test('hierarchical facets: no refinement', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
-    'exhaustive': true,
     'data': [{
       'name': 'beers',
       'path': 'beers',
       'count': 2,
       'isRefined': false,
-      'exhaustive': true,
       'data': null
     }, {
       'name': 'fruits',
       'path': 'fruits',
       'count': 3,
       'isRefined': false,
-      'exhaustive': true,
       'data': null
     }]
   }];

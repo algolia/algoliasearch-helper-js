@@ -111,8 +111,8 @@ test(
       {
         attributeName: 'hierarchicalCategories',
         count: 17,
-        exhaustive: true,
-        name: 'Best Buy Gift Cards > Entertainment Gift Cards',
+        exhaustive: false,
+        name: 'Entertainment Gift Cards',
         type: 'hierarchical'
       }
     ]);

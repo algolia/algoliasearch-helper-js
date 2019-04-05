@@ -33,7 +33,6 @@ test('hierarchical facets: custom prefix path', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
-      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 3},
         'categories.lvl1': {'beers | IPA': 2, 'beers | Belgian': 1},
@@ -70,26 +69,22 @@ test('hierarchical facets: custom prefix path', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
-    'exhaustive': true,
     'data': [{
       'name': 'Belgian',
       'path': 'beers | Belgian',
       'count': 1,
       'isRefined': true,
-      'exhaustive': true,
       'data': [{
         'name': 'Blond',
         'path': 'beers | Belgian | Blond',
         'count': 2,
         'isRefined': false,
-        'exhaustive': true,
         'data': null
       }, {
         'name': 'Dark',
         'path': 'beers | Belgian | Dark',
         'count': 1,
         'isRefined': false,
-        'exhaustive': true,
         'data': null
       }]
     }, {
@@ -97,7 +92,6 @@ test('hierarchical facets: custom prefix path', function(t) {
       'path': 'beers | IPA',
       'count': 2,
       'isRefined': false,
-      'exhaustive': true,
       'data': null
     }]
   }];

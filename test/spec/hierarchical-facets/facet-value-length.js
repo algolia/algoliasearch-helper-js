@@ -33,7 +33,6 @@ test('hierarchical facets: facet value called length', function(t) {
         page: 0,
         nbPages: 1,
         hitsPerPage: 20,
-        exhaustiveFacetsCount: true,
         facets: {
           // value length can cause lodash to turn an object into an array
           'categories.lvl0': {beers: 8, length: 3}
@@ -61,24 +60,9 @@ test('hierarchical facets: facet value called length', function(t) {
       count: null,
       isRefined: true,
       path: null,
-      exhaustive: true,
       data: [
-        {
-          name: 'beers',
-          path: 'beers',
-          count: 8,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'length',
-          path: 'length',
-          count: 3,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        }
+        {name: 'beers', path: 'beers', count: 8, isRefined: false, data: null},
+        {name: 'length', path: 'length', count: 3, isRefined: false, data: null}
       ]
     }
   ];

@@ -32,7 +32,6 @@ test('hierarchical facets: pagination', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
-      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 3, 'sales': 3},
         'categories.lvl1': {'beers > IPA': 3, 'sales > IPA': 3},
