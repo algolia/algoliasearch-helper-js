@@ -15,15 +15,36 @@ var prepareHierarchicalFacetSortBy = require('../functions/formatSort');
 function generateTrees(state) {
   return function generate(hierarchicalFacetResult, hierarchicalFacetIndex) {
     var hierarchicalFacet = state.hierarchicalFacets[hierarchicalFacetIndex];
-    var hierarchicalFacetRefinement = state.hierarchicalFacetsRefinements[hierarchicalFacet.name] &&
-      state.hierarchicalFacetsRefinements[hierarchicalFacet.name][0] || '';
-    var hierarchicalSeparator = state._getHierarchicalFacetSeparator(hierarchicalFacet);
-    var hierarchicalRootPath = state._getHierarchicalRootPath(hierarchicalFacet);
-    var hierarchicalShowParentLevel = state._getHierarchicalShowParentLevel(hierarchicalFacet);
-    var sortBy = prepareHierarchicalFacetSortBy(state._getHierarchicalFacetSortBy(hierarchicalFacet));
+    var hierarchicalFacetRefinement =
+      (state.hierarchicalFacetsRefinements[hierarchicalFacet.name] &&
+        state.hierarchicalFacetsRefinements[hierarchicalFacet.name][0]) ||
+      '';
+    var hierarchicalSeparator = state._getHierarchicalFacetSeparator(
+      hierarchicalFacet
+    );
+    var hierarchicalRootPath = state._getHierarchicalRootPath(
+      hierarchicalFacet
+    );
+    var hierarchicalShowParentLevel = state._getHierarchicalShowParentLevel(
+      hierarchicalFacet
+    );
+    var sortBy = prepareHierarchicalFacetSortBy(
+      state._getHierarchicalFacetSortBy(hierarchicalFacet)
+    );
 
-    var generateTreeFn = generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRootPath,
-      hierarchicalShowParentLevel, hierarchicalFacetRefinement);
+    var rootExhaustive = Array.isArray(hierarchicalFacetResult)
+      ? hierarchicalFacetResult.every(function(facetResult) {
+        return facetResult.exhaustive;
+      })
+      : false;
+
+    var generateTreeFn = generateHierarchicalTree(
+      sortBy,
+      hierarchicalSeparator,
+      hierarchicalRootPath,
+      hierarchicalShowParentLevel,
+      hierarchicalFacetRefinement
+    );
 
     var results = hierarchicalFacetResult;
 
@@ -36,6 +57,7 @@ function generateTrees(state) {
       count: null, // root level, no count
       isRefined: true, // root level, always refined
       path: null, // root level, no path
+      exhaustive: rootExhaustive,
       data: null
     });
   };
@@ -74,11 +96,20 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
         currentRefinement, hierarchicalSeparator, hierarchicalRootPath, hierarchicalShowParentLevel);
 
       parent.data = orderBy(
-        map(
-          pickBy(hierarchicalFacetResult.data, onlyMatchingValuesFn),
-          formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement)
-        ),
-        sortBy[0], sortBy[1]
+        picked.map(function(tuple) {
+          var facetValue = tuple[0];
+          var facetCount = tuple[1];
+
+          return format(
+            facetCount,
+            facetValue,
+            hierarchicalSeparator,
+            currentRefinement,
+            hierarchicalFacetResult.exhaustive
+          );
+        }),
+        sortBy[0],
+        sortBy[1]
       );
     }
 
@@ -112,14 +143,22 @@ function filterFacetValues(parentPath, currentRefinement, hierarchicalSeparator,
   };
 }
 
-function formatHierarchicalFacetValue(hierarchicalSeparator, currentRefinement) {
-  return function format(facetCount, facetValue) {
-    return {
-      name: trim(last(facetValue.split(hierarchicalSeparator))),
-      path: facetValue,
-      count: facetCount,
-      isRefined: currentRefinement === facetValue || currentRefinement.indexOf(facetValue + hierarchicalSeparator) === 0,
-      data: null
-    };
+function format(
+  facetCount,
+  facetValue,
+  hierarchicalSeparator,
+  currentRefinement,
+  exhaustive
+) {
+  var parts = facetValue.split(hierarchicalSeparator);
+  return {
+    name: parts[parts.length - 1].trim(),
+    path: facetValue,
+    count: facetCount,
+    isRefined:
+      currentRefinement === facetValue ||
+      currentRefinement.indexOf(facetValue + hierarchicalSeparator) === 0,
+    exhaustive: exhaustive,
+    data: null
   };
 }
