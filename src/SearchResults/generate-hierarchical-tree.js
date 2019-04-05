@@ -2,13 +2,8 @@
 
 module.exports = generateTrees;
 
-var last = require('lodash/last');
-var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var orderBy = require('lodash/orderBy');
-var trim = require('lodash/trim');
 var find = require('lodash/find');
-var pickBy = require('lodash/pickBy');
 
 var prepareHierarchicalFacetSortBy = require('../functions/formatSort');
 
@@ -49,10 +44,12 @@ function generateTrees(state) {
     var results = hierarchicalFacetResult;
 
     if (hierarchicalRootPath) {
-      results = hierarchicalFacetResult.slice(hierarchicalRootPath.split(hierarchicalSeparator).length);
+      results = hierarchicalFacetResult.slice(
+        hierarchicalRootPath.split(hierarchicalSeparator).length
+      );
     }
 
-    return reduce(results, generateTreeFn, {
+    return results.reduce(generateTreeFn, {
       name: state.hierarchicalFacets[hierarchicalFacetIndex].name,
       count: null, // root level, no count
       isRefined: true, // root level, always refined
@@ -63,9 +60,18 @@ function generateTrees(state) {
   };
 }
 
-function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRootPath,
-                                  hierarchicalShowParentLevel, currentRefinement) {
-  return function generateTree(hierarchicalTree, hierarchicalFacetResult, currentHierarchicalLevel) {
+function generateHierarchicalTree(
+  sortBy,
+  hierarchicalSeparator,
+  hierarchicalRootPath,
+  hierarchicalShowParentLevel,
+  currentRefinement
+) {
+  return function generateTree(
+    hierarchicalTree,
+    hierarchicalFacetResult,
+    currentHierarchicalLevel
+  ) {
     var parent = hierarchicalTree;
 
     if (currentHierarchicalLevel > 0) {
@@ -74,7 +80,11 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
       parent = hierarchicalTree;
 
       while (level < currentHierarchicalLevel) {
-        parent = parent && find(parent.data, {isRefined: true});
+        /**
+         * @type {object[]]} hierarchical data
+         */
+        var data = parent && Array.isArray(parent.data) ? parent.data : [];
+        parent = find(data, {isRefined: true});
         level++;
       }
     }
@@ -92,8 +102,21 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
       // If parent refinement is `beers`, then we do not want to have `bières > Belges`
       // showing up
 
-      var onlyMatchingValuesFn = filterFacetValues(parent.path || hierarchicalRootPath,
-        currentRefinement, hierarchicalSeparator, hierarchicalRootPath, hierarchicalShowParentLevel);
+      var picked = Object.keys(hierarchicalFacetResult.data)
+        .map(function(facetValue) {
+          return [facetValue, hierarchicalFacetResult.data[facetValue]];
+        })
+        .filter(function(tuple) {
+          var facetValue = tuple[0];
+          return onlyMatchingTree(
+            facetValue,
+            parent.path || hierarchicalRootPath,
+            currentRefinement,
+            hierarchicalSeparator,
+            hierarchicalRootPath,
+            hierarchicalShowParentLevel
+          );
+        });
 
       parent.data = orderBy(
         picked.map(function(tuple) {
@@ -117,30 +140,43 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
   };
 }
 
-function filterFacetValues(parentPath, currentRefinement, hierarchicalSeparator, hierarchicalRootPath,
-                           hierarchicalShowParentLevel) {
-  return function(facetCount, facetValue) {
-    // we want the facetValue is a child of hierarchicalRootPath
-    if (hierarchicalRootPath &&
-      (facetValue.indexOf(hierarchicalRootPath) !== 0 || hierarchicalRootPath === facetValue)) {
-      return false;
-    }
+function onlyMatchingTree(
+  facetValue,
+  parentPath,
+  currentRefinement,
+  hierarchicalSeparator,
+  hierarchicalRootPath,
+  hierarchicalShowParentLevel
+) {
+  // we want the facetValue is a child of hierarchicalRootPath
+  if (
+    hierarchicalRootPath &&
+    (facetValue.indexOf(hierarchicalRootPath) !== 0 ||
+      hierarchicalRootPath === facetValue)
+  ) {
+    return false;
+  }
 
-    // we always want root levels (only when there is no prefix path)
-    return !hierarchicalRootPath && facetValue.indexOf(hierarchicalSeparator) === -1 ||
-      // if there is a rootPath, being root level mean 1 level under rootPath
-      hierarchicalRootPath &&
-      facetValue.split(hierarchicalSeparator).length - hierarchicalRootPath.split(hierarchicalSeparator).length === 1 ||
-      // if current refinement is a root level and current facetValue is a root level,
-      // keep the facetValue
-      facetValue.indexOf(hierarchicalSeparator) === -1 &&
-      currentRefinement.indexOf(hierarchicalSeparator) === -1 ||
-      // currentRefinement is a child of the facet value
-      currentRefinement.indexOf(facetValue) === 0 ||
-      // facetValue is a child of the current parent, add it
-      facetValue.indexOf(parentPath + hierarchicalSeparator) === 0 &&
-      (hierarchicalShowParentLevel || facetValue.indexOf(currentRefinement) === 0);
-  };
+  // we always want root levels (only when there is no prefix path)
+  return (
+    (!hierarchicalRootPath &&
+      facetValue.indexOf(hierarchicalSeparator) === -1) ||
+    // if there is a rootPath, being root level mean 1 level under rootPath
+    (hierarchicalRootPath &&
+      facetValue.split(hierarchicalSeparator).length -
+        hierarchicalRootPath.split(hierarchicalSeparator).length ===
+        1) ||
+    // if current refinement is a root level and current facetValue is a root level,
+    // keep the facetValue
+    (facetValue.indexOf(hierarchicalSeparator) === -1 &&
+      currentRefinement.indexOf(hierarchicalSeparator) === -1) ||
+    // currentRefinement is a child of the facet value
+    currentRefinement.indexOf(facetValue) === 0 ||
+    // facetValue is a child of the current parent, add it
+    (facetValue.indexOf(parentPath + hierarchicalSeparator) === 0 &&
+      (hierarchicalShowParentLevel ||
+        facetValue.indexOf(currentRefinement) === 0))
+  );
 }
 
 function format(
