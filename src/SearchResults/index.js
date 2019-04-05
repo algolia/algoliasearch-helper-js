@@ -828,7 +828,6 @@ function getRefinement(state, type, attributeName, name, resultsFacets) {
  * @param {Facet[]} resultsFacets
  */
 function getHierarchicalRefinement(state, attributeName, name, resultsFacets) {
-  var facet = find(resultsFacets, {name: attributeName});
   var facetDeclaration = state.getHierarchicalFacetByName(attributeName);
   var separator = state._getHierarchicalFacetSeparator(facetDeclaration);
   var split = name.split(separator);
