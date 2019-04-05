@@ -110,9 +110,9 @@ test(
     t.deepEqual(refinements, [
       {
         attributeName: 'hierarchicalCategories',
-        count: 17,
+        count: 0,
         exhaustive: false,
-        name: 'Entertainment Gift Cards',
+        name: 'Best Buy Gift Cards > Entertainment Gift Cards',
         type: 'hierarchical'
       }
     ]);

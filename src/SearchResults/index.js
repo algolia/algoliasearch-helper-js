@@ -544,8 +544,11 @@ function SearchResults(state, results) {
   /**
    * @type {Array}
    */
+  try {
   this.hierarchicalFacets = this.hierarchicalFacets.map(generateHierarchicalTree(state));
-
+  } catch (e) {
+    console.log('heheheh', e)
+  }
   /**
    * @type {Array}
    */
@@ -828,17 +831,13 @@ function getRefinement(state, type, attributeName, name, resultsFacets) {
  * @param {Facet[]} resultsFacets
  */
 function getHierarchicalRefinement(state, attributeName, name, resultsFacets) {
+  var facet = find(resultsFacets, {name: attributeName});
   var facetDeclaration = state.getHierarchicalFacetByName(attributeName);
-  var separator = state._getHierarchicalFacetSeparator(facetDeclaration);
-  var split = name.split(separator);
-  var configuredName = split[split.length - 1];
-  var rootFacet = find(resultsFacets, {name: attributeName});
-
-  var facet = split.reduce(function(intermediateFacet, part) {
-    var newFacet =
-      intermediateFacet && find(intermediateFacet.data, {name: part});
-    return newFacet !== undefined ? newFacet : intermediateFacet;
-  }, rootFacet);
+  var splitted = name.split(facetDeclaration.separator);
+  var configuredName = splitted[splitted.length - 1];
+  for (var i = 0; facet !== undefined && i < splitted.length; ++i) {
+    facet = find(facet.data, {name: splitted[i]});
+  }
 
   var count = (facet && facet.count) || 0;
   var exhaustive = (facet && facet.exhaustive) || false;
