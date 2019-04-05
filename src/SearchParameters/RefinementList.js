@@ -13,7 +13,6 @@
  */
 
 var isUndefined = require('lodash/isUndefined');
-var isFunction = require('lodash/isFunction');
 var isEmpty = require('lodash/isEmpty');
 
 var defaultsPure = require('../functions/defaultsPure');
@@ -98,7 +97,7 @@ var lib = {
     } else if (typeof attribute === 'string') {
       if (isEmpty(refinementList[attribute])) return refinementList;
       return omit(refinementList, attribute);
-    } else if (isFunction(attribute)) {
+    } else if (typeof attribute === 'function') {
       var hasChanged = false;
 
       var newRefinementList = Object.keys(refinementList).reduce(function(memo, key) {

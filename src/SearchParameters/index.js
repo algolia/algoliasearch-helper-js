@@ -2,10 +2,8 @@
 
 var keys = require('lodash/keys');
 var isNaN = require('lodash/isNaN');
-var isEmpty = require('lodash/isEmpty');
 var isEqual = require('lodash/isEqual');
 var isUndefined = require('lodash/isUndefined');
-var isFunction = require('lodash/isFunction');
 
 var merge = require('lodash/merge');
 
@@ -622,7 +620,7 @@ SearchParameters.prototype = {
     } else if (typeof attribute === 'string') {
       if (isEmpty(this.numericRefinements[attribute])) return this.numericRefinements;
       return omit(this.numericRefinements, attribute);
-    } else if (isFunction(attribute)) {
+    } else if (typeof attribute === 'function') {
       var hasChanged = false;
       var numericRefinements = this.numericRefinements;
       var newNumericRefinements = Object.keys(numericRefinements).reduce(function(memo, key) {
