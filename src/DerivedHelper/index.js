@@ -1,6 +1,6 @@
 'use strict';
 
-var mitt = require('mitt');
+var mitt = require('../event-emitter');
 
 /**
  * A DerivedHelper is a way to create sub requests to
@@ -29,6 +29,7 @@ function DerivedHelper(mainHelper, fn) {
  */
 DerivedHelper.prototype.emit = function(type, data) {
   this._emitter.emit(type, data);
+  return this;
 };
 
 /**
@@ -39,6 +40,18 @@ DerivedHelper.prototype.emit = function(type, data) {
  */
 DerivedHelper.prototype.on = function(type, cb) {
   this._emitter.on(type, cb);
+  return this;
+};
+
+/**
+ * Register an event handler for the given type one time.
+ *
+ * @param  {String} type Type of event to listen for, or `"*"` for all events
+ * @param  {Function} handler Function to call in response to given event
+ */
+DerivedHelper.prototype.once = function(type, cb) {
+  this._emitter.once(type, cb);
+  return this;
 };
 
 /**
@@ -49,6 +62,15 @@ DerivedHelper.prototype.on = function(type, cb) {
  */
 DerivedHelper.prototype.off = function(type, cb) {
   this._emitter.off(type, cb);
+  return this;
+};
+
+/**
+ * Remove all event handlers.
+ */
+DerivedHelper.prototype.removeAllListeners = function() {
+  this._emitter.removeAllListeners();
+  return this;
 };
 
 /**
@@ -57,8 +79,7 @@ DerivedHelper.prototype.off = function(type, cb) {
  * @throws Error if the derived helper is already detached
  */
 DerivedHelper.prototype.detach = function() {
-  // this.removeAllListeners();
-  console.log('TODO: remove listeners!');
+  this.removeAllListeners();
   this.main.detachDerivedHelper(this);
 };
 

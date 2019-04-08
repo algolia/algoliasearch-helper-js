@@ -5,7 +5,7 @@ var SearchResults = require('./SearchResults');
 var DerivedHelper = require('./DerivedHelper');
 var requestBuilder = require('./requestBuilder');
 
-var mitt = require('mitt');
+var mitt = require('./event-emitter');
 
 var flatten = require('lodash/flatten');
 var forEach = require('lodash/forEach');
@@ -144,6 +144,7 @@ function AlgoliaSearchHelper(client, index, options) {
  */
 AlgoliaSearchHelper.prototype.emit = function(type, data) {
   this._emitter.emit(type, data);
+  return this;
 };
 
 /**
@@ -154,6 +155,18 @@ AlgoliaSearchHelper.prototype.emit = function(type, data) {
  */
 AlgoliaSearchHelper.prototype.on = function(type, cb) {
   this._emitter.on(type, cb);
+  return this;
+};
+
+/**
+ * Register an event handler for the given type one time.
+ *
+ * @param  {String} type Type of event to listen for, or `"*"` for all events
+ * @param  {Function} handler Function to call in response to given event
+ */
+AlgoliaSearchHelper.prototype.once = function(type, cb) {
+  this._emitter.once(type, cb);
+  return this;
 };
 
 /**
@@ -164,8 +177,16 @@ AlgoliaSearchHelper.prototype.on = function(type, cb) {
  */
 AlgoliaSearchHelper.prototype.off = function(type, cb) {
   this._emitter.off(type, cb);
+  return this;
 };
 
+/**
+ * Remove all event handlers.
+ */
+AlgoliaSearchHelper.prototype.removeAllListeners = function() {
+  this._emitter.removeAllListeners();
+  return this;
+};
 
 /**
  * Start the search with the parameters set in the state. When the
