@@ -9,7 +9,6 @@ var events = require('events');
 var inherits = require('./functions/inherits');
 
 var flatten = require('lodash/flatten');
-var isEmpty = require('lodash/isEmpty');
 
 var version = require('./version');
 
@@ -986,7 +985,7 @@ AlgoliaSearchHelper.prototype.isRefined = function(facet, value) {
  *
  */
 AlgoliaSearchHelper.prototype.hasRefinements = function(attribute) {
-  if (!isEmpty(this.state.getNumericRefinements(attribute))) {
+  if (Object.keys(this.state.getNumericRefinements(attribute)).length > 0) {
     return true;
   } else if (this.state.isConjunctiveFacet(attribute)) {
     return this.state.isFacetRefined(attribute);

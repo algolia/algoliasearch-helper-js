@@ -2,7 +2,6 @@
 
 var isNaN = require('lodash/isNaN');
 var isEqual = require('lodash/isEqual');
-var isUndefined = require('lodash/isUndefined');
 
 var merge = require('lodash/merge');
 
@@ -14,6 +13,10 @@ var omit = require('../functions/omit');
 var filterState = require('./filterState');
 
 var RefinementList = require('./RefinementList');
+
+function objectHasKeys(obj) {
+  return Object.keys(obj).length > 0;
+}
 
 /**
  * like _.find but using _.isEqual to be able to use it
@@ -316,14 +319,19 @@ SearchParameters.validate = function(currentState, parameters) {
       'an error, if it is not, you should first clear the tags with clearTags method.');
   }
 
-  if (currentState.numericFilters && params.numericRefinements && !isEmpty(params.numericRefinements)) {
+  if (
+    currentState.numericFilters &&
+    params.numericRefinements &&
+    !objectHasKeys(params.numericRefinements)
+  ) {
     return new Error(
       "[Numeric filters] Can't switch from the advanced to the managed API. It" +
-      ' is probably an error, if this is really what you want, you have to first' +
-      ' clear the numeric filters.');
+        ' is probably an error, if this is really what you want, you have to first' +
+        ' clear the numeric filters.'
+    );
   }
 
-  if (!isEmpty(currentState.numericRefinements) && params.numericFilters) {
+  if (objectHasKeys(currentState.numericRefinements) && params.numericFilters) {
     return new Error(
       "[Numeric filters] Can't switch from the managed API to the advanced. It" +
       ' is probably an error, if this is really what you want, you have to first' +
@@ -613,11 +621,15 @@ SearchParameters.prototype = {
    * @return {Object.<string, OperatorList>}
    */
   _clearNumericRefinements: function _clearNumericRefinements(attribute) {
-    if (isUndefined(attribute)) {
-      if (isEmpty(this.numericRefinements)) return this.numericRefinements;
+    if (attribute === undefined) {
+      if (!objectHasKeys(this.numericRefinements)) {
+        return this.numericRefinements;
+      }
       return {};
     } else if (typeof attribute === 'string') {
-      if (isEmpty(this.numericRefinements[attribute])) return this.numericRefinements;
+      if (this.numericRefinements[attribute] === undefined) {
+        return this.numericRefinements;
+      }
       return omit(this.numericRefinements, attribute);
     } else if (typeof attribute === 'function') {
       var hasChanged = false;
@@ -634,14 +646,16 @@ SearchParameters.prototype = {
             var predicateResult = attribute({val: value, op: operator}, key, 'numeric');
             if (!predicateResult) outValues.push(value);
           });
-          if (!isEmpty(outValues)) {
+          if (outValues.length > 0) {
             if (outValues.length !== values.length) hasChanged = true;
             operatorList[operator] = outValues;
           }
           else hasChanged = true;
         });
 
-        if (!isEmpty(operatorList)) memo[key] = operatorList;
+        if (objectHasKeys(operatorList)) {
+          memo[key] = operatorList;
+        }
 
         return memo;
       }, {});
@@ -1176,21 +1190,22 @@ SearchParameters.prototype = {
    * @return {boolean} true if it is refined
    */
   isNumericRefined: function isNumericRefined(attribute, operator, value) {
-    if (isUndefined(value) && isUndefined(operator)) {
+    if (value === undefined && operator === undefined) {
       return !!this.numericRefinements[attribute];
     }
 
-    var isOperatorDefined = this.numericRefinements[attribute] &&
-      !isUndefined(this.numericRefinements[attribute][operator]);
+    var isOperatorDefined =
+      this.numericRefinements[attribute] &&
+      this.numericRefinements[attribute][operator] !== undefined;
 
-    if (isUndefined(value) || !isOperatorDefined) {
+    if (value === undefined || !isOperatorDefined) {
       return isOperatorDefined;
     }
 
     var parsedValue = valToNumber(value);
-    var isAttributeValueDefined = !isUndefined(
-      findArray(this.numericRefinements[attribute][operator], parsedValue)
-    );
+    var isAttributeValueDefined =
+      findArray(this.numericRefinements[attribute][operator], parsedValue) !==
+      undefined;
 
     return isOperatorDefined && isAttributeValueDefined;
   },
