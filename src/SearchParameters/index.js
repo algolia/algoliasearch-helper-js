@@ -1,7 +1,6 @@
 'use strict';
 
 var isNaN = require('lodash/isNaN');
-var isEqual = require('lodash/isEqual');
 
 var merge = require('lodash/merge');
 
@@ -19,16 +18,33 @@ function objectHasKeys(obj) {
 }
 
 /**
- * like _.find but using _.isEqual to be able to use it
+ * isEqual, but only for arrays of base elements, or base elements
+ * @param {number|Array<number>} a first element
+ * @param {number|Array<number>} b second element
+ */
+function isEqualNumArr(a, b) {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return (
+      a.length === b.length &&
+      a.every(function(el, i) {
+        return b[i] === el;
+      })
+    );
+  }
+  return a === b;
+}
+
+/**
+ * like _.find but using deep equality to be able to use it
  * to find arrays.
  * @private
- * @param {any[]} array array to search into
- * @param {any} searchedValue the value we're looking for
+ * @param {any[]} array array to search into (elements are base or array of base)
+ * @param {any} searchedValue the value we're looking for (base or array of base)
  * @return {any} the searched value or undefined
  */
 function findArray(array, searchedValue) {
   return find(array, function(currentValue) {
-    return isEqual(currentValue, searchedValue);
+    return isEqualNumArr(currentValue, searchedValue);
   });
 }
 
@@ -571,10 +587,16 @@ SearchParameters.prototype = {
   removeNumericRefinement: function(attribute, operator, paramValue) {
     if (paramValue !== undefined) {
       var paramValueAsNumber = valToNumber(paramValue);
-      if (!this.isNumericRefined(attribute, operator, paramValueAsNumber)) return this;
+      if (!this.isNumericRefined(attribute, operator, paramValueAsNumber)) {
+        return this;
+      }
       return this.setQueryParameters({
         numericRefinements: this._clearNumericRefinements(function(value, key) {
-          return key === attribute && value.op === operator && isEqual(value.val, paramValueAsNumber);
+          return (
+            key === attribute &&
+            value.op === operator &&
+            isEqualNumArr(value.val, paramValueAsNumber)
+          );
         })
       });
     } else if (operator !== undefined) {
