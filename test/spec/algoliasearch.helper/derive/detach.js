@@ -4,7 +4,7 @@ var test = require('tape');
 
 var algoliasearchHelper = require('../../../../index.js');
 
-test.only('[derived helper] detach a derived helper', function(t) {
+test('[derived helper] detach a derived helper', function(t) {
   var client = {
     search: searchTest
   };
