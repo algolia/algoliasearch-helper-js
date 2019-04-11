@@ -39,7 +39,14 @@ test(
         t.deepEqual(rs.getFacetValues('df'), [], '');
         t.deepEqual(
           rs.getFacetValues('products'),
-          {count: null, data: null, isRefined: true, name: 'products', path: null},
+          {
+            name: 'products',
+            count: null,
+            isRefined: true,
+            path: null,
+            exhaustive: true,
+            data: null
+          },
           ''
         );
         t.end();

@@ -51,7 +51,7 @@ test('getRefinements(facetName) returns a refinement(facet) when a facet refinem
   t.end();
 });
 
-test('getRefinements(facetName) returns a refinement(exlude) when a facet exclusion is set', function(t) {
+test('getRefinements(facetName) returns a refinement(exclude) when a facet exclusion is set', function(t) {
   var data = require('./getRefinements/exclude-apple.json');
   var searchParams = new SearchParameters(data.state);
   var result = new SearchResults(searchParams, data.content.results);
@@ -107,11 +107,15 @@ test(
 
     var refinements = result.getRefinements();
 
-    t.deepEqual(refinements, [{
-      attributeName: 'hierarchicalCategories', count: 0, exhaustive: false,
-      name: 'Best Buy Gift Cards > Entertainment Gift Cards', type: 'hierarchical'
-    }]);
-
+    t.deepEqual(refinements, [
+      {
+        attributeName: 'hierarchicalCategories',
+        count: 17,
+        exhaustive: true,
+        name: 'Best Buy Gift Cards > Entertainment Gift Cards',
+        type: 'hierarchical'
+      }
+    ]);
     t.end();
   });
 
@@ -129,7 +133,7 @@ test('getRefinements(facetName) returns a refinement(numeric) when a numeric fil
   t.end();
 });
 
-test('getRefinements(facetName) returnes a refinement(tag) when a tag is set', function(t) {
+test('getRefinements(facetName) returns a refinement(tag) when a tag is set', function(t) {
   var data = require('./getRefinements/dummy-tags.json');
   var searchParams = new SearchParameters(data.state);
   var result = new SearchResults(searchParams, data.content.results);

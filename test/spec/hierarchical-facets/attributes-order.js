@@ -33,6 +33,7 @@ test('hierarchical facets: attributes order', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
+      'exhaustiveFacetsCount': true,
       'facets': {
         // /!\ Note that lvl1 comes *before* lvl0 here
         'categories.lvl1': {'beers > IPA': 6, 'beers > 1664': 3},
@@ -57,22 +58,26 @@ test('hierarchical facets: attributes order', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'exhaustive': true,
     'data': [{
       'name': 'beers',
       'path': 'beers',
       'count': 9,
       'isRefined': true,
+      'exhaustive': true,
       'data': [{
         'name': '1664',
         'path': 'beers > 1664',
         'count': 3,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }, {
         'name': 'IPA',
         'path': 'beers > IPA',
         'count': 6,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }]
     }, {
@@ -80,12 +85,14 @@ test('hierarchical facets: attributes order', function(t) {
       'path': 'fruits',
       'count': 5,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }, {
       'name': 'sales',
       'path': 'sales',
       'count': 20,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }]
   }];

@@ -100,3 +100,67 @@ test('getFacetValues(facetName) testing the sort function', function(t) {
 
   t.end();
 });
+
+test('getFacetValues(conjunctive) returns correct facet values with the name `length`', function(t) {
+  var searchParams = new SearchParameters({
+    index: 'instant_search',
+    facets: ['type']
+  });
+
+  var result = {
+    query: '',
+    facets: {
+      type: {
+        dogs: 0,
+        // the key length in an object makes it an array for lodash
+        length: 5
+      }
+    }
+  };
+
+  var results = new SearchResults(searchParams, [result, result]);
+
+  var facetValues = results.getFacetValues('type');
+
+  var expected = [
+    {name: 'length', count: 5, isRefined: false, isExcluded: false},
+    {name: 'dogs', count: 0, isRefined: false, isExcluded: false}
+  ];
+
+  t.deepEqual(facetValues, expected);
+  t.equal(facetValues.length, 2);
+
+  t.end();
+});
+
+test('getFacetValues(disjunctive) returns correct facet values with the name `length`', function(t) {
+  var searchParams = new SearchParameters({
+    index: 'instant_search',
+    disjunctiveFacets: ['type']
+  });
+
+  var result = {
+    query: '',
+    facets: {
+      type: {
+        dogs: 0,
+        // the key length in an object makes it an array for lodash
+        length: 5
+      }
+    }
+  };
+
+  var results = new SearchResults(searchParams, [result, result]);
+
+  var facetValues = results.getFacetValues('type');
+
+  var expected = [
+    {name: 'length', count: 5, isRefined: false},
+    {name: 'dogs', count: 0, isRefined: false}
+  ];
+
+  t.deepEqual(facetValues, expected);
+  t.equal(facetValues.length, 2);
+
+  t.end();
+});
