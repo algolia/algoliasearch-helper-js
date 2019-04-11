@@ -27,11 +27,9 @@ function generateTrees(state) {
       state._getHierarchicalFacetSortBy(hierarchicalFacet)
     );
 
-    var rootExhaustive = Array.isArray(hierarchicalFacetResult)
-      ? hierarchicalFacetResult.every(function(facetResult) {
-        return facetResult.exhaustive;
-      })
-      : false;
+    var rootExhaustive = hierarchicalFacetResult.every(function(facetResult) {
+      return facetResult.exhaustive;
+    });
 
     var generateTreeFn = generateHierarchicalTree(
       sortBy,

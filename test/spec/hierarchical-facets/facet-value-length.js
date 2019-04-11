@@ -38,19 +38,6 @@ test('hierarchical facets: facet value called length', function(t) {
           // value length can cause lodash to turn an object into an array
           'categories.lvl0': {beers: 8, length: 3}
         }
-      },
-      {
-        query: 'a',
-        index: indexName,
-        hits: [{objectID: 'one'}],
-        nbHits: 1,
-        page: 0,
-        nbPages: 1,
-        hitsPerPage: 20,
-        facets: {
-          // value length can cause lodash to turn an object into an array
-          'categories.lvl0': {beers: 30, length: 20}
-        }
       }
     ]
   };
