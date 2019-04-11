@@ -828,21 +828,25 @@ function getRefinement(state, type, attributeName, name, resultsFacets) {
  * @param {Facet[]} resultsFacets
  */
 function getHierarchicalRefinement(state, attributeName, name, resultsFacets) {
-  var facet = find(resultsFacets, {name: attributeName});
   var facetDeclaration = state.getHierarchicalFacetByName(attributeName);
-  var splitted = name.split(facetDeclaration.separator);
-  var configuredName = splitted[splitted.length - 1];
-  for (var i = 0; facet !== undefined && i < splitted.length; ++i) {
-    facet = find(facet.data, {name: splitted[i]});
-  }
+  var separator = state._getHierarchicalFacetSeparator(facetDeclaration);
+  var split = name.split(separator);
+  var rootFacet = find(resultsFacets, {name: attributeName});
+
+  var facet = split.reduce(function(intermediateFacet, part) {
+    var newFacet =
+      intermediateFacet && find(intermediateFacet.data, {name: part});
+    return newFacet !== undefined ? newFacet : intermediateFacet;
+  }, rootFacet);
 
   var count = (facet && facet.count) || 0;
   var exhaustive = (facet && facet.exhaustive) || false;
+  var path = (facet && facet.path) || '';
 
   return {
     type: 'hierarchical',
     attributeName: attributeName,
-    name: configuredName,
+    name: path,
     count: count,
     exhaustive: exhaustive
   };
