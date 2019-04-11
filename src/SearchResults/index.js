@@ -96,8 +96,8 @@ function findMatchingHierarchicalFacetFromAttributeName(
   return find(hierarchicalFacets, function facetKeyMatchesAttribute(
     hierarchicalFacet
   ) {
-    var facetValues = hierarchicalFacet.attributes || [];
-    return facetValues.indexOf(hierarchicalAttributeName) > -1;
+    var facetNames = hierarchicalFacet.attributes || [];
+    return facetNames.indexOf(hierarchicalAttributeName) > -1;
   });
 }
 
@@ -485,9 +485,9 @@ function SearchResults(state, results) {
       return;
     }
 
-    var facets =
-    results[nextDisjunctiveResult] && results[nextDisjunctiveResult].facets
-      ? results[nextDisjunctiveResult].facets
+    var result = results[nextDisjunctiveResult];
+    var facets = result && result.facets
+      ? result.facets
       : {};
     Object.keys(facets).forEach(function(dfacet) {
       var facetResults = facets[dfacet];
