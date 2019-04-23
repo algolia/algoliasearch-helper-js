@@ -6,14 +6,11 @@ var defaultsPure = require('../functions/defaultsPure');
 var find = require('../functions/find');
 var valToNumber = require('../functions/valToNumber');
 var omit = require('../functions/omit');
+const objectHasKeys = require('../functions/objectHasKeys');
 
 var filterState = require('./filterState');
 
 var RefinementList = require('./RefinementList');
-
-function objectHasKeys(obj) {
-  return Object.keys(obj).length > 0;
-}
 
 /**
  * isEqual, but only for arrays of base elements, or base elements
@@ -337,7 +334,7 @@ SearchParameters.validate = function(currentState, parameters) {
   if (
     currentState.numericFilters &&
     params.numericRefinements &&
-    !objectHasKeys(params.numericRefinements)
+    objectHasKeys(params.numericRefinements)
   ) {
     return new Error(
       "[Numeric filters] Can't switch from the advanced to the managed API. It" +

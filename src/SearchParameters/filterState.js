@@ -1,8 +1,5 @@
 'use strict';
-
-function objectHasKeys(obj) {
-  return Object.keys(obj).length > 0;
-}
+const objectHasKeys = require('../functions/objectHasKeys');
 
 /**
  * @param {any[]} filters
