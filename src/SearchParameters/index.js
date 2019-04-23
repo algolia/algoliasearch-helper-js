@@ -240,7 +240,7 @@ SearchParameters._parseNumbers = function(partialState) {
     var value = partialState[k];
     if (typeof value === 'string') {
       var parsedValue = parseFloat(value);
-      // global isNaN i sok to use here, value is only number or NaN
+      // global isNaN is ok to use here, value is only number or NaN
       numbers[k] = isNaN(parsedValue) ? value : parsedValue;
     }
   });
