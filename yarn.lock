@@ -4229,7 +4229,7 @@ exit-hook@^1.0.0:
   resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
   integrity sha1-8FyiM7SMBdVP/wd2XfhQfpXAL/g=
 
-exorcist@^1.0.1:
+exorcist@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/exorcist/-/exorcist-1.0.1.tgz#79316e3c4885845490f7bb405c0e5b5db1167c52"
   integrity sha1-eTFuPEiFhFSQ97tAXA5bXbEWfFI=
