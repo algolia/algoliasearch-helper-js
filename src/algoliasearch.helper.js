@@ -118,7 +118,7 @@ var version = require('./version');
  * just an object containing the properties you need from it.
  */
 function AlgoliaSearchHelper(client, index, options) {
-  if (client.addAlgoliaAgent) {
+  if (typeof client.addAlgoliaAgent === 'function') {
     client.addAlgoliaAgent('JS Helper (' + version + ')');
   }
 
@@ -1330,7 +1330,7 @@ AlgoliaSearchHelper.prototype.clearCache = function() {
 AlgoliaSearchHelper.prototype.setClient = function(newClient) {
   if (this.client === newClient) return this;
 
-  if (newClient.addAlgoliaAgent) {
+  if (typeof newClient.addAlgoliaAgent === 'function') {
     newClient.addAlgoliaAgent('JS Helper (' + version + ')');
   }
   this.client = newClient;
