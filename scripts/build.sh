@@ -13,7 +13,7 @@ bundle='algoliasearch.helper'
 echo "Build"
 
 browserify index.js \
-  -s algoliasearchHelper \
+  --standalone algoliasearchHelper \
   --debug | \
   exorcist dist/algoliasearch.helper.js.map > dist/algoliasearch.helper.js
 
