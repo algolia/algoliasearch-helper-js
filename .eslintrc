@@ -6,5 +6,11 @@
     "eslint:recommended",
     "airbnb/base",
     "algolia/es5"
-  ]
+  ],
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "test": true
+  }
 }
