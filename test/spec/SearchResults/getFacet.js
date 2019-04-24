@@ -3,7 +3,7 @@
 var SearchResults = require('../../../src/SearchResults');
 
 test('getFacetByName should return a given facet be it disjunctive or conjunctive', function() {
-  var data = require('../search.testdata')();
+  var data = require('../../datasets/SearchParameters/search.dataset')();
 
   var result = new SearchResults(data.searchParams, data.response.results);
 
