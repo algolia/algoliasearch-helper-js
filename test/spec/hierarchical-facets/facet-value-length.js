@@ -1,11 +1,7 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: facet value called length', function(t) {
+test('hierarchical facets: facet value called length', function(done) {
   var algoliasearch = require('algoliasearch');
-
-  var sinon = require('sinon');
 
   var algoliasearchHelper = require('../../../');
 
@@ -70,11 +66,13 @@ test('hierarchical facets: facet value called length', function(t) {
     }
   ];
 
-  client.search = sinon.stub().resolves(algoliaResponse);
+  client.search = jest.fn(function() {
+    return Promise.resolve(algoliaResponse);
+  });
 
   helper.search();
   helper.once('result', function(content) {
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });
