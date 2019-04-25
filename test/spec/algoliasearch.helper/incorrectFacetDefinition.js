@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 var fakeClient = {};
 
-test('Conjuctive facet should be declared to be refined', function() {
+test('Conjunctive facet should be declared to be refined', function() {
   var h = algoliasearchHelper(fakeClient, '', {});
 
   expect(_.bind(h.addRefine, h, 'undeclaredFacet', 'value')).toThrow();
