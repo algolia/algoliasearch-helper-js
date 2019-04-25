@@ -12,6 +12,7 @@ var enableIntegrationTest =
 
 var projectsRootPaths = [path.resolve(__dirname, '..')];
 var dynamicJestConfig = Object.assign({}, staticJestConfig, {
+  maxWorkers: 4,
   setupFilesAfterEnv: staticJestConfig.setupFilesAfterEnv || []
 });
 
