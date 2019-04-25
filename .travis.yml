@@ -7,7 +7,6 @@ cache:
 script:
 - yarn test:ci
 - yarn doc
-- yarn test:perf
 branches:
   only:
   - master
