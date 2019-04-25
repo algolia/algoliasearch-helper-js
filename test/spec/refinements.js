@@ -5,7 +5,7 @@ var algoliasearchHelper = require('../../index');
 
 var emptyClient = {};
 
-test('Adding refinments should add an entry to the refinments attribute', function() {
+test('Adding refinements should add an entry to the refinements attribute', function() {
   var facetName = 'facet1';
   var facetValue = '42';
 
