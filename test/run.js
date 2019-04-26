@@ -2,7 +2,7 @@
 
 var path = require('path');
 var jest = require('jest');
-var algolia = require('algoliasearch');
+var algoliasearch = require('algoliasearch');
 var staticJestConfig = require('../jest.config');
 
 var enableIntegrationTest =
@@ -27,7 +27,10 @@ jest.runCLI(dynamicJestConfig, projectsRootPaths).then(function(response) {
   }
 
   if (enableIntegrationTest) {
-    var client = algolia(process.env.INTEGRATION_TEST_APPID, process.env.INTEGRATION_TEST_API_KEY);
+    var client = algoliasearch(
+      process.env.INTEGRATION_TEST_APPID,
+      process.env.INTEGRATION_TEST_API_KEY
+    );
 
     client.listIndexes().then(content => {
       content.items
