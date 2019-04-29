@@ -5,8 +5,6 @@ var setup = utils.setup;
 
 var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : require('../../');
 
-var test = require('tape');
-var bind = require('lodash/bind');
 var random = require('lodash/random');
 
 if (!utils.shouldRun) {
@@ -18,7 +16,7 @@ var indexName = '_travis-algoliasearch-helper-js-' +
 
 test(
   '[INT][GETFACETVALUES] When the results are empty, getFacetValues should not crash',
-  function(t) {
+  function(done) {
     setup(indexName, function(client) {
       return client;
     }).then(function(client) {
@@ -34,23 +32,22 @@ test(
           }]
         }
       );
+
       helper.on('result', function(rs) {
-        t.deepEqual(rs.getFacetValues('f'), [], '');
-        t.deepEqual(rs.getFacetValues('df'), [], '');
-        t.deepEqual(
-          rs.getFacetValues('products'),
-          {
-            name: 'products',
-            count: null,
-            isRefined: true,
-            path: null,
-            exhaustive: true,
-            data: null
-          },
-          ''
-        );
-        t.end();
+        expect(rs.getFacetValues('f')).toEqual([]);
+        expect(rs.getFacetValues('df')).toEqual([]);
+        expect(rs.getFacetValues('products')).toEqual({
+          name: 'products',
+          count: null,
+          isRefined: true,
+          path: null,
+          exhaustive: true,
+          data: null
+        });
+
+        done();
       });
+
       helper.search();
-    }).then(null, bind(t.error, t));
+    });
   });
