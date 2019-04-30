@@ -72,4 +72,4 @@ workflows:
     jobs:
       - test_build
       - test_unit
-      # - test_examples
+      - test_docs
