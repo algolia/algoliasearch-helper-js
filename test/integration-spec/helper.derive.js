@@ -7,10 +7,6 @@ var algoliasearchHelper = require('../../');
 
 var random = require('lodash/random');
 
-if (!utils.shouldRun) {
-  test = test.skip;
-}
-
 test(
   '[INT][DERIVE] Query the same index twice with different query',
   function() {

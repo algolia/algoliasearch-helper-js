@@ -8,10 +8,6 @@ var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : requi
 var map = require('lodash/map');
 var random = require('lodash/random');
 
-if (!utils.shouldRun) {
-  test = test.skip;
-}
-
 function hitsToParsedID(h) {
   return parseInt(h.objectID, 10);
 }

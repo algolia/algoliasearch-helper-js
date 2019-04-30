@@ -7,9 +7,6 @@ var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : requi
 
 var random = require('lodash/random');
 
-if (!utils.shouldRun) {
-  test = test.skip;
-}
 
 test('[INT][FILTERS] Should retrieve different values for multi facetted records', function(done) {
   var indexName = '_travis-algoliasearch-helper-js-' +

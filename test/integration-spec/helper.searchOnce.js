@@ -8,9 +8,6 @@ var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : requi
 var find = require('lodash/find');
 var random = require('lodash/random');
 
-if (!utils.shouldRun) {
-  test = test.skip;
-}
 var indexName = '_travis-algoliasearch-helper-js-' +
   (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
   'helper_searchonce' + random(0, 5000);
