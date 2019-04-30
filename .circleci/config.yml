@@ -39,7 +39,7 @@ jobs:
           name: Build
           command: yarn build
 
-  test_unit:
+  test:
     <<: *defaults
     steps:
       - checkout
@@ -51,7 +51,7 @@ jobs:
           name: Lint & Code styles
           command: yarn lint
       - run:
-          name: Unit Tests
+          name: Unit & Integration Tests
           command: yarn test --maxWorkers=4
 
   test_docs:
@@ -71,5 +71,5 @@ workflows:
   ci:
     jobs:
       - test_build
-      - test_unit
+      - test
       - test_docs
