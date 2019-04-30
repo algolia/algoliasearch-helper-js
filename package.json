@@ -7,7 +7,7 @@
   "scripts": {
     "watch": "watchify index.js -v -s algoliasearchHelper -o dist/algoliasearch.helper.js",
     "build": "./scripts/build.sh",
-    "lint": "scripts/lint.sh",
+    "lint": "eslint .",
     "lint:watch": "onchange 'src/**/*js' 'index.js' 'test/**/*js' '.eslintrc' -- npm run -s lint",
     "doc": "gulp --gulpfile documentation-src/build.gulp.js doc",
     "doc:watch": "gulp --gulpfile documentation-src/build.gulp.js doc:watch",

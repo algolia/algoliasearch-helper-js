@@ -8,10 +8,4 @@ if [ $CI == 'true' ]; then
   set -x # debug messages
 fi
 
-echo "Test"
-
-echo "Test: node"
-./scripts/test-node.sh
-
-echo "Test: lint"
-./scripts/lint.sh
+node test/run.js
