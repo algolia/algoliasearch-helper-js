@@ -1,10 +1,7 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: custom prefix path', function(t) {
+test('hierarchical facets: custom prefix path', function(done) {
   var algoliasearch = require('algoliasearch');
-  var sinon = require('sinon');
 
   var algoliasearchHelper = require('../../../');
 
@@ -33,6 +30,7 @@ test('hierarchical facets: custom prefix path', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
+      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 3},
         'categories.lvl1': {'beers | IPA': 2, 'beers | Belgian': 1},
@@ -69,22 +67,26 @@ test('hierarchical facets: custom prefix path', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'exhaustive': true,
     'data': [{
       'name': 'Belgian',
       'path': 'beers | Belgian',
       'count': 1,
       'isRefined': true,
+      'exhaustive': true,
       'data': [{
         'name': 'Blond',
         'path': 'beers | Belgian | Blond',
         'count': 2,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }, {
         'name': 'Dark',
         'path': 'beers | Belgian | Dark',
         'count': 1,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }]
     }, {
@@ -92,18 +94,19 @@ test('hierarchical facets: custom prefix path', function(t) {
       'path': 'beers | IPA',
       'count': 2,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }]
   }];
 
-  client.search = sinon
-    .stub()
-    .resolves(algoliaResponse);
+  client.search = jest.fn(function() {
+    return Promise.resolve(algoliaResponse);
+  });
 
   helper.setQuery('a').search();
   helper.once('result', function(content) {
-    t.ok(client.search.calledOnce, 'client.search was called once');
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(client.search).toHaveBeenCalledTimes(1);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });

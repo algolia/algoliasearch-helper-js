@@ -1,10 +1,8 @@
 'use strict';
 
-var test = require('tape');
-
 var fakeClient = {};
 
-test('hierarchical facets: getFacetValues', function(t) {
+test('hierarchical facets: getFacetValues', function() {
   var algoliasearchHelper = require('../../../');
   var SearchResults = require('../../../src/SearchResults');
 
@@ -30,6 +28,7 @@ test('hierarchical facets: getFacetValues', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
+      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 2},
         'categories.lvl1': {'beers | IPA': 2}
@@ -65,18 +64,21 @@ test('hierarchical facets: getFacetValues', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'exhaustive': true,
     'data': [
       {
         'name': 'beers',
         'path': 'beers',
         'count': 3,
         'isRefined': true,
+        'exhaustive': true,
         'data': [
           {
             'name': 'Belgian',
             'path': 'beers | Belgian',
             'count': 1,
             'isRefined': false,
+            'exhaustive': true,
             'data': null
           },
           {
@@ -84,6 +86,7 @@ test('hierarchical facets: getFacetValues', function(t) {
             'path': 'beers | IPA',
             'count': 2,
             'isRefined': true,
+            'exhaustive': true,
             'data': null
           }
         ]
@@ -93,13 +96,8 @@ test('hierarchical facets: getFacetValues', function(t) {
 
   var results = new SearchResults(helper.state, algoliaResponse.results);
 
-  t.deepEqual(
-    results.getFacetValues('categories', {sortBy: ['name:asc']}),
-    expectedHelperResponseNameASC,
-    'Hierarchical facet values should be sorted as per the predicate');
-  t.deepEqual(
-    results.getFacetValues('categories', {sortBy: function(a, b) { return a.count - b.count; }}),
-    results.getFacetValues('categories', {sortBy: ['count:asc']}),
-    'Hierarchical faet values should be consistentely sort with string or function predicates');
-  t.end();
+  expect(results.getFacetValues('categories', {sortBy: ['name:asc']})).toEqual(expectedHelperResponseNameASC);
+  expect(
+    results.getFacetValues('categories', {sortBy: function(a, b) { return a.count - b.count; }})
+  ).toEqual(results.getFacetValues('categories', {sortBy: ['count:asc']}));
 });

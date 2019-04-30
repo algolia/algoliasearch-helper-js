@@ -2,11 +2,8 @@
 // different order than the declared attributes order at the helper initialization
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: attributes order', function(t) {
+test('hierarchical facets: attributes order', function(done) {
   var algoliasearch = require('algoliasearch');
-  var sinon = require('sinon');
 
   var algoliasearchHelper = require('../../../');
 
@@ -33,6 +30,7 @@ test('hierarchical facets: attributes order', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
+      'exhaustiveFacetsCount': true,
       'facets': {
         // /!\ Note that lvl1 comes *before* lvl0 here
         'categories.lvl1': {'beers > IPA': 6, 'beers > 1664': 3},
@@ -57,22 +55,26 @@ test('hierarchical facets: attributes order', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'exhaustive': true,
     'data': [{
       'name': 'beers',
       'path': 'beers',
       'count': 9,
       'isRefined': true,
+      'exhaustive': true,
       'data': [{
         'name': '1664',
         'path': 'beers > 1664',
         'count': 3,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }, {
         'name': 'IPA',
         'path': 'beers > IPA',
         'count': 6,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }]
     }, {
@@ -80,26 +82,28 @@ test('hierarchical facets: attributes order', function(t) {
       'path': 'fruits',
       'count': 5,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }, {
       'name': 'sales',
       'path': 'sales',
       'count': 20,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }]
   }];
 
-  client.search = sinon
-    .stub()
-    .resolves(algoliaResponse);
+  client.search = jest.fn(function() {
+    return Promise.resolve(algoliaResponse);
+  });
 
   helper.setQuery('a').search();
 
   helper.once('result', function(content) {
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.deepEqual(content.getFacetByName('categories'), expectedHelperResponse[0]);
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    expect(content.getFacetByName('categories')).toEqual(expectedHelperResponse[0]);
 
-    t.end();
+    done();
   });
 });

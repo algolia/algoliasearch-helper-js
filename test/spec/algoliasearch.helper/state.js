@@ -1,50 +1,37 @@
 'use strict';
 
-var test = require('tape');
 var algoliasearchHelper = require('../../../index');
 
 var SearchParameters = algoliasearchHelper.SearchParameters;
 
 var fakeClient = {};
 
-test('setState should set the state of the helper and trigger a change event', function(t) {
+test('setState should set the state of the helper and trigger a change event', function(done) {
   var state0 = {query: 'a query'};
   var state1 = {query: 'another query'};
 
   var helper = algoliasearchHelper(fakeClient, null, state0);
 
-  t.deepEquals(helper.state, new SearchParameters(state0), '(setstate) initial state should be state0');
+  expect(helper.state).toEqual(new SearchParameters(state0));
 
   helper.on('change', function(newState) {
-    t.deepEquals(
-      helper.state,
-      new SearchParameters(state1),
-      '(setState) the state in the helper should be changed to state1');
-    t.deepEquals(
-      newState,
-      new SearchParameters(state1),
-      '(setState) the state parameter of the event handler should be set to state1');
-    t.end();
+    expect(helper.state).toEqual(new SearchParameters(state1));
+    expect(newState).toEqual(new SearchParameters(state1));
+    done();
   });
 
   helper.setState(state1);
 });
 
-test('getState should return the current state of the helper', function(t) {
+test('getState should return the current state of the helper', function() {
   var initialState = {query: 'a query'};
   var helper = algoliasearchHelper(fakeClient, null, initialState);
 
-  t.deepEquals(helper.getState(),
-    new SearchParameters(initialState),
-    '(getState) getState returned value should be equivalent to initialstate as a new SearchParameters');
-  t.deepEquals(helper.getState(),
-    helper.state,
-    '(getState) getState returned value should be equivalent to the internal state of the helper');
-
-  t.end();
+  expect(helper.getState()).toEqual(new SearchParameters(initialState));
+  expect(helper.getState()).toEqual(helper.state);
 });
 
-test('getState should return an object according to the specified filters', function(t) {
+test('getState should return an object according to the specified filters', function() {
   var initialState = {
     query: 'a query',
     facets: ['facetA', 'facetWeDontCareAbout'],
@@ -86,21 +73,48 @@ test('getState should return an object according to the specified filters', func
     hierarchicalFacetsRefinements: {facetC: ['menu']}
   };
 
-  t.deepEquals(helper.getState([]), {}, 'if an empty array is passed then we should get an empty object');
-  t.deepEquals(
-    helper.getState(['index', 'query', 'attribute:facetA', 'attribute:facetB', 'attribute:numerical']),
-    stateFinalWithSpecificAttribute,
-    '(getState) getState returned value should contain all the required elements');
+  expect(helper.getState([])).toEqual({});
+  expect(
+    helper.getState(['index', 'query', 'attribute:facetA', 'attribute:facetB', 'attribute:numerical'])
+  ).toEqual(stateFinalWithSpecificAttribute);
 
-  t.deepEquals(
-    helper.getState(['attribute:facetC']),
-    stateWithHierarchicalAttribute,
-    '(getState) getState returned value should contain the hierarchical facet');
+  expect(helper.getState(['attribute:facetC'])).toEqual(stateWithHierarchicalAttribute);
 
-  t.deepEquals(
-    helper.getState(['index', 'query', 'attribute:*']),
-    stateFinalWithoutSpecificAttributes,
-    '(getState) getState should return all the attributes if *');
+  expect(helper.getState(['index', 'query', 'attribute:*'])).toEqual(stateFinalWithoutSpecificAttributes);
+});
 
-  t.end();
+test('setState should set a default hierarchicalFacetRefinement when a rootPath is defined', function() {
+  var searchParameters = {hierarchicalFacets: [
+    {
+      name: 'hierarchicalCategories.lvl0',
+      attributes: [
+        'hierarchicalCategories.lvl0',
+        'hierarchicalCategories.lvl1',
+        'hierarchicalCategories.lvl2'
+      ],
+      separator: ' > ',
+      rootPath: 'Cameras & Camcorders',
+      showParentLevel: true
+    }
+  ]};
+
+  var helper = algoliasearchHelper(fakeClient, null, searchParameters);
+  var initialHelperState = Object.assign({}, helper.getState());
+
+  expect(initialHelperState.hierarchicalFacetsRefinements).toEqual({
+    'hierarchicalCategories.lvl0': ['Cameras & Camcorders']
+  });
+
+  // reset state
+  helper.setState(helper.state.removeHierarchicalFacet('hierarchicalCategories.lvl0'));
+  expect(helper.getState().hierarchicalFacetsRefinements).toEqual({});
+
+  // re-add `hierarchicalFacets`
+  helper.setState(Object.assign({}, helper.state, searchParameters));
+  var finalHelperState = Object.assign({}, helper.getState());
+
+  expect(initialHelperState).toEqual(finalHelperState);
+  expect(finalHelperState.hierarchicalFacetsRefinements).toEqual({
+    'hierarchicalCategories.lvl0': ['Cameras & Camcorders']
+  });
 });

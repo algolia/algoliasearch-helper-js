@@ -1,10 +1,7 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: two hierarchical facets', function(t) {
+test('hierarchical facets: two hierarchical facets', function(done) {
   var algoliasearch = require('algoliasearch');
-  var sinon = require('sinon');
 
   var algoliasearchHelper = require('../../../');
 
@@ -35,6 +32,7 @@ test('hierarchical facets: two hierarchical facets', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
+      'exhaustiveFacetsCount': true,
       'facets': {
         'beers.lvl0': {'IPA': 2},
         'fruits.lvl0': {'oranges': 5}
@@ -69,17 +67,20 @@ test('hierarchical facets: two hierarchical facets', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'exhaustive': true,
     'data': [{
       'name': 'IPA',
       'path': 'IPA',
       'count': 2,
       'isRefined': true,
+      'exhaustive': true,
       'data': null
     }, {
       'name': 'Belgian',
       'path': 'Belgian',
       'count': 3,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }]
   }, {
@@ -87,29 +88,32 @@ test('hierarchical facets: two hierarchical facets', function(t) {
     'path': null,
     'count': null,
     'isRefined': true,
+    'exhaustive': true,
     'data': [{
       'name': 'oranges',
       'path': 'oranges',
       'count': 5,
       'isRefined': true,
+      'exhaustive': true,
       'data': null
     }, {
       'name': 'apples',
       'path': 'apples',
       'count': 4,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }]
   }];
 
 
-  client.search = sinon
-    .stub()
-    .resolves(algoliaResponse);
+  client.search = jest.fn(function() {
+    return Promise.resolve(algoliaResponse);
+  });
 
   helper.setQuery('a').search();
   helper.once('result', function(content) {
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });

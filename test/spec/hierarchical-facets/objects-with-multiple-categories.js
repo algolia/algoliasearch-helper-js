@@ -1,11 +1,7 @@
 'use strict';
 
-var test = require('tape');
-
-test('hierarchical facets: objects with multiple categories', function(t) {
+test('hierarchical facets: objects with multiple categories', function(done) {
   var algoliasearch = require('algoliasearch');
-
-  var sinon = require('sinon');
 
   var algoliasearchHelper = require('../../../');
 
@@ -32,6 +28,7 @@ test('hierarchical facets: objects with multiple categories', function(t) {
       'page': 0,
       'nbPages': 1,
       'hitsPerPage': 20,
+      'exhaustiveFacetsCount': true,
       'facets': {
         'categories.lvl0': {'beers': 3, 'bières': 3},
         'categories.lvl1': {'beers > IPA': 3, 'bières > Rousses': 3}
@@ -67,22 +64,26 @@ test('hierarchical facets: objects with multiple categories', function(t) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'exhaustive': true,
     'data': [{
       'name': 'beers',
       'path': 'beers',
       'count': 5,
       'isRefined': true,
+      'exhaustive': true,
       'data': [{
         'name': 'IPA',
         'path': 'beers > IPA',
         'count': 3,
         'isRefined': true,
+        'exhaustive': true,
         'data': null
       }, {
         'name': 'Guiness',
         'path': 'beers > Guiness',
         'count': 2,
         'isRefined': false,
+        'exhaustive': true,
         'data': null
       }]
     }, {
@@ -90,17 +91,18 @@ test('hierarchical facets: objects with multiple categories', function(t) {
       'path': 'bières',
       'count': 3,
       'isRefined': false,
+      'exhaustive': true,
       'data': null
     }]
   }];
 
-  client.search = sinon
-    .stub()
-    .resolves(algoliaResponse);
+  client.search = jest.fn(function() {
+    return Promise.resolve(algoliaResponse);
+  });
 
   helper.setQuery('a').search();
   helper.once('result', function(content) {
-    t.deepEqual(content.hierarchicalFacets, expectedHelperResponse);
-    t.end();
+    expect(content.hierarchicalFacets).toEqual(expectedHelperResponse);
+    done();
   });
 });
