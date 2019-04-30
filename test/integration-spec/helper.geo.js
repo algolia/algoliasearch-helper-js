@@ -8,7 +8,7 @@ var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : requi
 var random = require('lodash/random');
 
 var indexName = '_circle-algoliasearch-helper-js-' +
-  (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
+  (process.env.CIRCLE_BUILD_NUM || 'DEV') +
   'helper_searchonce' + random(0, 5000);
 
 var dataset = [

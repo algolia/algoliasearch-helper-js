@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ -z $TRAVIS_BUILD_NUMBER ] && CI='false' || CI='true'
+[ -z $CIRCLE_BUILD_NUM ] && CI='false' || CI='true'
 
 set -e # exit when error
 if [ $CI == 'true' ]; then

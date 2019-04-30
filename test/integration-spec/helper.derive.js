@@ -11,7 +11,7 @@ test(
   '[INT][DERIVE] Query the same index twice with different query',
   function() {
     var indexName = '_circle-algoliasearch-helper-js-' +
-      (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
+      (process.env.CIRCLE_BUILD_NUM || 'DEV') +
       'helper_distinct.facet' + random(0, 5000);
 
     return setup(indexName, function(client, index) {

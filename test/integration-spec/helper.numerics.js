@@ -15,7 +15,7 @@ function hitsToParsedID(h) {
 test('[INT][NUMERICS][RAW-API]Test numeric operations on the helper and their results on the algolia API',
   function(done) {
     var indexName = '_circle-algoliasearch-helper-js-' +
-      (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
+      (process.env.CIRCLE_BUILD_NUM || 'DEV') +
       'helper_numerics' + random(0, 5000);
 
     setup(indexName, function(client, index) {
@@ -84,7 +84,7 @@ test('[INT][NUMERICS][RAW-API]Test numeric operations on the helper and their re
 test('[INT][NUMERICS][MANAGED-API]Test numeric operations on the helper and their results on the algolia API',
   function(done) {
     var indexName = '_circle-algoliasearch-helper-js-' +
-      (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
+      (process.env.CIRCLE_BUILD_NUM || 'DEV') +
       'helper_numerics_managed' + random(0, 5000);
 
     setup(indexName, function(client, index) {
