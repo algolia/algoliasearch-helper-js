@@ -9,7 +9,7 @@ var random = require('lodash/random');
 
 
 test('[INT][HIGHLIGHT] The highlight should be consistent with the parameters', function(done) {
-  var indexName = '_travis-algoliasearch-helper-js-' +
+  var indexName = '_circle-algoliasearch-helper-js-' +
     (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
     'helper_highlight' + random(0, 5000);
 

@@ -13,7 +13,7 @@ function hitsToParsedID(h) {
 }
 
 test('[INT][TAGS]Test tags operations on the helper and their results on the algolia API', function(done) {
-  var indexName = '_travis-algoliasearch-helper-js-' +
+  var indexName = '_circle-algoliasearch-helper-js-' +
     (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
     'helper_refinements' + random(0, 5000);
 

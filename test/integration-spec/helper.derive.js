@@ -10,7 +10,7 @@ var random = require('lodash/random');
 test(
   '[INT][DERIVE] Query the same index twice with different query',
   function() {
-    var indexName = '_travis-algoliasearch-helper-js-' +
+    var indexName = '_circle-algoliasearch-helper-js-' +
       (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
       'helper_distinct.facet' + random(0, 5000);
 

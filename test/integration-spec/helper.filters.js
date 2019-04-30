@@ -9,7 +9,7 @@ var random = require('lodash/random');
 
 
 test('[INT][FILTERS] Should retrieve different values for multi facetted records', function(done) {
-  var indexName = '_travis-algoliasearch-helper-js-' +
+  var indexName = '_circle-algoliasearch-helper-js-' +
     (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
     'helper_refinements' + random(0, 5000);
 

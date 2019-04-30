@@ -8,7 +8,7 @@ var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : requi
 var random = require('lodash/random');
 
 test('[INT][FILTERS] Using distinct should let me retrieve all facet without distinct', function(done) {
-  var indexName = '_travis-algoliasearch-helper-js-' +
+  var indexName = '_circle-algoliasearch-helper-js-' +
     (process.env.TRAVIS_BUILD_NUMBER || 'DEV') +
     'helper_distinct.facet' + random(0, 5000);
 
