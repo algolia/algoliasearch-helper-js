@@ -54,7 +54,7 @@ jobs:
           name: Unit Tests
           command: yarn test --maxWorkers=4
 
- test_docs:
+  test_docs:
     <<: *defaults
     steps:
       - checkout
