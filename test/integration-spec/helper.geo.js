@@ -3,7 +3,7 @@
 var utils = require('../integration-utils.js');
 var setup = utils.setupSimple;
 
-var algoliasearchHelper = utils.isCIBrowser ? window.algoliasearchHelper : require('../../');
+var algoliasearchHelper = require('../../');
 
 var random = require('lodash/random');
 
