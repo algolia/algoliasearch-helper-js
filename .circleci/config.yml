@@ -27,7 +27,7 @@ defaults: &defaults
 
 version: 2
 jobs:
-  test_build:
+  build:
     <<: *defaults
     steps:
       - checkout
@@ -54,7 +54,7 @@ jobs:
           name: Unit & Integration Tests
           command: yarn test --maxWorkers=4
 
-  test_docs:
+  docs:
     <<: *defaults
     steps:
       - checkout
@@ -70,6 +70,6 @@ workflows:
   version: 2
   ci:
     jobs:
-      - test_build
+      - build
       - test
-      - test_docs
+      - docs
