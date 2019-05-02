@@ -13,6 +13,53 @@ function makeFakeClient() {
   };
 }
 
+test('Change events should be emitted with reset page to true on implicit reset methods', function() {
+  var changed = jest.fn();
+  var fakeClient = makeFakeClient();
+  var helper = algoliaSearchHelper(fakeClient, 'Index');
+
+  helper.on('change', changed);
+
+  expect(changed).toHaveBeenCalledTimes(0);
+
+  // Trigger a page reset
+  helper.setQuery('Apple');
+
+  expect(changed).toHaveBeenCalledTimes(1);
+  expect(changed).toHaveBeenLastCalledWith(expect.any(algoliaSearchHelper.SearchParameters), null, true);
+
+  // Trigger a page reset
+  helper.setQueryParameter('hitsPerPage', 10);
+
+  expect(changed).toHaveBeenCalledTimes(2);
+  expect(changed).toHaveBeenLastCalledWith(expect.any(algoliaSearchHelper.SearchParameters), null, true);
+});
+
+test('Change events should be emitted with reset page to false on regular methods', function() {
+  var changed = jest.fn();
+  var fakeClient = makeFakeClient();
+  var helper = algoliaSearchHelper(fakeClient, 'Index');
+
+  helper.on('change', changed);
+
+  expect(changed).toHaveBeenCalledTimes(0);
+
+  // Don't trigger a page reset
+  helper.setPage(22);
+
+  expect(changed).toHaveBeenCalledTimes(1);
+  expect(changed).toHaveBeenLastCalledWith(expect.any(algoliaSearchHelper.SearchParameters), null, false);
+
+  // Don't trigger a page reset
+  helper.setState({
+    query: 'Apple',
+    page: 22
+  });
+
+  expect(changed).toHaveBeenCalledTimes(2);
+  expect(changed).toHaveBeenLastCalledWith(expect.any(algoliaSearchHelper.SearchParameters), null, false);
+});
+
 test('Change events should be emitted as soon as the state change, but search should be triggered (refactored)', function() {
   var fakeClient = makeFakeClient();
   var helper = algoliaSearchHelper(fakeClient, 'Index', {
