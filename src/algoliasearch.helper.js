@@ -329,7 +329,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
  * @chainable
  */
 AlgoliaSearchHelper.prototype.setQuery = function(q) {
-  this._change(this.state.setPage(0).setQuery(q));
+  this._change(this.state.resetPage().setQuery(q));
   return this;
 };
 
@@ -357,7 +357,7 @@ AlgoliaSearchHelper.prototype.setQuery = function(q) {
  * }).search();
  */
 AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
-  this._change(this.state.setPage(0).clearRefinements(name));
+  this._change(this.state.resetPage().clearRefinements(name));
   return this;
 };
 
@@ -370,7 +370,7 @@ AlgoliaSearchHelper.prototype.clearRefinements = function(name) {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.clearTags = function() {
-  this._change(this.state.setPage(0).clearTags());
+  this._change(this.state.resetPage().clearTags());
   return this;
 };
 
@@ -386,7 +386,7 @@ AlgoliaSearchHelper.prototype.clearTags = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.addDisjunctiveFacetRefinement = function(facet, value) {
-  this._change(this.state.setPage(0).addDisjunctiveFacetRefinement(facet, value));
+  this._change(this.state.resetPage().addDisjunctiveFacetRefinement(facet, value));
   return this;
 };
 
@@ -411,7 +411,7 @@ AlgoliaSearchHelper.prototype.addDisjunctiveRefine = function() {
  * @fires change
  */
 AlgoliaSearchHelper.prototype.addHierarchicalFacetRefinement = function(facet, value) {
-  this._change(this.state.setPage(0).addHierarchicalFacetRefinement(facet, value));
+  this._change(this.state.resetPage().addHierarchicalFacetRefinement(facet, value));
   return this;
 };
 
@@ -428,7 +428,7 @@ AlgoliaSearchHelper.prototype.addHierarchicalFacetRefinement = function(facet, v
  * @chainable
  */
 AlgoliaSearchHelper.prototype.addNumericRefinement = function(attribute, operator, value) {
-  this._change(this.state.setPage(0).addNumericRefinement(attribute, operator, value));
+  this._change(this.state.resetPage().addNumericRefinement(attribute, operator, value));
   return this;
 };
 
@@ -444,7 +444,7 @@ AlgoliaSearchHelper.prototype.addNumericRefinement = function(attribute, operato
  * @chainable
  */
 AlgoliaSearchHelper.prototype.addFacetRefinement = function(facet, value) {
-  this._change(this.state.setPage(0).addFacetRefinement(facet, value));
+  this._change(this.state.resetPage().addFacetRefinement(facet, value));
   return this;
 };
 
@@ -468,7 +468,7 @@ AlgoliaSearchHelper.prototype.addRefine = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.addFacetExclusion = function(facet, value) {
-  this._change(this.state.setPage(0).addExcludeRefinement(facet, value));
+  this._change(this.state.resetPage().addExcludeRefinement(facet, value));
   return this;
 };
 
@@ -490,7 +490,7 @@ AlgoliaSearchHelper.prototype.addExclude = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.addTag = function(tag) {
-  this._change(this.state.setPage(0).addTagRefinement(tag));
+  this._change(this.state.resetPage().addTagRefinement(tag));
   return this;
 };
 
@@ -513,7 +513,7 @@ AlgoliaSearchHelper.prototype.addTag = function(tag) {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.removeNumericRefinement = function(attribute, operator, value) {
-  this._change(this.state.setPage(0).removeNumericRefinement(attribute, operator, value));
+  this._change(this.state.resetPage().removeNumericRefinement(attribute, operator, value));
   return this;
 };
 
@@ -532,7 +532,7 @@ AlgoliaSearchHelper.prototype.removeNumericRefinement = function(attribute, oper
  * @chainable
  */
 AlgoliaSearchHelper.prototype.removeDisjunctiveFacetRefinement = function(facet, value) {
-  this._change(this.state.setPage(0).removeDisjunctiveFacetRefinement(facet, value));
+  this._change(this.state.resetPage().removeDisjunctiveFacetRefinement(facet, value));
   return this;
 };
 
@@ -552,7 +552,7 @@ AlgoliaSearchHelper.prototype.removeDisjunctiveRefine = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.removeHierarchicalFacetRefinement = function(facet) {
-  this._change(this.state.setPage(0).removeHierarchicalFacetRefinement(facet));
+  this._change(this.state.resetPage().removeHierarchicalFacetRefinement(facet));
 
   return this;
 };
@@ -572,7 +572,7 @@ AlgoliaSearchHelper.prototype.removeHierarchicalFacetRefinement = function(facet
  * @chainable
  */
 AlgoliaSearchHelper.prototype.removeFacetRefinement = function(facet, value) {
-  this._change(this.state.setPage(0).removeFacetRefinement(facet, value));
+  this._change(this.state.resetPage().removeFacetRefinement(facet, value));
   return this;
 };
 
@@ -598,7 +598,7 @@ AlgoliaSearchHelper.prototype.removeRefine = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.removeFacetExclusion = function(facet, value) {
-  this._change(this.state.setPage(0).removeExcludeRefinement(facet, value));
+  this._change(this.state.resetPage().removeExcludeRefinement(facet, value));
   return this;
 };
 
@@ -620,7 +620,7 @@ AlgoliaSearchHelper.prototype.removeExclude = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.removeTag = function(tag) {
-  this._change(this.state.setPage(0).removeTagRefinement(tag));
+  this._change(this.state.resetPage().removeTagRefinement(tag));
   return this;
 };
 
@@ -636,7 +636,7 @@ AlgoliaSearchHelper.prototype.removeTag = function(tag) {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.toggleFacetExclusion = function(facet, value) {
-  this._change(this.state.setPage(0).toggleExcludeFacetRefinement(facet, value));
+  this._change(this.state.resetPage().toggleExcludeFacetRefinement(facet, value));
   return this;
 };
 
@@ -681,7 +681,7 @@ AlgoliaSearchHelper.prototype.toggleRefinement = function(facet, value) {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.toggleFacetRefinement = function(facet, value) {
-  this._change(this.state.setPage(0).toggleFacetRefinement(facet, value));
+  this._change(this.state.resetPage().toggleFacetRefinement(facet, value));
   return this;
 };
 
@@ -703,7 +703,7 @@ AlgoliaSearchHelper.prototype.toggleRefine = function() {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.toggleTag = function(tag) {
-  this._change(this.state.setPage(0).toggleTagRefinement(tag));
+  this._change(this.state.resetPage().toggleTagRefinement(tag));
   return this;
 };
 
@@ -776,7 +776,7 @@ AlgoliaSearchHelper.prototype.setPage = setCurrentPage;
  * @chainable
  */
 AlgoliaSearchHelper.prototype.setIndex = function(name) {
-  this._change(this.state.setPage(0).setIndex(name));
+  this._change(this.state.resetPage().setIndex(name));
   return this;
 };
 
@@ -798,7 +798,7 @@ AlgoliaSearchHelper.prototype.setIndex = function(name) {
  * helper.setQueryParameter('hitsPerPage', 20).search();
  */
 AlgoliaSearchHelper.prototype.setQueryParameter = function(parameter, value) {
-  this._change(this.state.setPage(0).setQueryParameter(parameter, value));
+  this._change(this.state.resetPage().setQueryParameter(parameter, value));
   return this;
 };
 
