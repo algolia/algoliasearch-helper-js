@@ -14,6 +14,7 @@
 
 var defaultsPure = require('../functions/defaultsPure');
 var omit = require('../functions/omit');
+var objectHasKeys = require('../functions/objectHasKeys');
 
 var lib = {
   /**
@@ -89,10 +90,14 @@ var lib = {
    */
   clearRefinement: function clearRefinement(refinementList, attribute, refinementType) {
     if (attribute === undefined) {
-      if (Object.keys(refinementList).length === 0) return refinementList;
+      if (!(refinementList && objectHasKeys(refinementList))) {
+        return refinementList;
+      }
       return {};
     } else if (typeof attribute === 'string') {
-      if (refinementList[attribute] === undefined) return refinementList;
+      if (!(refinementList[attribute] && refinementList[attribute].length > 0)) {
+        return refinementList;
+      }
       return omit(refinementList, attribute);
     } else if (typeof attribute === 'function') {
       var hasChanged = false;
