@@ -286,7 +286,9 @@ function SearchResults(state, results) {
    * @member {number}
    */
   this.processingTimeMS = results.reduce(function(sum, result) {
-    return sum + result.processingTimeMS;
+    return result.processingTimeMS === undefined
+      ? sum
+      : sum + result.processingTimeMS;
   }, 0);
   /**
    * The position if the position was guessed by IP.

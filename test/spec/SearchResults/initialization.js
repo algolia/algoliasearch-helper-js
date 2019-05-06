@@ -16,7 +16,7 @@ test('processingTime should be the sum of all individual times', function() {
   expect(result.processingTimeMS).toBe(2);
 });
 
-test('processingTime should be NaN for one value undefined', function() {
+test('processingTime should ignore undefined', function() {
   var result = new SearchResults(new SearchParameters(), [
     {
       processingTimeMS: undefined
@@ -26,5 +26,5 @@ test('processingTime should be NaN for one value undefined', function() {
     }
   ]);
 
-  expect(result.processingTimeMS).toBe(NaN);
+  expect(result.processingTimeMS).toBe(1);
 });
