@@ -66,7 +66,7 @@
     "metalsmith-changed": "2.0.0",
     "metalsmith-discover-partials": "0.1.0",
     "metalsmith-headings": "0.1.0",
-    "metalsmith-in-place": "superwolff/metalsmith-in-place#7cb06e54142b8843f35178ceb5560946ae356049",
+    "metalsmith-in-place": "superwolff/metalsmith-in-place#ed519587b1704db11f7f504ff775998474c0632b",
     "metalsmith-layouts": "1.8.1",
     "metalsmith-markdown": "0.2.1",
     "metalsmith-metallic": "1.0.0",
