@@ -1237,12 +1237,18 @@ AlgoliaSearchHelper.prototype._search = function() {
   var derivedQueries = this.derivedHelpers.map(function(derivedHelper) {
     var derivedState = derivedHelper.getModifiedState(state);
     var queries = requestBuilder._getQueries(derivedState.index, derivedState);
+
     states.push({
       state: derivedState,
       queriesCount: queries.length,
       helper: derivedHelper
     });
-    derivedHelper.emit('search', derivedState, derivedHelper.lastResults);
+
+    derivedHelper.emit('search', {
+      state: derivedState,
+      results: derivedHelper.lastResults
+    });
+
     return queries;
   });
 
