@@ -1,7 +1,5 @@
 'use strict';
 
-var compact = require('lodash/compact');
-
 var orderBy = require('lodash/orderBy');
 
 var defaults = require('lodash/defaults');
@@ -14,6 +12,7 @@ var partialRight = require('lodash/partialRight');
 
 var find = require('../functions/find');
 var findIndex = require('../functions/findIndex');
+var compact = require('../functions/compact');
 var formatSort = require('../functions/formatSort');
 
 var generateHierarchicalTree = require('./generate-hierarchical-tree');
