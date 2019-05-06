@@ -68,7 +68,7 @@
     "metalsmith-headings": "0.1.0",
     "metalsmith-in-place": "superwolff/metalsmith-in-place#7cb06e54142b8843f35178ceb5560946ae356049",
     "metalsmith-layouts": "1.8.1",
-    "metalsmith-markdown": "0.2.1",
+    "metalsmith-markdown": "0.2.2",
     "metalsmith-metallic": "1.0.0",
     "metalsmith-packagejson": "1.1.0",
     "metalsmith-sass": "1.4.0",

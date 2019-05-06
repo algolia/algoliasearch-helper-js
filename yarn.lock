@@ -8008,7 +8008,7 @@ marked-terminal@^3.0.0:
     node-emoji "^1.4.1"
     supports-hyperlinks "^1.0.1"
 
-marked@0.3.19:
+marked@0.3.19, marked@~0.3.9:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
   integrity sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
@@ -8018,7 +8018,7 @@ marked@^0.5.0:
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.5.2.tgz#3efdb27b1fd0ecec4f5aba362bddcd18120e5ba9"
   integrity sha512-fdZvBa7/vSQIZCi4uuwo2N3q+7jJURpMVCcbaX0S1Mg65WZ5ilXvC67MviJAsdjqqgD+CEq4RKo5AYGgINkVAA==
 
-marked@~0.3.1, marked@~0.3.6:
+marked@~0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
   integrity sha1-ssbGGPzOzk74bE/Gy4p8v1rtqNc=
@@ -8157,13 +8157,13 @@ metalsmith-layouts@1.8.1:
     lodash.omit "^4.0.2"
     multimatch "^2.0.0"
 
-metalsmith-markdown@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/metalsmith-markdown/-/metalsmith-markdown-0.2.1.tgz#1a1feeb6c76d15407b75271da81509d07932d753"
-  integrity sha1-Gh/utsdtFUB7dScdqBUJ0Hky11M=
+metalsmith-markdown@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/metalsmith-markdown/-/metalsmith-markdown-0.2.2.tgz#f863b7c9c0b2cd5bf034ee0899b0e5a8cde1ebd3"
+  integrity sha512-2WMtfd2xhBagmoyRZXg04EHd/jmWnK21aGOvEZG5/eDEBTn9zGtkeptZrl+fQV+CNwhWtoggn1s9d+yi0+JLqQ==
   dependencies:
     debug "~0.7.4"
-    marked "~0.3.1"
+    marked "~0.3.9"
 
 metalsmith-metallic@1.0.0:
   version "1.0.0"
