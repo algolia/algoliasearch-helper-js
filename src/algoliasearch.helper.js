@@ -1229,7 +1229,10 @@ AlgoliaSearchHelper.prototype._search = function() {
     helper: this
   }];
 
-  this.emit('search', state, this.lastResults);
+  this.emit('search', {
+    state: state,
+    results: this.lastResults
+  });
 
   var derivedQueries = this.derivedHelpers.map(function(derivedHelper) {
     var derivedState = derivedHelper.getModifiedState(state);
