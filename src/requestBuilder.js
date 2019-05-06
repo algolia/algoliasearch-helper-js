@@ -1,6 +1,5 @@
 'use strict';
 
-var forEach = require('lodash/forEach');
 var merge = require('lodash/merge');
 
 var requestBuilder = {
