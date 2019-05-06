@@ -1,6 +1,6 @@
 'use strict';
 
-var find = require('lodash/find');
+var find = require('./find');
 var startsWith = require('lodash/startsWith');
 
 /**
