@@ -4,7 +4,6 @@ var keys = require('lodash/keys');
 var intersection = require('lodash/intersection');
 var forOwn = require('lodash/forOwn');
 var filter = require('lodash/filter');
-var map = require('lodash/map');
 var isNaN = require('lodash/isNaN');
 var isEmpty = require('lodash/isEmpty');
 var isEqual = require('lodash/isEqual');
