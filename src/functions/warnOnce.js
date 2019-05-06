@@ -1,23 +1,15 @@
 'use strict';
-var bind = require('lodash/bind');
 
 try {
-  var warn;
+  var cache = [];
 
-  if (typeof window !== 'undefined') warn = window.console && bind(window.console.warn, console);
-  else warn = bind(console.warn, console); // eslint-disable-line no-console
-
-  var warnOnce = (function(w) {
-    var previousMessages = [];
-    return function warnOnlyOnce(m) {
-      if (previousMessages.indexOf(m) === -1) {
-        w(m);
-        previousMessages.push(m);
-      }
-    };
-  })(warn);
-
-  module.exports = warnOnce;
+  module.exports = function warn(message) {
+    if (cache.indexOf(message) > -1) {
+      return;
+    }
+    cache.push(message);
+    console.warn(message); // eslint-disable-line no-console
+  };
 } catch (e) {
   module.exports = function() {};
 }
