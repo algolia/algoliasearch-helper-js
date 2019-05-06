@@ -3,17 +3,13 @@
 var keys = require('lodash/keys');
 var intersection = require('lodash/intersection');
 var forOwn = require('lodash/forOwn');
-var forEach = require('lodash/forEach');
 var filter = require('lodash/filter');
-var map = require('lodash/map');
-var reduce = require('lodash/reduce');
 var isNaN = require('lodash/isNaN');
 var isEmpty = require('lodash/isEmpty');
 var isEqual = require('lodash/isEqual');
 var isUndefined = require('lodash/isUndefined');
 var isFunction = require('lodash/isFunction');
 var find = require('lodash/find');
-var trim = require('lodash/trim');
 
 var defaults = require('lodash/defaults');
 var merge = require('lodash/merge');
@@ -229,7 +225,7 @@ SearchParameters._parseNumbers = function(partialState) {
     'minProximity'
   ];
 
-  forEach(numberKeys, function(k) {
+  numberKeys.forEach(function(k) {
     var value = partialState[k];
     if (typeof value === 'string') {
       var parsedValue = parseFloat(value);
@@ -249,9 +245,11 @@ SearchParameters._parseNumbers = function(partialState) {
 
   if (partialState.numericRefinements) {
     var numericRefinements = {};
-    forEach(partialState.numericRefinements, function(operators, attribute) {
+    Object.keys(partialState.numericRefinements).forEach(function(attribute) {
+      var operators = partialState.numericRefinements[attribute] || {};
       numericRefinements[attribute] = {};
-      forEach(operators, function(values, operator) {
+      Object.keys(operators).forEach(function(operator) {
+        var values = operators[operator];
         var parsedValues = values.map(function(v) {
           if (Array.isArray(v)) {
             return v.map(function(vPrime) {
@@ -283,7 +281,8 @@ SearchParameters._parseNumbers = function(partialState) {
 SearchParameters.make = function makeSearchParameters(newParameters) {
   var instance = new SearchParameters(newParameters);
 
-  forEach(newParameters.hierarchicalFacets, function(facet) {
+  var hierarchicalFacets = newParameters.hierarchicalFacets || [];
+  hierarchicalFacets.forEach(function(facet) {
     if (facet.rootPath) {
       var currentRefinement = instance.getHierarchicalRefinement(facet.name);
 
@@ -628,12 +627,16 @@ SearchParameters.prototype = {
       return omit(this.numericRefinements, attribute);
     } else if (isFunction(attribute)) {
       var hasChanged = false;
-      var newNumericRefinements = reduce(this.numericRefinements, function(memo, operators, key) {
+      var numericRefinements = this.numericRefinements;
+      var newNumericRefinements = Object.keys(numericRefinements).reduce(function(memo, key) {
+        var operators = numericRefinements[key];
         var operatorList = {};
 
-        forEach(operators, function(values, operator) {
+        operators = operators || {};
+        Object.keys(operators).forEach(function(operator) {
+          var values = operators[operator] || [];
           var outValues = [];
-          forEach(values, function(value) {
+          values.forEach(function(value) {
             var predicateResult = attribute({val: value, op: operator}, key, 'numeric');
             if (!predicateResult) outValues.push(value);
           });
@@ -1233,7 +1236,7 @@ SearchParameters.prototype = {
     return intersection(
       // enforce the order between the two arrays,
       // so that refinement name index === hierarchical facet index
-      map(this.hierarchicalFacets, 'name'),
+      this.hierarchicalFacets.map(function(facet) { return facet.name; }),
       keys(this.hierarchicalFacetsRefinements)
     );
   },
@@ -1322,7 +1325,7 @@ SearchParameters.prototype = {
     return this.mutateMe(function mergeWith(newInstance) {
       var ks = keys(params);
 
-      forEach(ks, function(k) {
+      ks.forEach(function(k) {
         newInstance[k] = parsedParams[k];
       });
 
@@ -1441,7 +1444,9 @@ SearchParameters.prototype = {
       this.getHierarchicalFacetByName(facetName)
     );
     var path = refinement.split(separator);
-    return map(path, trim);
+    return path.map(function(part) {
+      return part.trim();
+    });
   },
 
   toString: function() {
