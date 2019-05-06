@@ -1,7 +1,6 @@
 'use strict';
 
 var forEach = require('lodash/forEach');
-var reduce = require('lodash/reduce');
 var merge = require('lodash/merge');
 
 var requestBuilder = {
@@ -250,8 +249,7 @@ var requestBuilder = {
   _getHitsHierarchicalFacetsAttributes: function(state) {
     var out = [];
 
-    return reduce(
-      state.hierarchicalFacets,
+    return state.hierarchicalFacets.reduce(
       // ask for as much levels as there's hierarchical refinements
       function getHitsAttributesForHierarchicalFacet(allAttributes, hierarchicalFacet) {
         var hierarchicalRefinement = state.getHierarchicalRefinement(hierarchicalFacet.name)[0];
