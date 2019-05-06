@@ -203,7 +203,9 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 
   this._currentNbQueries++;
 
-  this.emit('searchOnce', tempState);
+  this.emit('searchOnce', {
+    state: tempState
+  });
 
   if (cb) {
     this.client
