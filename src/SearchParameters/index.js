@@ -1,7 +1,6 @@
 'use strict';
 
 var keys = require('lodash/keys');
-var intersection = require('lodash/intersection');
 var forOwn = require('lodash/forOwn');
 var isNaN = require('lodash/isNaN');
 var isEmpty = require('lodash/isEmpty');
@@ -1217,9 +1216,11 @@ SearchParameters.prototype = {
    */
   getRefinedDisjunctiveFacets: function getRefinedDisjunctiveFacets() {
     // attributes used for numeric filter can also be disjunctive
-    var disjunctiveNumericRefinedFacets = intersection(
-      keys(this.numericRefinements),
-      this.disjunctiveFacets
+    var numericRefinements = Object.keys(this.numericRefinements);
+    var disjunctiveNumericRefinedFacets = this.disjunctiveFacets.filter(
+      function(facet) {
+        return numericRefinements.indexOf(facet) > -1;
+      }
     );
 
     return keys(this.disjunctiveFacetsRefinements)
@@ -1234,12 +1235,16 @@ SearchParameters.prototype = {
    * @return {string[]}
    */
   getRefinedHierarchicalFacets: function getRefinedHierarchicalFacets() {
-    return intersection(
-      // enforce the order between the two arrays,
-      // so that refinement name index === hierarchical facet index
-      this.hierarchicalFacets.map(function(facet) { return facet.name; }),
-      keys(this.hierarchicalFacetsRefinements)
+    var hierarchicalRefinedFacets = Object.keys(
+      this.hierarchicalFacetsRefinements
     );
+    return this.hierarchicalFacets
+      .map(function(facet) {
+        return facet.name;
+      })
+      .filter(function(name) {
+        return hierarchicalRefinedFacets.indexOf(name) > -1;
+      });
   },
   /**
    * Returned the list of all disjunctive facets not refined
