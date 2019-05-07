@@ -5,7 +5,5 @@ module.exports = function compact(array) {
     return [];
   }
 
-  return array.filter(function(element) {
-    return Boolean(element);
-  });
+  return array.filter(Boolean);
 };
