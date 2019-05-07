@@ -7,6 +7,7 @@ var requestBuilder = require('./requestBuilder');
 
 var events = require('events');
 var inherits = require('./functions/inherits');
+var objectHasKeys = require('./functions/objectHasKeys');
 
 var flatten = require('lodash/flatten');
 
@@ -985,7 +986,7 @@ AlgoliaSearchHelper.prototype.isRefined = function(facet, value) {
  *
  */
 AlgoliaSearchHelper.prototype.hasRefinements = function(attribute) {
-  if (Object.keys(this.state.getNumericRefinements(attribute)).length > 0) {
+  if (objectHasKeys(this.state.getNumericRefinements(attribute))) {
     return true;
   } else if (this.state.isConjunctiveFacet(attribute)) {
     return this.state.isFacetRefined(attribute);
