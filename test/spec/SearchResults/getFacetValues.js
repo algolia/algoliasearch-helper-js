@@ -1,11 +1,9 @@
 'use strict';
 
-var test = require('tape');
-
 var SearchResults = require('../../../src/SearchResults');
 var SearchParameters = require('../../../src/SearchParameters');
 
-test('getFacetValues(facetName) returns a list of values using the defaults', function(t) {
+test('getFacetValues(facetName) returns a list of values using the defaults', function() {
   var data = require('./getFacetValues/disjunctive.json');
   var searchParams = new SearchParameters(data.state);
   var result = new SearchResults(searchParams, data.content.results);
@@ -18,14 +16,12 @@ test('getFacetValues(facetName) returns a list of values using the defaults', fu
     {count: 511, isRefined: false, name: 'Samsung'}
   ];
 
-  t.deepEqual(facetValues, expected);
-
-  t.end();
+  expect(facetValues).toEqual(expected);
 });
 
 test(
   'getFacetValues(facetName) when no order is specified for isRefined the order is descending',
-  function(t) {
+  function() {
     var data = require('./getFacetValues/disjunctive.json');
     var searchParams = new SearchParameters(data.state);
     var result = new SearchResults(searchParams, data.content.results);
@@ -38,12 +34,10 @@ test(
       sortBy: ['isRefined:desc']
     });
 
-    t.deepEqual(facetValues, expected);
-
-    t.end();
+    expect(facetValues).toEqual(expected);
   });
 
-test('getFacetValues(facetName) when no order is specified for count the order is descending', function(t) {
+test('getFacetValues(facetName) when no order is specified for count the order is descending', function() {
   var data = require('./getFacetValues/disjunctive.json');
   var searchParams = new SearchParameters(data.state);
   var result = new SearchResults(searchParams, data.content.results);
@@ -56,12 +50,10 @@ test('getFacetValues(facetName) when no order is specified for count the order i
     sortBy: ['count:desc']
   });
 
-  t.deepEqual(facetValues, expected);
-
-  t.end();
+  expect(facetValues).toEqual(expected);
 });
 
-test('getFacetValues(facetName) when no order is specified for name the order is ascending', function(t) {
+test('getFacetValues(facetName) when no order is specified for name the order is ascending', function() {
   var data = require('./getFacetValues/disjunctive.json');
   var searchParams = new SearchParameters(data.state);
   var result = new SearchResults(searchParams, data.content.results);
@@ -74,12 +66,10 @@ test('getFacetValues(facetName) when no order is specified for name the order is
     sortBy: ['name:asc']
   });
 
-  t.deepEqual(facetValues, expected);
-
-  t.end();
+  expect(facetValues).toEqual(expected);
 });
 
-test('getFacetValues(facetName) testing the sort function', function(t) {
+test('getFacetValues(facetName) testing the sort function', function() {
   var data = require('./getFacetValues/disjunctive.json');
   var searchParams = new SearchParameters(data.state);
   var result = new SearchResults(searchParams, data.content.results);
@@ -96,12 +86,10 @@ test('getFacetValues(facetName) testing the sort function', function(t) {
     sortBy: ['count:asc']
   });
 
-  t.deepEqual(facetValues, expected);
-
-  t.end();
+  expect(facetValues).toEqual(expected);
 });
 
-test('getFacetValues(conjunctive) returns correct facet values with the name `length`', function(t) {
+test('getFacetValues(conjunctive) returns correct facet values with the name `length`', function() {
   var searchParams = new SearchParameters({
     index: 'instant_search',
     facets: ['type']
@@ -127,13 +115,11 @@ test('getFacetValues(conjunctive) returns correct facet values with the name `le
     {name: 'dogs', count: 0, isRefined: false, isExcluded: false}
   ];
 
-  t.deepEqual(facetValues, expected);
-  t.equal(facetValues.length, 2);
-
-  t.end();
+  expect(facetValues).toEqual(expected);
+  expect(facetValues.length).toBe(2);
 });
 
-test('getFacetValues(disjunctive) returns correct facet values with the name `length`', function(t) {
+test('getFacetValues(disjunctive) returns correct facet values with the name `length`', function() {
   var searchParams = new SearchParameters({
     index: 'instant_search',
     disjunctiveFacets: ['type']
@@ -159,8 +145,6 @@ test('getFacetValues(disjunctive) returns correct facet values with the name `le
     {name: 'dogs', count: 0, isRefined: false}
   ];
 
-  t.deepEqual(facetValues, expected);
-  t.equal(facetValues.length, 2);
-
-  t.end();
+  expect(facetValues).toEqual(expected);
+  expect(facetValues.length).toBe(2);
 });
