@@ -13,16 +13,18 @@ var filterState = require('./filterState');
 var RefinementList = require('./RefinementList');
 
 /**
- * isEqual, but only for arrays of base elements, or base elements
- * @param {number|Array<number>} a first element
- * @param {number|Array<number>} b second element
+ * isEqual, but only for numeric refinement values, possible values:
+ * - 5
+ * - [5]
+ * - [[5]]
+ * - [[5,5],[4]]
  */
-function isEqualNumArr(a, b) {
+function isEqualNumericRefinement(a, b) {
   if (Array.isArray(a) && Array.isArray(b)) {
     return (
       a.length === b.length &&
       a.every(function(el, i) {
-        return b[i] === el;
+        return isEqualNumericRefinement(b[i], el);
       })
     );
   }
@@ -39,7 +41,7 @@ function isEqualNumArr(a, b) {
  */
 function findArray(array, searchedValue) {
   return find(array, function(currentValue) {
-    return isEqualNumArr(currentValue, searchedValue);
+    return isEqualNumericRefinement(currentValue, searchedValue);
   });
 }
 
@@ -582,8 +584,7 @@ SearchParameters.prototype = {
    */
   removeNumericRefinement: function(attribute, operator, paramValue) {
     if (paramValue !== undefined) {
-      var paramValueAsNumber = valToNumber(paramValue);
-      if (!this.isNumericRefined(attribute, operator, paramValueAsNumber)) {
+      if (!this.isNumericRefined(attribute, operator, paramValue)) {
         return this;
       }
       return this.setQueryParameters({
@@ -591,7 +592,7 @@ SearchParameters.prototype = {
           return (
             key === attribute &&
             value.op === operator &&
-            isEqualNumArr(value.val, paramValueAsNumber)
+            isEqualNumericRefinement(value.val, valToNumber(paramValue))
           );
         })
       });
