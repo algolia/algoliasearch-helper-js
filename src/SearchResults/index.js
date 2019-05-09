@@ -1,7 +1,5 @@
 'use strict';
 
-var compact = require('lodash/compact');
-
 var orderBy = require('lodash/orderBy');
 
 var merge = require('lodash/merge');
@@ -12,6 +10,7 @@ var partial = require('lodash/partial');
 var partialRight = require('lodash/partialRight');
 
 var defaultsPure = require('../functions/defaultsPure');
+var compact = require('../functions/compact');
 var find = require('../functions/find');
 var findIndex = require('../functions/findIndex');
 var formatSort = require('../functions/formatSort');
