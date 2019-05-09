@@ -1,6 +1,5 @@
 'use strict';
 
-
 // NOTE: this behaves like lodash/defaults, but doesn't mutate the target
 module.exports = function defaultsPure() {
   const sources = Array.prototype.slice.call(arguments);
