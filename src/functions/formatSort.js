@@ -9,25 +9,34 @@ var find = require('./find');
  * @return {array.<string[]>} array containing 2 elements : attributes, orders
  */
 module.exports = function formatSort(sortBy, defaults) {
-  defaults = (defaults || []).map(function(sort) {
+  var defaultInstructions = (defaults || []).map(function(sort) {
     return sort.split(':');
   });
 
   return sortBy.reduce(
     function preparePredicate(out, sort) {
       var sortInstruction = sort.split(':');
-      if (sortInstruction.length === 1) {
-        var matchingDefault = find(defaults, function(defaultInstruction) {
-          return defaultInstruction[0] === sortInstruction[0];
-        });
-        if (matchingDefault) {
-          out[0].push(matchingDefault[0]);
-          out[1].push(matchingDefault[1]);
-          return out;
-        }
+
+      if (sortInstruction.length > 1) {
+        out[0].push(sortInstruction[0]);
+        out[1].push(sortInstruction[1]);
+        return out;
       }
-      out[0].push(sortInstruction[0]);
-      out[1].push(sortInstruction[1]);
+
+      var matchingDefault = find(defaultInstructions, function(
+        defaultInstruction
+      ) {
+        return defaultInstruction[0] === sortInstruction[0];
+      });
+
+      if (!matchingDefault) {
+        out[0].push(sortInstruction[0]);
+        out[1].push(sortInstruction[1]);
+        return out;
+      }
+
+      out[0].push(matchingDefault[0]);
+      out[1].push(matchingDefault[1]);
       return out;
     },
     [[], []]
