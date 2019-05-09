@@ -52,4 +52,9 @@ it('should sort by a property in ascending order when its order is not specified
   });
 });
 
-
+it('should return an empty array when collections is no array', function() {
+  expect(orderBy(undefined)).toEqual([]);
+  expect(orderBy(false)).toEqual([]);
+  expect(orderBy({})).toEqual([]);
+  expect(orderBy({}, [], [])).toEqual([]);
+});
