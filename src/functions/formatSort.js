@@ -16,7 +16,7 @@ module.exports = function formatSort(sortBy, defaults) {
   return sortBy.reduce(
     function preparePredicate(out, sort) {
       var sortInstruction = sort.split(':');
-      
+
       var matchingDefault = find(defaultInstructions, function(
         defaultInstruction
       ) {
