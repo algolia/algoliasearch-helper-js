@@ -60,3 +60,18 @@ test('[Derived helper] 1 derived helpers, modification', function() {
     expect(requests[0]).toEqual(requests[1]);
   }
 });
+
+test('[Derived helper] only search with the derived helpers', function() {
+  var client = makeFakeClient(assertions);
+  var helper = algoliasearchHelper(client, '');
+
+  helper.derive(function(state) {
+    return state;
+  });
+
+  helper.searchOnlyWithDerivedHelpers();
+
+  function assertions(requests) {
+    expect(requests.length).toBe(1);
+  }
+});
