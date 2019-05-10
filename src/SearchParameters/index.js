@@ -646,12 +646,7 @@ SearchParameters.prototype = {
       }
       return {};
     } else if (typeof attribute === 'string') {
-      if (
-        !(
-          this.numericRefinements[attribute] &&
-          objectHasKeys(this.numericRefinements[attribute])
-        )
-      ) {
+      if (!objectHasKeys(this.numericRefinements[attribute])) {
         return this.numericRefinements;
       }
       return omit(this.numericRefinements, attribute);

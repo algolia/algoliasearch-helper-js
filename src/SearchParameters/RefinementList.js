@@ -90,7 +90,7 @@ var lib = {
    */
   clearRefinement: function clearRefinement(refinementList, attribute, refinementType) {
     if (attribute === undefined) {
-      if (!(refinementList && objectHasKeys(refinementList))) {
+      if (!objectHasKeys(refinementList)) {
         return refinementList;
       }
       return {};
