@@ -1413,20 +1413,6 @@ SearchParameters.prototype = {
   filter: function(filters) {
     return filterState(this, filters);
   },
-  /**
-   * Helper function to make it easier to build new instances from a mutating
-   * function
-   * @private
-   * @param {function} fn newMutableState -> previousState -> () function that will
-   * change the value of the newMutable to the desired state
-   * @return {SearchParameters} a new instance with the specified modifications applied
-   */
-  mutateMe: function mutateMe(fn) {
-    var newState = new this.constructor(this);
-
-    fn(newState, this);
-    return newState;
-  },
 
   /**
    * Helper function to get the hierarchicalFacet separator or the default one (`>`)
