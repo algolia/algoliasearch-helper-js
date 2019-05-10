@@ -16,20 +16,14 @@ module.exports = function formatSort(sortBy, defaults) {
   return sortBy.reduce(
     function preparePredicate(out, sort) {
       var sortInstruction = sort.split(':');
-
-      if (sortInstruction.length > 1) {
-        out[0].push(sortInstruction[0]);
-        out[1].push(sortInstruction[1]);
-        return out;
-      }
-
+      
       var matchingDefault = find(defaultInstructions, function(
         defaultInstruction
       ) {
         return defaultInstruction[0] === sortInstruction[0];
       });
 
-      if (!matchingDefault) {
+      if (sortInstruction.length > 1 || !matchingDefault) {
         out[0].push(sortInstruction[0]);
         out[1].push(sortInstruction[1]);
         return out;
