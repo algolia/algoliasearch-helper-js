@@ -1,5 +1,6 @@
 'use strict';
-const objectHasKeys = require('../functions/objectHasKeys');
+
+var objectHasKeys = require('../functions/objectHasKeys');
 
 /**
  * @param {any[]} filters

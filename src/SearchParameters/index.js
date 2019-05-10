@@ -6,7 +6,7 @@ var defaultsPure = require('../functions/defaultsPure');
 var find = require('../functions/find');
 var valToNumber = require('../functions/valToNumber');
 var omit = require('../functions/omit');
-const objectHasKeys = require('../functions/objectHasKeys');
+var objectHasKeys = require('../functions/objectHasKeys');
 
 var filterState = require('./filterState');
 
