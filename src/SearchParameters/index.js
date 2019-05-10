@@ -1358,15 +1358,32 @@ SearchParameters.prototype = {
       throw error;
     }
 
-    var parsedParams = SearchParameters._parseNumbers(params);
+    var self = this;
+    var nextWithNumbers = SearchParameters._parseNumbers(params);
+    var previousPlainObject = Object.keys(this).reduce(function(acc, key) {
+      acc[key] = self[key];
+      return acc;
+    }, {});
 
-    return this.mutateMe(function mergeWith(newInstance) {
-      Object.keys(params).forEach(function(k) {
-        newInstance[k] = parsedParams[k];
-      });
+    var nextPlainObject = Object.keys(nextWithNumbers).reduce(
+      function(previous, key) {
+        var isPreviousValueDefined = previous[key] !== undefined;
+        var isNextValueDefined = nextWithNumbers[key] !== undefined;
 
-      return newInstance;
-    });
+        if (isPreviousValueDefined && !isNextValueDefined) {
+          return omit(previous, [key]);
+        }
+
+        if (isNextValueDefined) {
+          previous[key] = nextWithNumbers[key];
+        }
+
+        return previous;
+      },
+      previousPlainObject
+    );
+
+    return new this.constructor(nextPlainObject);
   },
 
   /**

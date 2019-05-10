@@ -53,3 +53,33 @@ test('setQueryParameters should add unknown properties', function() {
     expect(state1[k]).toEqual(v);
   });
 });
+
+test('setQueryParameters should ignore undefined parameters without previous values', function() {
+  var state0 = new SearchParameters({
+    aroundLatLng: '10,12'
+  });
+
+  var state1 = state0.setQueryParameters({
+    query: undefined,
+    page: undefined
+  });
+
+  expect(state1).not.toHaveProperty('query');
+  expect(state1).not.toHaveProperty('page');
+});
+
+test('setQueryParameters should omit defined parameters with next values of undefined', function() {
+  var state0 = new SearchParameters({
+    aroundLatLng: '10,12',
+    query: 'Apple',
+    page: 5
+  });
+
+  var state1 = state0.setQueryParameters({
+    query: undefined,
+    page: undefined
+  });
+
+  expect(state1).not.toHaveProperty('query');
+  expect(state1).not.toHaveProperty('page');
+});
