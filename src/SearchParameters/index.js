@@ -197,10 +197,10 @@ function SearchParameters(newParameters) {
 
   var self = this;
   Object.keys(params).forEach(function(paramName) {
-    var isKeyUnknown = SearchParameters.PARAMETERS.indexOf(paramName) === -1;
+    var isKeyKnown = SearchParameters.PARAMETERS.indexOf(paramName) !== -1;
     var isValueDefined = params[paramName] !== undefined;
 
-    if (isKeyUnknown && isValueDefined) {
+    if (!isKeyKnown && isValueDefined) {
       self[paramName] = params[paramName];
     }
   });
