@@ -74,7 +74,7 @@ it('should assign `null` values', function() {
   expect(actual.a).toBe(null);
 });
 
-it('should not augment source objects 1', function() {
+it('should not augment source objects for inner objects', function() {
   var source1 = {a: [{a: 1}]};
   var source2 = {a: [{b: 2}]};
   var actual = merge({}, source1, source2);
@@ -84,7 +84,7 @@ it('should not augment source objects 1', function() {
   expect(actual.a).toEqual([{a: 1, b: 2}]);
 });
 
-it('should not augment source objects 2', function() {
+it('should not augment source objects for inner arrays', function() {
   var source1 = {a: [[1, 2, 3]]};
   var source2 = {a: [[3, 4]]};
   var actual = merge({}, source1, source2);
