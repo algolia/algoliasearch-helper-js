@@ -24,26 +24,6 @@ it('should merge `source` into `object`', function() {
   expect(merge(names, ages, heights)).toEqual(expected);
 });
 
-it.skip('should merge sources containing circular references', function() {
-  var object = {
-    foo: {a: 1},
-    bar: {a: 2}
-  };
-
-  var source = {
-    foo: {b: {c: {d: {}}}},
-    bar: {}
-  };
-
-  source.foo.b.c.d = source;
-  source.bar.b = source.foo.b;
-
-  var actual = merge(object, source);
-
-  expect(actual.bar.b).not.toEqual(actual.foo.b);
-  expect(actual.foo.b.c.d).toEqual(actual.foo.b.c.d.foo.b.c.d);
-});
-
 it('should work with four arguments', function() {
   var expected = {a: 4};
   var actual = merge({a: 1}, {a: 2}, {a: 3}, expected);
@@ -79,20 +59,6 @@ it('should merge first and second source object properties to function', functio
   expect(actual.prop.dogs).toBe('out');
 });
 
-// TODO: if a source was a function, it _will_ get added properties (no big deal for us)
-it.skip('should not merge onto function values of sources', function() {
-  var source1 = {a: function() {}};
-  var source2 = {a: {b: 2}};
-  var expected = {a: {b: 2}};
-  var actual = merge({}, source1, source2);
-
-  expect(actual).toEqual(expected);
-  expect('b' in source1.a).toBe(false);
-
-  actual = merge(source1, source2);
-  expect(actual.a.b).toBe(expected.a.b);
-});
-
 it('should merge onto non-plain `object` values', function() {
   function Foo() {}
 
@@ -103,50 +69,9 @@ it('should merge onto non-plain `object` values', function() {
   expect(object.a).toBe(1);
 });
 
-// TODO: different from lodash, but seems not necessary
-it.skip('should treat sparse array sources as dense', function() {
-  var array = [1];
-  array[2] = 3;
-
-  var actual = merge([], array);
-  var expected = array.slice();
-
-  expected[1] = undefined;
-
-  expect('1' in actual).toBe(true);
-  expect(actual).toEqual(expected);
-});
-
 it('should assign `null` values', function() {
   var actual = merge({a: 1}, {a: null});
   expect(actual.a).toBe(null);
-});
-
-it.skip('should assign non array/object source values directly', function() {
-  function Foo() {}
-
-  /* eslint-disable no-new-wrappers */
-  var values = [
-    new Foo(),
-    new Boolean(),
-    new Date(),
-    Foo,
-    new Number(),
-    new String(),
-    new RegExp()
-  ];
-  /* eslint-enable no-new-wrappers */
-
-  var expected = values.map(function() {
-    return true;
-  });
-
-  var actual = values.map(function(value) {
-    var object = merge({}, {a: value, b: {c: value}});
-    return object.a === value && object.b.c === value;
-  });
-
-  expect(actual).toEqual(expected);
 });
 
 it('should not augment source objects 1', function() {
@@ -224,15 +149,19 @@ it('should skip merging when `object` and `source` are the same value', function
   expect(pass).toBe(true);
 });
 
-// NOT: we don't want this behavior
-it.skip('should convert values to arrays when merging arrays of `source`', function() {
+it('should not convert objects to arrays when merging arrays of `source`', function() {
   var object = {a: {'1': 'y', 'b': 'z', 'length': 2}};
   var actual = merge(object, {a: ['x']});
 
-  expect(actual).toEqual({a: ['x', 'y']});
+  expect(actual).toEqual({a: {
+    '0': 'x',
+    '1': 'y',
+    'b': 'z',
+    'length': 2
+  }});
 
   actual = merge({a: {}}, {a: []});
-  expect(actual).toEqual({a: []});
+  expect(actual).toEqual({a: {}});
 });
 
 it('should not convert strings to arrays when merging arrays of `source`', function() {
