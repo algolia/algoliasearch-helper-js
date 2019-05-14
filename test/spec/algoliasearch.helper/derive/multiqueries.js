@@ -12,7 +12,7 @@ function makeFakeClient(assertions) {
   };
 }
 
-test('[Derived helper] no derived helpers', function() {
+test('trigger a search without without derivation', function() {
   var client = makeFakeClient(assertions);
   var helper = algoliasearchHelper(client, '');
 
@@ -23,7 +23,7 @@ test('[Derived helper] no derived helpers', function() {
   }
 });
 
-test('[Derived helper] 1 derived helpers, no modifications', function() {
+test('trigger a search with one derivation without a state change', function() {
   var client = makeFakeClient(assertions);
   var helper = algoliasearchHelper(client, '');
 
@@ -39,7 +39,7 @@ test('[Derived helper] 1 derived helpers, no modifications', function() {
   }
 });
 
-test('[Derived helper] 1 derived helpers, modification', function() {
+test('trigger a search with one derivation with a state change', function() {
   var client = makeFakeClient(assertions);
   var helper = algoliasearchHelper(client, '');
 
@@ -61,7 +61,7 @@ test('[Derived helper] 1 derived helpers, modification', function() {
   }
 });
 
-test('[Derived helper] only search with the derived helpers', function() {
+test('trigger a search with derivation only', function() {
   var client = makeFakeClient(assertions);
   var helper = algoliasearchHelper(client, '');
 
