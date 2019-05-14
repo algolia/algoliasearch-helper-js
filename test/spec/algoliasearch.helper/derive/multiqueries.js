@@ -12,7 +12,7 @@ function makeFakeClient(assertions) {
   };
 }
 
-test('trigger a search without without derivation', function() {
+test('trigger a search without derivation', function() {
   var client = makeFakeClient(assertions);
   var helper = algoliasearchHelper(client, '');
 
