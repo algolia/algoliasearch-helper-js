@@ -1,11 +1,11 @@
 'use strict';
 
-function isPlainObject(value) {
+function isObjectLike(value) {
   return typeof value === 'object' && value !== null;
 }
 
 function clone(value) {
-  if (typeof value === 'object' && value !== null) {
+  if (isObjectLike(value)) {
     return merge(Array.isArray(value) ? [] : {}, value);
   }
   return value;
@@ -43,11 +43,11 @@ function merge() {
       return clone(source);
     }
 
-    if (!isPlainObject(acc) && typeof acc !== 'function') {
+    if (!isObjectLike(acc) && typeof acc !== 'function') {
       return clone(source);
     }
 
-    if (!isPlainObject(source) && typeof source !== 'function') {
+    if (!isObjectLike(source) && typeof source !== 'function') {
       return acc;
     }
 
