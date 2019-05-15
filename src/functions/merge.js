@@ -1,5 +1,9 @@
 'use strict';
 
+function isPlainObject(value) {
+  return typeof value === 'object' && value !== null;
+}
+
 function clone(value) {
   if (typeof value === 'object' && value !== null) {
     return merge(Array.isArray(value) ? [] : {}, value);
@@ -39,11 +43,11 @@ function merge() {
       return clone(source);
     }
 
-    if (typeof acc !== 'object' && typeof acc !== 'function') {
+    if (!isPlainObject(acc) && typeof acc !== 'function') {
       return clone(source);
     }
 
-    if (typeof source !== 'object' && typeof source !== 'function') {
+    if (!isPlainObject(source) && typeof source !== 'function') {
       return acc;
     }
 
