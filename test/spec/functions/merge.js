@@ -171,7 +171,7 @@ it('should not convert strings to arrays when merging arrays of `source`', funct
   expect(actual).toEqual({a: ['x', 'y', 'z']});
 });
 
-it('should return an object for null', function() {
+it('should not consider null as an object', function() {
   expect(merge(null, {})).toEqual({});
   expect(merge({this: 'b'}, {this: 'k'}, {this: null})).toEqual({this: null});
   expect(merge({this: 'b'}, {this: null}, {this: undefined})).toEqual({this: null});
