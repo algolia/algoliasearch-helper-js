@@ -31,20 +31,20 @@ if (isCanary) {
 }
 
 function releaseCanaryVersion() {
-  shell.echo(`Algoliasearch-Helper release CANARY version`);
+  shell.echo(`Algolia JS Helper release CANARY version`);
 
   checkCleanWorkdir();
   updateCanaryVersion(canaryVersion => {
     build();
     publishOnNpm('canary');
     revertStableVersion(packageJson.version, () => {
-      shell.echo(`Algoliasearch-Helper v${canaryVersion} released`);
+      shell.echo(`Algolia JS Helper v${canaryVersion} released`);
     });
   });
 }
 
 function releaseStableVersion() {
-  shell.echo(`Algoliasearch-Helper release STABLE version`);
+  shell.echo(`Algolia JS Helper release STABLE version`);
 
   checkDevelopBranch();
   checkCleanWorkdir();
@@ -58,7 +58,7 @@ function releaseStableVersion() {
       publish();
       goBackToDevelop();
 
-      shell.echo(`Algoliasearch-Helper v${version} released`);
+      shell.echo(`Algolia JS Helper v${version} released`);
     });
   });
 }
