@@ -1,62 +1,35 @@
 'use strict';
 
-function isObjectLike(value) {
-  return typeof value === 'object' && value !== null;
-}
+var deepmerge = require('deepmerge');
 
-function clone(value) {
-  if (isObjectLike(value)) {
-    return merge(Array.isArray(value) ? [] : {}, value);
+function arrayMerge(destinationArray, sourceArray) {
+  if (!Array.isArray(destinationArray) || !Array.isArray(sourceArray)) {
+    return sourceArray;
   }
-  return value;
+
+  var longestLength = Math.max(destinationArray.length, sourceArray.length);
+  var target = [];
+  for (var i = 0; i < longestLength; i++) {
+    target[i] = sourceArray.hasOwnProperty(i)
+      ? sourceArray[i]
+      : destinationArray[i];
+  }
+  return target;
 }
 
-/**
- * This method is like Object.assign, but recursively merges own and inherited
- * enumerable keyed properties of source objects into the destination object.
- *
- * NOTE: this behaves like lodash/merge, but:
- * - does mutate functions if they are a source
- * - treats non-plain objects as plain
- * - does not work for circular objects
- * - treats sparse arrays as sparse
- * - does not convert Array-like objects to arrays
- *
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @returns {Object} Returns `object`.
- */
 function merge() {
   var sources = Array.prototype.slice.call(arguments);
-  var target = sources.shift();
+  var target = sources.shift() || {};
 
-  return sources.reduce(function(acc, source) {
-    if (acc === source) {
-      return acc;
-    }
+  if (sources.every(function(source) {
+    return source === target;
+  })) {
+    return target;
+  }
 
-    if (source === undefined) {
-      return acc;
-    }
-
-    if (acc === undefined) {
-      return clone(source);
-    }
-
-    if (!isObjectLike(acc) && typeof acc !== 'function') {
-      return clone(source);
-    }
-
-    if (!isObjectLike(source) && typeof source !== 'function') {
-      return acc;
-    }
-
-    Object.keys(source).forEach(function(key) {
-      acc[key] = merge(acc[key], source[key]);
-    });
-
-    return acc;
-  }, target);
+  return deepmerge.all([target].concat(sources.filter(Boolean)), {
+    arrayMerge: arrayMerge
+  });
 }
 
 module.exports = merge;
