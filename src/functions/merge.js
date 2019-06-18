@@ -16,7 +16,7 @@ function clone(value) {
  * - treats non-plain objects as plain
  * - does not work for circular objects
  * - treats sparse arrays as sparse
- * - does not convert Array-like objects to arrays
+ * - does not convert Array-like objects (Arguments, NodeLists, etc.) to arrays
  *
  * @param {Object} object The destination object.
  * @param {...Object} [sources] The source objects.
