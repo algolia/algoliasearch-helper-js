@@ -28,7 +28,7 @@ function _merge(target, source) {
     var sourceVal = source[key];
     var targetVal = target[key];
 
-    if (typeof  targetVal !== 'undefined' && typeof sourceVal === 'undefined') {
+    if (typeof targetVal !== 'undefined' && typeof sourceVal === 'undefined') {
       continue;
     }
 
