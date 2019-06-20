@@ -7,7 +7,7 @@ function clone(value) {
   return value;
 }
 
-function isObjectOrArray(value) {
+function isObjectOrArrayOrFunction(value) {
   return (
     typeof value === 'function' ||
     Array.isArray(value) ||
@@ -32,7 +32,7 @@ function _merge(target, source) {
       continue;
     }
 
-    if (isObjectOrArray(targetVal) && isObjectOrArray(sourceVal)) {
+    if (isObjectOrArrayOrFunction(targetVal) && isObjectOrArrayOrFunction(sourceVal)) {
       target[key] = _merge(targetVal, sourceVal);
     } else {
       target[key] = clone(sourceVal);
@@ -58,14 +58,14 @@ function _merge(target, source) {
  */
 
 function merge(target) {
-  if (!isObjectOrArray(target)) {
+  if (!isObjectOrArrayOrFunction(target)) {
     target = {};
   }
 
   for (var i = 1, l = arguments.length; i < l; i++) {
     var source = arguments[i];
 
-    if (isObjectOrArray(source)) {
+    if (isObjectOrArrayOrFunction(source)) {
       _merge(target, source);
     }
   }
