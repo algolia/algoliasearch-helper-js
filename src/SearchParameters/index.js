@@ -2,7 +2,7 @@
 
 var merge = require('../functions/merge');
 var defaultsPure = require('../functions/defaultsPure');
-var intersection = require('lodash/intersection');
+var intersection = require('../functions/intersection');
 var find = require('../functions/find');
 var valToNumber = require('../functions/valToNumber');
 var omit = require('../functions/omit');
