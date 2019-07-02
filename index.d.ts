@@ -1,7 +1,10 @@
 import algoliasearch, { Client as AlgoliaSearchClient } from 'algoliasearch';
 import { EventEmitter } from 'events';
 
-type SearchClient = Pick<AlgoliaSearchClient, 'search' | 'searchForFacetValues'>;
+type SearchClient = Pick<
+  AlgoliaSearchClient,
+  'search' | 'searchForFacetValues'
+>;
 
 /**
  * The algoliasearchHelper module is the function that will let its
@@ -741,4 +744,3 @@ declare namespace algoliasearchHelper {
 }
 
 export = algoliasearchHelper;
-
