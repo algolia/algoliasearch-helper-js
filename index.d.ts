@@ -18,7 +18,7 @@ type SearchClient = Pick<
 declare function algoliasearchHelper(
   client: SearchClient,
   index: string,
-  opts?: algoliasearchHelper.QueryParameters
+  opts?: algoliasearchHelper.PlainSearchParameters
 ): algoliasearchHelper.AlgoliaSearchHelper;
 
 declare namespace algoliasearchHelper {
@@ -70,7 +70,7 @@ declare namespace algoliasearchHelper {
      * Gets the search query parameters that would be sent to the Algolia Client
      * for the hits
      */
-    getQuery(): algoliasearch.QueryParameters;
+    getQuery(): algoliasearchHelper.PlainSearchParameters;
 
     /**
      * Start a search using a modified version of the current state. This method does
@@ -237,7 +237,7 @@ declare namespace algoliasearchHelper {
      * @fires change
      * @chainable
      */
-    setState(newState: QueryParameters): this;
+    setState(newState: PlainSearchParameters): this;
 
     overrideStateWithoutTriggeringChangeEvent(...args: any[]): any;
     isRefined(...args: any[]): any;
@@ -288,7 +288,7 @@ declare namespace algoliasearchHelper {
     }
   }
 
-  export interface QueryParameters extends algoliasearch.QueryParameters {
+  export interface PlainSearchParameters extends algoliasearch.QueryParameters {
     /**
      * Targeted index. This parameter is mandatory.
      */
@@ -383,14 +383,7 @@ declare namespace algoliasearchHelper {
     };
   }
 
-  type ValueTypes<T> = T extends Array<infer U> ? U : never;
-  type ManagedParameters = {
-    [K in ValueTypes<
-      SearchParameters['managedParameters']
-    >]: SearchParameters[K];
-  };
-
-  export class SearchParameters implements Required<ManagedParameters> {
+  export class SearchParameters implements PlainSearchParameters {
     managedParameters: [
       'index',
       'facets',
@@ -404,7 +397,7 @@ declare namespace algoliasearchHelper {
       'hierarchicalFacetsRefinements'
     ];
 
-    constructor(newParameters?: QueryParameters);
+    constructor(newParameters?: PlainSearchParameters);
 
     /* Add a disjunctive facet to the disjunctiveFacets attribute of the helper configuration, if it isn't already present. */
     addDisjunctiveFacet(facet: string): SearchParameters;
@@ -464,7 +457,7 @@ declare namespace algoliasearchHelper {
       value?: string
     ): boolean;
     isTagRefined(tag: string): boolean;
-    static make(newParameters: QueryParameters): SearchParameters;
+    static make(newParameters: PlainSearchParameters): SearchParameters;
     removeExcludeRefinement(facet: string, value: string): SearchParameters;
     removeFacet(facet: string): SearchParameters;
     removeFacetRefinement(facet: string, value?: string): SearchParameters;
@@ -480,7 +473,7 @@ declare namespace algoliasearchHelper {
     setFacets(facets: string[]): SearchParameters;
     setHitsPerPage(n: number): SearchParameters;
     setPage(newPage: number): SearchParameters;
-    setQueryParameters(params: { [key: string]: any }): SearchParameters;
+    setQueryParameters(params: PlainSearchParameters): SearchParameters;
     setQueryParameter(parameter: string, value: any): SearchParameters;
     setQuery(newQuery: string): SearchParameters;
     setTypoTolerance(typoTolerance: string): SearchParameters;
@@ -501,7 +494,7 @@ declare namespace algoliasearchHelper {
     toggleTagRefinement(tag: string): SearchParameters;
     static validate(
       currentState: SearchParameters,
-      parameters: QueryParameters
+      parameters: PlainSearchParameters
     ): null | Error;
   }
 
