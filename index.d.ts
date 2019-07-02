@@ -106,10 +106,10 @@ declare namespace algoliasearchHelper {
      * }
      */
     searchOnce(
-      options: QueryParameters
+      options: SearchParameters
     ): Promise<{ content: SearchResults; state: SearchParameters }>;
     searchOnce(
-      options: QueryParameters,
+      options: SearchParameters,
       cb: (
         error: Error,
         content: SearchResults,
