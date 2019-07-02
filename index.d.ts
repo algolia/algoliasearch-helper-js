@@ -255,8 +255,10 @@ declare namespace algoliasearchHelper {
     clearCache(...args: any[]): any;
     setClient(client: SearchClient): this;
     getClient(): SearchClient;
-    derive(...args: any[]): any;
-    detachDerivedHelper(...args: any[]): any;
+    derive(
+      deriveFn: (oldParams: SearchParameters) => SearchParameters
+    ): AlgoliaSearchHelper;
+    detachDerivedHelper(derivedHelper: AlgoliaSearchHelper): void;
     hasPendingRequests(...args: any[]): any;
   }
 
