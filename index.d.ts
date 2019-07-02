@@ -15,7 +15,7 @@ type SearchClient = Pick<AlgoliaSearchClient, 'search' | 'searchForFacetValues'>
 declare function algoliasearchHelper(
   client: SearchClient,
   index: string,
-  opts: algoliasearchHelper.QueryParameters
+  opts?: algoliasearchHelper.QueryParameters
 ): algoliasearchHelper.AlgoliaSearchHelper;
 
 declare namespace algoliasearchHelper {
