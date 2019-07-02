@@ -1,7 +1,7 @@
-
-import { Client } from 'algoliasearch';
+import algoliasearch, { Client as AlgoliaSearchClient } from 'algoliasearch';
 import { EventEmitter } from 'events';
-import algoliasearch from 'algoliasearch';
+
+type SearchClient = Pick<AlgoliaSearchClient, 'search' | 'searchForFacetValues'>;
 
 /**
  * The algoliasearchHelper module is the function that will let its
@@ -13,7 +13,7 @@ import algoliasearch from 'algoliasearch';
  * @param opts
  */
 declare function algoliasearchHelper(
-  client: Client,
+  client: SearchClient,
   index: string,
   opts: algoliasearchHelper.QueryParameters
 ): algoliasearchHelper.AlgoliaSearchHelper;
@@ -271,8 +271,8 @@ declare namespace algoliasearchHelper {
     getHierarchicalFacetBreadcrumb(...args: any[]): any;
     containsRefinement(...args: any[]): any;
     clearCache(...args: any[]): any;
-    setClient(...args: any[]): any;
-    getClient(...args: any[]): any;
+    setClient(client: SearchClient): this;
+    getClient(): SearchClient;
     derive(...args: any[]): any;
     detachDerivedHelper(...args: any[]): any;
     hasPendingRequests(...args: any[]): any;
