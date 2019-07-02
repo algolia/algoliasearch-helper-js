@@ -236,24 +236,6 @@ declare namespace algoliasearchHelper {
      */
     setState(newState: QueryParameters): this;
 
-    /**
-     * Get the current search state stored in the helper. This object is immutable.
-     * @param [filters] optional filters to retrieve only a subset of the state
-     * @return if filters is specified a plain object is
-     * returned containing only the requested fields, otherwise return the unfiltered
-     * state
-     * @example
-     * // Get the complete state as stored in the helper
-     * helper.getState();
-     * @example
-     * // Get a part of the state with all the refinements on attributes and the query
-     * helper.getState(['query', 'attribute:category']);
-     */
-    getState(): SearchParameters;
-    getState(filters: string[]): QueryParameters;
-
-    getStateAsQueryString(...args: any[]): any;
-    setStateFromQueryString(...args: any[]): any;
     overrideStateWithoutTriggeringChangeEvent(...args: any[]): any;
     isRefined(...args: any[]): any;
     hasRefinements(...args: any[]): any;
@@ -296,7 +278,7 @@ declare namespace algoliasearchHelper {
      * promise.
      */
     interface FacetSearchResult {
-      facetHits: FacetSearchHit;
+      facetHits: FacetSearchHit[];
       processingTimeMS: number;
     }
   }
@@ -449,7 +431,6 @@ declare namespace algoliasearchHelper {
         | ((value: any, attribute: string, type: string) => void)
     ): SearchParameters;
     clearTags(): SearchParameters;
-    filter(filters: string[]): any;
     getConjunctiveRefinements(facetName: string): string[];
     getDisjunctiveRefinements(facetName: string): string[];
     getExcludeRefinements(facetName: string): string[];
@@ -462,7 +443,6 @@ declare namespace algoliasearchHelper {
       operator: SearchParameters.Operator
     ): Array<number | number[]>;
     getQueryParams(): Partial<ManagedParameters>;
-    getQueryParameter(paramName: string): any;
     getRefinedDisjunctiveFacets(facet: string, value: any): string[];
     getRefinedHierarchicalFacets(facet: string, value: any): string[];
     getUnrefinedDisjunctiveFacets(): string[];
