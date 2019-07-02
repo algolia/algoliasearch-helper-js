@@ -729,8 +729,6 @@ declare namespace algoliasearchHelper {
       exhaustive: boolean;
     }
   }
-
-  export {};
 }
 
 export = algoliasearchHelper;
