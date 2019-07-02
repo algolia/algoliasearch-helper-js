@@ -250,7 +250,6 @@ declare namespace algoliasearchHelper {
     getCurrentPage(...args: any[]): any;
     getPage(...args: any[]): any;
     getTags(...args: any[]): any;
-    getQueryParameter(...args: any[]): any;
     getRefinements(...args: any[]): any;
     getNumericRefinement(...args: any[]): any;
     getHierarchicalFacetBreadcrumb(...args: any[]): any;
