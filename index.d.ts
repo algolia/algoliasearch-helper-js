@@ -536,6 +536,7 @@ declare namespace algoliasearchHelper {
     type Operator = '=' | '>' | '>=' | '<' | '<=' | '!=';
   }
 
+  // @TODO extend from client types
   export class SearchResults {
     /**
      * query used to generate the results
