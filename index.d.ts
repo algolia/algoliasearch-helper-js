@@ -1,8 +1,8 @@
-import algoliasearch, { Client as AlgoliaSearchClient } from 'algoliasearch';
+import algoliasearch from 'algoliasearch';
 import { EventEmitter } from 'events';
 
 type SearchClient = Pick<
-  AlgoliaSearchClient,
+  algoliasearch.Client,
   'search' | 'searchForFacetValues'
 >;
 
@@ -31,26 +31,33 @@ declare namespace algoliasearchHelper {
 
     on(
       event: 'search',
-      cb: ({ state: SearchParameters, results: SearchResults }) => void
+      cb: (res: { state: SearchParameters; results: SearchResults }) => void
     ): this;
     on(
       event: 'change',
-      cb: ({
-        state: SearchParameters,
-        results: SearchResults,
-        isPageReset: boolean
+      cb: (res: {
+        state: SearchParameters;
+        results: SearchResults;
+        isPageReset: boolean;
       }) => void
     ): this;
     on(
       event: 'searchForFacetValues',
-      cb: ({ state: SearchParameters, facet: string, query: string }) => void
+      cb: (res: {
+        state: SearchParameters;
+        facet: string;
+        query: string;
+      }) => void
     ): this;
-    on(event: 'searchOnce', cb: ({ state: SearchParameters }) => void): this;
+    on(
+      event: 'searchOnce',
+      cb: (res: { state: SearchParameters }) => void
+    ): this;
     on(
       event: 'result',
-      cb: ({ results: SearchResults, state: SearchParameters }) => void
+      cb: (res: { results: SearchResults; state: SearchParameters }) => void
     ): this;
-    on(event: 'error', cb: ({ error: Error }) => void): this;
+    on(event: 'error', cb: (res: { error: Error }) => void): this;
     on(event: 'searchQueueEmpty', cb: () => void): this;
 
     /**
@@ -437,7 +444,7 @@ declare namespace algoliasearchHelper {
       attribute: string,
       operator: SearchParameters.Operator
     ): Array<number | number[]>;
-    getQueryParams(): Partial<ManagedParameters>;
+    getQueryParams(): PlainSearchParameters;
     getRefinedDisjunctiveFacets(facet: string, value: any): string[];
     getRefinedHierarchicalFacets(facet: string, value: any): string[];
     getUnrefinedDisjunctiveFacets(): string[];
@@ -493,6 +500,462 @@ declare namespace algoliasearchHelper {
       currentState: SearchParameters,
       parameters: PlainSearchParameters
     ): null | Error;
+
+    /**
+     * implementation of PlainSearchParameters, copied because it's an interface.
+     * Notable difference is that the managed search parameters are not optional,
+     * ideally this would be Required<ManagedParameters> where ManagedParameters
+     * are the following ones.
+     */
+
+    /**
+     * Targeted index. This parameter is mandatory.
+     */
+    index: string;
+    /**
+     * This attribute contains the list of all the disjunctive facets
+     * used. This list will be added to requested facets in the
+     * [facets attribute](https://www.algolia.com/doc/rest-api/search#param-facets) sent to algolia.
+     */
+    disjunctiveFacets: string[];
+    /**
+     * This attribute contains the list of all the hierarchical facets
+     * used. This list will be added to requested facets in the
+     * [facets attribute](https://www.algolia.com/doc/rest-api/search#param-facets) sent to algolia.
+     * Hierarchical facets are a sub type of disjunctive facets that
+     * let you filter faceted attributes hierarchically.
+     */
+    hierarchicalFacets: SearchParameters.HierarchicalFacet[];
+
+    // Refinements
+    /**
+     * This attribute contains all the filters that need to be
+     * applied on the conjunctive facets. Each facet must be properly
+     * defined in the `facets` attribute.
+     *
+     * The key is the name of the facet, and the `FacetList` contains all
+     * filters selected for the associated facet name.
+     *
+     * When querying algolia, the values stored in this attribute will
+     * be translated into the `facetFilters` attribute.
+     */
+    facetsRefinements: { [facet: string]: SearchParameters.FacetList };
+    /**
+     * This attribute contains all the filters that need to be
+     * excluded from the conjunctive facets. Each facet must be properly
+     * defined in the `facets` attribute.
+     *
+     * The key is the name of the facet, and the `FacetList` contains all
+     * filters excluded for the associated facet name.
+     *
+     * When querying algolia, the values stored in this attribute will
+     * be translated into the `facetFilters` attribute.
+     */
+    facetsExcludes: { [facet: string]: SearchParameters.FacetList };
+    /**
+     * This attribute contains all the filters that need to be
+     * applied on the disjunctive facets. Each facet must be properly
+     * defined in the `disjunctiveFacets` attribute.
+     *
+     * The key is the name of the facet, and the `FacetList` contains all
+     * filters selected for the associated facet name.
+     *
+     * When querying algolia, the values stored in this attribute will
+     * be translated into the `facetFilters` attribute.
+     */
+    disjunctiveFacetsRefinements: {
+      [facet: string]: SearchParameters.FacetList;
+    };
+    /**
+     * This attribute contains all the filters that need to be
+     * applied on the numeric attributes.
+     *
+     * The key is the name of the attribute, and the value is the
+     * filters to apply to this attribute.
+     *
+     * When querying algolia, the values stored in this attribute will
+     * be translated into the `numericFilters` attribute.
+     */
+    numericRefinements: { [facet: string]: SearchParameters.OperatorList };
+    /**
+     * This attribute contains all the tags used to refine the query.
+     *
+     * When querying algolia, the values stored in this attribute will
+     * be translated into the `tagFilters` attribute.
+     */
+    tagRefinements: string[];
+    /**
+     * This attribute contains all the filters that need to be
+     * applied on the hierarchical facets. Each facet must be properly
+     * defined in the `hierarchicalFacets` attribute.
+     *
+     * The key is the name of the facet, and the `FacetList` contains all
+     * filters selected for the associated facet name. The FacetList values
+     * are structured as a string that contain the values for each level
+     * separated by the configured separator.
+     *
+     * When querying algolia, the values stored in this attribute will
+     * be translated into the `facetFilters` attribute.
+     */
+    hierarchicalFacetsRefinements: {
+      [facet: string]: SearchParameters.FacetList;
+    };
+
+    /* end implementation of PlainSearchParameters */
+
+    /**
+     * Implementation of regular search parameters, copied from algoliasearch.QueryParameters
+     * Ideally there'd be a way to automatically implement this interface, but that
+     * isn't possible.
+     */
+
+    /**
+     * Query string used to perform the search
+     * default: ''
+     * https://www.algolia.com/doc/api-reference/api-parameters/query/
+     */
+    query?: string;
+    /**
+     * Filter the query with numeric, facet or/and tag filters
+     * default: ""
+     * https://www.algolia.com/doc/api-reference/api-parameters/filters/
+     */
+    filters?: string;
+    /**
+     * A string that contains the list of attributes you want to retrieve in order to minimize the size of the JSON answer.
+     * default: *
+     * https://www.algolia.com/doc/api-reference/api-parameters/attributesToRetrieve/
+     */
+    attributesToRetrieve?: string[];
+    /**
+     * List of attributes you want to use for textual search
+     * default: attributeToIndex
+     * https://www.algolia.com/doc/api-reference/api-parameters/restrictSearchableAttributes/
+     */
+    restrictSearchableAttributes?: string[];
+    /**
+     * You can use facets to retrieve only a part of your attributes declared in attributesForFaceting attributes
+     * default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/facets/
+     */
+    facets?: string[];
+    /**
+     * Force faceting to be applied after de-duplication (via the Distinct setting).
+     * When using the distinct setting in combination with faceting, facet counts may be higher than expected.
+     * This is because the engine, by default, computes faceting before applying de-duplication (distinct).
+     * When facetingAfterDistinct is set to true, the engine calculates faceting after the de-duplication has been applied.
+     * default ""
+     * https://www.algolia.com/doc/api-reference/api-parameters/facetingAfterDistinct/
+     */
+    facetingAfterDistinct?: boolean;
+    /**
+     * Limit the number of facet values returned for each facet.
+     * default: 100
+     * https://www.algolia.com/doc/api-reference/api-parameters/maxValuesPerFacet/
+     */
+    maxValuesPerFacet?: number;
+    /**
+     * Default list of attributes to highlight. If set to null, all indexed attributes are highlighted.
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/attributesToHighlight/
+     */
+    attributesToHighlight?: string[];
+    /**
+     * Default list of attributes to snippet alongside the number of words to return
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/attributesToSnippet/
+     */
+    attributesToSnippet?: string[];
+    /**
+     * Specify the string that is inserted before the highlighted parts in the query result
+     * default: <em>
+     * https://www.algolia.com/doc/api-reference/api-parameters/highlightPreTag/
+     */
+    highlightPreTag?: string;
+    /**
+     * Specify the string that is inserted after the highlighted parts in the query result
+     * default: </em>
+     * https://www.algolia.com/doc/api-reference/api-parameters/highlightPostTag/
+     */
+    highlightPostTag?: string;
+    /**
+     * String used as an ellipsis indicator when a snippet is truncated.
+     * default: …
+     * https://www.algolia.com/doc/api-reference/api-parameters/snippetEllipsisText/
+     */
+    snippetEllipsisText?: string;
+    /**
+     * If set to true, restrict arrays in highlights and snippets to items that matched the query at least partially else return all array items in highlights and snippets
+     * default: false
+     * https://www.algolia.com/doc/api-reference/api-parameters/restrictHighlightAndSnippetArrays/
+     */
+    restrictHighlightAndSnippetArrays?: boolean;
+    /**
+     * Pagination parameter used to select the number of hits per page
+     * default: 20
+     * https://www.algolia.com/doc/api-reference/api-parameters/hitsPerPage/
+     */
+    hitsPerPage?: number;
+    /**
+     * Pagination parameter used to select the page to retrieve.
+     * default: 0
+     * https://www.algolia.com/doc/api-reference/api-parameters/page/
+     */
+    page?: number;
+    /**
+     * Offset of the first hit to return
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/offset/
+     */
+    offset?: number;
+    /**
+     * Number of hits to return.
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/length/
+     */
+    length?: number;
+    /**
+     * The minimum number of characters needed to accept one typo.
+     * default: 4
+     * https://www.algolia.com/doc/api-reference/api-parameters/minWordSizefor1Typo/
+     */
+    minWordSizefor1Typo?: number;
+    /**
+     * The minimum number of characters needed to accept two typo.
+     * fault: 8
+     * https://www.algolia.com/doc/api-reference/api-parameters/minWordSizefor2Typos/
+     */
+    minWordSizefor2Typos?: number;
+    /**
+     * This option allows you to control the number of typos allowed in the result set:
+     * default: true
+     * 'true' The typo tolerance is enabled and all matching hits are retrieved
+     * 'false' The typo tolerance is disabled. All results with typos will be hidden.
+     * 'min' Only keep results with the minimum number of typos
+     * 'strict' Hits matching with 2 typos are not retrieved if there are some matching without typos.
+     * https://www.algolia.com/doc/api-reference/api-parameters/typoTolerance/
+     */
+    typoTolerance?: boolean;
+    /**
+     * If set to false, disables typo tolerance on numeric tokens (numbers).
+     * default:
+     * https://www.algolia.com/doc/api-reference/api-parameters/allowTyposOnNumericTokens/
+     */
+    allowTyposOnNumericTokens?: boolean;
+    /**
+     * If set to true, plural won't be considered as a typo
+     * default: false
+     * https://www.algolia.com/doc/api-reference/api-parameters/ignorePlurals/
+     */
+    ignorePlurals?: boolean;
+    /**
+     * List of attributes on which you want to disable typo tolerance
+     * default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/disableTypoToleranceOnAttributes/
+     */
+    disableTypoToleranceOnAttributes?: string[];
+    /**
+     * Search for entries around a given location
+     * default: ""
+     * https://www.algolia.com/doc/api-reference/api-parameters/aroundLatLng/
+     */
+    aroundLatLng?: string;
+    /**
+     * Search for entries around a given latitude/longitude automatically computed from user IP address.
+     * default: ""
+     * https://www.algolia.com/doc/api-reference/api-parameters/aroundLatLngViaIP/
+     */
+    aroundLatLngViaIP?: boolean;
+    /**
+     * Control the radius associated with a geo search. Defined in meters.
+     * default: null
+     * You can specify aroundRadius=all if you want to compute the geo distance without filtering in a geo area
+     * https://www.algolia.com/doc/api-reference/api-parameters/aroundRadius/
+     */
+    aroundRadius?: number | 'all';
+    /**
+     * Control the precision of a geo search
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/aroundPrecision/
+     */
+    aroundPrecision?: number;
+    /**
+     * Define the minimum radius used for a geo search when aroundRadius is not set.
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/minimumAroundRadius/
+     */
+    minimumAroundRadius?: number;
+    /**
+     * Search entries inside a given area defined by the two extreme points of a rectangle
+     * default: null
+     * https://www.algolia.com/doc/api-reference/api-parameters/insideBoundingBox/
+     */
+    insideBoundingBox?: number[][];
+    /**
+     * Selects how the query words are interpreted
+     * default: 'prefixLast'
+     * 'prefixAll' All query words are interpreted as prefixes. This option is not recommended.
+     * 'prefixLast' Only the last word is interpreted as a prefix (default behavior).
+     * 'prefixNone' No query word is interpreted as a prefix. This option is not recommended.
+     * https://www.algolia.com/doc/api-reference/api-parameters/queryType/
+     */
+    queryType?: 'prefixAll' | 'prefixLast' | 'prefixNone';
+    /**
+     * Search entries inside a given area defined by a set of points
+     * defauly: ''
+     * https://www.algolia.com/doc/api-reference/api-parameters/insidePolygon/
+     */
+    insidePolygon?: number[][];
+    /**
+     * This option is used to select a strategy in order to avoid having an empty result page
+     * default: 'none'
+     * 'lastWords' When a query does not return any results, the last word will be added as optional
+     * 'firstWords' When a query does not return any results, the first word will be added as optional
+     * 'allOptional' When a query does not return any results, a second trial will be made with all words as optional
+     * 'none' No specific processing is done when a query does not return any results
+     * https://www.algolia.com/doc/api-reference/api-parameters/removeWordsIfNoResults/
+     */
+    removeWordsIfNoResults?:
+      | 'none'
+      | 'lastWords'
+      | 'firstWords'
+      | 'allOptional';
+    /**
+     * Enables the advanced query syntax
+     * default: false
+     * https://www.algolia.com/doc/api-reference/api-parameters/advancedSyntax/
+     */
+    advancedSyntax?: boolean;
+    /**
+     * A string that contains the comma separated list of words that should be considered as optional when found in the query
+     * default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/optionalWords/
+     */
+    optionalWords?: string[];
+    /**
+     * Remove stop words from the query before executing it
+     * default: false
+     * true|false: enable or disable stop words for all 41 supported languages; or
+     * a list of language ISO codes (as a comma-separated string) for which stop words should be enable
+     * https://www.algolia.com/doc/api-reference/api-parameters/removeStopWords/
+     */
+    removeStopWords?: boolean | string[];
+    /**
+     * List of attributes on which you want to disable the computation of exact criteria
+     * default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/disableExactOnAttributes/
+     */
+    disableExactOnAttributes?: string[];
+    /**
+     * This parameter control how the exact ranking criterion is computed when the query contains one word
+     * default: attribute
+     * 'none': no exact on single word query
+     * 'word': exact set to 1 if the query word is found in the record
+     * 'attribute': exact set to 1 if there is an attribute containing a string equals to the query
+     * https://www.algolia.com/doc/api-reference/api-parameters/exactOnSingleWordQuery/
+     */
+    exactOnSingleWordQuery?: 'attribute' | 'none' | 'word';
+    /**
+     * Specify the list of approximation that should be considered as an exact match in the ranking formula
+     * default: ['ignorePlurals', 'singleWordSynonym']
+     * 'ignorePlurals': alternative words added by the ignorePlurals feature
+     * 'singleWordSynonym': single-word synonym (For example "NY" = "NYC")
+     * 'multiWordsSynonym': multiple-words synonym
+     * https://www.algolia.com/doc/api-reference/api-parameters/alternativesAsExact/
+     */
+    alternativesAsExact?: Array<
+      'ignorePlurals' | 'singleWordSynonym' | 'multiWordsSynonym'
+    >;
+    /**
+     * If set to 1, enables the distinct feature, disabled by default, if the attributeForDistinct index setting is set.
+     * https://www.algolia.com/doc/api-reference/api-parameters/distinct/
+     */
+    distinct?: number | boolean;
+    /**
+     * If set to true, the result hits will contain ranking information in the _rankingInfo attribute.
+     * default: false
+     * https://www.algolia.com/doc/api-reference/api-parameters/getRankingInfo/
+     */
+    getRankingInfo?: boolean;
+    /**
+     * @deprecated Use `numericAttributesForFiltering` instead
+     * All numerical attributes are automatically indexed as numerical filters
+     * default: ''
+     * https://www.algolia.com/doc/api-reference/api-parameters/numericAttributesForFiltering/
+     */
+    numericAttributesToIndex?: string[];
+    /**
+     * All numerical attributes are automatically indexed as numerical filters
+     * default: ''
+     * https://www.algolia.com/doc/api-reference/api-parameters/numericAttributesForFiltering/
+     */
+    numericAttributesForFiltering?: string[];
+    /**
+     * @deprecated please use filters instead
+     * A string that contains the comma separated list of numeric filters you want to apply.
+     * https://www.algolia.com/doc/api-reference/api-parameters/numericFilters/
+     */
+    numericFilters?: string[];
+    /**
+     * @deprecated
+     *
+     * Filter the query by a set of tags.
+     * Default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/
+     */
+    tagFilters?: string[];
+    /**
+     * Filter the query by a set of facets.
+     * Default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+     */
+    facetFilters?: string[] | string[][];
+    /**
+     * If set to false, this query will not be taken into account in the analytics feature.
+     * default true
+     * https://www.algolia.com/doc/api-reference/api-parameters/analytics/
+     */
+    analytics?: boolean;
+    /**
+     * If set to true, enables the Click Analytics feature
+     * default false
+     * https://www.algolia.com/doc/api-reference/api-parameters/clickAnalytics/
+     */
+    clickAnalytics?: boolean;
+    /**
+     * If set, tag your query with the specified identifiers
+     * default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/
+     */
+    analyticsTags?: string[];
+    /**
+     * If set to false, the search will not use the synonyms defined for the targeted index.
+     * default: true
+     * https://www.algolia.com/doc/api-reference/api-parameters/synonyms/
+     */
+    synonyms?: boolean;
+    /**
+     * If set to false, words matched via synonym expansion will not be replaced by the matched synonym in the highlighted result.
+     * default: true
+     * https://www.algolia.com/doc/api-reference/api-parameters/replaceSynonymsInHighlight/
+     */
+    replaceSynonymsInHighlight?: boolean;
+    /**
+     * Configure the precision of the proximity ranking criterion
+     * default: 1
+     * https://www.algolia.com/doc/api-reference/api-parameters/minProximity/
+     */
+    minProximity?: number;
+
+    nbShards?: number;
+    userData?: string | object;
+
+    /**
+     * https://www.algolia.com/doc/api-reference/api-parameters/sortFacetValuesBy/
+     */
+    sortFacetValuesBy?: 'count' | 'alpha';
+
+    /* end implementation of algoliasearch.QueryParameters */
   }
 
   namespace SearchParameters {
@@ -511,8 +974,8 @@ declare namespace algoliasearchHelper {
     type Operator = '=' | '>' | '>=' | '<' | '<=' | '!=';
   }
 
-  // @TODO extend from client types
-  export class SearchResults {
+  export class SearchResults<T = any>
+    implements Omit<algoliasearch.Response<T>, 'facets' | 'params'> {
     /**
      * query used to generate the results
      */
@@ -528,7 +991,7 @@ declare namespace algoliasearchHelper {
      *  - `value` : the value of the facet highlighted (html)
      *  - `matchLevel`: full, partial or none depending on how the query terms match
      */
-    hits: any[];
+    hits: T[];
     /**
      * index where the results come from
      */
@@ -614,10 +1077,10 @@ declare namespace algoliasearchHelper {
      */
     facets: SearchResults.Facet[];
 
-    _rawResults: any;
+    _rawResults: algoliasearch.MultiResponse<T>;
     _state: SearchParameters;
 
-    constructor(state: SearchParameters, results: any[]);
+    constructor(state: SearchParameters, results: algoliasearch.MultiResponse<T>);
 
     /**
      * Get a facet object with its name

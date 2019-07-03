@@ -37,6 +37,7 @@
     "index.js"
   ],
   "devDependencies": {
+    "@types/algoliasearch": "^3.30.12",
     "algolia-frontend-components": "0.0.35",
     "algoliasearch": "3.32.0",
     "babel-core": "6.26.3",
