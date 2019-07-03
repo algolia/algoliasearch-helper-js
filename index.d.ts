@@ -1077,10 +1077,10 @@ declare namespace algoliasearchHelper {
      */
     facets: SearchResults.Facet[];
 
-    _rawResults: algoliasearch.MultiResponse<T>;
+    _rawResults: algoliasearch.Response<T>[];
     _state: SearchParameters;
 
-    constructor(state: SearchParameters, results: algoliasearch.MultiResponse<T>);
+    constructor(state: SearchParameters, results: algoliasearch.Response<T>[]);
 
     /**
      * Get a facet object with its name
