@@ -266,11 +266,21 @@ declare namespace algoliasearchHelper {
     getClient(): SearchClient;
     derive(
       deriveFn: (oldParams: SearchParameters) => SearchParameters
-    ): AlgoliaSearchHelper;
-    detachDerivedHelper(derivedHelper: AlgoliaSearchHelper): void;
+    ): DerivedHelper;
+    detachDerivedHelper(derivedHelper: DerivedHelper): void;
     hasPendingRequests(...args: any[]): any;
   }
 
+  interface DerivedHelper extends EventEmitter  {
+    on(
+      event: 'search',
+      cb: (res: { state: SearchParameters; results: SearchResults }) => void
+    ): this;
+
+    lastResults: SearchResults | null;
+    detach(): void;
+    getModifiedState(): SearchParameters;
+  }
 
   namespace SearchForFacetValues {
     /**
