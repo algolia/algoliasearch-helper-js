@@ -26,7 +26,7 @@ declare namespace algoliasearchHelper {
 
   export class AlgoliaSearchHelper extends EventEmitter {
     state: SearchParameters;
-    lastResults: SearchResults;
+    lastResults: SearchResults | null;
     derivedHelpers: AlgoliaSearchHelper[];
 
     on(
