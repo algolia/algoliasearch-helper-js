@@ -116,10 +116,10 @@ declare namespace algoliasearchHelper {
      * }
      */
     searchOnce(
-      options: SearchParameters
+      options: PlainSearchParameters
     ): Promise<{ content: SearchResults; state: SearchParameters }>;
     searchOnce(
-      options: SearchParameters,
+      options: PlainSearchParameters,
       cb: (
         error: Error,
         content: SearchResults,
@@ -144,7 +144,7 @@ declare namespace algoliasearchHelper {
       facet: string,
       query: string,
       maxFacetHits: number,
-      userState: SearchParameters
+      userState: PlainSearchParameters
     ): Promise<SearchForFacetValues.Result>;
 
     /**
