@@ -145,7 +145,7 @@ declare namespace algoliasearchHelper {
       query: string,
       maxFacetHits: number,
       userState: SearchParameters
-    ): Promise<FacetSearchResult>;
+    ): Promise<SearchForFacetValues.Result>;
 
     /**
      * Sets the text query used for the search.
@@ -271,25 +271,28 @@ declare namespace algoliasearchHelper {
     hasPendingRequests(...args: any[]): any;
   }
 
-  /**
-   * Structure of each result when using
-   * [`searchForFacetValues()`](reference.html#AlgoliaSearchHelper#searchForFacetValues)
-   */
-  export interface FacetSearchHit {
-    value: string;
-    highlighted: string;
-    count: number;
-    isRefined: boolean;
-  }
 
-  /**
-   * Structure of the data resolved by the
-   * [`searchForFacetValues()`](reference.html#AlgoliaSearchHelper#searchForFacetValues)
-   * promise.
-   */
-  export interface FacetSearchResult {
-    facetHits: FacetSearchHit[];
-    processingTimeMS: number;
+  namespace SearchForFacetValues {
+    /**
+     * Structure of each result when using
+     * [`searchForFacetValues()`](reference.html#AlgoliaSearchHelper#searchForFacetValues)
+     */
+    export interface Hit {
+      value: string;
+      highlighted: string;
+      count: number;
+      isRefined: boolean;
+    }
+
+    /**
+     * Structure of the data resolved by the
+     * [`searchForFacetValues()`](reference.html#AlgoliaSearchHelper#searchForFacetValues)
+     * promise.
+     */
+    export interface Result {
+      facetHits: Hit[];
+      processingTimeMS: number;
+    }
   }
 
   export interface PlainSearchParameters extends algoliasearch.QueryParameters {
