@@ -276,6 +276,10 @@ declare namespace algoliasearchHelper {
       event: 'search',
       cb: (res: { state: SearchParameters; results: SearchResults }) => void
     ): this;
+    on(
+      event: 'result',
+      cb: (res: { results: SearchResults; state: SearchParameters }) => void
+    ): this;
 
     lastResults: SearchResults | null;
     detach(): void;
