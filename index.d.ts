@@ -457,7 +457,7 @@ declare namespace algoliasearchHelper {
       attribute: string,
       operator: SearchParameters.Operator
     ): Array<number | number[]>;
-    getQueryParams(): PlainSearchParameters;
+    getQueryParams(): algoliasearch.QueryParameters;
     getRefinedDisjunctiveFacets(facet: string, value: any): string[];
     getRefinedHierarchicalFacets(facet: string, value: any): string[];
     getUnrefinedDisjunctiveFacets(): string[];
