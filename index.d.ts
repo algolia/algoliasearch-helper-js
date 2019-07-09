@@ -77,7 +77,7 @@ declare namespace algoliasearchHelper {
      * Gets the search query parameters that would be sent to the Algolia Client
      * for the hits
      */
-    getQuery(): algoliasearchHelper.PlainSearchParameters;
+    getQuery(): algoliasearch.QueryParameters;
 
     /**
      * Start a search using a modified version of the current state. This method does
