@@ -3,8 +3,6 @@
 var SearchResults = require('../../../src/SearchResults');
 var SearchParameters = require('../../../src/SearchParameters');
 
-var bind = require('lodash/bind');
-
 var response = {
   'results': [{
     'page': 0,
