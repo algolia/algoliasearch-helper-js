@@ -35,7 +35,7 @@ test('isDisjunctiveFacetRefined returns false if value not in disjunctiveFacetsR
   expect(state.isDisjunctiveFacetRefined('test', 'not zongo')).toBe(false);
 });
 
-test('isDisjunctiveFacetRefined returns false if facet is not conjunctive', function() {
+test('isDisjunctiveFacetRefined returns false if facet is not disjunctive', function() {
   var state = new SearchParameters({
     disjunctiveFacetsRefinements: {
       test: ['zongo']
