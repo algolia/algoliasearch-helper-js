@@ -19,7 +19,6 @@ test('Conjuctive facet should be declared to be excluded', function() {
 
   expect(_.bind(h.addExclude, h, 'undeclaredFacet', 'value')).toThrow();
   expect(_.bind(h.removeExclude, h, 'undeclaredFacet', 'value')).toThrow();
-  expect(h.isExcluded('undeclaredFacet', 'value')).toBe(false);
 });
 
 test('Conjuctive facet should be declared to be refine', function() {
