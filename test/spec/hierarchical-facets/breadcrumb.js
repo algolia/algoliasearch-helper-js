@@ -54,5 +54,7 @@ test('hierarchical facets: using getHierarchicalFacetBreadcrumb on an undefined 
   var client = algoliasearch(appId, apiKey);
   var helper = algoliasearchHelper(client, indexName, {});
 
-  expect(helper.getHierarchicalFacetBreadcrumb.bind('categories')).toThrow();
+  expect(
+    helper.getHierarchicalFacetBreadcrumb('categories')
+  ).toEqual([]);
 });

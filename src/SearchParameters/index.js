@@ -1443,11 +1443,6 @@ SearchParameters.prototype = {
    * @return {array.<string>} the path as an array of string
    */
   getHierarchicalFacetBreadcrumb: function(facetName) {
-    if (!this.isHierarchicalFacet(facetName)) {
-      throw new Error(
-        'Cannot get the breadcrumb of an unknown hierarchical facet: `' + facetName + '`');
-    }
-
     var refinement = this.getHierarchicalRefinement(facetName)[0];
     if (!refinement) return [];
 
