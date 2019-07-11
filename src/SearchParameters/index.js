@@ -570,7 +570,7 @@ SearchParameters.prototype = {
    */
   getExcludeRefinements: function(facetName) {
     if (!this.isConjunctiveFacet(facetName)) {
-      throw new Error(facetName + ' is not defined in the facets attribute of the helper configuration');
+      return [];
     }
     return this.facetsExcludes[facetName] || [];
   },
@@ -1066,6 +1066,9 @@ SearchParameters.prototype = {
     if (this.isHierarchicalFacetRefined(facet)) {
       throw new Error(facet + ' is already refined.');
     }
+    if (!this.isHierarchicalFacet(facet)) {
+      throw new Error(facet + ' is not defined in the hierarchicalFacets attribute of the helper configuration.');
+    }
     var mod = {};
     mod[facet] = [path];
     return this.setQueryParameters({
@@ -1140,7 +1143,7 @@ SearchParameters.prototype = {
    */
   isFacetRefined: function isFacetRefined(facet, value) {
     if (!this.isConjunctiveFacet(facet)) {
-      throw new Error(facet + ' is not defined in the facets attribute of the helper configuration');
+      return false;
     }
     return RefinementList.isRefined(this.facetsRefinements, facet, value);
   },
@@ -1156,7 +1159,7 @@ SearchParameters.prototype = {
    */
   isExcludeRefined: function isExcludeRefined(facet, value) {
     if (!this.isConjunctiveFacet(facet)) {
-      throw new Error(facet + ' is not defined in the facets attribute of the helper configuration');
+      return false;
     }
     return RefinementList.isRefined(this.facetsExcludes, facet, value);
   },
@@ -1171,8 +1174,7 @@ SearchParameters.prototype = {
    */
   isDisjunctiveFacetRefined: function isDisjunctiveFacetRefined(facet, value) {
     if (!this.isDisjunctiveFacet(facet)) {
-      throw new Error(
-        facet + ' is not defined in the disjunctiveFacets attribute of the helper configuration');
+      return false;
     }
     return RefinementList.isRefined(this.disjunctiveFacetsRefinements, facet, value);
   },
@@ -1187,8 +1189,7 @@ SearchParameters.prototype = {
    */
   isHierarchicalFacetRefined: function isHierarchicalFacetRefined(facet, value) {
     if (!this.isHierarchicalFacet(facet)) {
-      throw new Error(
-        facet + ' is not defined in the hierarchicalFacets attribute of the helper configuration');
+      return false;
     }
 
     var refinements = this.getHierarchicalRefinement(facet);
