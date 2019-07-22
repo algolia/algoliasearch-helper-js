@@ -107,14 +107,11 @@ var lib = {
         var facetList = values.filter(function(value) {
           return !attribute(value, key, refinementType);
         });
-        if (facetList.length > 0) {
-          if (facetList.length !== values.length) {
-            hasChanged = true;
-          }
-          memo[key] = facetList;
-        } else {
+
+        if (facetList.length !== values.length) {
           hasChanged = true;
         }
+        memo[key] = facetList;
 
         return memo;
       }, {});

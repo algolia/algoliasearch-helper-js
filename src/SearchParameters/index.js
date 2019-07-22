@@ -671,9 +671,7 @@ SearchParameters.prototype = {
           else hasChanged = true;
         });
 
-        if (objectHasKeys(operatorList)) {
-          memo[key] = operatorList;
-        }
+        memo[key] = operatorList;
 
         return memo;
       }, {});

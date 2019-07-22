@@ -9,10 +9,15 @@ var operator = '=';
 function testSameValue(value) {
   var state0 = new SearchParameters();
   var state1 = state0.addNumericRefinement(attribute, operator, value);
+  var stateEmpty = new SearchParameters({
+    numericRefinements: {
+      [attribute]: {}
+    }
+  });
   expect(state1.isNumericRefined(attribute, operator, value)).toBeTruthy();
   var state2 = state1.removeNumericRefinement(attribute, operator, value);
   expect(state2.isNumericRefined(attribute, operator, value)).toBeFalsy();
-  expect(state2).toEqual(state0);
+  expect(state2).toEqual(stateEmpty);
 }
 
 test('Should be able to add remove strings', function() {

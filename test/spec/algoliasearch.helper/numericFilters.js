@@ -81,7 +81,7 @@ test('Should be able to remove values one by one even 0s', function() {
   helper.removeNumericRefinement('attribute', '>', 0);
   expect(helper.state.numericRefinements.attribute['>']).toEqual([4]);
   helper.removeNumericRefinement('attribute', '>', 4);
-  expect(helper.state.numericRefinements.attribute).toBe(undefined);
+  expect(helper.state.numericRefinements.attribute).toEqual({});
 });
 
 test(
@@ -111,7 +111,7 @@ test(
     helper.addNumericRefinement('attribute', '<', 4);
     expect(helper.state.numericRefinements.attribute).toEqual({'>': [0, 4], '<': [4]});
     helper.removeNumericRefinement('attribute');
-    expect(helper.state.numericRefinements.attribute).toBe(undefined);
+    expect(helper.state.numericRefinements.attribute).toEqual({});
 
     expect(helper.getRefinements('attribute')).toEqual([]);
   }
