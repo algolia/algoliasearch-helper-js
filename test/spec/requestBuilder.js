@@ -64,5 +64,5 @@ test('does only a single query if refinements are empty', function() {
   });
 
   var queries = getQueries(searchParams.index, searchParams);
-  expect(queries.length).toBe(1);
+  expect(queries).toHaveLength(1);
 });
