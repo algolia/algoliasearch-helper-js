@@ -52,7 +52,9 @@ var lib = {
    */
   removeRefinement: function removeRefinement(refinementList, attribute, value) {
     if (value === undefined) {
-      return lib.clearRefinement(refinementList, attribute);
+      return lib.clearRefinement(refinementList, function(v, f) {
+        return attribute === f;
+      });
     }
 
     var valueAsString = '' + value;

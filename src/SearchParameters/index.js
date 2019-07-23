@@ -664,11 +664,10 @@ SearchParameters.prototype = {
             var predicateResult = attribute({val: value, op: operator}, key, 'numeric');
             if (!predicateResult) outValues.push(value);
           });
-          if (outValues.length > 0) {
-            if (outValues.length !== values.length) hasChanged = true;
-            operatorList[operator] = outValues;
+          if (outValues.length !== values.length) {
+            hasChanged = true;
           }
-          else hasChanged = true;
+          operatorList[operator] = outValues;
         });
 
         memo[key] = operatorList;
