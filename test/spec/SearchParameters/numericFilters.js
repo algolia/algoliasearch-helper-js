@@ -2,16 +2,19 @@
 
 var SearchParameters = require('../../../src/SearchParameters');
 
-var attribute = 'attribute';
-var operator = '=';
 
 /* Ensure that we add and then remove the same value, and get a state equivalent to the initial one */
 function testSameValue(value) {
+  var attribute = 'attribute';
+  var operator = '=';
+
   var state0 = new SearchParameters();
   var state1 = state0.addNumericRefinement(attribute, operator, value);
   var stateEmpty = new SearchParameters({
     numericRefinements: {
-      [attribute]: {}
+      [attribute]: {
+        [operator]: []
+      }
     }
   });
   expect(state1.isNumericRefined(attribute, operator, value)).toBeTruthy();

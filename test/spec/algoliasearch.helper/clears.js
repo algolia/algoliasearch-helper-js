@@ -105,7 +105,9 @@ test('Clear with a function: remove all predicate', function() {
   });
 
   Object.keys(helper.state.numericRefinements).forEach(function(facet) {
-    expect(Object.keys(helper.state.numericRefinements[facet])).toHaveLength(0);
+    Object.keys(helper.state.numericRefinements[facet]).forEach(function(operator) {
+      expect(helper.state.numericRefinements[facet][operator]).toHaveLength(0);
+    });
   });
   Object.keys(helper.state.facetsRefinements).forEach(function(facet) {
     expect(helper.state.facetsRefinements[facet]).toHaveLength(0);
@@ -150,7 +152,7 @@ test('Clear with a function: filtering', function() {
     excluded2: ['0']
   });
   expect(helper.state.numericRefinements).toEqual({
-    numeric1: {},
+    numeric1: {'>=': [], '<': []},
     numeric2: {'>=': [0], '<': [10]}
   });
   expect(helper.state.hierarchicalFacetsRefinements).toEqual({
