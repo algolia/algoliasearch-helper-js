@@ -52,6 +52,8 @@ var lib = {
    */
   removeRefinement: function removeRefinement(refinementList, attribute, value) {
     if (value === undefined) {
+      // we use the "filter" form of clearRefinement, since it leaves empty values as-is
+      // the form with a string will remove the attribute completely
       return lib.clearRefinement(refinementList, function(v, f) {
         return attribute === f;
       });
