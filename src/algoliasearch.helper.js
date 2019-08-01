@@ -180,24 +180,17 @@ AlgoliaSearchHelper.prototype.getQuery = function() {
  * // Changing the number of records returned per page to 1
  * // This example uses the callback API
  * var state = helper.searchOnce({hitsPerPage: 1},
- *   function(error, content, state) {
+ *   function(error, content) {
  *     // if an error occurred it will be passed in error, otherwise its value is null
- *     // content contains the results formatted as a SearchResults
- *     // state is the instance of SearchParameters used for this search
+ *     // content is a SearchResults instance
  *   });
  * @example
  * // Changing the number of records returned per page to 1
  * // This example uses the promise API
  * var state1 = helper.searchOnce({hitsPerPage: 1})
- *                 .then(promiseHandler);
- *
- * function promiseHandler(res) {
- *   // res contains
- *   // {
- *   //   content : SearchResults
- *   //   state   : SearchParameters (the one used for this specific search)
- *   // }
- * }
+ *   .then(function (content) {
+ *     // content is a SearchResults instance
+ *   });
  */
 AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   var tempState = !options ? this.state : this.state.setQueryParameters(options);
@@ -219,7 +212,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
           self.emit('searchQueueEmpty');
         }
 
-        cb(null, new SearchResults(tempState, content.results), tempState);
+        cb(null, new SearchResults(tempState, content.results));
       })
       .catch(function(err) {
         self._currentNbQueries--;
@@ -236,11 +229,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   return this.client.search(queries).then(function(content) {
     self._currentNbQueries--;
     if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
-    return {
-      content: new SearchResults(tempState, content.results),
-      state: tempState,
-      _originalResponse: content
-    };
+    return new SearchResults(tempState, content.results);
   }, function(e) {
     self._currentNbQueries--;
     if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
