@@ -44,6 +44,14 @@ describe('removeDisjunctiveFacet', function() {
       new SearchParameters()
     );
   });
+
+  test('removeDisjunctiveFacet(attribute), empty', function() {
+    var state = new SearchParameters();
+
+    expect(state.removeDisjunctiveFacet('attribute')).toEqual(
+      new SearchParameters()
+    );
+  });
 });
 
 describe('removeFacet', function() {
@@ -83,6 +91,14 @@ describe('removeFacet', function() {
     var state = new SearchParameters({
       facets: ['attribute']
     });
+
+    expect(state.removeFacet('attribute')).toEqual(
+      new SearchParameters()
+    );
+  });
+
+  test('removeFacet(attribute), empty', function() {
+    var state = new SearchParameters();
 
     expect(state.removeFacet('attribute')).toEqual(
       new SearchParameters()
@@ -130,6 +146,14 @@ describe('removeHierarchicalFacet', function() {
     var state = new SearchParameters({
       hierarchicalFacets: [{name: 'attribute', attributes: ['zip', 'zop']}]
     });
+
+    expect(state.removeHierarchicalFacet('attribute')).toEqual(
+      new SearchParameters()
+    );
+  });
+
+  test('removeHierarchicalFacet(attribute), empty', function() {
+    var state = new SearchParameters();
 
     expect(state.removeHierarchicalFacet('attribute')).toEqual(
       new SearchParameters()
