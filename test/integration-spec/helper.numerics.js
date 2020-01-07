@@ -19,17 +19,14 @@ test('[INT][NUMERICS][RAW-API]Test numeric operations on the helper and their re
       'helper_numerics' + random(0, 5000);
 
     setup(indexName, function(client, index) {
-      return index.addObjects([
+      return index.saveObjects([
         {objectID: '0', n: [6]},
         {objectID: '1', n: [6, 10]},
         {objectID: '2', n: [5, 45]},
         {objectID: '3', n: 12}
-      ])
-        .then(function(content) {
-          return index.waitTask(content.taskID);
-        }).then(function() {
-          return client;
-        });
+      ]).wait().then(function() {
+        return client;
+      });
     }).then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {});
 
@@ -69,7 +66,7 @@ test('[INT][NUMERICS][RAW-API]Test numeric operations on the helper and their re
         if (calls === 5) {
           expect(content.hits.length).toBe(1);
           expect(map(content.hits, hitsToParsedID).sort()).toEqual([2]);
-          client.deleteIndex(indexName);
+          client.initIndex(indexName).delete();
           if (!process.browser) {
             client.destroy();
           }
@@ -88,17 +85,14 @@ test('[INT][NUMERICS][MANAGED-API]Test numeric operations on the helper and thei
       'helper_numerics_managed' + random(0, 5000);
 
     setup(indexName, function(client, index) {
-      return index.addObjects([
+      return index.saveObjects([
         {objectID: '0', n: [6]},
         {objectID: '1', n: [6, 10]},
         {objectID: '2', n: [5, 45]},
         {objectID: '3', n: 12}
-      ])
-        .then(function(content) {
-          return index.waitTask(content.taskID);
-        }).then(function() {
-          return client;
-        });
+      ]).wait().then(function() {
+        return client;
+      });
     }).then(function(client) {
       var helper = algoliasearchHelper(client, indexName, {});
 
@@ -138,7 +132,7 @@ test('[INT][NUMERICS][MANAGED-API]Test numeric operations on the helper and thei
         if (calls === 4) {
           expect(content.hits.length).toBe(1);
           expect(map(content.hits, hitsToParsedID).sort()).toEqual([2]);
-          client.deleteIndex(indexName);
+          client.initIndex(indexName).delete();
           if (!process.browser) {
             client.destroy();
           }

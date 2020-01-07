@@ -18,17 +18,14 @@ test('[INT][TAGS]Test tags operations on the helper and their results on the alg
     'helper_refinements' + random(0, 5000);
 
   setup(indexName, function(client, index) {
-    return index.addObjects([
+    return index.saveObjects([
       {objectID: '0', _tags: ['t1', 't2']},
       {objectID: '1', _tags: ['t1', 't3']},
       {objectID: '2', _tags: ['t2', 't3']},
       {objectID: '3', _tags: ['t3', 't4']}
-    ])
-      .then(function(content) {
-        return index.waitTask(content.taskID);
-      }).then(function() {
-        return client;
-      });
+    ]).wait().then(function() {
+      return client;
+    });
   }).then(function(client) {
     var helper = algoliasearchHelper(client, indexName, {});
 
@@ -68,7 +65,7 @@ test('[INT][TAGS]Test tags operations on the helper and their results on the alg
       if (calls === 5) {
         expect(content.hits.length).toBe(2);
         expect(map(content.hits, hitsToParsedID).sort()).toEqual([1, 2]);
-        client.deleteIndex(indexName);
+        client.initIndex(indexName).delete();
         if (!process.browser) {
           client.destroy();
         }

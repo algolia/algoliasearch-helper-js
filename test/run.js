@@ -32,11 +32,11 @@ jest.runCLI(dynamicJestConfig, projectsRootPaths).then(function(response) {
       process.env.INTEGRATION_TEST_API_KEY
     );
 
-    client.listIndexes().then(content => {
+    client.listIndices().then(content => {
       content.items
         .map(i => i.name)
         .filter(n => n.indexOf('_circle-algoliasearch-helper') !== -1)
-        .forEach(n => client.deleteIndex(n));
+        .forEach(n => client.initIndex(n).delete());
     });
   }
 });

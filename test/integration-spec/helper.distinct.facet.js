@@ -13,20 +13,17 @@ test('[INT][FILTERS] Using distinct should let me retrieve all facet without dis
     'helper_distinct.facet' + random(0, 5000);
 
   setup(indexName, function(client, index) {
-    return index.addObjects([
+    return index.saveObjects([
       {type: 'shoes', name: 'Adidas Stan Smith', colors: ['blue', 'red']},
       {type: 'shoes', name: 'Converse Chuck Taylor', colors: ['blue', 'green']},
       {type: 'shoes', name: 'Nike Air Jordan', colors: ['gold', 'red']}
-    ])
+    ], {autoGenerateObjectIDIfNotExist: true}).wait()
       .then(function() {
         return index.setSettings({
           attributesToIndex: ['type', 'colors', 'name'],
           attributeForDistinct: 'type',
           attributesForFaceting: ['type', 'colors']
-        });
-      })
-      .then(function(content) {
-        return index.waitTask(content.taskID);
+        }).wait();
       }).then(function() {
         return client;
       });
@@ -48,7 +45,7 @@ test('[INT][FILTERS] Using distinct should let me retrieve all facet without dis
         green: 1
       });
 
-      client.deleteIndex(indexName);
+      client.initIndex(indexName).delete();
 
       if (!process.browser) {
         client.destroy();

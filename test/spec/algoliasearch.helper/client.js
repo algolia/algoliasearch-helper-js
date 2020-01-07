@@ -58,16 +58,16 @@ test('clearCache gets called if exists', function() {
 
 test('setting the agent once', function() {
   var client = algoliasearch('what', 'wait', {});
-  var originalUA = client._ua;
+  var originalUA = client.transporter.userAgent.value;
   algoliaSearchHelper(client, 'IndexName', {});
   algoliaSearchHelper(client, 'IndexName2', {});
 
-  expect(client._ua).toBe(originalUA + ';JS Helper (' + version + ')');
+  expect(client.transporter.userAgent.value).toBe(originalUA + '; JS Helper (' + version + ')');
 });
 
 test('getClient / setClient', function() {
   var client0 = makeFakeClient();
-  var originalUA = client0._ua;
+  var originalUA = client0.transporter.userAgent.value;
   var helper = algoliaSearchHelper(client0, 'IndexName', {});
 
   expect(client0.search).toHaveBeenCalledTimes(0);
@@ -76,7 +76,7 @@ test('getClient / setClient', function() {
 
   expect(helper.getClient()).toBe(client0);
 
-  expect(client0._ua).toBe(originalUA + ';JS Helper (' + version + ')');
+  expect(client0.transporter.userAgent.value).toBe(originalUA + '; JS Helper (' + version + ')');
 
   var client1 = makeFakeClient();
   helper.setClient(client1);
@@ -88,10 +88,10 @@ test('getClient / setClient', function() {
   expect(client1.search).toHaveBeenCalledTimes(1);
   expect(client0.search).toHaveBeenCalledTimes(1);
 
-  expect(client1._ua).toBe(originalUA + ';JS Helper (' + version + ')');
+  expect(client1.transporter.userAgent.value).toBe(originalUA + '; JS Helper (' + version + ')');
 
   helper.setClient(client1);
-  expect(client1._ua).toBe(originalUA + ';JS Helper (' + version + ')');
+  expect(client1.transporter.userAgent.value).toBe(originalUA + '; JS Helper (' + version + ')');
 });
 
 test('initial client === getClient', function() {

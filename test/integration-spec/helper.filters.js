@@ -14,19 +14,16 @@ test('[INT][FILTERS] Should retrieve different values for multi facetted records
     'helper_refinements' + random(0, 5000);
 
   setup(indexName, function(client, index) {
-    return index.addObjects([
+    return index.saveObjects([
       {facet: ['f1', 'f2']},
       {facet: ['f1', 'f3']},
       {facet: ['f2', 'f3']}
-    ])
+    ], {autoGenerateObjectIDIfNotExist: true}).wait()
       .then(function() {
         return index.setSettings({
           attributesToIndex: ['facet'],
           attributesForFaceting: ['facet']
-        });
-      })
-      .then(function(content) {
-        return index.waitTask(content.taskID);
+        }).wait();
       }).then(function() {
         return client;
       });
@@ -79,7 +76,7 @@ test('[INT][FILTERS] Should retrieve different values for multi facetted records
           f3: 1
         });
 
-        client.deleteIndex(indexName);
+        client.initIndex(indexName).delete();
 
         if (!process.browser) {
           client.destroy();

@@ -14,19 +14,16 @@ test('[INT][HIGHLIGHT] The highlight should be consistent with the parameters', 
     'helper_highlight' + random(0, 5000);
 
   setup(indexName, function(client, index) {
-    return index.addObjects([
+    return index.saveObjects([
       {facet: ['f1', 'f2']},
       {facet: ['f1', 'f3']},
       {facet: ['f2', 'f3']}
-    ])
+    ], {autoGenerateObjectIDIfNotExist: true}).wait()
       .then(function() {
         return index.setSettings({
           attributesToIndex: ['facet'],
           attributesForFaceting: ['facet']
-        });
-      })
-      .then(function(content) {
-        return index.waitTask(content.taskID);
+        }).wait();
       }).then(function() {
         return client;
       });
@@ -48,7 +45,7 @@ test('[INT][HIGHLIGHT] The highlight should be consistent with the parameters', 
       } else if (calls === 2) {
         expect(content.hits[0]._highlightResult.facet[0].value).toBe('<strong>f1</strong>');
         expect(content.hits[1]._highlightResult.facet[0].value).toBe('<strong>f1</strong>');
-        client.deleteIndex(indexName);
+        client.initIndex(indexName).delete();
         if (!process.browser) {
           client.destroy();
         }

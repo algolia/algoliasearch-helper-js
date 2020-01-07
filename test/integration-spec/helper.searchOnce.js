@@ -16,17 +16,15 @@ test(
   '[INT][SEARCHONCE] Should be able to search once with custom parameters without changing main search state',
   function(done) {
     setup(indexName, function(client, index) {
-      return index.addObjects([
+      return index.saveObjects([
         {objectID: '1', facet: ['f1', 'f2']},
         {objectID: '2', facet: ['f1', 'f3']},
         {objectID: '3', facet: ['f2', 'f3']}
-      ]).then(function() {
+      ]).wait().then(function() {
         return index.setSettings({
           attributesToIndex: ['facet'],
           attributesForFaceting: ['facet']
-        });
-      }).then(function(content) {
-        return index.waitTask(content.taskID);
+        }).wait();
       }).then(function() {
         return client;
       });

@@ -15,13 +15,10 @@ test(
       'helper_distinct.facet' + random(0, 5000);
 
     return setup(indexName, function(client, index) {
-      return index.addObjects([
+      return index.saveObjects([
         {objectID: '0', content: 'tata'},
         {objectID: '1', content: 'toto'}
-      ])
-      .then(function(content) {
-        return index.waitTask(content.taskID);
-      }).then(function() {
+      ]).wait().then(function() {
         return client;
       });
     }).then(function(client) {
