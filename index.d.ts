@@ -864,6 +864,12 @@ declare namespace algoliasearchHelper {
      */
     optionalWords?: string[];
     /**
+     * Determines how to calculate the total score for filtering
+     * default: false
+     * https://www.algolia.com/doc/api-reference/api-parameters/sumOrFiltersScores/
+     */
+    sumOrFiltersScores?: boolean;
+    /**
      * Remove stop words from the query before executing it
      * default: false
      * true|false: enable or disable stop words for all 41 supported languages; or
@@ -941,6 +947,12 @@ declare namespace algoliasearchHelper {
      * https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
      */
     facetFilters?: string[] | string[][];
+    /**
+     * Create filters for ranking purposes, where records that match the filter are ranked highest
+     * default: []
+     * https://www.algolia.com/doc/api-reference/api-parameters/optionalFilters/
+     */
+    optionalFilters?: Array<string | string[]>;
     /**
      * If set to false, this query will not be taken into account in the analytics feature.
      * default true
