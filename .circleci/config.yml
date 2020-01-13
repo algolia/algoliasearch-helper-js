@@ -54,7 +54,7 @@ jobs:
           name: Unit & Integration Tests
           command: yarn test --maxWorkers=4
 
-  "test algoliasearch v4":
+  'test algoliasearch v4':
     <<: *defaults
     steps:
       - checkout
@@ -87,4 +87,5 @@ workflows:
     jobs:
       - build
       - test
+      - test algoliasearch v4
       - docs
