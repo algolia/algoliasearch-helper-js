@@ -54,7 +54,7 @@ jobs:
           name: Unit & Integration Tests
           command: yarn test --maxWorkers=4
 
-  'test algoliasearch v4':
+  'test algoliasearch v3':
     <<: *defaults
     steps:
       - checkout
@@ -63,8 +63,8 @@ jobs:
       - run: *run_yarn_install
       - save_cache: *save_yarn_cache
       - run:
-          name: Install algoliasearch v4
-          command: yarn add "algoliasearch@beta"
+          name: Install algoliasearch v3
+          command: yarn add "algoliasearch@3.35.1"
       - run:
           name: Unit & Integration Tests
           command: yarn test --maxWorkers=4
@@ -87,5 +87,5 @@ workflows:
     jobs:
       - build
       - test
-      - test algoliasearch v4
+      - test algoliasearch v3
       - docs
