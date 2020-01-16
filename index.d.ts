@@ -6,25 +6,34 @@ import algoliasearch, {
   // @ts-ignore
   QueryParameters as SearchOptionsV3,
   // @ts-ignore
-  Response as SearchResponseV3
+  Response as SearchResponseV3,
 } from 'algoliasearch';
 // @ts-ignore
 import {
   SearchOptions as SearchOptionsV4,
-  SearchResponse as SearchResponseV4
+  SearchResponse as SearchResponseV4,
 } from '@algolia/client-search';
 import { EventEmitter } from 'events';
 
-type DummySearchClientV4 = {readonly addAlgoliaAgent: (segment: string, version?: string) => void};
+type DummySearchClientV4 = {
+  readonly addAlgoliaAgent: (segment: string, version?: string) => void;
+};
 
-type Client = ReturnType<typeof algoliasearch> extends DummySearchClientV4 ? SearchClientV4 : SearchClientV3
-type SearchOptions = ReturnType<typeof algoliasearch> extends DummySearchClientV4 ? SearchOptionsV4 : SearchOptionsV3
-type SearchResponse<T> = ReturnType<typeof algoliasearch> extends DummySearchClientV4 ? SearchResponseV4<T> : SearchResponseV3<T>
+type Client = ReturnType<typeof algoliasearch> extends DummySearchClientV4
+  ? SearchClientV4
+  : SearchClientV3;
+type SearchOptions = ReturnType<
+  typeof algoliasearch
+> extends DummySearchClientV4
+  ? SearchOptionsV4
+  : SearchOptionsV3;
+type SearchResponse<T> = ReturnType<
+  typeof algoliasearch
+> extends DummySearchClientV4
+  ? SearchResponseV4<T>
+  : SearchResponseV3<T>;
 
-type SearchClient = Pick<
-  Client,
-  'search' | 'searchForFacetValues'
->;
+type SearchClient = Pick<Client, 'search' | 'searchForFacetValues'>;
 
 /**
  * The algoliasearchHelper module is the function that will let its
@@ -305,7 +314,7 @@ declare namespace algoliasearchHelper {
       event: 'result',
       cb: (res: { results: SearchResults; state: SearchParameters }) => void
     ): this;
-    on( event: 'error', cb: (res: { error: Error }) => void): this;
+    on(event: 'error', cb: (res: { error: Error }) => void): this;
 
     lastResults: SearchResults | null;
     detach(): void;
@@ -1039,7 +1048,8 @@ declare namespace algoliasearchHelper {
     type Operator = '=' | '>' | '>=' | '<' | '<=' | '!=';
   }
 
-  export interface SearchResults<T = any> extends Omit<SearchResponse<T>, 'facets' | 'params'> {
+  export interface SearchResults<T = any>
+    extends Omit<SearchResponse<T>, 'facets' | 'params'> {
     /**
      * Boolean that indicates if the computation of the counts did time out.
      * @deprecated
