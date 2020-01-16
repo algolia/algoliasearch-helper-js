@@ -8,10 +8,10 @@ import algoliasearch, {
   // @ts-ignore
   Response as SearchResponseV3,
 } from 'algoliasearch';
-// @ts-ignore
 import {
   SearchOptions as SearchOptionsV4,
-  SearchResponse as SearchResponseV4,
+  SearchResponse as SearchResponseV4
+// @ts-ignore
 } from '@algolia/client-search';
 import { EventEmitter } from 'events';
 
@@ -1048,8 +1048,65 @@ declare namespace algoliasearchHelper {
     type Operator = '=' | '>' | '>=' | '<' | '<=' | '!=';
   }
 
-  export interface SearchResults<T = any>
-    extends Omit<SearchResponse<T>, 'facets' | 'params'> {
+  export class SearchResults<T = any>
+    implements Omit<SearchResponse<T>, 'facets' | 'params'> {
+    /**
+     * query used to generate the results
+     */
+    query: string;
+    /**
+     * The query as parsed by the engine given all the rules.
+     */
+    parsedQuery: string;
+    /**
+     * all the records that match the search parameters. Each record is
+     * augmented with a new attribute `_highlightResult`
+     * which is an object keyed by attribute and with the following properties:
+     *  - `value` : the value of the facet highlighted (html)
+     *  - `matchLevel`: full, partial or none depending on how the query terms match
+     */
+    hits: (T & {
+      readonly objectID: string;
+    })[];
+    /**
+     * index where the results come from
+     */
+    index: string;
+    /**
+     * number of hits per page requested
+     */
+    hitsPerPage: number;
+    /**
+     * total number of hits of this query on the index
+     */
+    nbHits: number;
+    /**
+     * total number of pages with respect to the number of hits per page and the total number of hits
+     */
+    nbPages: number;
+    /**
+     * current page
+     */
+    page: number;
+    /**
+     * sum of the processing time of all the queries
+     */
+    processingTimeMS: number;
+    /**
+     * The position if the position was guessed by IP.
+     * @example "48.8637,2.3615",
+     */
+    aroundLatLng: string;
+    /**
+     * The radius computed by Algolia.
+     * @example "126792922",
+     */
+    automaticRadius: string;
+    /**
+     * String identifying the server used to serve this request.
+     * @example "c7-use-2.algolia.net",
+     */
+    serverUsed: string;
     /**
      * Boolean that indicates if the computation of the counts did time out.
      * @deprecated
@@ -1060,6 +1117,27 @@ declare namespace algoliasearchHelper {
      * @deprecated
      */
     timeoutHits: boolean;
+
+    /**
+     * True if the counts of the facets is exhaustive
+     */
+    exhaustiveFacetsCount: boolean;
+
+    /**
+     * True if the number of hits is exhaustive
+     */
+    exhaustiveNbHits: boolean;
+
+    /**
+     * Contains the userData if they are set by a [query rule](https://www.algolia.com/doc/guides/query-rules/query-rules-overview/).
+     */
+    userData: any[];
+
+    /**
+     * queryID is the unique identifier of the query used to generate the current search results.
+     * This value is only available if the `clickAnalytics` search parameter is set to `true`.
+     */
+    queryID: string;
     /**
      * disjunctive facets results
      */
