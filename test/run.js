@@ -32,6 +32,11 @@ jest.runCLI(dynamicJestConfig, projectsRootPaths).then(function(response) {
       process.env.INTEGRATION_TEST_API_KEY
     );
 
+    client.deleteIndex = client.deleteIndex || function(deleteIndexName) {
+       return client.initIndex(deleteIndexName).delete();
+     };
+     client.listIndexes = client.listIndexes || client.listIndices;
+
     client.listIndexes().then(content => {
       content.items
         .map(i => i.name)
