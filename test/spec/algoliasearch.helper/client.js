@@ -12,10 +12,10 @@ function makeFakeClient() {
   });
 
   client._ua || Object.defineProperty(client, '_ua', {
-     get() {
-       return client.transporter.userAgent.value;
-     }
-   });
+    get() {
+      return client.transporter.userAgent.value;
+    }
+  });
 
   return client;
 }
