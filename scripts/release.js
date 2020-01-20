@@ -95,19 +95,19 @@ function commitNewFiles(version) {
   shell.echo('Commiting files');
   const changelog = getChangelog(shell);
   changelog.splice(1, 0, '');
-  shell.exec(`git commit -a -m "${changelog.join('\n')}"`, {silent: true});
+  shell.exec(`git commit -a -m "${changelog.join('\n')}"`, {silent: false});
 
   shell.echo('Creating tag');
-  shell.exec(`git tag ${version}`, {silent: true});
+  shell.exec(`git tag ${version}`, {silent: false});
 }
 
 function publish(tag) {
   shell.echo('Pushing new commits to Github');
-  shell.exec('git push origin', {silent: true});
-  shell.exec('git push origin --tags', {silent: true});
+  shell.exec('git push origin', {silent: false});
+  shell.exec('git push origin --tags', {silent: false});
 
   shell.echo('Publishing new version on NPM');
-  shell.exec(`npm publish --tag=${tag}`, {silent: true});
+  shell.exec(`npm publish --tag=${tag}`, {silent: false});
 }
 
 function build() {
