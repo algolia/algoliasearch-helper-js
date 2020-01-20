@@ -37,8 +37,8 @@ promptVersion(packageJson.version, (version) => {
 function checkEnvironment() {
   const currentBranch = shell.exec('git rev-parse --abbrev-ref HEAD', {silent: true}).toString().trim();
 
-  if (currentBranch !== 'develop') {
-    shell.echo('The release script should be started from develop'.error);
+  if (currentBranch !== 'V2') {
+    shell.echo('The release script should be started from V2'.error);
     process.exit(1);
   }
 
