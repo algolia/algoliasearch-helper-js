@@ -90,13 +90,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           
         </a>
         
-      </li>
-      <li class="algc-menu__list__item ">
-        <a href="upgrade.html"  class="">
-          Upgrade
-          
-        </a>
-        
       </li></ul>
             <button class='algc-openmobile'><span></span></button>
           </div>
@@ -204,7 +197,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </li></ul></div></div>
 
     </nav>
-    <!-- End community_header --> <section class="hero-section shrink"><div class="container"><div class="hero-container"><div class="fl-right"><img src="images/al-helper-logo.svg"></div><div class="fl-left"><a href="https://www.algolia.com/?utm_medium=social-owned&amp;utm_source=algoliasearch-helper%20website&amp;utm_campaign=homepage" title="Algolia built this"><span class="icon icon-algolia-small no-mobile" id="icon-algolia"></span></a><h1>Reference</h1></div></div></div></section><section class="documentation-section"><div class="container"><nav class="sidebar"><ul><li class="level-h2"><a href="#algoliasearchhelper">AlgoliaSearchHelper</a></li><li class="level-h3"><a href="#instantiate">Instantiate</a></li><li class="level-h3"><a href="#search">Search</a></li><li class="level-h3"><a href="#derive-multi-queries">Derive / multi-queries</a></li><li class="level-h3"><a href="#query-and-index">Query and index</a></li><li class="level-h3"><a href="#pagination">Pagination</a></li><li class="level-h3"><a href="#query-parameters">Query parameters</a></li><li class="level-h3"><a href="#conjunctive-facets">Conjunctive Facets</a></li><li class="level-h3"><a href="#disjunctive-facets">Disjunctive facets</a></li><li class="level-h3"><a href="#hierarchical-facets">Hierarchical facets</a></li><li class="level-h3"><a href="#facet-exclusions">Facet exclusions</a></li><li class="level-h3"><a href="#numeric-filters">Numeric filters</a></li><li class="level-h3"><a href="#tag-filters">Tag filters</a></li><li class="level-h3"><a href="#state-management">State management</a></li><li class="level-h3"><a href="#events">Events</a></li><li class="level-h3"><a href="#client-management">Client management</a></li><li class="level-h2"><a href="#searchresults">SearchResults</a></li><li class="level-h3"><a href="#results">Results</a></li><li class="level-h3"><a href="#facets-and-filters-methods">Facets and filters methods</a></li><li class="level-h3"><a href="#geolocation-data">Geolocation data</a></li><li class="level-h3"><a href="#results-metadata">Results metadata</a></li><li class="level-h3"><a href="#parameters">Parameters</a></li><li class="level-h3"><a href="#query-rules">Query rules</a></li><li class="level-h3"><a href="#technical-metadata">Technical metadata</a></li><li class="level-h2"><a href="#types">Types</a></li><li class="level-h2"><a href="#searchparameters">SearchParameters</a></li><li class="level-h3"><a href="#attributes">Attributes</a></li><li class="level-h3"><a href="#methods">Methods</a></li></ul></nav><div class="documentation-container"><h2 id="algoliasearchhelper">AlgoliaSearchHelper</h2>
+    <!-- End community_header --> <section class="hero-section shrink"><div class="container"><div class="hero-container"><div class="fl-right"><img src="images/al-helper-logo.svg"></div><div class="fl-left"><a href="https://www.algolia.com/?utm_medium=social-owned&amp;utm_source=algoliasearch-helper%20website&amp;utm_campaign=homepage" title="Algolia built this"><span class="icon icon-algolia-small no-mobile" id="icon-algolia"></span></a><h1>Reference</h1></div></div></div></section><section class="documentation-section"><div class="container"><nav class="sidebar"><ul><li class="level-h2"><a href="#algoliasearchhelper">AlgoliaSearchHelper</a></li><li class="level-h3"><a href="#instantiate">Instantiate</a></li><li class="level-h3"><a href="#search">Search</a></li><li class="level-h3"><a href="#derive-multi-queries">Derive / multi-queries</a></li><li class="level-h3"><a href="#query-and-index">Query and index</a></li><li class="level-h3"><a href="#pagination">Pagination</a></li><li class="level-h3"><a href="#query-parameters">Query parameters</a></li><li class="level-h3"><a href="#conjunctive-facets">Conjunctive Facets</a></li><li class="level-h3"><a href="#disjunctive-facets">Disjunctive facets</a></li><li class="level-h3"><a href="#hierarchical-facets">Hierarchical facets</a></li><li class="level-h3"><a href="#facet-exclusions">Facet exclusions</a></li><li class="level-h3"><a href="#numeric-filters">Numeric filters</a></li><li class="level-h3"><a href="#tag-filters">Tag filters</a></li><li class="level-h3"><a href="#state-management">State management</a></li><li class="level-h3"><a href="#events">Events</a></li><li class="level-h3"><a href="#client-management">Client management</a></li><li class="level-h2"><a href="#searchresults">SearchResults</a></li><li class="level-h3"><a href="#results">Results</a></li><li class="level-h3"><a href="#facets-and-filters-methods">Facets and filters methods</a></li><li class="level-h3"><a href="#geolocation-data">Geolocation data</a></li><li class="level-h3"><a href="#results-metadata">Results metadata</a></li><li class="level-h3"><a href="#parameters">Parameters</a></li><li class="level-h3"><a href="#query-rules">Query rules</a></li><li class="level-h3"><a href="#technical-metadata">Technical metadata</a></li><li class="level-h2"><a href="#types">Types</a></li><li class="level-h2"><a href="#searchparameters">SearchParameters</a></li><li class="level-h3"><a href="#attributes">Attributes</a></li><li class="level-h3"><a href="#methods">Methods</a></li><li class="level-h2"><a href="#url">URL</a></li></ul></nav><div class="documentation-container"><h2 id="algoliasearchhelper">AlgoliaSearchHelper</h2>
 <p>The <code>AlgoliaSearchHelper</code> is the main interface of the Helper library. It
 lets you set the parameters for the search and retrieve information
 during the search cycle with events:</p>
@@ -220,7 +213,7 @@ during the search cycle with events:</p>
 <p>You can also read the current parameters of the search using the AlgoliaSearchHelper
 but it might not be the one you expect according to the last results received.</p>
 <h3 id="instantiate">Instantiate</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -279,8 +272,8 @@ To use the helper, you also need the Algolia JS client v3.</p>
   facets: [<span class="hljs-string">&#39;shipping&#39;</span>],
   disjunctiveFacets: [<span class="hljs-string">&#39;category&#39;</span>]
 });
-helper.on(<span class="hljs-string">&#39;result&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(event.results);
+helper.on(<span class="hljs-string">&#39;result&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(result);
 });
 helper
   .toggleFacetRefinement(<span class="hljs-string">&#39;category&#39;</span>, <span class="hljs-string">&#39;Movies &amp; TV Shows&#39;</span>)
@@ -322,7 +315,7 @@ based method, that&#39;s why it is prefered.</p>
 method can be called in the same way that <code>searchOnce</code>.</p>
 <p>Finally, you can retrieve if there is an on-going search with <code>hasPendingRequests</code> or by
 listening to the <code>searchQueueEmpty</code> event.</p>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -354,7 +347,7 @@ be available through the <code>result</code> event. If an error occurs, an
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -436,7 +429,7 @@ otherwise it returns a promise containing an object with two keys :</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -504,7 +497,7 @@ it in the generated query.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -538,7 +531,7 @@ it in the generated query.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -573,7 +566,7 @@ it in the generated query.</p>
 
 
 <h3 id="derive-multi-queries">Derive / multi-queries</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -629,7 +622,7 @@ parameter function.</p>
 
 
 <h3 id="query-and-index">Query and index</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -666,7 +659,7 @@ parameter function.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -703,7 +696,7 @@ parameter function.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -742,7 +735,7 @@ parameter function.</p>
 
 
 <h3 id="pagination">Pagination</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -778,7 +771,7 @@ parameter function.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -809,7 +802,7 @@ parameter function.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -840,7 +833,7 @@ parameter function.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -880,7 +873,7 @@ parameter function.</p>
 list of parameters that can be in the <a href="https://www.algolia.com/doc/rest#query-an-index">rest API
 documentation</a>.</p>
 <p>Before using those methods, be sure to check <a href="query-parameters-shortcuts">the shortcuts</a>.</p>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -931,6 +924,58 @@ or benefit from higher-level APIs (all the kind of filters and facets have their
 
 
 
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#AlgoliaSearchHelper#getQueryParameter" id="AlgoliaSearchHelper#getQueryParameter" class="api-entry">getQueryParameter</a>
+          (<span class="params">
+            <span class="param param-0">parameterName</span>
+          </span>)
+          ⇒ <span class="type"><span>any</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Get a parameter of the search by its name. It is possible that a parameter is directly
+defined in the index dashboard, but it will be undefined using this method.</p>
+<p>The complete list of parameters is
+available on the
+<a href="https://www.algolia.com/doc/rest#query-an-index">Algolia website</a>.
+The most commonly used parameters have their own <a href="#query-parameters-shortcuts">shortcuts</a>
+or benefit from higher-level APIs (all the kind of filters have their own API)</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">parameterName</span>
+      <span class="type"><span>string</span>
+</span>
+      <div class="description"><p>the parameter name</p>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>any</span>
+</span>
+      <span class="description"><p>the parameter value</p>
+</span>
+    </div>
+  </div>
+  <div class="examples">
+<pre><code class="hljs javascript"><span class="hljs-keyword">var</span> hitsPerPage = helper.getQueryParameter(<span class="hljs-string">&#39;hitsPerPage&#39;</span>);</code></pre>
+  </div>
+</div>
+
+
+
+
+
+
 
 
 <h3 id="conjunctive-facets">Conjunctive Facets</h3>
@@ -957,7 +1002,7 @@ way:</p>
 the answer from Algolia. They are accessible using the
 <a href="#SearchResults#getFacetValues">getFacetValues</a> methods on the
 <a href="#SearchResults">SearchResults</a> object.</p>
-<h4>Methods</h4>  <div class="method">
+<h4>Methods</h4><div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1007,7 +1052,7 @@ helper.clearRefinements(<span class="hljs-function"><span class="hljs-keyword">f
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1052,7 +1097,7 @@ filter is already set, it doesn&#39;t change the filters.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1099,7 +1144,7 @@ attribute.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1145,7 +1190,7 @@ the value is set then it removes it, otherwise it adds the filter.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1206,7 +1251,7 @@ helper.hasRefinements(<span class="hljs-string">&#39;categories&#39;</span>); <s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1311,7 +1356,7 @@ way:</p>
 the answer from Algolia. They are accessible using the
 <a href="#SearchResults#getFacetValues">getFacetValues</a> methods on the
 <a href="#SearchResults">SearchResults</a> object.</p>
-<h4>Methods</h4>  <div class="method">
+<h4>Methods</h4><div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1361,7 +1406,7 @@ helper.clearRefinements(<span class="hljs-function"><span class="hljs-keyword">f
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1406,7 +1451,7 @@ filter is already set, it doesn&#39;t change the filters.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1453,7 +1498,7 @@ attribute.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1552,8 +1597,8 @@ helper.hasRefinements(<span class="hljs-string">&#39;categories&#39;</span>); <s
 
 <p>You will get a hierarchical presentation of your facet values: a navigation menu
 of your facet values.</p>
-<pre><code class="hljs js">helper.on(<span class="hljs-string">'result'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(event.results.hierarchicalFacets[<span class="hljs-number">0</span>]);
+<pre><code class="hljs js">helper.on(<span class="hljs-string">'result'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(data.hierarchicalFacets[<span class="hljs-number">0</span>]);
   <span class="hljs-comment">// {</span>
   <span class="hljs-comment">//   'name': 'products',</span>
   <span class="hljs-comment">//   'count': null,</span>
@@ -1664,7 +1709,7 @@ helper.toggleFacetRefinement(<span class="hljs-string">'products'</span>, <span 
   }]
 });</code></pre>
 
-<h4>Methods</h4>  <div class="method">
+<h4>Methods</h4><div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1710,7 +1755,7 @@ is already refined.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1753,7 +1798,7 @@ is already refined.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1789,7 +1834,7 @@ is already refined.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1842,7 +1887,7 @@ they are conjunctive facets. The following set of methods let
 you specify wich value not to keep in the results. See the
 <a href="#conjunctive-facets">conjunctive facets</a> for more information
 on how to configure them.</p>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1887,7 +1932,7 @@ filter is already set, it doesn&#39;t change the filters.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1934,7 +1979,7 @@ attribute.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -1979,7 +2024,7 @@ the value is set then it removes it, otherwise it adds the filter.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2040,7 +2085,7 @@ helper.hasRefinements(<span class="hljs-string">&#39;categories&#39;</span>); <s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2108,7 +2153,7 @@ helper.isExcludeRefined(<span class="hljs-string">&#39;color&#39;</span>, <span 
 <p>The numeric filters don&#39;t require any configuration. However
 they require that the attribute is stored as a number in
 Algolia.</p>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2160,7 +2205,7 @@ filter is already set, it doesn&#39;t change the filters.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2219,7 +2264,7 @@ will be removed.</li>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2274,7 +2319,7 @@ will be removed.</li>
 <p>The tag filters don&#39;t require any configuration. However,
 they require to be stored in the <code>_tags</code> attribute in
 Algolia.</p>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2302,7 +2347,7 @@ Algolia.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2340,7 +2385,7 @@ filter is already set, it doesn&#39;t change the filters.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2378,7 +2423,7 @@ filter is not set, it doesn&#39;t change the filters.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2416,7 +2461,7 @@ the value is set then it removes it, otherwise it adds the filter.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2458,7 +2503,7 @@ the value is set then it removes it, otherwise it adds the filter.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2494,7 +2539,58 @@ the value is set then it removes it, otherwise it adds the filter.</p>
 
 
 <h3 id="state-management">State management</h3>
-  <div class="method">
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#AlgoliaSearchHelper#getState" id="AlgoliaSearchHelper#getState" class="api-entry">getState</a>
+          (<span class="params">
+            <span class="param param-0 optional">filters</span>
+          </span>)
+          ⇒ <span class="type"><span>SearchParameters</span><span>object</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Get the current search state stored in the helper. This object is immutable.</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">filters</span>
+      <span class="type"><span>string[]</span>
+</span>
+      <div class="description"><p>optional filters to retrieve only a subset of the state</p>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>SearchParameters</span><span>object</span>
+</span>
+      <span class="description"><p>if filters is specified a plain object is
+returned containing only the requested fields, otherwise return the unfiltered
+state</p>
+</span>
+    </div>
+  </div>
+  <div class="examples">
+<pre><code class="hljs javascript"><span class="hljs-comment">// Get the complete state as stored in the helper</span>
+helper.getState();</code></pre>
+<pre><code class="hljs javascript"><span class="hljs-comment">// Get a part of the state with all the refinements on attributes and the query</span>
+helper.getState([<span class="hljs-string">&#39;query&#39;</span>, <span class="hljs-string">&#39;attribute:category&#39;</span>]);</code></pre>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2530,7 +2626,7 @@ the value is set then it removes it, otherwise it adds the filter.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2579,34 +2675,29 @@ for a legit use case)</p>
 
 
 <h3 id="events">Events</h3>
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:change" id="AlgoliaSearchHelper#event:change" class="api-entry">change</a></span></div>
   <div class="description"><p>Event triggered when a parameter is set or updated</p>
 </div>
   <ul class="parameters">
     <li class="parameter">
-      <span class="param param-">event</span>
-      <span class="type"><span>object</span>
-</span>
-      <div class="description"></div>
-    </li>
-    <li class="parameter">
-      <span class="param param-">event.state</span>
+      <span class="param param-">state</span>
       <span class="type"><span>SearchParameters</span>
 </span>
       <div class="description"><p>the current parameters with the latest changes applied</p>
 </div>
     </li>
     <li class="parameter">
-      <span class="param param-">event.results</span>
+      <span class="param param-">lastResults</span>
       <span class="type"><span>SearchResults</span>
 </span>
-      <div class="description"><p>the previous results received from Algolia. <code>null</code> before the first request</p>
+      <div class="description"><p>the previous results received from Algolia. <code>null</code> before
+the first request</p>
 </div>
     </li>
   </ul>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;change&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;change&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">state, lastResults</span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#39;The parameters have changed&#39;</span>);
 });</code></pre>
   </div>
@@ -2616,34 +2707,29 @@ for a legit use case)</p>
 
 
 
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:search" id="AlgoliaSearchHelper#event:search" class="api-entry">search</a></span></div>
   <div class="description"><p>Event triggered when a main search is sent to Algolia</p>
 </div>
   <ul class="parameters">
     <li class="parameter">
-      <span class="param param-">event</span>
-      <span class="type"><span>object</span>
-</span>
-      <div class="description"></div>
-    </li>
-    <li class="parameter">
-      <span class="param param-">event.state</span>
+      <span class="param param-">state</span>
       <span class="type"><span>SearchParameters</span>
 </span>
       <div class="description"><p>the parameters used for this search</p>
 </div>
     </li>
     <li class="parameter">
-      <span class="param param-">event.results</span>
+      <span class="param param-">lastResults</span>
       <span class="type"><span>SearchResults</span>
 </span>
-      <div class="description"><p>the results from the previous search. <code>null</code> if it is the first search.</p>
+      <div class="description"><p>the results from the previous search. <code>null</code> if
+it is the first search.</p>
 </div>
     </li>
   </ul>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;search&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;search&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">state, lastResults</span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#39;Search sent&#39;</span>);
 });</code></pre>
   </div>
@@ -2653,34 +2739,29 @@ for a legit use case)</p>
 
 
 
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:result" id="AlgoliaSearchHelper#event:result" class="api-entry">result</a></span></div>
   <div class="description"><p>Event triggered when the results are retrieved from Algolia</p>
 </div>
   <ul class="parameters">
     <li class="parameter">
-      <span class="param param-">event</span>
-      <span class="type"><span>object</span>
-</span>
-      <div class="description"></div>
-    </li>
-    <li class="parameter">
-      <span class="param param-">event.results</span>
+      <span class="param param-">results</span>
       <span class="type"><span>SearchResults</span>
 </span>
       <div class="description"><p>the results received from Algolia</p>
 </div>
     </li>
     <li class="parameter">
-      <span class="param param-">event.state</span>
+      <span class="param param-">state</span>
       <span class="type"><span>SearchParameters</span>
 </span>
-      <div class="description"><p>the parameters used to query Algolia. Those might be different from the one in the helper instance (for example if the network is unreliable).</p>
+      <div class="description"><p>the parameters used to query Algolia. Those might
+be different from the one in the helper instance (for example if the network is unreliable).</p>
 </div>
     </li>
   </ul>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;result&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;result&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">results, state</span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#39;Search results received&#39;</span>);
 });</code></pre>
   </div>
@@ -2690,20 +2771,14 @@ for a legit use case)</p>
 
 
 
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:error" id="AlgoliaSearchHelper#event:error" class="api-entry">error</a></span></div>
   <div class="description"><p>Event triggered when Algolia sends back an error. For example, if an unknown parameter is
 used, the error can be caught using this event.</p>
 </div>
   <ul class="parameters">
     <li class="parameter">
-      <span class="param param-">event</span>
-      <span class="type"><span>object</span>
-</span>
-      <div class="description"></div>
-    </li>
-    <li class="parameter">
-      <span class="param param-">event.error</span>
+      <span class="param param-">error</span>
       <span class="type"><span>Error</span>
 </span>
       <div class="description"><p>the error returned by the Algolia.</p>
@@ -2711,7 +2786,7 @@ used, the error can be caught using this event.</p>
     </li>
   </ul>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;error&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;error&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#39;Houston we got a problem.&#39;</span>);
 });</code></pre>
   </div>
@@ -2721,7 +2796,7 @@ used, the error can be caught using this event.</p>
 
 
 
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:searchQueueEmpty" id="AlgoliaSearchHelper#event:searchQueueEmpty" class="api-entry">searchQueueEmpty</a></span></div>
   <div class="description"><p>Event triggered when the queue of queries have been depleted (with any result or outdated queries)</p>
 </div>
@@ -2741,27 +2816,22 @@ helper.search();</code></pre>
 
 
 
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:searchOnce" id="AlgoliaSearchHelper#event:searchOnce" class="api-entry">searchOnce</a></span></div>
   <div class="description"><p>Event triggered when a search using <code>searchOnce</code> is sent to Algolia</p>
 </div>
   <ul class="parameters">
     <li class="parameter">
-      <span class="param param-">event</span>
-      <span class="type"><span>object</span>
-</span>
-      <div class="description"></div>
-    </li>
-    <li class="parameter">
-      <span class="param param-">event.state</span>
+      <span class="param param-">state</span>
       <span class="type"><span>SearchParameters</span>
 </span>
-      <div class="description"><p>the parameters used for this search it is the first search.</p>
+      <div class="description"><p>the parameters used for this search
+it is the first search.</p>
 </div>
     </li>
   </ul>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;searchOnce&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;searchOnce&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">state</span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#39;searchOnce sent&#39;</span>);
 });</code></pre>
   </div>
@@ -2771,33 +2841,28 @@ helper.search();</code></pre>
 
 
 
-  <div class="event">
+<div class="event">
   <div class="summary"><span class="name"><a href="#AlgoliaSearchHelper#event:searchForFacetValues" id="AlgoliaSearchHelper#event:searchForFacetValues" class="api-entry">searchForFacetValues</a></span></div>
   <div class="description"><p>Event triggered when a search using <code>searchForFacetValues</code> is sent to Algolia</p>
 </div>
   <ul class="parameters">
     <li class="parameter">
-      <span class="param param-">event</span>
-      <span class="type"><span>object</span>
-</span>
-      <div class="description"></div>
-    </li>
-    <li class="parameter">
-      <span class="param param-">event.state</span>
+      <span class="param param-">state</span>
       <span class="type"><span>SearchParameters</span>
 </span>
-      <div class="description"><p>the parameters used for this search it is the first search.</p>
+      <div class="description"><p>the parameters used for this search
+it is the first search.</p>
 </div>
     </li>
     <li class="parameter">
-      <span class="param param-">event.facet</span>
+      <span class="param param-">facet</span>
       <span class="type"><span>string</span>
 </span>
       <div class="description"><p>the facet searched into</p>
 </div>
     </li>
     <li class="parameter">
-      <span class="param param-">event.query</span>
+      <span class="param param-">query</span>
       <span class="type"><span>string</span>
 </span>
       <div class="description"><p>the query used to search in the facets</p>
@@ -2805,7 +2870,7 @@ helper.search();</code></pre>
     </li>
   </ul>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;searchForFacetValues&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;searchForFacetValues&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">state, facet, query</span>) </span>{
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#39;searchForFacetValues sent&#39;</span>);
 });</code></pre>
   </div>
@@ -2813,7 +2878,7 @@ helper.search();</code></pre>
 
 
 <h3 id="client-management">Client management</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2846,7 +2911,7 @@ helper.search();</code></pre>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2896,7 +2961,7 @@ Algolia search API. Most of the data is accessible directly through
 properties. The exception being the data used for the features that
 are implemented on top of Algolia API such as faceting.</p>
 <h3 id="results">Results</h3>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#hits" id="SearchResults#hits" class="api-entry">hits</a></span> - <span class="type"><span>object[]</span>
 </span></div>
   <div class="description"><p>all the records that match the search parameters. Each record is
@@ -2913,7 +2978,7 @@ which is an object keyed by attribute and with the following properties:</p>
 
 
 <h3 id="facets-and-filters-methods">Facets and filters methods</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -2921,7 +2986,7 @@ which is an object keyed by attribute and with the following properties:</p>
           (<span class="params">
             <span class="param param-0">attribute</span><span class="param param-1">opts</span>
           </span>)
-          ⇒ <span class="type"><span>FacetValue[]</span><span>HierarchicalFacet</span><span>undefined</span>
+          ⇒ <span class="type"><span>FacetValue[]</span><span>HierarchicalFacet</span>
 </span>
 
       </span>
@@ -2975,7 +3040,7 @@ bigger or -1 otherwise.</p>
 
   <div class="returns">
     <div class="return">
-      <span class="type"><span>FacetValue[]</span><span>HierarchicalFacet</span><span>undefined</span>
+      <span class="type"><span>FacetValue[]</span><span>HierarchicalFacet</span>
 </span>
       <span class="description"><p>depending on the type of facet of
 the attribute requested (hierarchical, disjunctive or conjunctive)</p>
@@ -2983,11 +3048,11 @@ the attribute requested (hierarchical, disjunctive or conjunctive)</p>
     </div>
   </div>
   <div class="examples">
-<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;result&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>)</span>{
+<pre><code class="hljs javascript">helper.on(<span class="hljs-string">&#39;results&#39;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">content</span>)</span>{
   <span class="hljs-comment">//get values ordered only by name ascending using the string predicate</span>
-  event.results.getFacetValues(<span class="hljs-string">&#39;city&#39;</span>, {sortBy: [<span class="hljs-string">&#39;name:asc&#39;</span>]});
+  content.getFacetValues(<span class="hljs-string">&#39;city&#39;</span>, {sortBy: [<span class="hljs-string">&#39;name:asc&#39;</span>]});
   <span class="hljs-comment">//get values  ordered only by count ascending using a function</span>
-  event.results.getFacetValues(<span class="hljs-string">&#39;city&#39;</span>, {
+  content.getFacetValues(<span class="hljs-string">&#39;city&#39;</span>, {
     <span class="hljs-comment">// this is equivalent to [&#39;count:asc&#39;]</span>
     sortBy: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{
       <span class="hljs-keyword">if</span> (a.count === b.count) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -3004,7 +3069,7 @@ the attribute requested (hierarchical, disjunctive or conjunctive)</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -3048,7 +3113,7 @@ Otherwise returns undefined.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -3064,11 +3129,9 @@ Otherwise returns undefined.</p>
   </div>
   <div class="description">
     <p>Returns all refinements for all filters + tags. It also provides
-additional information: count and exhaustiveness for each filter.</p>
+additional information: count and exhausistivity for each filter.</p>
 <p>See the <a href="#Refinement">refinement type</a> for an exhaustive view of the available
 data.</p>
-<p>Note that for a numeric refinement, results are grouped per operator, this
-means that it will return responses for operators which are empty.</p>
 
   </div>
 
@@ -3089,7 +3152,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 <h3 id="geolocation-data">Geolocation data</h3>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#aroundLatLng" id="SearchResults#aroundLatLng" class="api-entry">aroundLatLng</a></span> - <span class="type"><span>string</span>
 </span></div>
   <div class="description"><p>The position if the position was guessed by IP.</p>
@@ -3100,7 +3163,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#automaticRadius" id="SearchResults#automaticRadius" class="api-entry">automaticRadius</a></span> - <span class="type"><span>string</span>
 </span></div>
   <div class="description"><p>The radius computed by Algolia.</p>
@@ -3111,7 +3174,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 <h3 id="results-metadata">Results metadata</h3>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#hitsPerPage" id="SearchResults#hitsPerPage" class="api-entry">hitsPerPage</a></span> - <span class="type"><span>number</span>
 </span></div>
   <div class="description"><p>number of hits per page requested</p>
@@ -3122,7 +3185,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#nbHits" id="SearchResults#nbHits" class="api-entry">nbHits</a></span> - <span class="type"><span>number</span>
 </span></div>
   <div class="description"><p>total number of hits of this query on the index</p>
@@ -3133,7 +3196,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#nbPages" id="SearchResults#nbPages" class="api-entry">nbPages</a></span> - <span class="type"><span>number</span>
 </span></div>
   <div class="description"><p>total number of pages with respect to the number of hits per page and the total number of hits</p>
@@ -3144,7 +3207,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 <h3 id="parameters">Parameters</h3>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#index" id="SearchResults#index" class="api-entry">index</a></span> - <span class="type"><span>string</span>
 </span></div>
   <div class="description"><p>index where the results come from</p>
@@ -3155,7 +3218,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#query" id="SearchResults#query" class="api-entry">query</a></span> - <span class="type"><span>string</span>
 </span></div>
   <div class="description"><p>query used to generate the results</p>
@@ -3166,7 +3229,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#page" id="SearchResults#page" class="api-entry">page</a></span> - <span class="type"><span>number</span>
 </span></div>
   <div class="description"><p>current page</p>
@@ -3177,7 +3240,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#parsedQuery" id="SearchResults#parsedQuery" class="api-entry">parsedQuery</a></span> - <span class="type"><span>string</span>
 </span></div>
   <div class="description"><p>The query as parsed by the engine given all the rules.</p>
@@ -3188,7 +3251,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 <h3 id="query-rules">Query rules</h3>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#userData" id="SearchResults#userData" class="api-entry">userData</a></span> - <span class="type"><span>object[]</span>
 </span></div>
   <div class="description"><p>Contains the userData if they are set by a <a href="https://www.algolia.com/doc/guides/query-rules/query-rules-overview/">query rule</a>.</p>
@@ -3199,7 +3262,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 <h3 id="technical-metadata">Technical metadata</h3>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#processingTimeMS" id="SearchResults#processingTimeMS" class="api-entry">processingTimeMS</a></span> - <span class="type"><span>number</span>
 </span></div>
   <div class="description"><p>sum of the processing time of all the queries</p>
@@ -3210,11 +3273,10 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#serverUsed" id="SearchResults#serverUsed" class="api-entry">serverUsed</a></span> - <span class="type"><span>string</span>
 </span></div>
   <div class="description"><p>String identifying the server used to serve this request.</p>
-<p>getRankingInfo needs to be set to <code>true</code> for this to be returned</p>
 </div>
 </div>
 
@@ -3222,7 +3284,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#exhaustiveFacetsCount" id="SearchResults#exhaustiveFacetsCount" class="api-entry">exhaustiveFacetsCount</a></span> - <span class="type"><span>boolean</span>
 </span></div>
   <div class="description"><p>True if the counts of the facets is exhaustive</p>
@@ -3233,7 +3295,7 @@ means that it will return responses for operators which are empty.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchResults#exhaustiveNbHits" id="SearchResults#exhaustiveNbHits" class="api-entry">exhaustiveNbHits</a></span> - <span class="type"><span>boolean</span>
 </span></div>
   <div class="description"><p>True if the number of hits is exhaustive</p>
@@ -3247,7 +3309,7 @@ means that it will return responses for operators which are empty.</p>
 <p>The helper structures the way the data is sent and retrieved
 from the Algolia API. Here is the list of those common structure
 that you might encounter in the documentation.</p>
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#AlgoliaSearchHelper.FacetRefinement" id="AlgoliaSearchHelper.FacetRefinement" class="api-entry">FacetRefinement</a></span>
     -
@@ -3276,7 +3338,7 @@ that you might encounter in the documentation.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#AlgoliaSearchHelper.NumericRefinement" id="AlgoliaSearchHelper.NumericRefinement" class="api-entry">NumericRefinement</a></span>
     -
@@ -3313,7 +3375,7 @@ the operator specified.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#FacetSearchResult" id="FacetSearchResult" class="api-entry">FacetSearchResult</a></span>
     -
@@ -3345,7 +3407,7 @@ promise.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#FacetSearchHit" id="FacetSearchHit" class="api-entry">FacetSearchHit</a></span>
     -
@@ -3390,7 +3452,7 @@ promise.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#SearchResults.Facet" id="SearchResults.Facet" class="api-entry">Facet</a></span>
     -
@@ -3426,7 +3488,7 @@ promise.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#SearchResults.FacetValue" id="SearchResults.FacetValue" class="api-entry">FacetValue</a></span>
     -
@@ -3469,7 +3531,7 @@ promise.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#SearchResults.HierarchicalFacet" id="SearchResults.HierarchicalFacet" class="api-entry">HierarchicalFacet</a></span>
     -
@@ -3520,7 +3582,7 @@ If root node, you get the facet name</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#Refinement" id="Refinement" class="api-entry">Refinement</a></span>
     -
@@ -3585,7 +3647,7 @@ If root node, you get the facet name</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#SearchParameters.clearCallback" id="SearchParameters.clearCallback" class="api-entry">clearCallback</a></span>
     -
@@ -3632,7 +3694,7 @@ depending on the type of facet</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#SearchParameters.FacetList" id="SearchParameters.FacetList" class="api-entry">FacetList</a></span>
     -
@@ -3648,7 +3710,7 @@ filter a single attribute.</p>
 
 
 
-  <div class="typedef">
+<div class="typedef">
   <div class="summary">
     <span class="name"><a href="#SearchParameters.OperatorList" id="SearchParameters.OperatorList" class="api-entry">OperatorList</a></span>
     -
@@ -3665,10 +3727,10 @@ are <code>=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <c
 <h2 id="searchparameters">SearchParameters</h2>
 <p>The SearchParameters is the class that structures all the parameters
 that are needed to build a query to Algolia.</p>
-<p>The SearchParameters instances are usually referred to as the state of
+<p>The SearchParameters instances are usually refered to as the state of
 the search. This state is available when receiving <code>change</code> and <code>search</code>
 events, and with <code>result</code> as a secondary parameter. Alternatively,
-it can be retrieved using <code>helper.state</code>.</p>
+it can be retrieved using the <a href="#AlgoliaSearchHelper#getState">getState</a> method on the Helper.</p>
 <p>SearchParameter is an immutable class. Each setter method returns a new
 instance with the modification, and does not modify the object it is
 called on.</p>
@@ -3684,7 +3746,7 @@ SearchParameters in a way that makes them easy to use with a programmatic
 API. But those are not native to Algolia.</li>
 </ul>
 <p>All the attributes specific to the helper are described below:</p>
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#disjunctiveFacets" id="SearchParameters#disjunctiveFacets" class="api-entry">disjunctiveFacets</a></span> - <span class="type"><span>string[]</span>
 </span></div>
   <div class="description"><p>This attribute contains the list of all the disjunctive facets
@@ -3697,7 +3759,7 @@ used. This list will be added to requested facets in the
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#disjunctiveFacetsRefinements" id="SearchParameters#disjunctiveFacetsRefinements" class="api-entry">disjunctiveFacetsRefinements</a></span> - <span class="type"><span>{ string: SearchParameters.FacetList }</span>
 </span></div>
   <div class="description"><p>This attribute contains all the filters that need to be
@@ -3714,7 +3776,7 @@ be translated into the <code>facetFilters</code> attribute.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#facets" id="SearchParameters#facets" class="api-entry">facets</a></span> - <span class="type"><span>string[]</span>
 </span></div>
   <div class="description"><p>This attribute contains the list of all the conjunctive facets
@@ -3727,7 +3789,7 @@ used. This list will be added to requested facets in the
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#facetsExcludes" id="SearchParameters#facetsExcludes" class="api-entry">facetsExcludes</a></span> - <span class="type"><span>{ string: SearchParameters.FacetList }</span>
 </span></div>
   <div class="description"><p>This attribute contains all the filters that need to be
@@ -3744,7 +3806,7 @@ be translated into the <code>facetFilters</code> attribute.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#facetsRefinements" id="SearchParameters#facetsRefinements" class="api-entry">facetsRefinements</a></span> - <span class="type"><span>{ string: SearchParameters.FacetList }</span>
 </span></div>
   <div class="description"><p>This attribute contains all the filters that need to be
@@ -3761,7 +3823,7 @@ be translated into the <code>facetFilters</code> attribute.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#hierarchicalFacets" id="SearchParameters#hierarchicalFacets" class="api-entry">hierarchicalFacets</a></span> - <span class="type"><span>string[]</span><span>object[]</span>
 </span></div>
   <div class="description"><p>This attribute contains the list of all the hierarchical facets
@@ -3776,7 +3838,7 @@ let you filter faceted attributes hierarchically.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#hierarchicalFacetsRefinements" id="SearchParameters#hierarchicalFacetsRefinements" class="api-entry">hierarchicalFacetsRefinements</a></span> - <span class="type"><span>{ string: SearchParameters.FacetList }</span>
 </span></div>
   <div class="description"><p>This attribute contains all the filters that need to be
@@ -3795,7 +3857,7 @@ be translated into the <code>facetFilters</code> attribute.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#numericRefinements" id="SearchParameters#numericRefinements" class="api-entry">numericRefinements</a></span> - <span class="type"><span>{ string: SearchParameters.OperatorList }</span>
 </span></div>
   <div class="description"><p>This attribute contains all the filters that need to be
@@ -3811,7 +3873,7 @@ be translated into the <code>numericFilters</code> attribute.</p>
 
 
 
-  <div class="property">
+<div class="property">
   <div class="summary"><span class="name"><a href="#SearchParameters#tagRefinements" id="SearchParameters#tagRefinements" class="api-entry">tagRefinements</a></span> - <span class="type"><span>string[]</span>
 </span></div>
   <div class="description"><p>This attribute contains all the tags used to refine the query.</p>
@@ -3824,7 +3886,7 @@ be translated into the <code>tagFilters</code> attribute.</p>
 
 
 <h3 id="methods">Methods</h3>
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -3867,7 +3929,7 @@ configuration, if it isn&#39;t already present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -3916,7 +3978,7 @@ configuration, if it isn&#39;t already present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -3965,7 +4027,7 @@ configuration, if it isn&#39;t already present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4008,7 +4070,7 @@ isn&#39;t already present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4057,7 +4119,7 @@ isn&#39;t already present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4100,7 +4162,7 @@ configuration.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4150,7 +4212,7 @@ configuration.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4215,7 +4277,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4257,7 +4319,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4304,7 +4366,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4337,7 +4399,51 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#SearchParameters#filter" id="SearchParameters#filter" class="api-entry">filter</a>
+          (<span class="params">
+            <span class="param param-0">filters</span>
+          </span>)
+          ⇒ <span class="type"><span>object</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Returns an object with only the selected attributes.</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">filters</span>
+      <span class="type"><span>string[]</span>
+</span>
+      <div class="description"><p>filters to retrieve only a subset of the state. It
+accepts strings that can be either attributes of the SearchParameters (e.g. hitsPerPage)
+or attributes of the index with the notation &#39;attribute:nameOfMyAttribute&#39;</p>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>object</span>
+</span>
+      <span class="description"></span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4380,7 +4486,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4423,7 +4529,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4466,7 +4572,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4509,7 +4615,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4551,7 +4657,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4594,7 +4700,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4637,7 +4743,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4687,7 +4793,50 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#SearchParameters#getQueryParameter" id="SearchParameters#getQueryParameter" class="api-entry">getQueryParameter</a>
+          (<span class="params">
+            <span class="param param-0">paramName</span>
+          </span>)
+          ⇒ <span class="type"><span>any</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Let the user retrieve any parameter value from the SearchParameters</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">paramName</span>
+      <span class="type"><span>string</span>
+</span>
+      <div class="description"><p>name of the parameter</p>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>any</span>
+</span>
+      <span class="description"><p>the value of the parameter</p>
+</span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4736,7 +4885,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4785,7 +4934,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4818,7 +4967,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4860,7 +5009,7 @@ searchparameter.addNumericRefinement(<span class="hljs-string">&#39;size&#39;</s
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4911,7 +5060,7 @@ if there is one, otherwise will test if the facet contains any refinement</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -4953,7 +5102,7 @@ if there is one, otherwise will test if the facet contains any refinement</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5005,7 +5154,7 @@ is filtering the given facet.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5057,7 +5206,7 @@ is filtering the given facet.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5108,7 +5257,7 @@ if there is one, otherwise will test if the facet contains any refinement</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5150,7 +5299,7 @@ if there is one, otherwise will test if the facet contains any refinement</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5209,7 +5358,7 @@ contains any refinement value.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5251,7 +5400,7 @@ contains any refinement value.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5295,7 +5444,7 @@ object for the properties of a new SearchParameters</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5344,7 +5493,7 @@ object for the properties of a new SearchParameters</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5387,7 +5536,7 @@ is present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5438,7 +5587,7 @@ values for the faceted attribute.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5481,7 +5630,7 @@ helper configuration, if it is present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5530,7 +5679,7 @@ helper configuration, if it is present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5573,7 +5722,7 @@ helper configuration, if it is present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5616,7 +5765,7 @@ helper configuration, if it is present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5658,7 +5807,7 @@ helper configuration, if it is present.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5701,7 +5850,7 @@ Change the list of disjunctive (or) facets the helper chan handle.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5744,7 +5893,7 @@ The facets are the simple facets, used for conjunctive (and) faceting.</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5787,7 +5936,7 @@ Hits per page represents the number of hits retrieved for this query</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5829,7 +5978,7 @@ Hits per page represents the number of hits retrieved for this query</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5872,7 +6021,7 @@ Hits per page represents the number of hits retrieved for this query</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5925,7 +6074,7 @@ of the attribute on the object</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -5967,7 +6116,7 @@ of the attribute on the object</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6010,7 +6159,7 @@ Set the value of typoTolerance</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6059,7 +6208,7 @@ Set the value of typoTolerance</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6108,7 +6257,7 @@ Set the value of typoTolerance</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6157,7 +6306,7 @@ Set the value of typoTolerance</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6206,7 +6355,7 @@ Set the value of typoTolerance</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6256,7 +6405,7 @@ and hierarchical facets</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6298,7 +6447,7 @@ and hierarchical facets</p>
 
 
 
-  <div class="method">
+<div class="method">
   <div class="summary">
     <div class="name">
       <span class="signature">
@@ -6348,4 +6497,180 @@ and hierarchical facets</p>
 
 
 
-</div></div></section><section class="ac-footer"><div class="ac-footer-container"><p class="ac-footer-links">Code licensed under<a class="ac-footer-link-item" href="https://raw.githubusercontent.com/algolia/algoliasearch-helper-js/master/LICENSE">MIT</a><br><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js">Github</a><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js/issues">issues</a></p></div><div class="ac-footer-container ac-footer-brand"><p>This project is part of</p><img class="ac-footer-brand-icon" src="images/community-badge.svg"><figure><img class="ac-footer-brand-logo" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1484219849/algolia-community-logo-words-darkbg.svg"><figcaption>Algolia Community</figcaption></figure><a class="ac-footer-btn ac-footer-btn-cta" href="https://community.algolia.com/">See More</a><span class="ac-icon ac-icon-love-dark"></span></div><p class="ac-footer-version">Latest version: 3.0.0</p><div class="ac-footer-actions"><div class="footer-container"><p>Build unique search experiences with Algolia</p><a class="ac-footer-btn ac-footer-btn-ghost-grey" href="https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=why">See Why<span class="ac-icon-triangle"></span></a><a class="ac-footer-btn ac-footer-btn-ghost-pink" href="https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=get_started">Get Started For Free</a></div></div></section><script src="js/main.js"></script></body></html>
+
+<h2 id="url">URL</h2>
+<p>The helper exposes some URL utility methods for serializing and deserializing
+state to and from a URL query string.</p>
+<p>The following methods are available under the <code>algoliasearchHelper.url</code> namespace.</p>
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#algoliasearchHelper.module:url.getStateFromQueryString" id="algoliasearchHelper.module:url.getStateFromQueryString" class="api-entry">getStateFromQueryString</a>
+          (<span class="params">
+            <span class="param param-0">queryString</span><span class="param param-1 optional">options</span>
+          </span>)
+          ⇒ <span class="type"><span>object</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Read a query string and return an object containing the state</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">queryString</span>
+      <span class="type"><span>string</span>
+</span>
+      <div class="description"><p>the query string that will be decoded</p>
+</div>
+    </div>
+    <div class="parameter">
+      <span class="param param-1">options</span>
+      <span class="type"><span>object</span>
+</span>
+      <div class="description"><p>accepted options :</p>
+<ul>
+<li>prefix : the prefix used for the saved attributes, you have to provide the
+same that was used for serialization</li>
+<li>mapping : map short attributes to another value e.g. {q: &#39;query&#39;}</li>
+</ul>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>object</span>
+</span>
+      <span class="description"><p>partial search parameters object (same properties than in the
+SearchParameters but not exhaustive)</p>
+</span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#algoliasearchHelper.module:url.getUnrecognizedParametersInQueryString" id="algoliasearchHelper.module:url.getUnrecognizedParametersInQueryString" class="api-entry">getUnrecognizedParametersInQueryString</a>
+          (<span class="params">
+            <span class="param param-0">queryString</span><span class="param param-1 optional">options</span>
+          </span>)
+          ⇒ <span class="type"><span>object</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Retrieve an object of all the properties that are not understandable as helper
+parameters.</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">queryString</span>
+      <span class="type"><span>string</span>
+</span>
+      <div class="description"><p>the query string to read</p>
+</div>
+    </div>
+    <div class="parameter">
+      <span class="param param-1">options</span>
+      <span class="type"><span>object</span>
+</span>
+      <div class="description"><p>the options</p>
+<ul>
+<li>prefixForParameters : prefix used for the helper configuration keys</li>
+<li>mapping : map short attributes to another value e.g. {q: &#39;query&#39;}</li>
+</ul>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>object</span>
+</span>
+      <span class="description"><p>the object containing the parsed configuration that doesn&#39;t
+to the helper</p>
+</span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="method">
+  <div class="summary">
+    <div class="name">
+      <span class="signature">
+        <a href="#algoliasearchHelper.module:url.getQueryStringFromState" id="algoliasearchHelper.module:url.getQueryStringFromState" class="api-entry">getQueryStringFromState</a>
+          (<span class="params">
+            <span class="param param-0">state</span><span class="param param-1 optional">options</span>
+          </span>)
+          ⇒ <span class="type"><span>string</span>
+</span>
+
+      </span>
+    </div>
+  </div>
+  <div class="description">
+    <p>Generate a query string for the state passed according to the options</p>
+
+  </div>
+  <div class="parameters">
+    <div class="parameter">
+      <span class="param param-0">state</span>
+      <span class="type"><span>SearchParameters</span>
+</span>
+      <div class="description"><p>state to serialize</p>
+</div>
+    </div>
+    <div class="parameter">
+      <span class="param param-1">options</span>
+      <span class="type"><span>object</span>
+</span>
+      <div class="description"><p>May contain the following parameters :</p>
+<ul>
+<li>prefix : prefix in front of the keys</li>
+<li>mapping : map short attributes to another value e.g. {q: &#39;query&#39;}</li>
+<li>moreAttributes : more values to be added in the query string. Those values
+won&#39;t be prefixed.</li>
+<li>safe : get safe urls for use in emails, chat apps or any application auto linking urls.
+All parameters and values will be encoded in a way that it&#39;s safe to share them.
+Default to false for legacy reasons ()</li>
+</ul>
+</div>
+    </div>
+  </div>
+
+  <div class="returns">
+    <div class="return">
+      <span class="type"><span>string</span>
+</span>
+      <span class="description"><p>the query string</p>
+</span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+</div></div></section><section class="ac-footer"><div class="ac-footer-container"><p class="ac-footer-links">Code licensed under<a class="ac-footer-link-item" href="https://raw.githubusercontent.com/algolia/algoliasearch-helper-js/master/LICENSE">MIT</a><br><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js">Github</a><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js/issues">issues</a></p></div><div class="ac-footer-container ac-footer-brand"><p>This project is part of</p><img class="ac-footer-brand-icon" src="images/community-badge.svg"><figure><img class="ac-footer-brand-logo" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1484219849/algolia-community-logo-words-darkbg.svg"><figcaption>Algolia Community</figcaption></figure><a class="ac-footer-btn ac-footer-btn-cta" href="https://community.algolia.com/">See More</a><span class="ac-icon ac-icon-love-dark"></span></div><p class="ac-footer-version">Latest version: 2.28.1</p><div class="ac-footer-actions"><div class="footer-container"><p>Build unique search experiences with Algolia</p><a class="ac-footer-btn ac-footer-btn-ghost-grey" href="https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=why">See Why<span class="ac-icon-triangle"></span></a><a class="ac-footer-btn ac-footer-btn-ghost-pink" href="https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=get_started">Get Started For Free</a></div></div></section><script src="js/main.js"></script></body></html>
