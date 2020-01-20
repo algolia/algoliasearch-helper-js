@@ -119,9 +119,6 @@ function publish(tag) {
 
   shell.echo('Publishing new version on NPM');
   shell.exec(`npm publish --tag=${tag}`, {silent: true});
-
-  shell.echo('Publishing new documentation');
-  shell.exec('yarn run doc:publish');
 }
 
 function goBackToBranch(name) {
