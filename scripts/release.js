@@ -23,15 +23,14 @@ const {showChangelog, getChangelog, updateChangelog} = require('./lib/convention
 shell.echo(`Algoliasearch-Helper release script`);
 
 checkEnvironment();
-mergeDevIntoMaster();
 showChangelog(shell);
 promptVersion(packageJson.version, (version) => {
   bumpVersion(version, () => {
     build();
     updateChangelog(shell);
     commitNewFiles(version);
-    publish();
-    goBackToDevelop();
+    publish('v2');
+    goBackToBranch('v2');
   });
 });
 
@@ -46,20 +45,20 @@ function checkEnvironment() {
   const changes = shell.exec('git status --porcelain', {silent: true}).toString().trim();
 
   if (changes.length > 0) {
-    shell.echo('The project has some uncommited changes'.error);
+    shell.echo('The project has some uncommitted changes'.error);
     process.exit(1);
   }
 }
 
-function mergeDevIntoMaster() {
-  shell.echo('Merging develop into master');
+// function mergeDevIntoMaster() {
+//   shell.echo('Merging develop into master');
 
-  shell.exec('git fetch origin', {silent: true});
-  shell.exec('git merge origin develop', {silent: true});
-  shell.exec('git checkout master', {silent: true});
-  shell.exec('git merge origin master', {silent: true});
-  shell.exec('git merge --no-ff --no-edit develop', {silent: true});
-}
+//   shell.exec('git fetch origin', {silent: true});
+//   shell.exec('git merge origin develop', {silent: true});
+//   shell.exec('git checkout master', {silent: true});
+//   shell.exec('git merge origin master', {silent: true});
+//   shell.exec('git merge --no-ff --no-edit develop', {silent: true});
+// }
 
 function promptVersion(currentVersion, cb) {
   shell.echo(`Current version is ${packageJson.version.toString().green.bold}`);
@@ -113,24 +112,24 @@ function commitNewFiles(version) {
   shell.exec(`git tag ${version}`, {silent: true});
 }
 
-function publish() {
+function publish(tag) {
   shell.echo('Pushing new commits to Github');
   shell.exec('git push origin', {silent: true});
   shell.exec('git push origin --tags', {silent: true});
 
   shell.echo('Publishing new version on NPM');
-  shell.exec('npm publish', {silent: true});
+  shell.exec(`npm publish --tag=${tag}`, {silent: true});
 
   shell.echo('Publishing new documentation');
   shell.exec('yarn run doc:publish');
 }
 
-function goBackToDevelop() {
-  shell.echo('Merging back to develop');
-  shell.exec('git checkout develop && git merge --no-edit master', {silent: true});
+function goBackToBranch(name) {
+  shell.echo(`Merging back to ${name}`);
+  shell.exec(`git checkout ${name} && git merge --no-edit master`, {silent: true});
 
   shell.echo('Pushing the merge to Github');
-  shell.exec('git push origin develop', {silent: true});
+  shell.exec(`git push origin ${name}`, {silent: true});
 }
 
 function build() {
