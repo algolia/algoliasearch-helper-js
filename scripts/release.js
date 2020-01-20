@@ -30,7 +30,6 @@ promptVersion(packageJson.version, (version) => {
     updateChangelog(shell);
     commitNewFiles(version);
     publish('v2');
-    goBackToBranch('V2');
   });
 });
 
@@ -49,16 +48,6 @@ function checkEnvironment() {
     process.exit(1);
   }
 }
-
-// function mergeDevIntoMaster() {
-//   shell.echo('Merging develop into master');
-
-//   shell.exec('git fetch origin', {silent: true});
-//   shell.exec('git merge origin develop', {silent: true});
-//   shell.exec('git checkout master', {silent: true});
-//   shell.exec('git merge origin master', {silent: true});
-//   shell.exec('git merge --no-ff --no-edit develop', {silent: true});
-// }
 
 function promptVersion(currentVersion, cb) {
   shell.echo(`Current version is ${packageJson.version.toString().green.bold}`);
@@ -119,14 +108,6 @@ function publish(tag) {
 
   shell.echo('Publishing new version on NPM');
   shell.exec(`npm publish --tag=${tag}`, {silent: true});
-}
-
-function goBackToBranch(name) {
-  shell.echo(`Merging back to ${name}`);
-  shell.exec(`git checkout ${name} && git merge --no-edit master`, {silent: true});
-
-  shell.echo('Pushing the merge to Github');
-  shell.exec(`git push origin ${name}`, {silent: true});
 }
 
 function build() {
