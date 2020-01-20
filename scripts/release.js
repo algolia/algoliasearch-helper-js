@@ -30,7 +30,7 @@ promptVersion(packageJson.version, (version) => {
     updateChangelog(shell);
     commitNewFiles(version);
     publish('v2');
-    goBackToBranch('v2');
+    goBackToBranch('V2');
   });
 });
 
