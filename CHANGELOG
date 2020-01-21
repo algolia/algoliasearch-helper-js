@@ -1,3 +1,16 @@
+2.28.1 - 2020-01-21
+ * chore: merge develop into master (#750) https://github.com/algolia/algoliasearch-helper-js/commit/53c7c62f239bc53174bae79ec84812776da582dc, closes https://github.com/algolia/algoliasearch-helper-js/issues/750 https://github.com/algolia/algoliasearch-helper-js/issues/715
+ * chore: update lock https://github.com/algolia/algoliasearch-helper-js/commit/31084c6701c10b1672609a12e21cb191bb74d23a
+ * chore(release): clean up https://github.com/algolia/algoliasearch-helper-js/commit/947e0bae04fb7d50d50b54b4ce688490caa0c5a0
+ * chore(release): correct branch name https://github.com/algolia/algoliasearch-helper-js/commit/85c65e918de0b6d0cc48dd1a9a5104dabaa0498b
+ * chore(release): debug https://github.com/algolia/algoliasearch-helper-js/commit/6e9ff544b01c28c8b18fb77b4a571a8de9003d5a
+ * chore(release): edit script to avoid overriding major version https://github.com/algolia/algoliasearch-helper-js/commit/4f0739d59437d821040c78719f1f05438ad930b9
+ * chore(release): remove docs https://github.com/algolia/algoliasearch-helper-js/commit/10063cc77275e3e39c0277f11536a5e740faac95
+ * chore(release): remove silenting of errors https://github.com/algolia/algoliasearch-helper-js/commit/ae72aaba0815fc1780b54d785a1872400aed4ee7
+ * chore(release): simplify script https://github.com/algolia/algoliasearch-helper-js/commit/ee022f92414dd6f6338af1c9463d5995b24b98a4
+ * chore(release): V2 everywhere https://github.com/algolia/algoliasearch-helper-js/commit/f8f1b27e9286c83d8969a41eb9f278815cf8dfb6
+ * feat(algoliasearch): add support for algoliasearch v4  (#757) https://github.com/algolia/algoliasearch-helper-js/commit/8c4178c33084da9faa88602f8c0f1293a544e285, closes https://github.com/algolia/algoliasearch-helper-js/issues/757
+
 2.28.0 - 2019-05-07
  * fix(results): revert changes done in #648
     * this will come back in the next major version, but has breaking changes for now
