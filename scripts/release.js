@@ -92,10 +92,10 @@ function bumpVersion(newVersion, cb) {
 }
 
 function commitNewFiles(version) {
-  shell.echo('Commiting files');
+  shell.echo('Committing files');
   const changelog = getChangelog(shell);
   changelog.splice(1, 0, '');
-  shell.exec(`git commit -a -m "${changelog.join('\n') || 'version'}"`, {silent: false});
+  shell.exec(`git commit -a -m "${changelog.join('\n') }"`, {silent: false});
 
   shell.echo('Creating tag');
   shell.exec(`git tag ${version}`, {silent: false});
