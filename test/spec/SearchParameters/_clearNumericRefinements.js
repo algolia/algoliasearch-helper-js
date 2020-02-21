@@ -20,7 +20,7 @@ test('When removing numericRefinements of a specific attribute, and there are no
 test('When removing refinements of a specific attribute, and another refinement is a substring of this attribute', function() {
   var state = SearchParameters.make({
     numericRefinements: {
-      price: {'>': [300]},
+      'price': {'>': [300]},
       'price with taxes': {'>': [300]}
     }
   });
