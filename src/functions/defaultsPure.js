@@ -14,12 +14,7 @@ module.exports = function defaultsPure() {
   }, {});
 
   var orderedKeys = sources.reduce(function(acc, source) {
-    Object.keys(Object(source)).forEach(function(key) {
-      if (!acc.includes(key)) {
-        acc.push(key);
-      }
-    });
-    return acc;
+    return acc.slice().concat(Object.keys(Object(source)));
   }, []);
 
   return orderedKeys.reduce(function(acc, key) {
