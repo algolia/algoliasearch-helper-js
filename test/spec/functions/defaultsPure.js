@@ -66,8 +66,8 @@ it('should assign properties that shadow those on `Object.prototype`', function(
 });
 
 it('should not touch keys order', function() {
-  var expected = {'a': 1, 'b': 2, 'c': 3};
-  var actual = defaults({'a': 1, 'b': 2, 'c': 3}, {'c': 3});
+  var expected = {'a': 1, 'b': 3, 'c': 3, 'd': 4};
+  var actual = defaults({'a': 1, 'b': 2}, {'b': 3, 'c': 3}, {'d': 4});
 
   var expectedKeys = Object.keys(expected);
   var actualKeys = Object.keys(actual);
