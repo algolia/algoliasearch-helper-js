@@ -18,14 +18,6 @@ var requestBuilder = {
       params: requestBuilder._getHitsSearchParams(state)
     });
 
-    // One for each disjunctive facets
-    state.getRefinedDisjunctiveFacets().forEach(function(refinedFacet) {
-      queries.push({
-        indexName: index,
-        params: requestBuilder._getDisjunctiveFacetSearchParams(state, refinedFacet)
-      });
-    });
-
     // maybe more to get the root level of hierarchical facets when activated
     state.getRefinedHierarchicalFacets().forEach(function(refinedFacet) {
       var hierarchicalFacet = state.getHierarchicalFacetByName(refinedFacet);
@@ -52,7 +44,11 @@ var requestBuilder = {
    */
   _getHitsSearchParams: function(state) {
     var facets = state.facets
-      .concat(state.disjunctiveFacets)
+      .concat(state.disjunctiveFacets.map(function(facet) {
+        // TODO: use this syntax once it's live
+        // return 'disjunctive(' + facet + ')';
+        return facet;
+      }))
       .concat(requestBuilder._getHitsHierarchicalFacetsAttributes(state));
 
 
