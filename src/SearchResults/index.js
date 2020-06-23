@@ -229,50 +229,11 @@ function SearchResults(state, results) {
 
   this._rawResults = results;
 
-  /**
-   * query used to generate the results
-   * @member {string}
-   */
-  this.query = mainSubResponse.query;
-  /**
-   * The query as parsed by the engine given all the rules.
-   * @member {string}
-   */
-  this.parsedQuery = mainSubResponse.parsedQuery;
-  /**
-   * all the records that match the search parameters. Each record is
-   * augmented with a new attribute `_highlightResult`
-   * which is an object keyed by attribute and with the following properties:
-   *  - `value` : the value of the facet highlighted (html)
-   *  - `matchLevel`: full, partial or none depending on how the query terms match
-   * @member {object[]}
-   */
-  this.hits = mainSubResponse.hits;
-  /**
-   * index where the results come from
-   * @member {string}
-   */
-  this.index = mainSubResponse.index;
-  /**
-   * number of hits per page requested
-   * @member {number}
-   */
-  this.hitsPerPage = mainSubResponse.hitsPerPage;
-  /**
-   * total number of hits of this query on the index
-   * @member {number}
-   */
-  this.nbHits = mainSubResponse.nbHits;
-  /**
-   * total number of pages with respect to the number of hits per page and the total number of hits
-   * @member {number}
-   */
-  this.nbPages = mainSubResponse.nbPages;
-  /**
-   * current page
-   * @member {number}
-   */
-  this.page = mainSubResponse.page;
+  // https://www.algolia.com/doc/api-reference/api-methods/search/#response
+  Object.keys(mainSubResponse).forEach((key) => {
+    this[key] = mainSubResponse[key];
+  });
+
   /**
    * sum of the processing time of all the queries
    * @member {number}
@@ -282,65 +243,6 @@ function SearchResults(state, results) {
       ? sum
       : sum + result.processingTimeMS;
   }, 0);
-  /**
-   * The position if the position was guessed by IP.
-   * @member {string}
-   * @example "48.8637,2.3615",
-   */
-  this.aroundLatLng = mainSubResponse.aroundLatLng;
-  /**
-   * The radius computed by Algolia.
-   * @member {string}
-   * @example "126792922",
-   */
-  this.automaticRadius = mainSubResponse.automaticRadius;
-  /**
-   * String identifying the server used to serve this request.
-   *
-   * getRankingInfo needs to be set to `true` for this to be returned
-   *
-   * @member {string}
-   * @example "c7-use-2.algolia.net",
-   */
-  this.serverUsed = mainSubResponse.serverUsed;
-  /**
-   * Boolean that indicates if the computation of the counts did time out.
-   * @deprecated
-   * @member {boolean}
-   */
-  this.timeoutCounts = mainSubResponse.timeoutCounts;
-  /**
-   * Boolean that indicates if the computation of the hits did time out.
-   * @deprecated
-   * @member {boolean}
-   */
-  this.timeoutHits = mainSubResponse.timeoutHits;
-
-  /**
-   * True if the counts of the facets is exhaustive
-   * @member {boolean}
-   */
-  this.exhaustiveFacetsCount = mainSubResponse.exhaustiveFacetsCount;
-
-  /**
-   * True if the number of hits is exhaustive
-   * @member {boolean}
-   */
-  this.exhaustiveNbHits = mainSubResponse.exhaustiveNbHits;
-
-
-  /**
-   * Contains the userData if they are set by a [query rule](https://www.algolia.com/doc/guides/query-rules/query-rules-overview/).
-   * @member {object[]}
-   */
-  this.userData = mainSubResponse.userData;
-
-  /**
-   * queryID is the unique identifier of the query used to generate the current search results.
-   * This value is only available if the `clickAnalytics` search parameter is set to `true`.
-   * @member {string}
-   */
-  this.queryID = mainSubResponse.queryID;
 
   /**
    * disjunctive facets results
