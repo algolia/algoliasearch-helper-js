@@ -229,9 +229,11 @@ function SearchResults(state, results) {
 
   this._rawResults = results;
 
+  var self = this;
+
   // https://www.algolia.com/doc/api-reference/api-methods/search/#response
-  Object.keys(mainSubResponse).forEach((key) => {
-    this[key] = mainSubResponse[key];
+  Object.keys(mainSubResponse).forEach(function (key) {
+    self[key] = mainSubResponse[key];
   });
 
   /**
@@ -268,7 +270,6 @@ function SearchResults(state, results) {
   var disjunctiveFacetsIndices = getIndices(state.disjunctiveFacets);
   var nextDisjunctiveResult = 1;
 
-  var self = this;
   // Since we send request only for disjunctive facets that have been refined,
   // we get the facets information from the first, general, response.
 
