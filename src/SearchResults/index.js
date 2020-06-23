@@ -232,7 +232,7 @@ function SearchResults(state, results) {
   var self = this;
 
   // https://www.algolia.com/doc/api-reference/api-methods/search/#response
-  Object.keys(mainSubResponse).forEach(function (key) {
+  Object.keys(mainSubResponse).forEach(function(key) {
     self[key] = mainSubResponse[key];
   });
 
