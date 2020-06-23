@@ -240,11 +240,15 @@ function SearchResults(state, results) {
    * query used to generate the results
    * @name query
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * The query as parsed by the engine given all the rules.
    * @name parsedQuery
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * all the records that match the search parameters. Each record is
@@ -254,42 +258,58 @@ function SearchResults(state, results) {
    *  - `matchLevel`: full, partial or none depending on how the query terms match
    * @name hits
    * @member {object[]}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * index where the results come from
    * @name index
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * number of hits per page requested
    * @name hitsPerPage
    * @member {number}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * total number of hits of this query on the index
    * @name nbHits
    * @member {number}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * total number of pages with respect to the number of hits per page and the total number of hits
    * @name nbPages
    * @member {number}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * current page
    * @name page
    * @member {number}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * The position if the position was guessed by IP.
    * @name aroundLatLng
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    * @example "48.8637,2.3615",
    */
   /**
    * The radius computed by Algolia.
    * @name automaticRadius
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    * @example "126792922",
    */
   /**
@@ -299,6 +319,8 @@ function SearchResults(state, results) {
    *
    * @name serverUsed
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    * @example "c7-use-2.algolia.net",
    */
   /**
@@ -306,33 +328,45 @@ function SearchResults(state, results) {
    * @deprecated
    * @name timeoutCounts
    * @member {boolean}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * Boolean that indicates if the computation of the hits did time out.
    * @deprecated
    * @name timeoutHits
    * @member {boolean}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * True if the counts of the facets is exhaustive
    * @name exhaustiveFacetsCount
    * @member {boolean}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * True if the number of hits is exhaustive
    * @name exhaustiveNbHits
    * @member {boolean}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * Contains the userData if they are set by a [query rule](https://www.algolia.com/doc/guides/query-rules/query-rules-overview/).
    * @name userData
    * @member {object[]}
+   * @memberof SearchResults
+   * @instance
    */
   /**
    * queryID is the unique identifier of the query used to generate the current search results.
    * This value is only available if the `clickAnalytics` search parameter is set to `true`.
    * @name queryID
    * @member {string}
+   * @memberof SearchResults
+   * @instance
    */
 
   /**
