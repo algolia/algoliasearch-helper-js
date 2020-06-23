@@ -237,6 +237,105 @@ function SearchResults(state, results) {
   });
 
   /**
+   * query used to generate the results
+   * @name query
+   * @member {string}
+   */
+  /**
+   * The query as parsed by the engine given all the rules.
+   * @name parsedQuery
+   * @member {string}
+   */
+  /**
+   * all the records that match the search parameters. Each record is
+   * augmented with a new attribute `_highlightResult`
+   * which is an object keyed by attribute and with the following properties:
+   *  - `value` : the value of the facet highlighted (html)
+   *  - `matchLevel`: full, partial or none depending on how the query terms match
+   * @name hits
+   * @member {object[]}
+   */
+  /**
+   * index where the results come from
+   * @name index
+   * @member {string}
+   */
+  /**
+   * number of hits per page requested
+   * @name hitsPerPage
+   * @member {number}
+   */
+  /**
+   * total number of hits of this query on the index
+   * @name nbHits
+   * @member {number}
+   */
+  /**
+   * total number of pages with respect to the number of hits per page and the total number of hits
+   * @name nbPages
+   * @member {number}
+   */
+  /**
+   * current page
+   * @name page
+   * @member {number}
+   */
+  /**
+   * The position if the position was guessed by IP.
+   * @name aroundLatLng
+   * @member {string}
+   * @example "48.8637,2.3615",
+   */
+  /**
+   * The radius computed by Algolia.
+   * @name automaticRadius
+   * @member {string}
+   * @example "126792922",
+   */
+  /**
+   * String identifying the server used to serve this request.
+   *
+   * getRankingInfo needs to be set to `true` for this to be returned
+   *
+   * @name serverUsed
+   * @member {string}
+   * @example "c7-use-2.algolia.net",
+   */
+  /**
+   * Boolean that indicates if the computation of the counts did time out.
+   * @deprecated
+   * @name timeoutCounts
+   * @member {boolean}
+   */
+  /**
+   * Boolean that indicates if the computation of the hits did time out.
+   * @deprecated
+   * @name timeoutHits
+   * @member {boolean}
+   */
+  /**
+   * True if the counts of the facets is exhaustive
+   * @name exhaustiveFacetsCount
+   * @member {boolean}
+   */
+  /**
+   * True if the number of hits is exhaustive
+   * @name exhaustiveNbHits
+   * @member {boolean}
+   */
+  /**
+   * Contains the userData if they are set by a [query rule](https://www.algolia.com/doc/guides/query-rules/query-rules-overview/).
+   * @name userData
+   * @member {object[]}
+   */
+  /**
+   * queryID is the unique identifier of the query used to generate the current search results.
+   * This value is only available if the `clickAnalytics` search parameter is set to `true`.
+   * @name queryID
+   * @member {string}
+   */
+
+  /**
    * sum of the processing time of all the queries
    * @member {number}
    */
