@@ -80,7 +80,6 @@ it('should keep the keys order with facets', function() {
   expect(Object.keys(actual)).toEqual(['Insignia™', 'Samsung', 'Apple']);
 });
 
-
 it('should keep the keys order when adding facet refinements', function() {
   var actual = defaults(
     {},
