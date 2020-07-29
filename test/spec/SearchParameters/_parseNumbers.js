@@ -53,7 +53,7 @@ test('_parseNumbers should not convert insideBoundingBox if it\'s a string', fun
 
 test('_parseNumbers should leave insideBoundingBox as-is if not nested array', function() {
   var partialState = {
-    insideBoundingBox: ['5', '4', '5', '4'],
+    insideBoundingBox: ['5', '4', '5', '4']
   };
   var actual = SearchParameters._parseNumbers(partialState);
 
