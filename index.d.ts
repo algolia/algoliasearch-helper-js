@@ -21,7 +21,6 @@ import {
 import { EventEmitter } from 'events';
 
 type DummySearchClientV4 = {
-  readonly addAlgoliaAgent: (segment: string, version?: string) => void;
   transporter: any;
 };
 
