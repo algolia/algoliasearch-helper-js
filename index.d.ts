@@ -22,6 +22,7 @@ import { EventEmitter } from 'events';
 
 type DummySearchClientV4 = {
   readonly addAlgoliaAgent: (segment: string, version?: string) => void;
+  transporter: any;
 };
 
 type Client = ReturnType<typeof algoliasearch> extends DummySearchClientV4
@@ -439,7 +440,9 @@ declare namespace algoliasearchHelper {
       [facet: string]: SearchParameters.FacetList;
     };
 
+    // types missing in @types/algoliasearch, so duplicated from v4
     ruleContexts?: string[];
+    optionalFilters?: Array<string | string[]>;
   }
 
   export class SearchParameters implements PlainSearchParameters {
