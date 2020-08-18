@@ -76,7 +76,7 @@ declare function algoliasearchHelper<TSearchClient extends GenericSearchClient>(
 declare namespace algoliasearchHelper {
   export const version: string;
 
-  export class AlgoliaSearchHelper<TSearchClient> extends EventEmitter {
+  export class AlgoliaSearchHelper<TSearchClient = GenericSearchClient> extends EventEmitter {
     state: SearchParameters;
     lastResults: SearchResults | null;
     derivedHelpers: DerivedHelper[];
