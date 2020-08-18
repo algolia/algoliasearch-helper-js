@@ -2,21 +2,34 @@
 // `v3` and algoliasearch `v4` types. The goal is being
 // able to export the algoliasearch-helper types using
 // the developer installed version of the client.
+declare module 'algoliasearch' {
+  // fake v3 exports
+  interface Client {}
+  interface QueryParameters {}
+  interface Response<T> {}
+
+  // fake v4 exports as interface
+  interface SearchClientV4 extends SearchClientV4Type {}
+}
+
+declare module '@algolia/client-search' {
+  // fake v4 exports as interface
+  interface SearchOptionsV4 extends SearchOptionsV4Type {}
+  interface SearchResponseV4<TObject = {}> extends SearchResponseV4Type {}
+}
 
 import algoliasearch, {
-  // @ts-ignore
-  SearchClient as SearchClientV4,
-  // @ts-ignore
+  SearchClient as SearchClientV4Type,
+  SearchClientV4,
   Client as SearchClientV3,
-  // @ts-ignore
   QueryParameters as SearchOptionsV3,
-  // @ts-ignore
   Response as SearchResponseV3,
 } from 'algoliasearch';
 import {
-  SearchOptions as SearchOptionsV4,
-  SearchResponse as SearchResponseV4,
-  // @ts-ignore
+  SearchOptions as SearchOptionsV4Type,
+  SearchOptionsV4,
+  SearchResponse as SearchResponseV4Type,
+  SearchResponseV4,
 } from '@algolia/client-search';
 import { EventEmitter } from 'events';
 
@@ -24,21 +37,26 @@ type DummySearchClientV4 = {
   transporter: any;
 };
 
-type Client = ReturnType<typeof algoliasearch> extends DummySearchClientV4
+type SearchClient = ReturnType<typeof algoliasearch> extends DummySearchClientV4
   ? SearchClientV4
   : SearchClientV3;
+
 type SearchOptions = ReturnType<
   typeof algoliasearch
 > extends DummySearchClientV4
   ? SearchOptionsV4
   : SearchOptionsV3;
+
 type SearchResponse<T> = ReturnType<
   typeof algoliasearch
 > extends DummySearchClientV4
   ? SearchResponseV4<T>
   : SearchResponseV3<T>;
 
-type SearchClient = Pick<Client, 'search' | 'searchForFacetValues'>;
+type GenericSearchClient = Pick<
+  SearchClient,
+  'search' | 'searchForFacetValues'
+>;
 
 /**
  * The algoliasearchHelper module is the function that will let its
@@ -49,16 +67,16 @@ type SearchClient = Pick<Client, 'search' | 'searchForFacetValues'>;
  * @param index the name of the index to query
  * @param opts
  */
-declare function algoliasearchHelper(
-  client: SearchClient,
+declare function algoliasearchHelper<TSearchClient extends GenericSearchClient>(
+  client: TSearchClient,
   index: string,
   opts?: algoliasearchHelper.PlainSearchParameters
-): algoliasearchHelper.AlgoliaSearchHelper;
+): algoliasearchHelper.AlgoliaSearchHelper<TSearchClient>;
 
 declare namespace algoliasearchHelper {
   export const version: string;
 
-  export class AlgoliaSearchHelper extends EventEmitter {
+  export class AlgoliaSearchHelper<TSearchClient> extends EventEmitter {
     state: SearchParameters;
     lastResults: SearchResults | null;
     derivedHelpers: DerivedHelper[];
@@ -252,19 +270,27 @@ declare namespace algoliasearchHelper {
      */
     addDisjunctiveRefine(facet: string, value: string): this;
     addHierarchicalFacetRefinement(facet: string, path: string): this;
-    addNumericRefinement(facet: string, operator?: SearchParameters.Operator, value?: number | number[]): this;
+    addNumericRefinement(
+      facet: string,
+      operator?: SearchParameters.Operator,
+      value?: number | number[]
+    ): this;
     addFacetRefinement(facet: string, value: string): this;
     /**
      * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#addFacetRefinement}
      */
-    addRefine: AlgoliaSearchHelper['addFacetRefinement'];
+    addRefine: AlgoliaSearchHelper<TSearchClient>['addFacetRefinement'];
     addFacetExclusion(facet: string, value: string): this;
     /**
      * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#addFacetExclusion}
      */
-    addExclude: AlgoliaSearchHelper['addFacetExclusion'];
+    addExclude: AlgoliaSearchHelper<TSearchClient>['addFacetExclusion'];
     addTag(facet: string, value: string): this;
-    removeNumericRefinement(facet: string, operator?: SearchParameters.Operator, value?: number | number[]): this;
+    removeNumericRefinement(
+      facet: string,
+      operator?: SearchParameters.Operator,
+      value?: number | number[]
+    ): this;
     removeDisjunctiveFacetRefinement(facet: string, value?: string): this;
     /**
      * @deprecated since version 2.4.0, see {@link AlgoliaSearchHelper#removeDisjunctiveFacetRefinement}
@@ -318,7 +344,9 @@ declare namespace algoliasearchHelper {
      */
     setState(newState: PlainSearchParameters): this;
 
-    overrideStateWithoutTriggeringChangeEvent: AlgoliaSearchHelper['setState'];
+    overrideStateWithoutTriggeringChangeEvent: AlgoliaSearchHelper<
+      TSearchClient
+    >['setState'];
     hasRefinements(facet: string): boolean;
     isExcluded: SearchParameters['isExcludeRefined'];
     /**
@@ -345,8 +373,8 @@ declare namespace algoliasearchHelper {
      */
     containsRefinement(...any: any[]): any;
     clearCache(): void;
-    setClient(client: SearchClient): this;
-    getClient(): SearchClient;
+    setClient(client: TSearchClient): this;
+    getClient(): TSearchClient;
     derive(
       deriveFn: (oldParams: SearchParameters) => SearchParameters
     ): DerivedHelper;
