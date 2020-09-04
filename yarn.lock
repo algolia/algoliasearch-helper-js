@@ -2849,7 +2849,7 @@ combine-source-map@~0.7.1:
 
 combined-stream@1.0.6:
   version "1.0.6"
-  resolved "http://registry.npmjs.org/combined-stream/-/combined-stream-1.0.6.tgz#723e7df6e801ac5613113a7e445a9b69cb632818"
+  resolved "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.6.tgz#723e7df6e801ac5613113a7e445a9b69cb632818"
   integrity sha1-cj599ugBrFYTETp+RFqbactjKBg=
   dependencies:
     delayed-stream "~1.0.0"
@@ -7833,9 +7833,9 @@ lodash.merge@^3.3.2:
     lodash.toplainobject "^3.0.0"
 
 lodash.mergewith@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
-  integrity sha1-FQzwoWeR9ZA7iJHqsVRgknS96lU=
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
+  integrity sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==
 
 lodash.omit@^3.1.0:
   version "3.1.0"
