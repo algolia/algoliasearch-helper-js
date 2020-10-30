@@ -8205,9 +8205,10 @@ metalsmith-headings@0.1.0:
   dependencies:
     cheerio "^0.14.0"
 
-metalsmith-in-place@superwolff/metalsmith-in-place#7cb06e54142b8843f35178ceb5560946ae356049:
+metalsmith-in-place@1.4.4:
   version "1.4.4"
-  resolved "https://codeload.github.com/superwolff/metalsmith-in-place/tar.gz/7cb06e54142b8843f35178ceb5560946ae356049"
+  resolved "https://registry.yarnpkg.com/metalsmith-in-place/-/metalsmith-in-place-1.4.4.tgz#69d2961b8d597750777e0b143b7bd5e7a8f4e4f2"
+  integrity sha1-adKWG41Zd1B3fgsUO3vV56j05PI=
   dependencies:
     async "^1.4.2"
     consolidate "^0.14.0"
