@@ -7,5 +7,5 @@ function warn(message) {
 }
 
 module.exports = {
-  warn
+  warn: warn
 };
