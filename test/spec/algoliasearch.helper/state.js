@@ -58,3 +58,27 @@ test('setState should set a default hierarchicalFacetRefinement when a rootPath 
     'hierarchicalCategories.lvl0': ['Cameras & Camcorders']
   });
 });
+
+test('setState should ignore invalid userToken', function() {
+  var helper = algoliasearchHelper(fakeClient, null, {});
+  helper.setState({userToken: null});
+  expect(helper.state.userToken).toBeUndefined();
+
+  helper.setState({userToken: ''});
+  expect(helper.state.userToken).toBeUndefined();
+
+  helper.setState({userToken: 'my invalid token!'});
+  expect(helper.state.userToken).toBeUndefined();
+});
+
+test('setState should preserve valid userToken', function() {
+  var helper = algoliasearchHelper(fakeClient, null, {userToken: 'abc'});
+  helper.setState({userToken: null});
+  expect(helper.state.userToken).toBe('abc');
+
+  helper.setState({userToken: ''});
+  expect(helper.state.userToken).toBe('abc');
+
+  helper.setState({userToken: 'my invalid token!'});
+  expect(helper.state.userToken).toBe('abc');
+});

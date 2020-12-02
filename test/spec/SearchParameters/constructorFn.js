@@ -60,6 +60,20 @@ test('Constructor should ignore keys with undefined values', function() {
   expect(state).not.toHaveProperty('page');
 });
 
+test('Constructor should ignore invalid userToken', function() {
+  expect(new SearchParameters({
+    userToken: ''
+  })).not.toHaveProperty('userToken');
+
+  expect(new SearchParameters({
+    userToken: null
+  })).not.toHaveProperty('userToken');
+
+  expect(new SearchParameters({
+    userToken: 'wrong user token!'
+  })).not.toHaveProperty('userToken');
+});
+
 test('Factory should accept an object with known keys', function() {
   var legitConfig = {
     'query': '',

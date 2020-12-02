@@ -35,3 +35,28 @@ test('setChange should not change the current state: no real modification', func
   expect(changed).toBe(false);
   expect(helper.state).toBe(initialState);
 });
+
+test('setChange should ignore invalid userToken', function() {
+  var helper = algoliasearchHelper(fakeClient, null, {});
+  helper.setQueryParameter('userToken', null);
+  expect(helper.state.userToken).toBeUndefined();
+
+  helper.setQueryParameter('userToken', '');
+  expect(helper.state.userToken).toBeUndefined();
+
+  helper.setQueryParameter('userToken', 'my invalid token!');
+  expect(helper.state.userToken).toBeUndefined();
+});
+
+test('setChange should preserve valid userToken', function() {
+  var helper = algoliasearchHelper(fakeClient, null, {userToken: 'abc'});
+  helper.setQueryParameter('userToken', null);
+  expect(helper.state.userToken).toBe('abc');
+
+  helper.setQueryParameter('userToken', '');
+  expect(helper.state.userToken).toBe('abc');
+
+  helper.setQueryParameter('userToken', 'my invalid token!');
+  expect(helper.state.userToken).toBe('abc');
+});
+
