@@ -96,7 +96,6 @@ function SearchParameters(newParameters) {
   var params = newParameters ? SearchParameters._parseNumbers(newParameters) : {};
 
   if (params.userToken !== undefined && !isValidUserToken(params.userToken)) {
-    delete params.userToken;
     logger.warn('The `userToken` parameter is invalid. Format: [a-zA-Z0-9_-]{1,64}');
   }
   /**

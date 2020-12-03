@@ -9,9 +9,6 @@ var events = require('events');
 var inherits = require('./functions/inherits');
 var objectHasKeys = require('./functions/objectHasKeys');
 
-var isValidUserToken = require('./utils/isValidUserToken');
-var logger = require('./utils/logger');
-
 var version = require('./version');
 
 /**
@@ -889,12 +886,6 @@ AlgoliaSearchHelper.prototype.setIndex = function(name) {
  * helper.setQueryParameter('hitsPerPage', 20).search();
  */
 AlgoliaSearchHelper.prototype.setQueryParameter = function(parameter, value) {
-  if (parameter === 'userToken' && !isValidUserToken(value)) {
-    logger.warn('The `userToken` parameter is invalid. Format: [a-zA-Z0-9_-]{1,64}');
-    return this;
-  }
-
-
   this._change({
     state: this.state.resetPage().setQueryParameter(parameter, value),
     isPageReset: true
@@ -911,11 +902,6 @@ AlgoliaSearchHelper.prototype.setQueryParameter = function(parameter, value) {
  * @chainable
  */
 AlgoliaSearchHelper.prototype.setState = function(newState) {
-  if (newState.userToken !== undefined && !isValidUserToken(newState.userToken)) {
-    delete newState.userToken;
-    logger.warn('The `userToken` parameter is invalid. Format: [a-zA-Z0-9_-]{1,64}');
-    return this;
-  }
   this._change({
     state: SearchParameters.make(newState),
     isPageReset: false
