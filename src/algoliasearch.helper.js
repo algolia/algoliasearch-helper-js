@@ -8,6 +8,8 @@ var requestBuilder = require('./requestBuilder');
 var events = require('events');
 var inherits = require('./functions/inherits');
 var objectHasKeys = require('./functions/objectHasKeys');
+var omit = require('./functions/omit');
+var merge = require('./functions/merge');
 
 var version = require('./version');
 
@@ -246,6 +248,55 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
     if (self._currentNbQueries === 0) self.emit('searchQueueEmpty');
     throw e;
   });
+};
+
+/**
+ * Start the search for answers with the parameters set in the state.
+ * This method returns a promise.
+ * @return {AlgoliaSearchHelper}
+ * @return {promise.<FacetSearchResult>} the answer results
+ */
+AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPrediction, queryLanguages, nbHits) {
+  var state = this.state;
+  var derivedHelper = this.derivedHelpers[0];
+  if (!derivedHelper) {
+    return Promise.resolve([]);
+  }
+  var derivedState = derivedHelper.getModifiedState(state);
+  var params = merge(
+    {
+      attributesForPrediction: attributesForPrediction,
+      nbHits: nbHits
+    },
+    omit(requestBuilder._getHitsSearchParams(derivedState), [
+      'attributesToSnippet',
+      'hitsPerPage',
+      'restrictSearchableAttributes',
+      'clickAnalytics',
+      'facets',
+      'highlightPostTag',
+      'highlightPreTag',
+      'maxValuesPerFacet',
+      'page',
+      'snippetEllipsisText',
+      'tagFilters'
+    ]
+  ));
+
+  if (
+    typeof this.client.initIndex !== 'function'
+  ) {
+    throw new Error(
+      'search for answers was called, but this client does not have a function client.initIndex'
+    );
+  }
+  var index = this.client.initIndex(derivedState.index);
+  if (typeof index.findAnswers !== 'function') {
+    throw new Error(
+      'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers'
+    );
+  }
+  return index.findAnswers(params.query, queryLanguages, params);
 };
 
 /**
