@@ -263,25 +263,20 @@ AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPredictio
     return Promise.resolve([]);
   }
   var derivedState = derivedHelper.getModifiedState(state);
-  var params = merge(
+  var data = merge(
     {
       attributesForPrediction: attributesForPrediction,
       nbHits: nbHits
     },
-    omit(requestBuilder._getHitsSearchParams(derivedState), [
-      'attributesToSnippet',
-      'hitsPerPage',
-      'restrictSearchableAttributes',
-      'clickAnalytics',
-      'facets',
-      'highlightPostTag',
-      'highlightPreTag',
-      'maxValuesPerFacet',
-      'page',
-      'snippetEllipsisText',
-      'tagFilters'
-    ]
-  ));
+    {
+      params: omit(requestBuilder._getHitsSearchParams(derivedState), [
+        'attributesToSnippet',
+        'hitsPerPage',
+        'restrictSearchableAttributes',
+        'snippetEllipsisText'
+      ])
+    }
+  );
 
   if (
     typeof this.client.initIndex !== 'function'
@@ -296,7 +291,7 @@ AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPredictio
       'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers'
     );
   }
-  return index.findAnswers(params.query, queryLanguages, params);
+  return index.findAnswers(derivedState.query, queryLanguages, data);
 };
 
 /**
