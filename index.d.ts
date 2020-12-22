@@ -172,6 +172,28 @@ declare namespace algoliasearchHelper {
     ): void;
 
     /**
+     * Start the search for answers with the parameters set in the state.
+     * This method returns a promise.
+     * @param {Object} options - the options for answers API call
+     * @param {string[]} options.attributesForPrediction - Attributes to use for predictions. If empty, `searchableAttributes` is used instead.
+     * @param {string[]} options.queryLanguages - The languages in the query. Currently only supports ['en'].
+     * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
+     */
+    findAnswers(options: {
+      attributesForPrediction: string[];
+      queryLanguages: string[];
+      nbHits: number;
+    }): Promise<{
+      hits: Array<any & {
+        _answer: {
+          extract: string;
+          extractAttribute: string;
+          score: number;
+        }
+      }>
+    }>;
+
+    /**
      * Search for facet values based on an query and the name of a faceted attribute. This
      * triggers a search and will return a promise. On top of using the query, it also sends
      * the parameters from the state so that the search is narrowed down to only the possible values.

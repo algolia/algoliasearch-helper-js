@@ -251,6 +251,26 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 };
 
 /**
+ * @typedef Answer
+ * @type {object}
+ * @property {string} extract the extracted value with highlights
+ * @property {string} extractAttribute the attribute used to extract the answer
+ * @property {number} score the score indicating how well it was matched
+ */
+
+/**
+ * @typedef AnswerHit
+ * @type {object}
+ * @property {Answer} _answer the object describing why the hit was chosen
+ */
+
+/**
+ * @typedef AnswersResult
+ * @type {object}
+ * @property {AnswerHit[]} hits the answer hits
+ */
+
+ /**
  * Start the search for answers with the parameters set in the state.
  * This method returns a promise.
  * @param {Object} options - the options for answers API call
@@ -259,9 +279,9 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
  *
  * @return {AlgoliaSearchHelper}
- * @return {promise.<FacetSearchResult>} the answer results
+ * @return {promise.<AnswersResult>} the answer results
  */
-AlgoliaSearchHelper.prototype.searchForAnswers = function(options) {
+AlgoliaSearchHelper.prototype.findAnswers = function(options) {
   var state = this.state;
   var derivedHelper = this.derivedHelpers[0];
   if (!derivedHelper) {
