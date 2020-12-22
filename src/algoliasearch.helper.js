@@ -253,10 +253,15 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
 /**
  * Start the search for answers with the parameters set in the state.
  * This method returns a promise.
+ * @param {Object} options - the options for answers API call
+ * @param {string[]} options.attributesForPrediction - Attributes to use for predictions. If empty, `searchableAttributes` is used instead.
+ * @param {string[]} options.queryLanguages - The languages in the query. Currently only supports ['en'].
+ * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
+ *
  * @return {AlgoliaSearchHelper}
  * @return {promise.<FacetSearchResult>} the answer results
  */
-AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPrediction, queryLanguages, nbHits) {
+AlgoliaSearchHelper.prototype.searchForAnswers = function(options) {
   var state = this.state;
   var derivedHelper = this.derivedHelpers[0];
   if (!derivedHelper) {
@@ -265,8 +270,8 @@ AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPredictio
   var derivedState = derivedHelper.getModifiedState(state);
   var data = merge(
     {
-      attributesForPrediction: attributesForPrediction,
-      nbHits: nbHits
+      attributesForPrediction: options.attributesForPrediction,
+      nbHits: options.nbHits
     },
     {
       params: omit(requestBuilder._getHitsSearchParams(derivedState), [
@@ -291,7 +296,7 @@ AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPredictio
       'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers'
     );
   }
-  return index.findAnswers(derivedState.query, queryLanguages, data);
+  return index.findAnswers(derivedState.query, options.queryLanguages, data);
 };
 
 /**
