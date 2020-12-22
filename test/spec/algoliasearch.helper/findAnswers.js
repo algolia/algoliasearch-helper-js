@@ -20,7 +20,7 @@ function setupTestEnvironment(helperOptions) {
       return {
         findAnswers: findAnswers
       };
-    },
+    }
   };
 
   var helper = algoliasearchHelper(fakeClient, 'index', helperOptions);
