@@ -273,7 +273,7 @@ AlgoliaSearchHelper.prototype.searchForAnswers = function(attributesForPredictio
         'attributesToSnippet',
         'hitsPerPage',
         'restrictSearchableAttributes',
-        'snippetEllipsisText'
+        'snippetEllipsisText' // FIXME remove this line once the engine is fixed.
       ])
     }
   );
