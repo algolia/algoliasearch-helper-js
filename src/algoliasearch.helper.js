@@ -303,18 +303,13 @@ AlgoliaSearchHelper.prototype.findAnswers = function(options) {
     }
   );
 
-  if (
-    typeof this.client.initIndex !== 'function'
-  ) {
-    throw new Error(
-      'search for answers was called, but this client does not have a function client.initIndex'
-    );
+  var errorMessage = 'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers'
+  if (typeof this.client.initIndex !== 'function') {
+    throw new Error(errorMessage);
   }
   var index = this.client.initIndex(derivedState.index);
   if (typeof index.findAnswers !== 'function') {
-    throw new Error(
-      'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers'
-    );
+    throw new Error(errorMessage);
   }
   return index.findAnswers(derivedState.query, options.queryLanguages, data);
 };
