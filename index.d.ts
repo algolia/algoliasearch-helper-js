@@ -16,6 +16,7 @@ import algoliasearch, {
 import {
   SearchOptions as SearchOptionsV4,
   SearchResponse as SearchResponseV4,
+  FindAnswersResponse
   // @ts-ignore
 } from '@algolia/client-search';
 import { EventEmitter } from 'events';
@@ -179,19 +180,11 @@ declare namespace algoliasearchHelper {
      * @param {string[]} options.queryLanguages - The languages in the query. Currently only supports ['en'].
      * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
      */
-    findAnswers(options: {
+    findAnswers<TObject>(options: {
       attributesForPrediction: string[];
       queryLanguages: string[];
       nbHits: number;
-    }): Promise<{
-      hits: Array<any & {
-        _answer: {
-          extract: string;
-          extractAttribute: string;
-          score: number;
-        }
-      }>
-    }>;
+    }): FindAnswersResponse<TObject>;
 
     /**
      * Search for facet values based on an query and the name of a faceted attribute. This
