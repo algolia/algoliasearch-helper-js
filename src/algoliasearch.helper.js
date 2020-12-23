@@ -250,26 +250,6 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   });
 };
 
-/**
- * @typedef Answer
- * @type {object}
- * @property {string} extract the extracted value with highlights
- * @property {string} extractAttribute the attribute used to extract the answer
- * @property {number} score the score indicating how well it was matched
- */
-
-/**
- * @typedef AnswerHit
- * @type {object}
- * @property {Answer} _answer the object describing why the hit was chosen
- */
-
-/**
- * @typedef AnswersResult
- * @type {object}
- * @property {AnswerHit[]} hits the answer hits
- */
-
  /**
  * Start the search for answers with the parameters set in the state.
  * This method returns a promise.
@@ -278,7 +258,7 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @param {string[]} options.queryLanguages - The languages in the query. Currently only supports ['en'].
  * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
  *
- * @return {promise.<AnswersResult>} the answer results
+ * @return {promise} the answer results
  */
 AlgoliaSearchHelper.prototype.findAnswers = function(options) {
   var state = this.state;
@@ -302,7 +282,7 @@ AlgoliaSearchHelper.prototype.findAnswers = function(options) {
     }
   );
 
-  var errorMessage = 'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers'
+  var errorMessage = 'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers';
   if (typeof this.client.initIndex !== 'function') {
     throw new Error(errorMessage);
   }
