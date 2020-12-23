@@ -278,7 +278,6 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
  * @param {string[]} options.queryLanguages - The languages in the query. Currently only supports ['en'].
  * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
  *
- * @return {AlgoliaSearchHelper}
  * @return {promise.<AnswersResult>} the answer results
  */
 AlgoliaSearchHelper.prototype.findAnswers = function(options) {
