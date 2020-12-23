@@ -184,7 +184,7 @@ declare namespace algoliasearchHelper {
       attributesForPrediction: string[];
       queryLanguages: string[];
       nbHits: number;
-    }): FindAnswersResponse<TObject>;
+    }): Promise<FindAnswersResponse<TObject>>;
 
     /**
      * Search for facet values based on an query and the name of a faceted attribute. This
