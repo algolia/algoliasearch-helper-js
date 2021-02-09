@@ -511,6 +511,16 @@ declare namespace algoliasearchHelper {
     ruleContexts?: string[];
     optionalFilters?: Array<string | string[]>;
     queryLanguages?: string[];
+
+    /**
+     * A number between 0 and 100 indicating
+     * how strict the hits will be sorted.
+     * (dynamically at the query time, not in the indexing time)
+     * 
+     * 0: No smart sort at all, falling back to the original sort.
+     * 100: Very smart sort, it will provide only relevant hits.
+     */
+    relevancyStrictness?: number;
   }
 
   export class SearchParameters implements PlainSearchParameters {
@@ -1156,6 +1166,14 @@ declare namespace algoliasearchHelper {
      * total number of hits of this query on the index
      */
     nbHits: number;
+    /**
+     * total number of hits from smart sort
+     */
+    nbSortedHits?: number;
+    /**
+     * applied relevancyStrictness either from index setting or search parameters (0~100)
+     */
+    appliedRelevancyStrictness?: number;
     /**
      * total number of pages with respect to the number of hits per page and the total number of hits
      */
