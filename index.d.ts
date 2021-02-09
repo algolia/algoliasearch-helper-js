@@ -513,12 +513,9 @@ declare namespace algoliasearchHelper {
     queryLanguages?: string[];
 
     /**
-     * A number between 0 and 100 indicating
-     * how strict the hits will be sorted.
-     * (dynamically at the query time, not in the indexing time)
-     * 
-     * 0: No smart sort at all, falling back to the original sort.
-     * 100: Very smart sort, it will provide only relevant hits.
+     * The relevancy threshold to apply to search in a virtual index [0-100]. A Bigger
+     * value means fewer, but more relevant results, smaller value means more, but
+     * less relevant results.
      */
     relevancyStrictness?: number;
   }
@@ -1167,11 +1164,11 @@ declare namespace algoliasearchHelper {
      */
     nbHits: number;
     /**
-     * total number of hits from smart sort
+     * subset of hits selected when relevancyStrictness is applied
      */
     nbSortedHits?: number;
     /**
-     * applied relevancyStrictness either from index setting or search parameters (0~100)
+     * the relevancy threshold applied to search in a virtual index
      */
     appliedRelevancyStrictness?: number;
     /**
