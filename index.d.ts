@@ -1110,6 +1110,13 @@ declare namespace algoliasearchHelper {
      */
     sortFacetValuesBy?: 'count' | 'alpha';
 
+    /**
+     * The relevancy threshold to apply to search in a virtual index [0-100]. A Bigger
+     * value means fewer, but more relevant results, smaller value means more, but
+     * less relevant results.
+     */
+    relevancyStrictness?: number;
+
     /* end implementation of algoliasearch.QueryParameters */
 
     ruleContexts?: string[];
