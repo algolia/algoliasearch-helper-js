@@ -513,8 +513,8 @@ declare namespace algoliasearchHelper {
     queryLanguages?: string[];
 
     /**
-     * The relevancy threshold to apply to search in a virtual index [0-100]. A Bigger
-     * value means fewer, but more relevant results, smaller value means more, but
+     * The relevancy threshold to apply to search in a virtual index [0-100]. A bigger
+     * value means fewer but more relevant results, a smaller value means more but
      * less relevant results.
      */
     relevancyStrictness?: number;
