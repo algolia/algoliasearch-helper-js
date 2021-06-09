@@ -937,7 +937,8 @@
             "Best Buy Gift Cards": 80
           },
           "hierarchicalCategories.lvl1": {
-            "Best Buy Gift Cards > Entertainment Gift Cards": 17
+            "Best Buy Gift Cards > Entertainment Gift Cards": 17,
+            "Best Buy Gift Cards > Swag Gift Cards": 20
           }
         },
         "exhaustiveFacetsCount": true,
