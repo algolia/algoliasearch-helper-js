@@ -1248,7 +1248,7 @@ declare namespace algoliasearchHelper {
          */
         facet?: {
           /**
-           * pinned order of facet lists
+           * Ordered facet lists
            */
           order: string[];
         };
@@ -1258,7 +1258,7 @@ declare namespace algoliasearchHelper {
         values?: {
           [facet: string]: {
             /**
-             * pinned order of facet values
+             * Ordered facet values
              */
             order: string[];
             /**
