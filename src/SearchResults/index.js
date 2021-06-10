@@ -706,35 +706,39 @@ function vanillaSortFn(order, data) {
  * @returns {Array}
  */
 function sortViaFacetOrdering(facetValues, facetOrdering) {
-  var pinnedFacets = [];
-  var unpinnedFacets = [];
+  var orderedFacets = [];
+  var remainingFacets = [];
 
-  var pinned = facetOrdering.order || [];
-  var reversePinned = pinned.reduce(function(acc, name, i) {
+  var order = facetOrdering.order || [];
+  /**
+   * an object with the keys being the values in order, the values their index:
+   * ['one', 'two'] -> { one: 0, two: 1 }
+   */
+  var reverseOrder = order.reduce(function(acc, name, i) {
     acc[name] = i;
     return acc;
   }, {});
 
   facetValues.forEach(function(item) {
-    if (reversePinned[item.name] !== undefined) {
-      pinnedFacets[reversePinned[item.name]] = item;
+    if (reverseOrder[item.name] !== undefined) {
+      orderedFacets[reverseOrder[item.name]] = item;
     } else {
-      unpinnedFacets.push(item);
+      remainingFacets.push(item);
     }
   });
 
   var sortRemainingBy = facetOrdering.sortRemainingBy;
   var ordering;
   if (sortRemainingBy === 'hidden') {
-    return pinnedFacets;
+    return orderedFacets;
   } else if (sortRemainingBy === 'alpha') {
     ordering = [['name'], ['asc']];
   } else {
     ordering = [['count'], ['desc']];
   }
 
-  return pinnedFacets.concat(
-    orderBy(unpinnedFacets, ordering[0], ordering[1])
+  return orderedFacets.concat(
+    orderBy(remainingFacets, ordering[0], ordering[1])
   );
 }
 

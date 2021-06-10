@@ -6,7 +6,7 @@ var SearchParameters = require('../../../src/SearchParameters');
 describe('disjunctive facet', function() {
   test.each([
     [
-      'nothing pinned',
+      'nothing ordered',
       {
         values: {
           brand: {
@@ -21,7 +21,7 @@ describe('disjunctive facet', function() {
       ]
     ],
     [
-      'all pinned',
+      'all ordered',
       {
         values: {
           brand: {
@@ -36,7 +36,7 @@ describe('disjunctive facet', function() {
       ]
     ],
     [
-      'one item pinned (implicit sort)',
+      'one item ordered (implicit sort)',
       {
         values: {
           brand: {
@@ -51,7 +51,7 @@ describe('disjunctive facet', function() {
       ]
     ],
     [
-      'one item pinned (sort by count)',
+      'one item ordered (sort by count)',
       {
         values: {
           brand: {
@@ -67,7 +67,7 @@ describe('disjunctive facet', function() {
       ]
     ],
     [
-      'one item pinned (sort by alpha)',
+      'one item ordered (sort by alpha)',
       {
         values: {
           brand: {
@@ -83,7 +83,7 @@ describe('disjunctive facet', function() {
       ]
     ],
     [
-      'one item pinned (sort by hidden)',
+      'one item ordered (sort by hidden)',
       {
         values: {
           brand: {
@@ -516,7 +516,7 @@ describe('hierarchical facet', function() {
     expect(facetValues).toEqual(expected);
   });
 
-  test('root pinned (no sortRemainingBy)', function() {
+  test('root ordered (no sortRemainingBy)', function() {
     var data = require('./getRefinements/hierarchical-cards.json');
     var order = {
       renderingContent: {
@@ -807,7 +807,7 @@ describe('hierarchical facet', function() {
     expect(facetValues).toEqual(expected);
   });
 
-  test('root pinned (sortRemainingBy count)', function() {
+  test('root ordered (sortRemainingBy count)', function() {
     var data = require('./getRefinements/hierarchical-cards.json');
     var order = {
       renderingContent: {
@@ -1099,7 +1099,7 @@ describe('hierarchical facet', function() {
     expect(facetValues).toEqual(expected);
   });
 
-  test('root pinned (sortRemainingBy alpha)', function() {
+  test('root ordered (sortRemainingBy alpha)', function() {
     var data = require('./getRefinements/hierarchical-cards.json');
     var order = {
       renderingContent: {
@@ -1128,7 +1128,7 @@ describe('hierarchical facet', function() {
       path: null,
       exhaustive: true,
       data: [
-        // pinned
+        // ordered
         {
           name: 'Appliances',
           path: 'Appliances',
@@ -1393,7 +1393,7 @@ describe('hierarchical facet', function() {
     expect(facetValues).toEqual(expected);
   });
 
-  test('root pinned (sortRemainingBy hidden)', function() {
+  test('root ordered (sortRemainingBy hidden)', function() {
     var data = require('./getRefinements/hierarchical-cards.json');
     var order = {
       renderingContent: {
@@ -1452,7 +1452,7 @@ describe('hierarchical facet', function() {
     expect(facetValues).toEqual(expected);
   });
 
-  test('two levels pinned (sortRemainingBy count)', function() {
+  test('two levels ordered (sortRemainingBy count)', function() {
     var data = require('./getRefinements/hierarchical-cards.json');
     var order = {
       renderingContent: {
