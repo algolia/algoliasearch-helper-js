@@ -806,7 +806,12 @@ SearchResults.prototype.getFacetValues = function(attribute, opts) {
     return undefined;
   }
 
-  var options = defaultsPure({}, opts, {sortBy: SearchResults.DEFAULT_SORT});
+  var options = defaultsPure({}, opts, {
+    sortBy: SearchResults.DEFAULT_SORT,
+    // if no sortBy is given, attempt to sort based on facetOrdering
+    // if it is given, we still allow to sort via facet ordering first
+    facetOrdering: !(opts && opts.sortBy)
+  });
 
   var results = this;
   var attributes;
@@ -818,9 +823,7 @@ SearchResults.prototype.getFacetValues = function(attribute, opts) {
   }
 
   return recSort(function(data, facetName) {
-    // if no sortBy is given, attempt to sort based on facetOrdering
-    // if it is given, we still allow to sort via facet ordering first
-    if (!opts || !opts.sortBy || opts.facetOrdering) {
+    if (options.facetOrdering) {
       var facetOrdering = getFacetOrdering(results, facetName);
       if (Boolean(facetOrdering)) {
         return sortViaFacetOrdering(data, facetOrdering);
@@ -829,7 +832,6 @@ SearchResults.prototype.getFacetValues = function(attribute, opts) {
 
     if (Array.isArray(options.sortBy)) {
       var order = formatSort(options.sortBy, SearchResults.DEFAULT_SORT);
-
       return orderBy(data, order[0], order[1]);
     } else if (typeof options.sortBy === 'function') {
       return vanillaSortFn(options.sortBy, data);

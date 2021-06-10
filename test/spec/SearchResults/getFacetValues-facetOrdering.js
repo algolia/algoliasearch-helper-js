@@ -175,6 +175,38 @@ describe('disjunctive facet', function() {
     expect(facetValues).toEqual(expected);
   });
 
+  test('facetOrdering: false without sortBy uses default order', function() {
+    var data = require('./getFacetValues/disjunctive.json');
+    var order = {
+      renderingContent: {
+        facetOrdering: {
+          values: {
+            brand: {
+              order: ['Samsung', 'Apple', 'Insignia™']
+            }
+          }
+        }
+      }
+    };
+    var results = data.content.results.slice();
+    results[0] = Object.assign(order, results[0]);
+
+    var searchParams = new SearchParameters(data.state);
+    var result = new SearchResults(searchParams, results);
+
+    var facetValues = result.getFacetValues('brand', {
+      facetOrdering: false
+    });
+
+    var expected = [
+      {count: 386, isRefined: true, name: 'Apple'},
+      {count: 551, isRefined: false, name: 'Insignia™'},
+      {count: 511, isRefined: false, name: 'Samsung'}
+    ];
+
+    expect(facetValues).toEqual(expected);
+  });
+
   test('without facetOrdering, nor sortBy', function() {
     var data = require('./getFacetValues/disjunctive.json');
     var order = {
