@@ -743,7 +743,7 @@ function sortViaFacetOrdering(facetValues, facetOrdering) {
 }
 
 /**
- * @param {SearchResults} results a results class (this)
+ * @param {SearchResults} results the search results class
  * @param {string} attribute the attribute to retrieve ordering of
  * @returns {FacetOrdering=}
  */
