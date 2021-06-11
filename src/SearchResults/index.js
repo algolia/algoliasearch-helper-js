@@ -662,7 +662,7 @@ function extractNormalizedFacetValues(results, attribute) {
  * Sort nodes of a hierarchical or disjunctive facet results
  * @private
  * @param {function} sortFn
- * @param {HierarchicalFacet|Array} node node to upon which we want to apply the sort
+ * @param {HierarchicalFacet|Array} node node upon which we want to apply the sort
  * @param {string[]} names attribute names
  * @param {number} [level=0] current index in the names array
  */
@@ -681,8 +681,7 @@ function recSort(sortFn, node, names, level) {
     return recSort(sortFn, childNode, names, level + 1);
   });
   var sortedChildren = sortFn(children, names[level]);
-  var newNode = merge({}, node);
-  newNode.data = sortedChildren;
+  var newNode = defaultsPure({data: sortedChildren}, node);
   return newNode;
 }
 
@@ -768,7 +767,7 @@ function getFacetOrdering(results, attribute) {
  * might not be respected if you have facet values that are already refined.
  * @param {string} attribute attribute name
  * @param {object} opts configuration options.
- * @param {boolean} [opts.facetOrdering=false]
+ * @param {boolean} [opts.facetOrdering]
  * Force the use of facetOrdering from the result if a sortBy is present. If
  * sortBy isn't present, facetOrdering will be used automatically.
  * @param {Array.<string> | function} opts.sortBy

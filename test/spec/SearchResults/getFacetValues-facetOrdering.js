@@ -6,7 +6,7 @@ var SearchParameters = require('../../../src/SearchParameters');
 describe('disjunctive facet', function() {
   test.each([
     [
-      'nothing ordered',
+      'nothing ordered (implicit sort by count)',
       {
         values: {
           brand: {
@@ -36,7 +36,7 @@ describe('disjunctive facet', function() {
       ]
     ],
     [
-      'one item ordered (implicit sort)',
+      'one item ordered (implicit sort by count)',
       {
         values: {
           brand: {
@@ -232,7 +232,7 @@ describe('disjunctive facet', function() {
 
 describe('hierarchical facet', function() {
   test('empty facet ordering', function() {
-    var data = require('./getRefinements/hierarchical-cards.json');
+    var data = require('./getFacetValues/hierarchical.json');
     var order = {
       renderingContent: {
         facetOrdering: {}
@@ -309,206 +309,6 @@ describe('hierarchical facet', function() {
           isRefined: false,
           exhaustive: true,
           data: null
-        },
-        {
-          name: 'Cameras & Camcorders',
-          path: 'Cameras & Camcorders',
-          count: 753,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'TV & Home Theater',
-          path: 'TV & Home Theater',
-          count: 617,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Car Electronics & GPS',
-          path: 'Car Electronics & GPS',
-          count: 509,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Health, Fitness & Beauty',
-          path: 'Health, Fitness & Beauty',
-          count: 385,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office & School Supplies',
-          path: 'Office & School Supplies',
-          count: 302,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Video Games',
-          path: 'Video Games',
-          count: 178,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Housewares',
-          path: 'Housewares',
-          count: 135,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Electronics',
-          path: 'Office Electronics',
-          count: 122,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Toys, Games & Drones',
-          path: 'Toys, Games & Drones',
-          count: 104,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Connected Home',
-          path: 'Connected Home',
-          count: 96,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Telephones & Communication',
-          path: 'Telephones & Communication',
-          count: 76,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Wearable Technology',
-          path: 'Wearable Technology',
-          count: 68,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Name Brands',
-          path: 'Name Brands',
-          count: 55,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Paper',
-          path: 'Paper',
-          count: 48,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Musical Instruments',
-          path: 'Musical Instruments',
-          count: 40,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Household Essentials',
-          path: 'Household Essentials',
-          count: 32,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Scanners, Faxes & Copiers',
-          path: 'Scanners, Faxes & Copiers',
-          count: 25,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Furniture & Storage',
-          path: 'Office Furniture & Storage',
-          count: 14,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Movies & Music',
-          path: 'Movies & Music',
-          count: 13,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Magnolia Home Theater',
-          path: 'Magnolia Home Theater',
-          count: 10,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Furniture & Decor',
-          path: 'Furniture & Decor',
-          count: 6,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Batteries & Power',
-          path: 'Batteries & Power',
-          count: 5,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Carfi Instore Only',
-          path: 'Carfi Instore Only',
-          count: 4,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Home',
-          path: 'Home',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Microwaves',
-          path: 'Microwaves',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
         }
       ]
     };
@@ -517,13 +317,13 @@ describe('hierarchical facet', function() {
   });
 
   test('root ordered (no sortRemainingBy)', function() {
-    var data = require('./getRefinements/hierarchical-cards.json');
+    var data = require('./getFacetValues/hierarchical.json');
     var order = {
       renderingContent: {
         facetOrdering: {
           values: {
             'hierarchicalCategories.lvl0': {
-              order: ['Appliances', 'Audio', 'Scanners, Faxes & Copiers']
+              order: ['Appliances', 'Best Buy Gift Cards', 'Audio']
             }
           }
         }
@@ -548,118 +348,6 @@ describe('hierarchical facet', function() {
           name: 'Appliances',
           path: 'Appliances',
           count: 1533,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Audio',
-          path: 'Audio',
-          count: 1010,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Scanners, Faxes & Copiers',
-          path: 'Scanners, Faxes & Copiers',
-          count: 25,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Cell Phones',
-          path: 'Cell Phones',
-          count: 1920,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Computers & Tablets',
-          path: 'Computers & Tablets',
-          count: 1858,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Cameras & Camcorders',
-          path: 'Cameras & Camcorders',
-          count: 753,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'TV & Home Theater',
-          path: 'TV & Home Theater',
-          count: 617,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Car Electronics & GPS',
-          path: 'Car Electronics & GPS',
-          count: 509,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Health, Fitness & Beauty',
-          path: 'Health, Fitness & Beauty',
-          count: 385,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office & School Supplies',
-          path: 'Office & School Supplies',
-          count: 302,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Video Games',
-          path: 'Video Games',
-          count: 178,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Housewares',
-          path: 'Housewares',
-          count: 135,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Electronics',
-          path: 'Office Electronics',
-          count: 122,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Toys, Games & Drones',
-          path: 'Toys, Games & Drones',
-          count: 104,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Connected Home',
-          path: 'Connected Home',
-          count: 96,
           isRefined: false,
           exhaustive: true,
           data: null
@@ -690,116 +378,28 @@ describe('hierarchical facet', function() {
           ]
         },
         {
-          name: 'Telephones & Communication',
-          path: 'Telephones & Communication',
-          count: 76,
+          name: 'Audio',
+          path: 'Audio',
+          count: 1010,
           isRefined: false,
           exhaustive: true,
           data: null
         },
         {
-          name: 'Wearable Technology',
-          path: 'Wearable Technology',
-          count: 68,
-          isRefined: false,
+          count: 1920,
+          data: null,
           exhaustive: true,
-          data: null
+          isRefined: false,
+          name: 'Cell Phones',
+          path: 'Cell Phones'
         },
         {
-          name: 'Name Brands',
-          path: 'Name Brands',
-          count: 55,
-          isRefined: false,
+          count: 1858,
+          data: null,
           exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Paper',
-          path: 'Paper',
-          count: 48,
           isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Musical Instruments',
-          path: 'Musical Instruments',
-          count: 40,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Household Essentials',
-          path: 'Household Essentials',
-          count: 32,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Furniture & Storage',
-          path: 'Office Furniture & Storage',
-          count: 14,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Movies & Music',
-          path: 'Movies & Music',
-          count: 13,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Magnolia Home Theater',
-          path: 'Magnolia Home Theater',
-          count: 10,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Furniture & Decor',
-          path: 'Furniture & Decor',
-          count: 6,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Batteries & Power',
-          path: 'Batteries & Power',
-          count: 5,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Carfi Instore Only',
-          path: 'Carfi Instore Only',
-          count: 4,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Home',
-          path: 'Home',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Microwaves',
-          path: 'Microwaves',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
+          name: 'Computers & Tablets',
+          path: 'Computers & Tablets'
         }
       ]
     };
@@ -808,13 +408,13 @@ describe('hierarchical facet', function() {
   });
 
   test('root ordered (sortRemainingBy count)', function() {
-    var data = require('./getRefinements/hierarchical-cards.json');
+    var data = require('./getFacetValues/hierarchical.json');
     var order = {
       renderingContent: {
         facetOrdering: {
           values: {
             'hierarchicalCategories.lvl0': {
-              order: ['Appliances', 'Audio', 'Scanners, Faxes & Copiers'],
+              order: ['Appliances', 'Best Buy Gift Cards'],
               sortRemainingBy: 'count'
             }
           }
@@ -845,20 +445,29 @@ describe('hierarchical facet', function() {
           data: null
         },
         {
-          name: 'Audio',
-          path: 'Audio',
-          count: 1010,
-          isRefined: false,
+          name: 'Best Buy Gift Cards',
+          path: 'Best Buy Gift Cards',
+          count: 80,
+          isRefined: true,
           exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Scanners, Faxes & Copiers',
-          path: 'Scanners, Faxes & Copiers',
-          count: 25,
-          isRefined: false,
-          exhaustive: true,
-          data: null
+          data: [
+            {
+              name: 'Entertainment Gift Cards',
+              path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              count: 17,
+              isRefined: true,
+              exhaustive: true,
+              data: null
+            },
+            {
+              name: 'Swag Gift Cards',
+              path: 'Best Buy Gift Cards > Swag Gift Cards',
+              count: 20,
+              isRefined: false,
+              exhaustive: true,
+              data: null
+            }
+          ]
         },
         {
           name: 'Cell Phones',
@@ -877,218 +486,9 @@ describe('hierarchical facet', function() {
           data: null
         },
         {
-          name: 'Cameras & Camcorders',
-          path: 'Cameras & Camcorders',
-          count: 753,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'TV & Home Theater',
-          path: 'TV & Home Theater',
-          count: 617,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Car Electronics & GPS',
-          path: 'Car Electronics & GPS',
-          count: 509,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Health, Fitness & Beauty',
-          path: 'Health, Fitness & Beauty',
-          count: 385,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office & School Supplies',
-          path: 'Office & School Supplies',
-          count: 302,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Video Games',
-          path: 'Video Games',
-          count: 178,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Housewares',
-          path: 'Housewares',
-          count: 135,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Electronics',
-          path: 'Office Electronics',
-          count: 122,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Toys, Games & Drones',
-          path: 'Toys, Games & Drones',
-          count: 104,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Connected Home',
-          path: 'Connected Home',
-          count: 96,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Best Buy Gift Cards',
-          path: 'Best Buy Gift Cards',
-          count: 80,
-          isRefined: true,
-          exhaustive: true,
-          data: [
-            {
-              count: 17,
-              data: null,
-              exhaustive: true,
-              isRefined: true,
-              name: 'Entertainment Gift Cards',
-              path: 'Best Buy Gift Cards > Entertainment Gift Cards'
-            },
-            {
-              name: 'Swag Gift Cards',
-              path: 'Best Buy Gift Cards > Swag Gift Cards',
-              count: 20,
-              isRefined: false,
-              exhaustive: true,
-              data: null
-            }
-          ]
-        },
-        {
-          name: 'Telephones & Communication',
-          path: 'Telephones & Communication',
-          count: 76,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Wearable Technology',
-          path: 'Wearable Technology',
-          count: 68,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Name Brands',
-          path: 'Name Brands',
-          count: 55,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Paper',
-          path: 'Paper',
-          count: 48,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Musical Instruments',
-          path: 'Musical Instruments',
-          count: 40,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Household Essentials',
-          path: 'Household Essentials',
-          count: 32,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Furniture & Storage',
-          path: 'Office Furniture & Storage',
-          count: 14,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Movies & Music',
-          path: 'Movies & Music',
-          count: 13,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Magnolia Home Theater',
-          path: 'Magnolia Home Theater',
-          count: 10,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Furniture & Decor',
-          path: 'Furniture & Decor',
-          count: 6,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Batteries & Power',
-          path: 'Batteries & Power',
-          count: 5,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Carfi Instore Only',
-          path: 'Carfi Instore Only',
-          count: 4,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Home',
-          path: 'Home',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Microwaves',
-          path: 'Microwaves',
-          count: 1,
+          name: 'Audio',
+          path: 'Audio',
+          count: 1010,
           isRefined: false,
           exhaustive: true,
           data: null
@@ -1100,13 +500,13 @@ describe('hierarchical facet', function() {
   });
 
   test('root ordered (sortRemainingBy alpha)', function() {
-    var data = require('./getRefinements/hierarchical-cards.json');
+    var data = require('./getFacetValues/hierarchical.json');
     var order = {
       renderingContent: {
         facetOrdering: {
           values: {
             'hierarchicalCategories.lvl0': {
-              order: ['Appliances', 'Audio', 'Scanners, Faxes & Copiers'],
+              order: ['Appliances', 'Best Buy Gift Cards'],
               sortRemainingBy: 'alpha'
             }
           }
@@ -1128,36 +528,10 @@ describe('hierarchical facet', function() {
       path: null,
       exhaustive: true,
       data: [
-        // ordered
         {
           name: 'Appliances',
           path: 'Appliances',
           count: 1533,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Audio',
-          path: 'Audio',
-          count: 1010,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Scanners, Faxes & Copiers',
-          path: 'Scanners, Faxes & Copiers',
-          count: 25,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        // ordered alphabetically
-        {
-          name: 'Batteries & Power',
-          path: 'Batteries & Power',
-          count: 5,
           isRefined: false,
           exhaustive: true,
           data: null
@@ -1170,12 +544,12 @@ describe('hierarchical facet', function() {
           exhaustive: true,
           data: [
             {
-              count: 17,
-              data: null,
-              exhaustive: true,
-              isRefined: true,
               name: 'Entertainment Gift Cards',
-              path: 'Best Buy Gift Cards > Entertainment Gift Cards'
+              path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              count: 17,
+              isRefined: true,
+              exhaustive: true,
+              data: null
             },
             {
               name: 'Swag Gift Cards',
@@ -1188,25 +562,9 @@ describe('hierarchical facet', function() {
           ]
         },
         {
-          name: 'Cameras & Camcorders',
-          path: 'Cameras & Camcorders',
-          count: 753,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Car Electronics & GPS',
-          path: 'Car Electronics & GPS',
-          count: 509,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Carfi Instore Only',
-          path: 'Carfi Instore Only',
-          count: 4,
+          name: 'Audio',
+          path: 'Audio',
+          count: 1010,
           isRefined: false,
           exhaustive: true,
           data: null
@@ -1226,166 +584,6 @@ describe('hierarchical facet', function() {
           isRefined: false,
           exhaustive: true,
           data: null
-        },
-        {
-          name: 'Connected Home',
-          path: 'Connected Home',
-          count: 96,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Furniture & Decor',
-          path: 'Furniture & Decor',
-          count: 6,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Health, Fitness & Beauty',
-          path: 'Health, Fitness & Beauty',
-          count: 385,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Home',
-          path: 'Home',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Household Essentials',
-          path: 'Household Essentials',
-          count: 32,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Housewares',
-          path: 'Housewares',
-          count: 135,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Magnolia Home Theater',
-          path: 'Magnolia Home Theater',
-          count: 10,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Microwaves',
-          path: 'Microwaves',
-          count: 1,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Movies & Music',
-          path: 'Movies & Music',
-          count: 13,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Musical Instruments',
-          path: 'Musical Instruments',
-          count: 40,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Name Brands',
-          path: 'Name Brands',
-          count: 55,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office & School Supplies',
-          path: 'Office & School Supplies',
-          count: 302,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Electronics',
-          path: 'Office Electronics',
-          count: 122,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Office Furniture & Storage',
-          path: 'Office Furniture & Storage',
-          count: 14,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Paper',
-          path: 'Paper',
-          count: 48,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'TV & Home Theater',
-          path: 'TV & Home Theater',
-          count: 617,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Telephones & Communication',
-          path: 'Telephones & Communication',
-          count: 76,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Toys, Games & Drones',
-          path: 'Toys, Games & Drones',
-          count: 104,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Video Games',
-          path: 'Video Games',
-          count: 178,
-          isRefined: false,
-          exhaustive: true,
-          data: null
-        },
-        {
-          name: 'Wearable Technology',
-          path: 'Wearable Technology',
-          count: 68,
-          isRefined: false,
-          exhaustive: true,
-          data: null
         }
       ]
     };
@@ -1394,13 +592,13 @@ describe('hierarchical facet', function() {
   });
 
   test('root ordered (sortRemainingBy hidden)', function() {
-    var data = require('./getRefinements/hierarchical-cards.json');
+    var data = require('./getFacetValues/hierarchical.json');
     var order = {
       renderingContent: {
         facetOrdering: {
           values: {
             'hierarchicalCategories.lvl0': {
-              order: ['Appliances', 'Audio', 'Scanners, Faxes & Copiers'],
+              order: ['Appliances', 'Audio', 'Best Buy Gift Cards'],
               sortRemainingBy: 'hidden'
             }
           }
@@ -1439,12 +637,29 @@ describe('hierarchical facet', function() {
           data: null
         },
         {
-          name: 'Scanners, Faxes & Copiers',
-          path: 'Scanners, Faxes & Copiers',
-          count: 25,
-          isRefined: false,
+          name: 'Best Buy Gift Cards',
+          path: 'Best Buy Gift Cards',
+          count: 80,
+          isRefined: true,
           exhaustive: true,
-          data: null
+          data: [
+            {
+              name: 'Entertainment Gift Cards',
+              path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              count: 17,
+              isRefined: true,
+              exhaustive: true,
+              data: null
+            },
+            {
+              name: 'Swag Gift Cards',
+              path: 'Best Buy Gift Cards > Swag Gift Cards',
+              count: 20,
+              isRefined: false,
+              exhaustive: true,
+              data: null
+            }
+          ]
         }
       ]
     };
@@ -1453,7 +668,7 @@ describe('hierarchical facet', function() {
   });
 
   test('two levels ordered (sortRemainingBy count)', function() {
-    var data = require('./getRefinements/hierarchical-cards.json');
+    var data = require('./getFacetValues/hierarchical.json');
     var order = {
       renderingContent: {
         facetOrdering: {
