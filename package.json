@@ -80,7 +80,7 @@
     "metalsmith-serve": "0.0.7",
     "metalsmith-watch": "1.0.3",
     "metalsmith-webpack": "1.0.3",
-    "mversion": "1.13.0",
+    "mversion": "2.0.0",
     "onchange": "3.2.1",
     "patch-package": "6.2.2",
     "pretty-bytes-cli": "2.0.0",
