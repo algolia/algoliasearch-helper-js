@@ -94,7 +94,7 @@
     "watchify": "3.7.0",
     "webpack": "1.15.0",
     "webpack-stream": "3.2.0",
-    "yargs": "13.2.4"
+    "yargs": "13.3.2"
   },
   "dependencies": {
     "events": "^1.1.1"
