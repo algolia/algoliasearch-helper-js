@@ -76,7 +76,7 @@
     "metalsmith-markdown": "0.2.1",
     "metalsmith-metallic": "1.0.0",
     "metalsmith-packagejson": "1.1.0",
-    "metalsmith-sass": "1.4.0",
+    "metalsmith-sass": "1.7.0",
     "metalsmith-serve": "0.0.7",
     "metalsmith-watch": "1.0.3",
     "metalsmith-webpack": "1.0.3",
