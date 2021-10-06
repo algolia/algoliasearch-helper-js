@@ -1312,9 +1312,18 @@ SearchParameters.prototype = {
 
   managedParameters: [
     'index',
-    'facets', 'disjunctiveFacets', 'facetsRefinements',
-    'facetsExcludes', 'disjunctiveFacetsRefinements',
-    'numericRefinements', 'tagRefinements', 'hierarchicalFacets', 'hierarchicalFacetsRefinements'
+
+    'expandWildcardFacets',
+    'facets',
+    'disjunctiveFacets',
+    'facetsRefinements',
+    'hierarchicalFacets',
+    'facetsExcludes',
+
+    'disjunctiveFacetsRefinements',
+    'numericRefinements',
+    'tagRefinements',
+    'hierarchicalFacetsRefinements'
   ],
   getQueryParams: function getQueryParams() {
     var managedParameters = this.managedParameters;

@@ -66,3 +66,63 @@ test('does only a single query if refinements are empty', function() {
   var queries = getQueries(searchParams.index, searchParams);
   expect(queries).toHaveLength(1);
 });
+
+describe('expandWildcardFacets', function() {
+  test('does not send expandWildcardFacets as parameter', function() {
+    var searchParams = new SearchParameters({
+      expandWildcardFacets: true,
+      facets: ['test', '-negative', '*'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
+    });
+
+    var queries = getQueries(searchParams.index, searchParams);
+
+    expect(queries.length).toBe(1);
+    expect(queries[0].params.expandWildcardFacets).toBe(undefined);
+  });
+
+  test('keeps only * and negative', function() {
+    var searchParams = new SearchParameters({
+      expandWildcardFacets: true,
+      facets: ['test', '-negative', '*'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
+    });
+
+    var queries = getQueries(searchParams.index, searchParams);
+
+    expect(queries.length).toBe(1);
+    expect(queries[0].params.facets).toEqual(['-negative', '*']);
+  });
+
+  test('does not inject * if not present', function() {
+    var searchParams = new SearchParameters({
+      expandWildcardFacets: true,
+      facets: ['test'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
+    });
+
+    var queries = getQueries(searchParams.index, searchParams);
+
+    expect(queries.length).toBe(1);
+    expect(queries[0].params.facets).toEqual([]);
+  });
+
+  test('only applies to first query', function() {
+    var searchParams = new SearchParameters({
+      expandWildcardFacets: true,
+      facets: ['test', '*'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}],
+      disjunctiveFacetsRefinements: {test_disjunctive: ['one', 'two']}
+    });
+
+    var queries = getQueries(searchParams.index, searchParams);
+
+    expect(queries.length).toBe(2);
+    expect(queries[0].params.facets).toEqual(['*']);
+    expect(queries[1].params.facets).toEqual('test_disjunctive');
+  });
+});

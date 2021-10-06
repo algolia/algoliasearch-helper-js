@@ -432,6 +432,12 @@ declare namespace algoliasearchHelper {
      * let you filter faceted attributes hierarchically.
      */
     hierarchicalFacets?: SearchParameters.HierarchicalFacet[];
+    /**
+     * When a * is detected as one of the facets requested, all facets that are
+     * not starting with "-" are removed from the request, to cache more often.
+     * @default false
+     */
+     expandWildcardFacets: boolean;
 
     // Refinements
     /**
@@ -523,14 +529,17 @@ declare namespace algoliasearchHelper {
   export class SearchParameters implements PlainSearchParameters {
     managedParameters: [
       'index',
+
+      'expandWildcardFacets',
       'facets',
       'disjunctiveFacets',
       'facetsRefinements',
+      'hierarchicalFacets',
       'facetsExcludes',
+  
       'disjunctiveFacetsRefinements',
       'numericRefinements',
       'tagRefinements',
-      'hierarchicalFacets',
       'hierarchicalFacetsRefinements'
     ];
 
