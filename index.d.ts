@@ -432,12 +432,6 @@ declare namespace algoliasearchHelper {
      * let you filter faceted attributes hierarchically.
      */
     hierarchicalFacets?: SearchParameters.HierarchicalFacet[];
-    /**
-     * When a * is detected as one of the facets requested, it will be the only
-     * facet requested, to cache more often.
-     * @default false
-     */
-     expandWildcardFacets: boolean;
 
     // Refinements
     /**
@@ -530,7 +524,6 @@ declare namespace algoliasearchHelper {
     managedParameters: [
       'index',
 
-      'expandWildcardFacets',
       'facets',
       'disjunctiveFacets',
       'facetsRefinements',

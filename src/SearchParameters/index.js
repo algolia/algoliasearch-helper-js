@@ -1313,7 +1313,6 @@ SearchParameters.prototype = {
   managedParameters: [
     'index',
 
-    'expandWildcardFacets',
     'facets',
     'disjunctiveFacets',
     'facetsRefinements',

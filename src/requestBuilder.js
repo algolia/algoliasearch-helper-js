@@ -60,8 +60,7 @@ var requestBuilder = {
     var numericFilters = requestBuilder._getNumericFilters(state);
     var tagFilters = requestBuilder._getTagFilters(state);
     var additionalParams = {
-      facets: state.expandWildcardFacets && facets.indexOf('*') > 0
-        ? ['*']
+      facets: facets.indexOf('*') > 0 ? ['*']
         : facets,
       tagFilters: tagFilters
     };

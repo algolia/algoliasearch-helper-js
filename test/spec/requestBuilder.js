@@ -67,38 +67,9 @@ test('does only a single query if refinements are empty', function() {
   expect(queries).toHaveLength(1);
 });
 
-describe('expandWildcardFacets', function() {
-  test('does not send expandWildcardFacets as parameter', function() {
-    var searchParams = new SearchParameters({
-      expandWildcardFacets: true,
-      facets: ['test', '*'],
-      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
-      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
-    });
-
-    var queries = getQueries(searchParams.index, searchParams);
-
-    expect(queries.length).toBe(1);
-    expect(queries[0].params.expandWildcardFacets).toBe(undefined);
-  });
-
-  test('keeps only *', function() {
-    var searchParams = new SearchParameters({
-      expandWildcardFacets: true,
-      facets: ['test', '*'],
-      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
-      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
-    });
-
-    var queries = getQueries(searchParams.index, searchParams);
-
-    expect(queries.length).toBe(1);
-    expect(queries[0].params.facets).toEqual(['*']);
-  });
-
+describe('wildcard facets', function() {
   test('keeps as-is if no * present', function() {
     var searchParams = new SearchParameters({
-      expandWildcardFacets: true,
       facets: ['test'],
       disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
       hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
@@ -115,9 +86,21 @@ describe('expandWildcardFacets', function() {
     ]);
   });
 
+  test('keeps only *', function() {
+    var searchParams = new SearchParameters({
+      facets: ['test', '*'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
+    });
+
+    var queries = getQueries(searchParams.index, searchParams);
+
+    expect(queries.length).toBe(1);
+    expect(queries[0].params.facets).toEqual(['*']);
+  });
+
   test('only applies to first query', function() {
     var searchParams = new SearchParameters({
-      expandWildcardFacets: true,
       facets: ['test', '*'],
       disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
       hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}],
