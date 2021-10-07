@@ -96,7 +96,7 @@ describe('expandWildcardFacets', function() {
     expect(queries[0].params.facets).toEqual(['*']);
   });
 
-  test('injects * if not present', function() {
+  test('keeps as-is if no * present', function() {
     var searchParams = new SearchParameters({
       expandWildcardFacets: true,
       facets: ['test'],
@@ -107,7 +107,12 @@ describe('expandWildcardFacets', function() {
     var queries = getQueries(searchParams.index, searchParams);
 
     expect(queries.length).toBe(1);
-    expect(queries[0].params.facets).toEqual(['*']);
+    expect(queries[0].params.facets).toEqual([
+      'test',
+      'test_disjunctive',
+      'test_numeric',
+      'whatever'
+    ]);
   });
 
   test('only applies to first query', function() {
