@@ -71,7 +71,7 @@ describe('expandWildcardFacets', function() {
   test('does not send expandWildcardFacets as parameter', function() {
     var searchParams = new SearchParameters({
       expandWildcardFacets: true,
-      facets: ['test', '-negative', '*'],
+      facets: ['test', '*'],
       disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
       hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
     });
@@ -82,10 +82,10 @@ describe('expandWildcardFacets', function() {
     expect(queries[0].params.expandWildcardFacets).toBe(undefined);
   });
 
-  test('keeps only * and negative', function() {
+  test('keeps only *', function() {
     var searchParams = new SearchParameters({
       expandWildcardFacets: true,
-      facets: ['test', '-negative', '*'],
+      facets: ['test', '*'],
       disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
       hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
     });
@@ -93,10 +93,10 @@ describe('expandWildcardFacets', function() {
     var queries = getQueries(searchParams.index, searchParams);
 
     expect(queries.length).toBe(1);
-    expect(queries[0].params.facets).toEqual(['-negative', '*']);
+    expect(queries[0].params.facets).toEqual(['*']);
   });
 
-  test('does not inject * if not present', function() {
+  test('injects * if not present', function() {
     var searchParams = new SearchParameters({
       expandWildcardFacets: true,
       facets: ['test'],
@@ -107,7 +107,7 @@ describe('expandWildcardFacets', function() {
     var queries = getQueries(searchParams.index, searchParams);
 
     expect(queries.length).toBe(1);
-    expect(queries[0].params.facets).toEqual([]);
+    expect(queries[0].params.facets).toEqual(['*']);
   });
 
   test('only applies to first query', function() {

@@ -61,7 +61,7 @@ var requestBuilder = {
     var tagFilters = requestBuilder._getTagFilters(state);
     var additionalParams = {
       facets: state.expandWildcardFacets
-        ? facets.filter((facet) => facet === '*' || facet[0] === '-')
+        ? ['*']
         : facets,
       tagFilters: tagFilters
     };
