@@ -23,7 +23,7 @@ aliases:
 defaults: &defaults
   working_directory: ~/algoliasearch-helper-js
   docker:
-    - image: cimg/node:8.15.1
+    - image: cimg/node:8.17.0
 
 version: 2
 jobs:
