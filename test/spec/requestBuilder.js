@@ -99,6 +99,19 @@ describe('wildcard facets', function() {
     expect(queries[0].params.facets).toEqual(['*']);
   });
 
+  test('detects * as first value', function() {
+    var searchParams = new SearchParameters({
+      facets: ['*', 'test'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}]
+    });
+
+    var queries = getQueries(searchParams.index, searchParams);
+
+    expect(queries.length).toBe(1);
+    expect(queries[0].params.facets).toEqual(['*']);
+  });
+
   test('only applies to first query', function() {
     var searchParams = new SearchParameters({
       facets: ['test', '*'],
