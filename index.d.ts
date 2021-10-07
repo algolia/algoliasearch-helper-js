@@ -433,8 +433,8 @@ declare namespace algoliasearchHelper {
      */
     hierarchicalFacets?: SearchParameters.HierarchicalFacet[];
     /**
-     * When a * is detected as one of the facets requested, all facets that are
-     * not starting with "-" are removed from the request, to cache more often.
+     * When a * is detected as one of the facets requested, it will be the only
+     * facet requested, to cache more often.
      * @default false
      */
      expandWildcardFacets: boolean;
