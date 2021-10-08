@@ -99,7 +99,7 @@ describe('wildcard facets', function() {
     expect(queries[0].params.facets).toEqual(['*']);
   });
 
-  test('detects * as first value', function() {
+  test('keeps only * when first value', function() {
     var searchParams = new SearchParameters({
       facets: ['*', 'test'],
       disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
