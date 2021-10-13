@@ -780,7 +780,7 @@ describe('hierarchical facet', function() {
   });
 });
 
-test('customer issue', function() {
+test('does not return empty items', function() {
   var rawResults = require('./getFacetValues/sparse.json');
   var results = new SearchResults(new SearchParameters({
     disjunctiveFacets: ['brands']
