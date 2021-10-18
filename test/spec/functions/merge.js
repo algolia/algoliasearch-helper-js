@@ -181,5 +181,5 @@ it('does not pollute the prototype', () => {
 
   expect(out).toEqual({});
 
-  expect(subject.polluted).toBe(undefined);
+  expect({}.polluted).toBe(undefined);
 });
