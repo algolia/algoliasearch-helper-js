@@ -1,6 +1,6 @@
 'use strict';
 
-var events = require('events');
+var events = require('../events');
 var inherits = require('../functions/inherits');
 
 /**
