@@ -5,7 +5,7 @@ var SearchResults = require('./SearchResults');
 var DerivedHelper = require('./DerivedHelper');
 var requestBuilder = require('./requestBuilder');
 
-var EventEmitter = require('@algolia/events').default;
+var EventEmitter = require('@algolia/events');
 var inherits = require('./functions/inherits');
 var objectHasKeys = require('./functions/objectHasKeys');
 var omit = require('./functions/omit');

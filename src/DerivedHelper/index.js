@@ -1,6 +1,6 @@
 'use strict';
 
-var EventEmitter = require('@algolia/events').default;
+var EventEmitter = require('@algolia/events');
 var inherits = require('../functions/inherits');
 
 /**
