@@ -205,7 +205,8 @@ var requestBuilder = {
       var orFilters = [];
 
       facetValues.forEach(function(facetValue) {
-        orFilters.push(facetName + ':' + facetValue);
+        var prefix = facetValue.length > 0 && facetValue[0] === '-' ? '\\' : '';
+        orFilters.push(facetName + ':' + prefix + facetValue);
       });
 
       facetFilters.push(orFilters);
@@ -251,7 +252,8 @@ var requestBuilder = {
       }
 
       if (attributeToRefine) {
-        facetFilters.push([attributeToRefine + ':' + facetValue]);
+        var prefix = facetValue.length > 0 && facetValue[0] === '-' ? '\\' : '';
+        facetFilters.push([attributeToRefine + ':' + prefix + facetValue]);
       }
     });
 
