@@ -9,12 +9,12 @@ test('getQuery', function() {
     disjunctiveFacets: ['df1', 'df2', 'df3'],
     disjunctiveFacetsRefinements: {
       df1: ['DF1-VAL-1'],
-      df2: ['DF2-VAL-1', 'DF2-VAL-2']
+      df2: ['DF2-VAL-1', 'DF2-VAL-2', '-DF2-VAL-3']
     },
     facets: ['facet1', 'facet2', 'facet3'],
     facetsRefinements: {
       facet1: ['FACET1-VAL-1'],
-      facet2: ['FACET2-VAL-1', 'FACET2-VAL2']
+      facet2: ['FACET2-VAL-1', 'FACET2-VAL2', '-FACET2-VAL3']
     },
     minWordSizefor1Typo: 8,
     ignorePlurals: true
@@ -28,8 +28,9 @@ test('getQuery', function() {
     facetFilters: ['facet1:FACET1-VAL-1',
       'facet2:FACET2-VAL-1',
       'facet2:FACET2-VAL2',
+      'facet2:\\-FACET2-VAL3',
       ['df1:DF1-VAL-1'],
-      ['df2:DF2-VAL-1', 'df2:DF2-VAL-2']
+      ['df2:DF2-VAL-1', 'df2:DF2-VAL-2', 'df2:\\-DF2-VAL-3']
     ]
   });
 });
