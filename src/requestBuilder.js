@@ -183,7 +183,8 @@ var requestBuilder = {
     Object.keys(facetsRefinements).forEach(function(facetName) {
       var facetValues = facetsRefinements[facetName] || [];
       facetValues.forEach(function(facetValue) {
-        facetFilters.push(facetName + ':' + facetValue);
+        var prefix = facetValue.length > 0 && facetValue[0] === '-' ? '\\' : '';
+        facetFilters.push(facetName + ':' + prefix + facetValue);
       });
     });
 
