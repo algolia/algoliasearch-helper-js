@@ -7,6 +7,7 @@ var compact = require('../functions/compact');
 var find = require('../functions/find');
 var findIndex = require('../functions/findIndex');
 var formatSort = require('../functions/formatSort');
+var escapeFacetValue = require('../functions/escapeFacetValue');
 
 var generateHierarchicalTree = require('./generate-hierarchical-tree');
 
@@ -642,6 +643,7 @@ function extractNormalizedFacetValues(results, attribute) {
     return Object.keys(facet.data).map(function(name) {
       return {
         name: name,
+        value: escapeFacetValue(name),
         count: facet.data[name],
         isRefined: results._state.isFacetRefined(attribute, name),
         isExcluded: results._state.isExcludeRefined(attribute, name)
@@ -654,6 +656,7 @@ function extractNormalizedFacetValues(results, attribute) {
     return Object.keys(disjunctiveFacet.data).map(function(name) {
       return {
         name: name,
+        value: escapeFacetValue(name),
         count: disjunctiveFacet.data[name],
         isRefined: results._state.isDisjunctiveFacetRefined(attribute, name)
       };
