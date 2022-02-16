@@ -227,6 +227,7 @@ test('getFacetValues(disjunctive) returns escaped facet values', function() {
   expect(facetValues.length).toBe(2);
 });
 
+// TODO: escape these too
 test('getFacetValues(hierachical) returns escaped facet values', function() {
   var searchParams = new SearchParameters({
     index: 'instant_search',
@@ -259,9 +260,17 @@ test('getFacetValues(hierachical) returns escaped facet values', function() {
     data: [
       {
         count: 5,
-        data: null,
-        exhaustive: undefined,
-        isRefined: false,
+        data: [
+          {
+            count: 5,
+            data: null,
+            exhaustive: undefined,
+            isRefined: false,
+            name: 'discounts',
+            path: '-something > discounts'
+          }
+        ],
+        isRefined: true,
         name: '-something',
         path: '-something'
       },
