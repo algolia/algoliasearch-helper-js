@@ -619,6 +619,16 @@ SearchResults.prototype.getFacetByName = function(name) {
 };
 
 /**
+ * Replaces a leading - with \-
+ * @private
+ * @param {string} value the facet value to replace
+ * @returns string
+ */
+function escapeFacetValue(value) {
+  return value.replace(/^-/, '\\-');
+}
+
+/**
  * Get the facet values of a specified attribute from a SearchResults object.
  * @private
  * @param {SearchResults} results the search results to search in
@@ -637,6 +647,7 @@ function extractNormalizedFacetValues(results, attribute) {
     return Object.keys(facet.data).map(function(name) {
       return {
         name: name,
+        value: escapeFacetValue(name),
         count: facet.data[name],
         isRefined: results._state.isFacetRefined(attribute, name),
         isExcluded: results._state.isExcludeRefined(attribute, name)
@@ -649,6 +660,7 @@ function extractNormalizedFacetValues(results, attribute) {
     return Object.keys(disjunctiveFacet.data).map(function(name) {
       return {
         name: name,
+        value: escapeFacetValue(name),
         count: disjunctiveFacet.data[name],
         isRefined: results._state.isDisjunctiveFacetRefined(attribute, name)
       };

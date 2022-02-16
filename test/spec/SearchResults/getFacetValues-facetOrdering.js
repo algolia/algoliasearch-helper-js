@@ -15,9 +15,9 @@ describe('disjunctive facet', function() {
         }
       },
       [
-        {count: 551, isRefined: false, name: 'Insignia™'},
-        {count: 511, isRefined: false, name: 'Samsung'},
-        {count: 386, isRefined: true, name: 'Apple'}
+        {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'},
+        {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+        {count: 386, isRefined: true, name: 'Apple', value: 'Apple'}
       ]
     ],
     [
@@ -30,9 +30,9 @@ describe('disjunctive facet', function() {
         }
       },
       [
-        {count: 511, isRefined: false, name: 'Samsung'},
-        {count: 386, isRefined: true, name: 'Apple'},
-        {count: 551, isRefined: false, name: 'Insignia™'}
+        {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+        {count: 386, isRefined: true, name: 'Apple', value: 'Apple'},
+        {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'}
       ]
     ],
     [
@@ -45,9 +45,9 @@ describe('disjunctive facet', function() {
         }
       },
       [
-        {count: 511, isRefined: false, name: 'Samsung'},
-        {count: 551, isRefined: false, name: 'Insignia™'},
-        {count: 386, isRefined: true, name: 'Apple'}
+        {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+        {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'},
+        {count: 386, isRefined: true, name: 'Apple', value: 'Apple'}
       ]
     ],
     [
@@ -61,9 +61,9 @@ describe('disjunctive facet', function() {
         }
       },
       [
-        {count: 511, isRefined: false, name: 'Samsung'},
-        {count: 551, isRefined: false, name: 'Insignia™'},
-        {count: 386, isRefined: true, name: 'Apple'}
+        {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+        {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'},
+        {count: 386, isRefined: true, name: 'Apple', value: 'Apple'}
       ]
     ],
     [
@@ -77,9 +77,9 @@ describe('disjunctive facet', function() {
         }
       },
       [
-        {count: 511, isRefined: false, name: 'Samsung'},
-        {count: 386, isRefined: true, name: 'Apple'},
-        {count: 551, isRefined: false, name: 'Insignia™'}
+        {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+        {count: 386, isRefined: true, name: 'Apple', value: 'Apple'},
+        {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'}
       ]
     ],
     [
@@ -92,7 +92,7 @@ describe('disjunctive facet', function() {
           }
         }
       },
-      [{count: 511, isRefined: false, name: 'Samsung'}]
+      [{count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'}]
     ]
   ])('%p', function(_name, facetOrdering, expected) {
     var data = require('./getFacetValues/disjunctive.json');
@@ -134,9 +134,9 @@ describe('disjunctive facet', function() {
     var facetValues = result.getFacetValues('brand', {sortBy: ['name:desc']});
 
     var expected = [
-      {count: 511, isRefined: false, name: 'Samsung'},
-      {count: 551, isRefined: false, name: 'Insignia™'},
-      {count: 386, isRefined: true, name: 'Apple'}
+      {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+      {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'},
+      {count: 386, isRefined: true, name: 'Apple', value: 'Apple'}
     ];
 
     expect(facetValues).toEqual(expected);
@@ -167,9 +167,9 @@ describe('disjunctive facet', function() {
     });
 
     var expected = [
-      {count: 511, isRefined: false, name: 'Samsung'},
-      {count: 386, isRefined: true, name: 'Apple'},
-      {count: 551, isRefined: false, name: 'Insignia™'}
+      {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'},
+      {count: 386, isRefined: true, name: 'Apple', value: 'Apple'},
+      {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'}
     ];
 
     expect(facetValues).toEqual(expected);
@@ -199,9 +199,9 @@ describe('disjunctive facet', function() {
     });
 
     var expected = [
-      {count: 386, isRefined: true, name: 'Apple'},
-      {count: 551, isRefined: false, name: 'Insignia™'},
-      {count: 511, isRefined: false, name: 'Samsung'}
+      {count: 386, isRefined: true, name: 'Apple', value: 'Apple'},
+      {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'},
+      {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'}
     ];
 
     expect(facetValues).toEqual(expected);
@@ -221,9 +221,9 @@ describe('disjunctive facet', function() {
     var facetValues = result.getFacetValues('brand');
 
     var expected = [
-      {count: 386, isRefined: true, name: 'Apple'},
-      {count: 551, isRefined: false, name: 'Insignia™'},
-      {count: 511, isRefined: false, name: 'Samsung'}
+      {count: 386, isRefined: true, name: 'Apple', value: 'Apple'},
+      {count: 551, isRefined: false, name: 'Insignia™', value: 'Insignia™'},
+      {count: 511, isRefined: false, name: 'Samsung', value: 'Samsung'}
     ];
 
     expect(facetValues).toEqual(expected);
@@ -787,14 +787,14 @@ test('does not return empty items', function() {
   }), rawResults.results);
 
   expect(results.getFacetValues('brands', {facetOrdering: true})).toEqual([
-    {name: 'Addo', count: 321, isRefined: false},
-    {name: 'Paw Patrol', count: 130, isRefined: false},
-    {name: 'Mattel', count: 586, isRefined: false},
-    {name: 'Nick Jr.', count: 147, isRefined: false},
-    {name: 'Early Learning Centre', count: 292, isRefined: false},
-    {name: 'Hot Wheels', count: 94, isRefined: false},
-    {name: 'Fisher-Price', count: 104, isRefined: false},
-    {name: 'Funko', count: 187, isRefined: false},
-    {name: 'Nickelodeon', count: 230, isRefined: false}
+    {name: 'Addo', value: 'Addo', count: 321, isRefined: false},
+    {name: 'Paw Patrol', value: 'Paw Patrol', count: 130, isRefined: false},
+    {name: 'Mattel', value: 'Mattel', count: 586, isRefined: false},
+    {name: 'Nick Jr.', value: 'Nick Jr.', count: 147, isRefined: false},
+    {name: 'Early Learning Centre', value: 'Early Learning Centre', count: 292, isRefined: false},
+    {name: 'Hot Wheels', value: 'Hot Wheels', count: 94, isRefined: false},
+    {name: 'Fisher-Price', value: 'Fisher-Price', count: 104, isRefined: false},
+    {name: 'Funko', value: 'Funko', count: 187, isRefined: false},
+    {name: 'Nickelodeon', value: 'Nickelodeon', count: 230, isRefined: false}
   ]);
 });
