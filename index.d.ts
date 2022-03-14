@@ -1300,7 +1300,7 @@ declare namespace algoliasearchHelper {
 
     /**
      * Marker which can be added to search results to identify them as created without a search response.
-     * This is for internal use, eg. avoiding caching in infinite hits, or delaying the display of these results.
+     * This is for internal use, e.g., avoiding caching in infinite hits, or delaying the display of these results.
      */
     __isArtificial?: boolean;
 
