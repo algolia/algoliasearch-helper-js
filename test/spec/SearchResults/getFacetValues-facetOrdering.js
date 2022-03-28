@@ -251,26 +251,30 @@ describe('hierarchical facet', function() {
       count: null,
       isRefined: true,
       path: null,
+      value: null,
       exhaustive: true,
       data: [
         {
           name: 'Best Buy Gift Cards',
           path: 'Best Buy Gift Cards',
+          value: 'Best Buy Gift Cards',
           count: 80,
           isRefined: true,
           exhaustive: true,
           data: [
             {
+              name: 'Entertainment Gift Cards',
+              path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              value: 'Best Buy Gift Cards > Entertainment Gift Cards',
               count: 17,
               data: null,
               exhaustive: true,
-              isRefined: true,
-              name: 'Entertainment Gift Cards',
-              path: 'Best Buy Gift Cards > Entertainment Gift Cards'
+              isRefined: true
             },
             {
               name: 'Swag Gift Cards',
               path: 'Best Buy Gift Cards > Swag Gift Cards',
+              value: 'Best Buy Gift Cards > Swag Gift Cards',
               count: 20,
               isRefined: false,
               exhaustive: true,
@@ -279,6 +283,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Useless Gift Cards',
               path: 'Best Buy Gift Cards > Useless Gift Cards',
+              value: 'Best Buy Gift Cards > Useless Gift Cards',
               count: 12,
               isRefined: false,
               exhaustive: true,
@@ -289,6 +294,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Cell Phones',
           path: 'Cell Phones',
+          value: 'Cell Phones',
           count: 1920,
           isRefined: false,
           exhaustive: true,
@@ -297,6 +303,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Computers & Tablets',
           path: 'Computers & Tablets',
+          value: 'Computers & Tablets',
           count: 1858,
           isRefined: false,
           exhaustive: true,
@@ -305,6 +312,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Appliances',
           path: 'Appliances',
+          value: 'Appliances',
           count: 1533,
           isRefined: false,
           exhaustive: true,
@@ -313,6 +321,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Audio',
           path: 'Audio',
+          value: 'Audio',
           count: 1010,
           isRefined: false,
           exhaustive: true,
@@ -350,11 +359,13 @@ describe('hierarchical facet', function() {
       count: null,
       isRefined: true,
       path: null,
+      value: null,
       exhaustive: true,
       data: [
         {
           name: 'Appliances',
           path: 'Appliances',
+          value: 'Appliances',
           count: 1533,
           isRefined: false,
           exhaustive: true,
@@ -363,6 +374,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Best Buy Gift Cards',
           path: 'Best Buy Gift Cards',
+          value: 'Best Buy Gift Cards',
           count: 80,
           isRefined: true,
           exhaustive: true,
@@ -373,11 +385,13 @@ describe('hierarchical facet', function() {
               exhaustive: true,
               isRefined: true,
               name: 'Entertainment Gift Cards',
-              path: 'Best Buy Gift Cards > Entertainment Gift Cards'
+              path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              value: 'Best Buy Gift Cards > Entertainment Gift Cards'
             },
             {
               name: 'Swag Gift Cards',
               path: 'Best Buy Gift Cards > Swag Gift Cards',
+              value: 'Best Buy Gift Cards > Swag Gift Cards',
               count: 20,
               isRefined: false,
               exhaustive: true,
@@ -386,6 +400,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Useless Gift Cards',
               path: 'Best Buy Gift Cards > Useless Gift Cards',
+              value: 'Best Buy Gift Cards > Useless Gift Cards',
               count: 12,
               isRefined: false,
               exhaustive: true,
@@ -396,6 +411,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Audio',
           path: 'Audio',
+          value: 'Audio',
           count: 1010,
           isRefined: false,
           exhaustive: true,
@@ -407,7 +423,8 @@ describe('hierarchical facet', function() {
           exhaustive: true,
           isRefined: false,
           name: 'Cell Phones',
-          path: 'Cell Phones'
+          path: 'Cell Phones',
+          value: 'Cell Phones'
         },
         {
           count: 1858,
@@ -415,7 +432,8 @@ describe('hierarchical facet', function() {
           exhaustive: true,
           isRefined: false,
           name: 'Computers & Tablets',
-          path: 'Computers & Tablets'
+          path: 'Computers & Tablets',
+          value: 'Computers & Tablets'
         }
       ]
     };
@@ -449,12 +467,14 @@ describe('hierarchical facet', function() {
       name: 'hierarchicalCategories',
       count: null,
       isRefined: true,
+      value: null,
       path: null,
       exhaustive: true,
       data: [
         {
           name: 'Appliances',
           path: 'Appliances',
+          value: 'Appliances',
           count: 1533,
           isRefined: false,
           exhaustive: true,
@@ -463,6 +483,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Best Buy Gift Cards',
           path: 'Best Buy Gift Cards',
+          value: 'Best Buy Gift Cards',
           count: 80,
           isRefined: true,
           exhaustive: true,
@@ -470,6 +491,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Entertainment Gift Cards',
               path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              value: 'Best Buy Gift Cards > Entertainment Gift Cards',
               count: 17,
               isRefined: true,
               exhaustive: true,
@@ -478,6 +500,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Swag Gift Cards',
               path: 'Best Buy Gift Cards > Swag Gift Cards',
+              value: 'Best Buy Gift Cards > Swag Gift Cards',
               count: 20,
               isRefined: false,
               exhaustive: true,
@@ -486,6 +509,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Useless Gift Cards',
               path: 'Best Buy Gift Cards > Useless Gift Cards',
+              value: 'Best Buy Gift Cards > Useless Gift Cards',
               count: 12,
               isRefined: false,
               exhaustive: true,
@@ -496,6 +520,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Cell Phones',
           path: 'Cell Phones',
+          value: 'Cell Phones',
           count: 1920,
           isRefined: false,
           exhaustive: true,
@@ -504,6 +529,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Computers & Tablets',
           path: 'Computers & Tablets',
+          value: 'Computers & Tablets',
           count: 1858,
           isRefined: false,
           exhaustive: true,
@@ -512,6 +538,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Audio',
           path: 'Audio',
+          value: 'Audio',
           count: 1010,
           isRefined: false,
           exhaustive: true,
@@ -550,11 +577,13 @@ describe('hierarchical facet', function() {
       count: null,
       isRefined: true,
       path: null,
+      value: null,
       exhaustive: true,
       data: [
         {
           name: 'Appliances',
           path: 'Appliances',
+          value: 'Appliances',
           count: 1533,
           isRefined: false,
           exhaustive: true,
@@ -563,6 +592,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Best Buy Gift Cards',
           path: 'Best Buy Gift Cards',
+          value: 'Best Buy Gift Cards',
           count: 80,
           isRefined: true,
           exhaustive: true,
@@ -570,6 +600,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Entertainment Gift Cards',
               path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              value: 'Best Buy Gift Cards > Entertainment Gift Cards',
               count: 17,
               isRefined: true,
               exhaustive: true,
@@ -578,6 +609,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Swag Gift Cards',
               path: 'Best Buy Gift Cards > Swag Gift Cards',
+              value: 'Best Buy Gift Cards > Swag Gift Cards',
               count: 20,
               isRefined: false,
               exhaustive: true,
@@ -586,6 +618,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Useless Gift Cards',
               path: 'Best Buy Gift Cards > Useless Gift Cards',
+              value: 'Best Buy Gift Cards > Useless Gift Cards',
               count: 12,
               isRefined: false,
               exhaustive: true,
@@ -596,6 +629,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Audio',
           path: 'Audio',
+          value: 'Audio',
           count: 1010,
           isRefined: false,
           exhaustive: true,
@@ -604,6 +638,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Cell Phones',
           path: 'Cell Phones',
+          value: 'Cell Phones',
           count: 1920,
           isRefined: false,
           exhaustive: true,
@@ -612,6 +647,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Computers & Tablets',
           path: 'Computers & Tablets',
+          value: 'Computers & Tablets',
           count: 1858,
           isRefined: false,
           exhaustive: true,
@@ -650,11 +686,13 @@ describe('hierarchical facet', function() {
       count: null,
       isRefined: true,
       path: null,
+      value: null,
       exhaustive: true,
       data: [
         {
           name: 'Appliances',
           path: 'Appliances',
+          value: 'Appliances',
           count: 1533,
           isRefined: false,
           exhaustive: true,
@@ -663,6 +701,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Audio',
           path: 'Audio',
+          value: 'Audio',
           count: 1010,
           isRefined: false,
           exhaustive: true,
@@ -671,6 +710,7 @@ describe('hierarchical facet', function() {
         {
           name: 'Best Buy Gift Cards',
           path: 'Best Buy Gift Cards',
+          value: 'Best Buy Gift Cards',
           count: 80,
           isRefined: true,
           exhaustive: true,
@@ -678,6 +718,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Entertainment Gift Cards',
               path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              value: 'Best Buy Gift Cards > Entertainment Gift Cards',
               count: 17,
               isRefined: true,
               exhaustive: true,
@@ -686,6 +727,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Swag Gift Cards',
               path: 'Best Buy Gift Cards > Swag Gift Cards',
+              value: 'Best Buy Gift Cards > Swag Gift Cards',
               count: 20,
               isRefined: false,
               exhaustive: true,
@@ -694,6 +736,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Useless Gift Cards',
               path: 'Best Buy Gift Cards > Useless Gift Cards',
+              value: 'Best Buy Gift Cards > Useless Gift Cards',
               count: 12,
               isRefined: false,
               exhaustive: true,
@@ -738,11 +781,13 @@ describe('hierarchical facet', function() {
       count: null,
       isRefined: true,
       path: null,
+      value: null,
       exhaustive: true,
       data: [
         {
           name: 'Best Buy Gift Cards',
           path: 'Best Buy Gift Cards',
+          value: 'Best Buy Gift Cards',
           count: 80,
           isRefined: true,
           exhaustive: true,
@@ -750,6 +795,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Entertainment Gift Cards',
               path: 'Best Buy Gift Cards > Entertainment Gift Cards',
+              value: 'Best Buy Gift Cards > Entertainment Gift Cards',
               count: 17,
               isRefined: true,
               exhaustive: true,
@@ -758,6 +804,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Swag Gift Cards',
               path: 'Best Buy Gift Cards > Swag Gift Cards',
+              value: 'Best Buy Gift Cards > Swag Gift Cards',
               count: 20,
               isRefined: false,
               exhaustive: true,
@@ -766,6 +813,7 @@ describe('hierarchical facet', function() {
             {
               name: 'Useless Gift Cards',
               path: 'Best Buy Gift Cards > Useless Gift Cards',
+              value: 'Best Buy Gift Cards > Useless Gift Cards',
               count: 12,
               isRefined: false,
               exhaustive: true,

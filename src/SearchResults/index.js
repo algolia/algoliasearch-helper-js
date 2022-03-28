@@ -7,6 +7,7 @@ var compact = require('../functions/compact');
 var find = require('../functions/find');
 var findIndex = require('../functions/findIndex');
 var formatSort = require('../functions/formatSort');
+const escapeFacetValue = require('../functions/escapeFacetValue');
 
 var generateHierarchicalTree = require('./generate-hierarchical-tree');
 
@@ -617,16 +618,6 @@ SearchResults.prototype.getFacetByName = function(name) {
     find(this.disjunctiveFacets, predicate) ||
     find(this.hierarchicalFacets, predicate);
 };
-
-/**
- * Replaces a leading - with \-
- * @private
- * @param {string} value the facet value to replace
- * @returns string
- */
-function escapeFacetValue(value) {
-  return value.replace(/^-/, '\\-');
-}
 
 /**
  * Get the facet values of a specified attribute from a SearchResults object.

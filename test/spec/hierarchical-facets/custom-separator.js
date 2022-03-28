@@ -65,16 +65,19 @@ test('hierarchical facets: custom separator', function(done) {
     'count': null,
     'isRefined': true,
     'path': null,
+    'value': null,
     'exhaustive': true,
     'data': [{
       'name': 'beers',
       'path': 'beers',
+      'value': 'beers',
       'count': 3,
       'isRefined': true,
       'exhaustive': true,
       'data': [{
         'name': 'IPA',
         'path': 'beers | IPA',
+        'value': 'beers | IPA',
         'count': 2,
         'isRefined': true,
         'exhaustive': true,
@@ -82,6 +85,7 @@ test('hierarchical facets: custom separator', function(done) {
       }, {
         'name': 'Belgian',
         'path': 'beers | Belgian',
+        'value': 'beers | Belgian',
         'count': 1,
         'isRefined': false,
         'exhaustive': true,

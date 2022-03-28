@@ -227,15 +227,14 @@ test('getFacetValues(disjunctive) returns escaped facet values', function() {
   expect(facetValues.length).toBe(2);
 });
 
-// TODO: escape these too
 test('getFacetValues(hierachical) returns escaped facet values', function() {
   var searchParams = new SearchParameters({
     index: 'instant_search',
     hierarchicalFacets: [{
       name: 'type',
-      attributes: ['type1', 'type2']
+      attributes: ['type1', 'type2', 'type3']
     }],
-    hierarchicalFacetsRefinements: {type: ['-something']}
+    hierarchicalFacetsRefinements: {type: ['-something > discounts']}
   });
 
   var result = {
@@ -248,11 +247,16 @@ test('getFacetValues(hierachical) returns escaped facet values', function() {
       type2: {
         'dogs > hounds': 1,
         '-something > discounts': 5
+      },
+      type3: {
+        '-something > discounts > -5%': 1,
+        '-something > discounts > full price': 4
       }
-    }
+    },
+    exhaustiveFacetsCount: true
   };
 
-  var results = new SearchResults(searchParams, [result, result]);
+  var results = new SearchResults(searchParams, [result, result, result]);
 
   var facetValues = results.getFacetValues('type');
 
@@ -263,30 +267,51 @@ test('getFacetValues(hierachical) returns escaped facet values', function() {
         data: [
           {
             count: 5,
-            data: null,
-            exhaustive: undefined,
-            isRefined: false,
+            data: [{
+              count: 4,
+              data: null,
+              exhaustive: true,
+              isRefined: false,
+              name: 'full price',
+              path: '-something > discounts > full price',
+              value: '\\-something > discounts > full price'
+            }, {
+              count: 1,
+              data: null,
+              exhaustive: true,
+              isRefined: false,
+              name: '-5%',
+              path: '-something > discounts > -5%',
+              value: '\\-something > discounts > -5%'
+            }],
+            exhaustive: true,
+            isRefined: true,
             name: 'discounts',
-            path: '-something > discounts'
+            path: '-something > discounts',
+            value: '\\-something > discounts'
           }
         ],
+        exhaustive: true,
         isRefined: true,
         name: '-something',
-        path: '-something'
+        path: '-something',
+        value: '\\-something'
       },
       {
         count: 1,
         data: null,
-        exhaustive: undefined,
+        exhaustive: true,
         isRefined: false,
         name: 'dogs',
-        path: 'dogs'
+        path: 'dogs',
+        value: 'dogs'
       }
     ],
-    exhaustive: false,
+    exhaustive: true,
     isRefined: true,
     name: 'type',
     path: null,
+    value: null,
     count: null
   };
 
