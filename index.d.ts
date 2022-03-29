@@ -1415,14 +1415,16 @@ declare namespace algoliasearchHelper {
 
     interface HierarchicalFacet {
       name: string;
-      count: number;
       path: string;
+      value: string;
+      count: number;
       isRefined: boolean;
       data: HierarchicalFacet[];
     }
 
     interface FacetValue {
       name: string;
+      value: string;
       count: number;
       isRefined: boolean;
       isExcluded: boolean;
