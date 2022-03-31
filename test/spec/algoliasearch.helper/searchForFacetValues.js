@@ -347,6 +347,8 @@ test('value is escaped when it starts with `-`', function() {
     expect(content.processingTimeMS).toBe(3);
     expect(content.facetHits.length).toBe(2);
     expect(content.facetHits[0].value).toBe('something');
-    expect(content.facetHits[1].value).toBe('\\-20%');
+    expect(content.facetHits[0].safeValue).toBe('something');
+    expect(content.facetHits[1].value).toBe('-20%');
+    expect(content.facetHits[1].safeValue).toBe('\\-20%');
   });
 });
