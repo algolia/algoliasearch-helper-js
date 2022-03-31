@@ -12,7 +12,7 @@ var omit = require('./functions/omit');
 var merge = require('./functions/merge');
 
 var version = require('./version');
-const escapeFacetValue = require('./functions/escapeFacetValue');
+var escapeFacetValue = require('./functions/escapeFacetValue').escapeFacetValue;
 
 /**
  * Event triggered when a parameter is set or updated
@@ -364,8 +364,8 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
     content.facetHits.forEach(function(f) {
       f.escapedValue = escapeFacetValue(f.value);
       f.isRefined = isDisjunctive
-        ? state.isDisjunctiveFacetRefined(facet, f.value)
-        : state.isFacetRefined(facet, f.value);
+        ? state.isDisjunctiveFacetRefined(facet, f.escapedValue)
+        : state.isFacetRefined(facet, f.escapedValue);
     });
 
     return content;
