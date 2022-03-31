@@ -362,7 +362,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
     content = Array.isArray(content) ? content[0] : content;
 
     content.facetHits.forEach(function(f) {
-      f.safeValue = escapeFacetValue(f.value);
+      f.escapedValue = escapeFacetValue(f.value);
       f.isRefined = isDisjunctive
         ? state.isDisjunctiveFacetRefined(facet, f.value)
         : state.isFacetRefined(facet, f.value);
