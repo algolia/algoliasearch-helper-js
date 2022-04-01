@@ -352,3 +352,60 @@ test('value is escaped when it starts with `-`', function() {
     expect(content.facetHits[1].escapedValue).toBe('\\-20%');
   });
 });
+
+
+test('escaped value is marked as refined', function() {
+  var fakeClient = {
+    addAlgoliaAgent: function() {},
+    searchForFacetValues: function() {
+      return Promise.resolve([
+        {
+          exhaustiveFacetsCount: true,
+          facetHits: [
+            {
+              count: 318,
+              highlighted: 'something',
+              value: 'something'
+            },
+            {
+              count: 1,
+              highlighted: '-20%',
+              value: '-20%'
+            }
+          ],
+          processingTimeMS: 3
+        }
+      ]);
+    }
+  };
+
+  var helper = algoliasearchHelper(fakeClient, 'index', {
+    disjunctiveFacets: ['facet'],
+    disjunctiveFacetsRefinements: {
+      facet: ['\\-20%', 'something']
+    }
+  });
+
+  return helper.searchForFacetValues('facet', 'k', 1).then(function(content) {
+    expect(content).toEqual({
+      exhaustiveFacetsCount: true,
+      processingTimeMS: 3,
+      facetHits: [
+        {
+          count: 318,
+          highlighted: 'something',
+          isRefined: true,
+          escapedValue: 'something',
+          value: 'something'
+        },
+        {
+          count: 1,
+          highlighted: '-20%',
+          isRefined: true,
+          escapedValue: '\\-20%',
+          value: '-20%'
+        }
+      ]
+    });
+  });
+});

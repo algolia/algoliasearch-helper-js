@@ -7,7 +7,9 @@ var compact = require('../functions/compact');
 var find = require('../functions/find');
 var findIndex = require('../functions/findIndex');
 var formatSort = require('../functions/formatSort');
-var escapeFacetValue = require('../functions/escapeFacetValue');
+var fv = require('../functions/escapeFacetValue');
+var escapeFacetValue = fv.escapeFacetValue;
+var unescapeFacetValue = fv.unescapeFacetValue;
 
 var generateHierarchicalTree = require('./generate-hierarchical-tree');
 
@@ -509,7 +511,7 @@ function SearchResults(state, results, options) {
           state.disjunctiveFacetsRefinements[dfacet].forEach(function(refinementValue) {
             // add the disjunctive refinements if it is no more retrieved
             if (!self.disjunctiveFacets[position].data[refinementValue] &&
-              state.disjunctiveFacetsRefinements[dfacet].indexOf(refinementValue) > -1) {
+              state.disjunctiveFacetsRefinements[dfacet].indexOf(unescapeFacetValue(refinementValue)) > -1) {
               self.disjunctiveFacets[position].data[refinementValue] = 0;
             }
           });
@@ -641,11 +643,12 @@ function extractNormalizedFacetValues(results, attribute) {
     if (!facet) return [];
 
     return Object.keys(facet.data).map(function(name) {
+      var value = escapeFacetValue(name);
       return {
         name: name,
-        value: escapeFacetValue(name),
+        value: value,
         count: facet.data[name],
-        isRefined: results._state.isFacetRefined(attribute, name),
+        isRefined: results._state.isFacetRefined(attribute, value),
         isExcluded: results._state.isExcludeRefined(attribute, name)
       };
     });
@@ -654,11 +657,12 @@ function extractNormalizedFacetValues(results, attribute) {
     if (!disjunctiveFacet) return [];
 
     return Object.keys(disjunctiveFacet.data).map(function(name) {
+      var value = escapeFacetValue(name);
       return {
         name: name,
-        value: escapeFacetValue(name),
+        value: value,
         count: disjunctiveFacet.data[name],
-        isRefined: results._state.isDisjunctiveFacetRefined(attribute, name)
+        isRefined: results._state.isDisjunctiveFacetRefined(attribute, value)
       };
     });
   } else if (results._state.isHierarchicalFacet(attribute)) {

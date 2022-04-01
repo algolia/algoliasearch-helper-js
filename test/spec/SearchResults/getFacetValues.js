@@ -172,7 +172,10 @@ test('getFacetValues(disjunctive) returns correct facet values with the name `le
 test('getFacetValues(conjunctive) returns escaped facet values', function() {
   var searchParams = new SearchParameters({
     index: 'instant_search',
-    facets: ['type']
+    facets: ['type'],
+    facetsRefinements: {
+      type: ['dogs', '\\-20%']
+    }
   });
 
   var result = {
@@ -180,7 +183,8 @@ test('getFacetValues(conjunctive) returns escaped facet values', function() {
     facets: {
       type: {
         'dogs': 1,
-        '-something': 5
+        '-something': 5,
+        '-20%': 2
       }
     }
   };
@@ -190,18 +194,22 @@ test('getFacetValues(conjunctive) returns escaped facet values', function() {
   var facetValues = results.getFacetValues('type');
 
   var expected = [
-    {name: '-something', value: '\\-something', count: 5, isRefined: false, isExcluded: false},
-    {name: 'dogs', value: 'dogs', count: 1, isRefined: false, isExcluded: false}
+    {name: '-20%', value: '\\-20%', count: 2, isRefined: true, isExcluded: false},
+    {name: 'dogs', value: 'dogs', count: 1, isRefined: true, isExcluded: false},
+    {name: '-something', value: '\\-something', count: 5, isRefined: false, isExcluded: false}
   ];
 
   expect(facetValues).toEqual(expected);
-  expect(facetValues.length).toBe(2);
+  expect(facetValues.length).toBe(3);
 });
 
 test('getFacetValues(disjunctive) returns escaped facet values', function() {
   var searchParams = new SearchParameters({
     index: 'instant_search',
-    disjunctiveFacets: ['type']
+    disjunctiveFacets: ['type'],
+    disjunctiveFacetsRefinements: {
+      type: ['dogs', '\\-20%']
+    }
   });
 
   var result = {
@@ -209,7 +217,8 @@ test('getFacetValues(disjunctive) returns escaped facet values', function() {
     facets: {
       type: {
         'dogs': 1,
-        '-something': 5
+        '-something': 5,
+        '-20%': 2
       }
     }
   };
@@ -219,12 +228,13 @@ test('getFacetValues(disjunctive) returns escaped facet values', function() {
   var facetValues = results.getFacetValues('type');
 
   var expected = [
-    {name: '-something', value: '\\-something', count: 5, isRefined: false},
-    {name: 'dogs', value: 'dogs', count: 1, isRefined: false}
+    {name: '-20%', value: '\\-20%', count: 2, isRefined: true},
+    {name: 'dogs', value: 'dogs', count: 1, isRefined: true},
+    {name: '-something', value: '\\-something', count: 5, isRefined: false}
   ];
 
   expect(facetValues).toEqual(expected);
-  expect(facetValues.length).toBe(2);
+  expect(facetValues.length).toBe(3);
 });
 
 test('getFacetValues(hierachical) returns escaped facet values', function() {
@@ -234,7 +244,7 @@ test('getFacetValues(hierachical) returns escaped facet values', function() {
       name: 'type',
       attributes: ['type1', 'type2', 'type3']
     }],
-    hierarchicalFacetsRefinements: {type: ['-something > discounts']}
+    hierarchicalFacetsRefinements: {type: ['\\-something > discounts']}
   });
 
   var result = {

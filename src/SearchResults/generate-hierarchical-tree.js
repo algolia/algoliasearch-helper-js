@@ -5,7 +5,9 @@ module.exports = generateTrees;
 var orderBy = require('../functions/orderBy');
 var find = require('../functions/find');
 var prepareHierarchicalFacetSortBy = require('../functions/formatSort');
-var escapeFacetValue = require('../functions/escapeFacetValue');
+var fv = require('../functions/escapeFacetValue');
+var escapeFacetValue = fv.escapeFacetValue;
+var unescapeFacetValue = fv.unescapeFacetValue;
 
 function generateTrees(state) {
   return function generate(hierarchicalFacetResult, hierarchicalFacetIndex) {
@@ -128,7 +130,7 @@ function generateHierarchicalTree(
             facetCount,
             facetValue,
             hierarchicalSeparator,
-            currentRefinement,
+            unescapeFacetValue(currentRefinement),
             hierarchicalFacetResult.exhaustive
           );
         }),
