@@ -397,6 +397,7 @@ declare namespace algoliasearchHelper {
      */
     export interface Hit {
       value: string;
+      escapedValue: string;
       highlighted: string;
       count: number;
       isRefined: boolean;
