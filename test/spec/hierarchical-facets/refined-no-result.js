@@ -68,7 +68,7 @@ test('hierarchical facets: no results', function(done) {
         count: null,
         isRefined: true,
         path: null,
-        value: null,
+        escapedValue: null,
         exhaustive: true,
         data: null
       }

@@ -51,12 +51,12 @@ test('hierarchical facets: only one level deep', function(done) {
     'count': null,
     'isRefined': true,
     'path': null,
-    'value': null,
+    'escapedValue': null,
     'exhaustive': true,
     'data': [{
       'name': 'beers',
       'path': 'beers',
-      'value': 'beers',
+      'escapedValue': 'beers',
       'count': 2,
       'isRefined': true,
       'exhaustive': true,
@@ -64,7 +64,7 @@ test('hierarchical facets: only one level deep', function(done) {
     }, {
       'name': 'fruits',
       'path': 'fruits',
-      'value': 'fruits',
+      'escapedValue': 'fruits',
       'count': 3,
       'isRefined': false,
       'exhaustive': true,
