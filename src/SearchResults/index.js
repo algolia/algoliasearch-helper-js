@@ -646,7 +646,7 @@ function extractNormalizedFacetValues(results, attribute) {
       var value = escapeFacetValue(name);
       return {
         name: name,
-        value: value,
+        escapedValue: value,
         count: facet.data[name],
         isRefined: results._state.isFacetRefined(attribute, value),
         isExcluded: results._state.isExcludeRefined(attribute, name)
@@ -660,7 +660,7 @@ function extractNormalizedFacetValues(results, attribute) {
       var value = escapeFacetValue(name);
       return {
         name: name,
-        value: value,
+        escapedValue: value,
         count: disjunctiveFacet.data[name],
         isRefined: results._state.isDisjunctiveFacetRefined(attribute, value)
       };
@@ -946,7 +946,7 @@ SearchResults.prototype.getRefinements = function() {
           type: 'numeric',
           attributeName: attributeName,
           name: value,
-          numericValue: value,
+          numericescapedValue: value,
           operator: operator
         });
       });

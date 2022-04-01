@@ -1417,7 +1417,7 @@ declare namespace algoliasearchHelper {
     interface HierarchicalFacet {
       name: string;
       path: string;
-      value: string;
+      escapedValue: string;
       count: number;
       isRefined: boolean;
       data: HierarchicalFacet[];
@@ -1425,7 +1425,7 @@ declare namespace algoliasearchHelper {
 
     interface FacetValue {
       name: string;
-      value: string;
+      escapedValue: string;
       count: number;
       isRefined: boolean;
       isExcluded: boolean;

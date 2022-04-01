@@ -54,7 +54,7 @@ function generateTrees(state) {
       count: null, // root level, no count
       isRefined: true, // root level, always refined
       path: null, // root level, no path
-      value: null,
+      escapedValue: null,
       exhaustive: rootExhaustive,
       data: null
     });
@@ -193,7 +193,7 @@ function format(
   return {
     name: parts[parts.length - 1].trim(),
     path: facetValue,
-    value: escapeFacetValue(facetValue),
+    escapedValue: escapeFacetValue(facetValue),
     count: facetCount,
     isRefined:
       currentRefinement === facetValue ||

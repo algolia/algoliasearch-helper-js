@@ -43,13 +43,13 @@ test('hierarchical facets: facet value called length', function(done) {
       count: null,
       isRefined: true,
       path: null,
-      value: null,
+      escapedValue: null,
       exhaustive: true,
       data: [
         {
           name: 'beers',
           path: 'beers',
-          value: 'beers',
+          escapedValue: 'beers',
           count: 8,
           isRefined: false,
           exhaustive: true,
@@ -58,7 +58,7 @@ test('hierarchical facets: facet value called length', function(done) {
         {
           name: 'length',
           path: 'length',
-          value: 'length',
+          escapedValue: 'length',
           count: 3,
           isRefined: false,
           exhaustive: true,
