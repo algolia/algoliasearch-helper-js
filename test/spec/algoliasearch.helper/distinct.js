@@ -25,7 +25,7 @@ test('Distinct not set', function() {
   expect(disjunctiveFacetSearchParam.distinct).toBe(undefined);
   facetSearchParam = requestBuilder._getHitsSearchParams(helper.state);
   expect(facetSearchParam.distinct).toBe(undefined);
-  forEach(requestBuilder._getQueries('', helper.state), function(q) {
+  forEach(requestBuilder._getQueries(helper.state), function(q) {
     expect(q.hasOwnProperty('distinct')).toBeFalsy();
   });
 
@@ -35,7 +35,7 @@ test('Distinct not set', function() {
   expect(disjunctiveFacetSearchParam.distinct).toBe(undefined);
   facetSearchParam = requestBuilder._getHitsSearchParams(helper.state);
   expect(facetSearchParam.distinct).toBe(undefined);
-  forEach(requestBuilder._getQueries('', helper.state), function(q) {
+  forEach(requestBuilder._getQueries(helper.state), function(q) {
     expect(q.hasOwnProperty('distinct')).toBeFalsy();
   });
 
@@ -45,7 +45,7 @@ test('Distinct not set', function() {
   expect(disjunctiveFacetSearchParam.distinct).toBe(undefined);
   facetSearchParam = requestBuilder._getHitsSearchParams(helper.state);
   expect(facetSearchParam.distinct).toBe(undefined);
-  forEach(requestBuilder._getQueries('', helper.state), function(q) {
+  forEach(requestBuilder._getQueries(helper.state), function(q) {
     expect(q.hasOwnProperty('distinct')).toBeFalsy();
   });
 
@@ -55,7 +55,7 @@ test('Distinct not set', function() {
   expect(disjunctiveFacetSearchParam.distinct).toBe(undefined);
   facetSearchParam = requestBuilder._getHitsSearchParams(helper.state);
   expect(facetSearchParam.distinct).toBe(undefined);
-  forEach(requestBuilder._getQueries('', helper.state), function(q) {
+  forEach(requestBuilder._getQueries(helper.state), function(q) {
     expect(q.hasOwnProperty('distinct')).toBeFalsy();
   });
 });

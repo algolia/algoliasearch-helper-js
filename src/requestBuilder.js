@@ -9,21 +9,15 @@ var requestBuilder = {
    * @private
    * @return {object[]} The queries
    */
-  _getQueries: function getQueries(index, state) {
+  _getQueries: function getQueries(state) {
     var queries = [];
 
     // One query for the hits
-    queries.push({
-      indexName: index,
-      params: requestBuilder._getHitsSearchParams(state)
-    });
+    queries.push(requestBuilder._getHitsSearchParams(state));
 
     // One for each disjunctive facets
     state.getRefinedDisjunctiveFacets().forEach(function(refinedFacet) {
-      queries.push({
-        indexName: index,
-        params: requestBuilder._getDisjunctiveFacetSearchParams(state, refinedFacet)
-      });
+      queries.push(requestBuilder._getDisjunctiveFacetSearchParams(state, refinedFacet));
     });
 
     // maybe more to get the root level of hierarchical facets when activated
@@ -35,10 +29,7 @@ var requestBuilder = {
       // we want to get the root values
       var separator = state._getHierarchicalFacetSeparator(hierarchicalFacet);
       if (currentRefinement.length > 0 && currentRefinement[0].split(separator).length > 1) {
-        queries.push({
-          indexName: index,
-          params: requestBuilder._getDisjunctiveFacetSearchParams(state, refinedFacet, true)
-        });
+        queries.push(requestBuilder._getDisjunctiveFacetSearchParams(state, refinedFacet, true));
       }
     });
 
@@ -60,6 +51,7 @@ var requestBuilder = {
     var numericFilters = requestBuilder._getNumericFilters(state);
     var tagFilters = requestBuilder._getTagFilters(state);
     var additionalParams = {
+      indexName: state.index,
       facets: facets.indexOf('*') > -1 ? ['*'] : facets,
       tagFilters: tagFilters
     };
@@ -87,6 +79,7 @@ var requestBuilder = {
     var numericFilters = requestBuilder._getNumericFilters(state, facet);
     var tagFilters = requestBuilder._getTagFilters(state);
     var additionalParams = {
+      indexName: state.index,
       hitsPerPage: 1,
       page: 0,
       attributesToRetrieve: [],
@@ -304,8 +297,9 @@ var requestBuilder = {
       state.clearRefinements(facetName) :
       state;
     var searchForFacetSearchParameters = {
-      facetQuery: query,
-      facetName: facetName
+      type: 'facet',
+      facet: facetName,
+      facetQuery: query
     };
     if (typeof maxFacetHits === 'number') {
       searchForFacetSearchParameters.maxFacetHits = maxFacetHits;

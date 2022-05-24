@@ -8,8 +8,6 @@ var requestBuilder = require('./requestBuilder');
 var EventEmitter = require('@algolia/events');
 var inherits = require('./functions/inherits');
 var objectHasKeys = require('./functions/objectHasKeys');
-var omit = require('./functions/omit');
-var merge = require('./functions/merge');
 
 var version = require('./version');
 var escapeFacetValue = require('./functions/escapeFacetValue').escapeFacetValue;
@@ -204,7 +202,7 @@ AlgoliaSearchHelper.prototype.getQuery = function() {
  */
 AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   var tempState = !options ? this.state : this.state.setQueryParameters(options);
-  var queries = requestBuilder._getQueries(tempState.index, tempState);
+  var queries = requestBuilder._getQueries(tempState);
   var self = this;
 
   this._currentNbQueries++;
@@ -251,49 +249,6 @@ AlgoliaSearchHelper.prototype.searchOnce = function(options, cb) {
   });
 };
 
- /**
- * Start the search for answers with the parameters set in the state.
- * This method returns a promise.
- * @param {Object} options - the options for answers API call
- * @param {string[]} options.attributesForPrediction - Attributes to use for predictions. If empty, `searchableAttributes` is used instead.
- * @param {string[]} options.queryLanguages - The languages in the query. Currently only supports ['en'].
- * @param {number} options.nbHits - Maximum number of answers to retrieve from the Answers Engine. Cannot be greater than 1000.
- *
- * @return {promise} the answer results
- */
-AlgoliaSearchHelper.prototype.findAnswers = function(options) {
-  var state = this.state;
-  var derivedHelper = this.derivedHelpers[0];
-  if (!derivedHelper) {
-    return Promise.resolve([]);
-  }
-  var derivedState = derivedHelper.getModifiedState(state);
-  var data = merge(
-    {
-      attributesForPrediction: options.attributesForPrediction,
-      nbHits: options.nbHits
-    },
-    {
-      params: omit(requestBuilder._getHitsSearchParams(derivedState), [
-        'attributesToSnippet',
-        'hitsPerPage',
-        'restrictSearchableAttributes',
-        'snippetEllipsisText' // FIXME remove this line once the engine is fixed.
-      ])
-    }
-  );
-
-  var errorMessage = 'search for answers was called, but this client does not have a function client.initIndex(index).findAnswers';
-  if (typeof this.client.initIndex !== 'function') {
-    throw new Error(errorMessage);
-  }
-  var index = this.client.initIndex(derivedState.index);
-  if (typeof index.findAnswers !== 'function') {
-    throw new Error(errorMessage);
-  }
-  return index.findAnswers(derivedState.query, options.queryLanguages, data);
-};
-
 /**
  * Structure of each result when using
  * [`searchForFacetValues()`](reference.html#AlgoliaSearchHelper#searchForFacetValues)
@@ -329,52 +284,17 @@ AlgoliaSearchHelper.prototype.findAnswers = function(options) {
  * @return {promise.<FacetSearchResult>} the results of the search
  */
 AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxFacetHits, userState) {
-  var clientHasSFFV = typeof this.client.searchForFacetValues === 'function';
-  var clientHasInitIndex = typeof this.client.initIndex === 'function';
-  if (
-    !clientHasSFFV &&
-    !clientHasInitIndex &&
-    typeof this.client.search !== 'function'
-  ) {
-    throw new Error(
-      'search for facet values (searchable) was called, but this client does not have a function client.searchForFacetValues or client.initIndex(index).searchForFacetValues'
-    );
-  }
-
   var state = this.state.setQueryParameters(userState || {});
   var isDisjunctive = state.isDisjunctiveFacet(facet);
   var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, maxFacetHits, state);
 
   this._currentNbQueries++;
   var self = this;
-  var searchForFacetValuesPromise;
-  // newer algoliasearch ^3.27.1 - ~4.0.0
-  if (clientHasSFFV) {
-    searchForFacetValuesPromise = this.client.searchForFacetValues([
-      {indexName: state.index, params: algoliaQuery}
-    ]);
-    // algoliasearch < 3.27.1
-  } else if (clientHasInitIndex) {
-    searchForFacetValuesPromise = this.client
-      .initIndex(state.index)
-      .searchForFacetValues(algoliaQuery);
-    // algoliasearch ~5.0.0
-  } else {
-    // @MAJOR only use client.search
-    delete algoliaQuery.facetName;
-    searchForFacetValuesPromise = this.client
-      .search([
-        {
-          type: 'facet',
-          facet: facet,
-          indexName: state.index,
-          params: algoliaQuery
-        }
-      ])
-      .then(function processResponse(response) {
-        return response.results[0];
-      });
-  }
+  var searchForFacetValuesPromise = this.client
+    .search({requests: [algoliaQuery]})
+    .then(function processResponse(response) {
+      return response.results[0];
+    });
 
   this.emit('searchForFacetValues', {
     state: state,
@@ -1258,7 +1178,7 @@ AlgoliaSearchHelper.prototype._search = function(options) {
   var mainQueries = [];
 
   if (!options.onlyWithDerivedHelpers) {
-    mainQueries = requestBuilder._getQueries(state.index, state);
+    mainQueries = requestBuilder._getQueries(state);
 
     states.push({
       state: state,
@@ -1274,7 +1194,7 @@ AlgoliaSearchHelper.prototype._search = function(options) {
 
   var derivedQueries = this.derivedHelpers.map(function(derivedHelper) {
     var derivedState = derivedHelper.getModifiedState(state);
-    var derivedStateQueries = requestBuilder._getQueries(derivedState.index, derivedState);
+    var derivedStateQueries = requestBuilder._getQueries(derivedState);
 
     states.push({
       state: derivedState,
@@ -1296,7 +1216,7 @@ AlgoliaSearchHelper.prototype._search = function(options) {
   this._currentNbQueries++;
 
   try {
-    this.client.search(queries)
+    this.client.search({requests: queries})
       .then(this._dispatchAlgoliaResponse.bind(this, states, queryId))
       .catch(this._dispatchAlgoliaError.bind(this, queryId));
   } catch (error) {
