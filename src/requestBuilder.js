@@ -50,13 +50,12 @@ var requestBuilder = {
         filtersMap.forEach(function(filter, level) {
           var params = requestBuilder._getDisjunctiveFacetSearchParams(
             state,
-            filter.attribute, level === 0
+            filter.attribute,
+            level === 0
           );
 
-          if (level > 0) {
-            var parent = filtersMap[level - 1];
-            params.facetFilters = [parent.attribute + ':' + parent.value];
-          }
+          var parent = filtersMap[level - 1];
+          params.facetFilters = level > 0 ? [parent.attribute + ':' + parent.value] : undefined;
 
           queries.push({indexName: index, params: params});
         });
