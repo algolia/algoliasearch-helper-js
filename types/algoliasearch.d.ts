@@ -7,13 +7,11 @@ import type algoliasearch from 'algoliasearch/lite';
 // @ts-ignore
 import type * as AlgoliaSearchLite from 'algoliasearch/lite';
 // @ts-ignore
+import type * as AlgoliaSearchLiteV5 from 'algoliasearch-lite';
+// @ts-ignore
+import type * as AlgoliaSearch from 'algoliasearch';
+// @ts-ignore
 import type * as ClientSearch from '@algolia/client-search';
-// @ts-ignore
-import type * as AlgoliaSearchLiteV5 from '@experimental-api-clients-automation/algoliasearch-lite';
-// @ts-ignore
-import type * as AlgoliaSearchFullV5 from '@experimental-api-clients-automation/algoliasearch';
-// @ts-ignore
-import * as ClientSearchV5 from '@experimental-api-clients-automation/client-search';
 
 // turns any to unknown, so it can be used as a conditional
 type AnyToUnknown<T> = any extends T ? unknown : T;
@@ -32,7 +30,7 @@ type ClientLiteV5 = ReturnType<
   typeof AlgoliaSearchLiteV5.algoliasearchLiteClient
 >;
 // @ts-ignore
-type ClientFullV5 = ReturnType<typeof AlgoliaSearchFullV5.algoliasearch>;
+type ClientFullV5 = ReturnType<typeof AlgoliaSearch.algoliasearch>;
 type ClientV5 = AnyToUnknown<ClientLiteV5 extends DummySearchClient
   ? ClientLiteV5
   : ClientFullV5>;
@@ -65,7 +63,7 @@ export type SearchOptions = PickForClient<{
   v4: ClientSearch.SearchOptions;
   v5: NonNullable<
     // @ts-ignore
-    ClientSearchV5.LegacySearchMethodProps[number]['params']
+    ClientSearch.LegacySearchMethodProps[number]['params']
   >;
 }>;
 
@@ -75,7 +73,7 @@ export type SearchResponse<T> = PickForClient<{
   // @ts-ignore
   v4: ClientSearch.SearchResponse<T>;
   // @ts-ignore
-  v5: ClientSearchV5.SearchResponse; // TODO: should be generic
+  v5: ClientSearch.SearchResponse; // TODO: should be generic
 }>;
 
 export type SearchForFacetValuesResponse = PickForClient<{
@@ -84,7 +82,7 @@ export type SearchForFacetValuesResponse = PickForClient<{
   // @ts-ignore
   v4: ClientSearch.SearchForFacetValuesResponse;
   // @ts-ignore
-  v5: ClientSearchV5.SearchForFacetValuesResponse;
+  v5: ClientSearch.SearchForFacetValuesResponse;
 }>;
 
 export type FindAnswersOptions = PickForClient<{
