@@ -36,7 +36,8 @@
     "dist",
     "src",
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "types/algoliasearch.d.ts"
   ],
   "devDependencies": {
     "@types/algoliasearch": "3.34.11",
