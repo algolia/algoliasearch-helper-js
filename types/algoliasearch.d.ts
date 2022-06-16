@@ -29,9 +29,9 @@ type ClientLiteV5 = ReturnType<
 >;
 // @ts-ignore
 type ClientFullV5 = ReturnType<typeof AlgoliaSearch.algoliasearch>;
-type ClientV5 = AnyToUnknown<ClientLiteV5 extends DummySearchClient
-  ? ClientLiteV5
-  : ClientFullV5>;
+type ClientV5 = AnyToUnknown<
+  ClientLiteV5 extends DummySearchClient ? ClientLiteV5 : ClientFullV5
+>;
 
 type PickForClient<
   T extends {
@@ -67,7 +67,10 @@ export type SearchOptions = PickForClient<{
 
 export type SearchResponse<T> = PickForClient<{
   // @ts-ignore
-  v3: AlgoliaSearch.Response<T>;
+  v3: AlgoliaSearch.Response<T> & {
+    appliedRelevancyStrictness?: number;
+    nbSortedHits?: number;
+  };
   // @ts-ignore
   v4: ClientSearch.SearchResponse<T>;
   // @ts-ignore
