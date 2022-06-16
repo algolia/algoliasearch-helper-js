@@ -70,6 +70,19 @@ export type SearchResponse<T> = PickForClient<{
   v3: AlgoliaSearch.Response<T> & {
     appliedRelevancyStrictness?: number;
     nbSortedHits?: number;
+    renderingContent?: {
+      facetOrdering?: {
+        facets?: {
+          order?: string[];
+        };
+        values?: {
+          [facet: string]: {
+            order?: string[];
+            sortRemainingBy?: 'count' | 'alpha' | 'hidden';
+          };
+        };
+      };
+    };
   };
   // @ts-ignore
   v4: ClientSearch.SearchResponse<T>;
