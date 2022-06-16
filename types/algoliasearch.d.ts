@@ -76,6 +76,15 @@ export type SearchResponse<T> = PickForClient<{
   v5: ClientSearch.SearchResponse; // TODO: should be generic
 }>;
 
+export type SearchResponses<T> = PickForClient<{
+  // @ts-ignore
+  v3: AlgoliaSearch.MultiResponse<T>;
+  // @ts-ignore
+  v4: ClientSearch.MultipleQueriesResponse<T>;
+  // @ts-ignore
+  v5: ClientSearch.SearchResponses; // TODO: should be generic
+}>;
+
 export type SearchForFacetValuesResponse = PickForClient<{
   // @ts-ignore
   v3: AlgoliaSearchLite.SearchForFacetValues.Response;
