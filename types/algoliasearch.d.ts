@@ -5,8 +5,6 @@
 // @ts-ignore
 import type algoliasearch from 'algoliasearch/lite';
 // @ts-ignore
-import type * as AlgoliaSearchLite from 'algoliasearch/lite';
-// @ts-ignore
 import type * as AlgoliaSearchLiteV5 from 'algoliasearch-lite';
 // @ts-ignore
 import type * as AlgoliaSearch from 'algoliasearch';
@@ -58,7 +56,7 @@ type DefaultSearchClient = PickForClient<{
 
 export type SearchOptions = PickForClient<{
   // @ts-ignore
-  v3: AlgoliaSearchLite.QueryParameters;
+  v3: AlgoliaSearch.QueryParameters;
   // @ts-ignore
   v4: ClientSearch.SearchOptions;
   v5: NonNullable<
@@ -69,7 +67,7 @@ export type SearchOptions = PickForClient<{
 
 export type SearchResponse<T> = PickForClient<{
   // @ts-ignore
-  v3: AlgoliaSearchLite.Response<T>;
+  v3: AlgoliaSearch.Response<T>;
   // @ts-ignore
   v4: ClientSearch.SearchResponse<T>;
   // @ts-ignore
@@ -87,7 +85,7 @@ export type SearchResponses<T> = PickForClient<{
 
 export type SearchForFacetValuesResponse = PickForClient<{
   // @ts-ignore
-  v3: AlgoliaSearchLite.SearchForFacetValues.Response;
+  v3: AlgoliaSearch.SearchForFacetValues.Response;
   // @ts-ignore
   v4: ClientSearch.SearchForFacetValuesResponse;
   // @ts-ignore
