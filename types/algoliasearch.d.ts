@@ -5,7 +5,7 @@
 // @ts-ignore
 import type algoliasearch from 'algoliasearch/lite';
 // @ts-ignore
-import type * as AlgoliaSearchLiteV5 from 'algoliasearch-lite';
+import type * as AlgoliaSearchLite from 'algoliasearch/lite';
 // @ts-ignore
 import type * as AlgoliaSearch from 'algoliasearch';
 // @ts-ignore
@@ -22,16 +22,25 @@ type DummySearchClient = {
   search: unknown;
 };
 
-// @ts-ignore
-type ClientLiteV5 = ReturnType<
+type ClientLiteV5 = AnyToUnknown<
   // @ts-ignore
-  typeof AlgoliaSearchLiteV5.algoliasearchLiteClient
+  ReturnType<typeof AlgoliaSearchLite.liteClient>
 >;
-// @ts-ignore
-type ClientFullV5 = ReturnType<typeof AlgoliaSearch.algoliasearch>;
-type ClientV5 = AnyToUnknown<
-  ClientLiteV5 extends DummySearchClient ? ClientLiteV5 : ClientFullV5
+type ClientFullV5 = AnyToUnknown<
+  // @ts-ignore
+  ReturnType<typeof AlgoliaSearch.algoliasearch>
 >;
+type ClientSearchV5 = AnyToUnknown<
+  // @ts-ignore
+  ReturnType<typeof ClientSearch.searchClient>
+>;
+type ClientV5 = ClientLiteV5 extends DummySearchClient
+  ? ClientLiteV5
+  : ClientSearchV5 extends DummySearchClient
+  ? ClientSearchV5
+  : ClientFullV5 extends DummySearchClient
+  ? ClientFullV5
+  : unknown;
 
 type PickForClient<
   T extends {
