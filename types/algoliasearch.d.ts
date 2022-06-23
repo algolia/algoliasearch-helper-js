@@ -12,7 +12,9 @@ import type * as AlgoliaSearch from 'algoliasearch';
 import type * as ClientSearch from '@algolia/client-search';
 
 // turns any to unknown, so it can be used as a conditional
-type AnyToUnknown<T> = any extends T ? unknown : T;
+type AnyToUnknown<T> = (any extends T ? true : false) extends true
+  ? unknown
+  : T;
 
 type DummySearchClientV4 = {
   transporter: unknown;
@@ -21,6 +23,9 @@ type DummySearchClientV4 = {
 type DummySearchClient = {
   search: unknown;
 };
+
+// @ts-ignore
+type ClientV3_4 = ReturnType<typeof algoliasearch>;
 
 type ClientLiteV5 = AnyToUnknown<
   // @ts-ignore
@@ -50,16 +55,14 @@ type PickForClient<
   }
 > = ClientV5 extends DummySearchClient
   ? T['v5']
-  : ReturnType<typeof algoliasearch> extends DummySearchClientV4
+  : // @ts-ignore
+  ClientV3_4 extends DummySearchClientV4
   ? T['v4']
   : T['v3'];
 
 type DefaultSearchClient = PickForClient<{
-  // @ts-ignore
-  v3: ReturnType<typeof algoliasearch>;
-  // @ts-ignore
-  v4: ReturnType<typeof algoliasearch>;
-  // @ts-ignore
+  v3: ClientV3_4;
+  v4: ClientV3_4;
   v5: ClientV5;
 }>;
 
@@ -70,7 +73,7 @@ export type SearchOptions = PickForClient<{
   v4: ClientSearch.SearchOptions;
   v5: NonNullable<
     // @ts-ignore
-    ClientSearch.LegacySearchMethodProps[number]['params']
+    AlgoliaSearch.LegacySearchMethodProps[number]['params']
   >;
 }>;
 
@@ -96,7 +99,7 @@ export type SearchResponse<T> = PickForClient<{
   // @ts-ignore
   v4: ClientSearch.SearchResponse<T>;
   // @ts-ignore
-  v5: ClientSearch.SearchResponse; // TODO: should be generic
+  v5: AlgoliaSearch.SearchResponse; // TODO: should be generic
 }>;
 
 export type SearchResponses<T> = PickForClient<{
@@ -105,7 +108,7 @@ export type SearchResponses<T> = PickForClient<{
   // @ts-ignore
   v4: ClientSearch.MultipleQueriesResponse<T>;
   // @ts-ignore
-  v5: ClientSearch.SearchResponses; // TODO: should be generic
+  v5: AlgoliaSearch.SearchResponses; // TODO: should be generic
 }>;
 
 export type SearchForFacetValuesResponse = PickForClient<{
@@ -114,7 +117,7 @@ export type SearchForFacetValuesResponse = PickForClient<{
   // @ts-ignore
   v4: ClientSearch.SearchForFacetValuesResponse;
   // @ts-ignore
-  v5: ClientSearch.SearchForFacetValuesResponse;
+  v5: AlgoliaSearch.SearchForFacetValuesResponse;
 }>;
 
 export type FindAnswersOptions = PickForClient<{
