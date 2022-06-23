@@ -121,8 +121,7 @@ var requestBuilder = {
       hitsPerPage: 0,
       page: 0,
       analytics: false,
-      clickAnalytics: false,
-      responseFields: ['facets', 'renderingContent']
+      clickAnalytics: false
     };
 
     if (tagFilters.length > 0) {
