@@ -124,9 +124,9 @@ var requestBuilder = {
       clickAnalytics: false,
       responseFields: ['facets', 'renderingContent']
     };
-    
+
     if (tagFilters.length > 0) {
-      additionalParams.tagFilters = tagFilters; 
+      additionalParams.tagFilters = tagFilters;
     }
 
     var hierarchicalFacet = state.getHierarchicalFacetByName(facet);
