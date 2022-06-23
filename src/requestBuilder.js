@@ -122,7 +122,7 @@ var requestBuilder = {
       page: 0,
       analytics: false,
       clickAnalytics: false,
-      responseFields: ["facets", "renderingContent"],
+      responseFields: ['facets', 'renderingContent']
     };
     
     if (tagFilters.length > 0) {
