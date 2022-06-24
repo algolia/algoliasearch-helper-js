@@ -16,11 +16,11 @@ type AnyToUnknown<T> = (any extends T ? true : false) extends true
   ? unknown
   : T;
 
-type DummySearchClientV4 = {
+type SearchClientV4Shape = {
   transporter: unknown;
 };
 
-type DummySearchClient = {
+type SearchClientShape = {
   search: unknown;
 };
 
@@ -39,11 +39,11 @@ type ClientSearchV5 = AnyToUnknown<
   // @ts-ignore
   ReturnType<typeof ClientSearch.searchClient>
 >;
-type ClientV5 = ClientLiteV5 extends DummySearchClient
+type ClientV5 = ClientLiteV5 extends SearchClientShape
   ? ClientLiteV5
-  : ClientSearchV5 extends DummySearchClient
+  : ClientSearchV5 extends SearchClientShape
   ? ClientSearchV5
-  : ClientFullV5 extends DummySearchClient
+  : ClientFullV5 extends SearchClientShape
   ? ClientFullV5
   : unknown;
 
@@ -53,10 +53,10 @@ type PickForClient<
     v4: unknown;
     v5: unknown;
   }
-> = ClientV5 extends DummySearchClient
+> = ClientV5 extends SearchClientShape
   ? T['v5']
   : // @ts-ignore
-  ClientV3_4 extends DummySearchClientV4
+  ClientV3_4 extends SearchClientV4Shape
   ? T['v4']
   : T['v3'];
 

@@ -1,1 +1,1 @@
-// fake file to work with the types
+// fake file to allow `export * from 'algoliasearch-helper/types/algoliasearch'`
