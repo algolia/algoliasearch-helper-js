@@ -1300,10 +1300,15 @@ AlgoliaSearchHelper.prototype._search = function(options) {
       .then(this._dispatchAlgoliaResponse.bind(this, states, queryId))
       .catch(this._dispatchAlgoliaError.bind(this, queryId));
   } catch (error) {
+    // If an error is emitted, it is re-thrown by events. In previous versions
+    // we emitted {error}, which is thrown as:
+    // "Uncaught, unspecified \"error\" event. ([object Object])"
+    // To avoid breaking changes, we make the error available in both
+    // `error` and `error.error`
+    // @MAJOR emit only error
+    error.error = error;
     // If we reach this part, we're in an internal error state
-    this.emit('error', {
-      error: error
-    });
+    this.emit('error', error);
   }
 };
 
@@ -1357,9 +1362,14 @@ AlgoliaSearchHelper.prototype._dispatchAlgoliaError = function(queryId, error) {
   this._currentNbQueries -= queryId - this._lastQueryIdReceived;
   this._lastQueryIdReceived = queryId;
 
-  this.emit('error', {
-    error: error
-  });
+  // If an error is emitted, it is re-thrown by events. In previous versions
+  // we emitted {error}, which is thrown as:
+  // "Uncaught, unspecified \"error\" event. ([object Object])"
+  // To avoid breaking changes, we make the error available in both
+  // `error` and `error.error`
+  // @MAJOR emit only error
+  error.error = error;
+  this.emit('error', error);
 
   if (this._currentNbQueries === 0) this.emit('searchQueueEmpty');
 };
