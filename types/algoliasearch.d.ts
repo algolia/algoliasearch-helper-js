@@ -66,6 +66,10 @@ type DefaultSearchClient = PickForClient<{
   v5: ClientV5;
 }>;
 
+export type HighlightResult<T> = ClientSearch.HighlightResult<T>;
+export type SnippetResult<T> = ClientSearch.SnippetResult<T>;
+export type RankingInfo = ClientSearch.RankingInfo;
+
 export type SearchOptions = PickForClient<{
   // @ts-ignore
   v3: AlgoliaSearch.QueryParameters;
