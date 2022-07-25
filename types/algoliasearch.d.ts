@@ -3,13 +3,13 @@
 // the version of the client installed by the developer.
 
 // @ts-ignore
-import type algoliasearch from "algoliasearch/lite";
+import type algoliasearch from 'algoliasearch/lite';
 // @ts-ignore
-import type * as AlgoliaSearchLite from "algoliasearch/lite";
+import type * as AlgoliaSearchLite from 'algoliasearch/lite';
 // @ts-ignore
-import type * as AlgoliaSearch from "algoliasearch";
+import type * as AlgoliaSearch from 'algoliasearch';
 // @ts-ignore
-import type * as ClientSearch from "@algolia/client-search";
+import type * as ClientSearch from '@algolia/client-search';
 
 // turns any to unknown, so it can be used as a conditional
 type AnyToUnknown<T> = (any extends T ? true : false) extends true
@@ -54,11 +54,11 @@ type PickForClient<
     v5: unknown;
   }
 > = ClientV5 extends SearchClientShape
-  ? T["v5"]
+  ? T['v5']
   : // @ts-ignore
   ClientV3_4 extends SearchClientV4Shape
-  ? T["v4"]
-  : T["v3"];
+  ? T['v4']
+  : T['v3'];
 
 type DefaultSearchClient = PickForClient<{
   v3: ClientV3_4;
@@ -100,7 +100,7 @@ export type SearchOptions = PickForClient<{
   v4: ClientSearch.SearchOptions;
   v5: NonNullable<
     // @ts-ignore
-    AlgoliaSearch.LegacySearchMethodProps[number]["params"]
+    AlgoliaSearch.LegacySearchMethodProps[number]['params']
   >;
 }>;
 
@@ -117,7 +117,7 @@ export type SearchResponse<T> = PickForClient<{
         values?: {
           [facet: string]: {
             order?: string[];
-            sortRemainingBy?: "count" | "alpha" | "hidden";
+            sortRemainingBy?: 'count' | 'alpha' | 'hidden';
           };
         };
       };
@@ -162,14 +162,14 @@ export type FindAnswersResponse<T> = PickForClient<{
 }>;
 
 export interface SearchClient {
-  search: DefaultSearchClient["search"];
+  search: DefaultSearchClient['search'];
   searchForFacetValues?: DefaultSearchClient extends {
     searchForFacetValues: unknown;
   }
-    ? DefaultSearchClient["searchForFacetValues"]
+    ? DefaultSearchClient['searchForFacetValues']
     : never;
   initIndex?: DefaultSearchClient extends { initIndex: unknown }
-    ? DefaultSearchClient["initIndex"]
+    ? DefaultSearchClient['initIndex']
     : never;
-  addAlgoliaAgent?: DefaultSearchClient["addAlgoliaAgent"];
+  addAlgoliaAgent?: DefaultSearchClient['addAlgoliaAgent'];
 }
