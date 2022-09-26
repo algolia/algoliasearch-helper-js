@@ -644,6 +644,25 @@ function extractNormalizedFacetValues(results, attribute) {
     var facet = find(results.facets, predicate);
     if (!facet) return [];
 
+    // generate a map with all the refined facet values and their actual count
+    if (!facet._facetHitsMap) {
+      facet._facetHitsMap = results._rawResults.slice(1).reduce(function(facetHitsMap, rawResult) {
+        if (rawResult.facets[attribute]) {
+          Object.assign(facetHitsMap, rawResult.facets[attribute]);
+        }
+        return facetHitsMap;
+      }, {});
+    }
+
+    // add the conjunctive refinements from the map
+    // if they have not been retrieved
+    results._state.getConjunctiveRefinements(attribute).forEach(function(refinedValue) {
+      var unescapedFacetValue = unescapeFacetValue(refinedValue);
+      if (!facet.data[unescapedFacetValue]) {
+        facet.data[unescapedFacetValue] = facet._facetHitsMap[unescapedFacetValue] || 0;
+      }
+    });
+
     return Object.keys(facet.data).map(function(name) {
       var value = escapeFacetValue(name);
       return {

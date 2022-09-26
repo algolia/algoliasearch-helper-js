@@ -29,12 +29,24 @@ var requestBuilder = {
       params: requestBuilder._getHitsSearchParams(state)
     });
 
-    // One for each disjunctive facets
+    // One for each disjunctive facet
     state.getRefinedDisjunctiveFacets().forEach(function(refinedFacet) {
       queries.push({
         indexName: index,
         params: requestBuilder._getDisjunctiveFacetSearchParams(state, refinedFacet)
       });
+    });
+
+    // One for each conjunctive facet
+    state.facets.forEach(function(facet) {
+      if (state.getConjunctiveRefinements(facet).length > 0) {
+        var queryParams = requestBuilder._getDisjunctiveFacetSearchParams(state, facet);
+        queryParams.maxValuesPerFacet = 1000;
+        queries.push({
+          indexName: index,
+          params: queryParams
+        });
+      }
     });
 
     // More to get the parent levels of the hierarchical facets when refined

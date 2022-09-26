@@ -20,6 +20,29 @@ test('getFacetValues(facetName) returns a list of values using the defaults', fu
 });
 
 test(
+  'getFacetValues(facetName) adds refined values from other query results if necessary',
+  function() {
+    var data = require('./getFacetValues/refinedValuesFromOtherResults.json');
+    var searchParams = new SearchParameters(data.state);
+    var result = new SearchResults(searchParams, data.content.results);
+
+    var resultsFacet = result.facets.find(function(facet) {
+      return facet.name === 'tags';
+    });
+    expect(resultsFacet.data).not.toContain('Partner/REI');
+
+    var facetValues = result.getFacetValues('tags');
+    expect(facetValues).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        name: 'Partner/REI',
+        count: 1,
+        isRefined: true
+      })
+    ]));
+  }
+);
+
+test(
   'getFacetValues(facetName) when no order is specified for isRefined the order is descending',
   function() {
     var data = require('./getFacetValues/disjunctive.json');

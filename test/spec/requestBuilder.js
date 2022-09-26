@@ -67,6 +67,29 @@ test('does only a single query if refinements are empty', function() {
   expect(queries).toHaveLength(1);
 });
 
+test('adds a query for each refined conjunctive facet', function() {
+  var searchParams = new SearchParameters({
+    facets: ['brand', 'color', 'tags']
+  })
+    .addFacetRefinement('brand', 'Samsung')
+    .addFacetRefinement('color', 'Blue')
+  ;
+
+  var queries = getQueries(searchParams.index, searchParams);
+
+  expect(queries.length).toBe(3);
+  expect(queries[1].params).toEqual(expect.objectContaining({
+    facets: 'brand',
+    facetFilters: ['brand:Samsung', 'color:Blue'],
+    maxValuesPerFacet: 1000
+  }));
+  expect(queries[2].params).toEqual(expect.objectContaining({
+    facets: 'color',
+    facetFilters: ['brand:Samsung', 'color:Blue'],
+    maxValuesPerFacet: 1000
+  }));
+});
+
 describe('hierarchical facets', function() {
   var searchParams = new SearchParameters({
     hierarchicalFacets: [{

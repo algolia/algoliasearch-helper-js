@@ -1,0 +1,115 @@
+{
+  "content": {
+    "results": [
+      {
+        "hits": [],
+        "nbHits": 1,
+        "page": 0,
+        "nbPages": 1,
+        "hitsPerPage": 8,
+        "facets": {
+          "tags": {
+            "America": 1,
+            "Beneficial": 1,
+            "Big Business": 1,
+            "Branded": 1,
+            "Business": 1,
+            "Business Growth": 1,
+            "Care": 1,
+            "Charitable Cause": 1,
+            "Co-Op": 1,
+            "Co-Opportunity": 1
+          }
+        },
+        "exhaustiveFacetsCount": true,
+        "exhaustiveNbHits": true,
+        "exhaustiveTypo": true,
+        "exhaustive": {
+          "facetsCount": true,
+          "nbHits": true,
+          "typo": true
+        },
+        "query": "",
+        "params": "facetFilters=%5B%22tags%3APartner%2FREI%22%5D&facets=%5B%22tags%22%5D&highlightPostTag=__%2Fais-highlight__&highlightPreTag=__ais-highlight__&hitsPerPage=8&maxValuesPerFacet=10&page=0&query=&tagFilters=",
+        "index": "dev_attn",
+        "renderingContent": {},
+        "processingTimeMS": 1
+      },
+      {
+        "hits": [],
+        "nbHits": 1,
+        "page": 0,
+        "nbPages": 0,
+        "hitsPerPage": 0,
+        "facets": {
+          "tags": {
+            "America": 1,
+            "Beneficial": 1,
+            "Big Business": 1,
+            "Branded": 1,
+            "Business": 1,
+            "Business Growth": 1,
+            "Care": 1,
+            "Charitable Cause": 1,
+            "Co-Op": 1,
+            "Co-Opportunity": 1,
+            "Community": 1,
+            "Creative Solution": 1,
+            "Dimension/1:1": 1,
+            "Distribution": 1,
+            "Donate": 1,
+            "Employer": 1,
+            "Fair": 1,
+            "Feel Good": 1,
+            "Format/Explainer": 1,
+            "Honesty": 1,
+            "Kindness": 1,
+            "Length/90": 1,
+            "Opening/Featured Sub": 1,
+            "Partner/REI": 1,
+            "Partner/REI Co-op": 1,
+            "Partnership": 1,
+            "Profit": 1,
+            "Prosper": 1,
+            "REI": 1,
+            "Rememberance": 1,
+            "Sentiment/Informative": 1,
+            "Sentiment/Inspirational": 1,
+            "Sharing is Caring": 1,
+            "Small Business": 1,
+            "Source/ATTN: Original": 1,
+            "Source/Harvard University": 1,
+            "Success": 1,
+            "Timeliness/Evergreen": 1,
+            "Topic/Career": 1,
+            "Topic/Civic Engagement-Other": 1,
+            "Topic/Innovation-Social": 1,
+            "Topic/Money-Economy": 1,
+            "Transitional Employer": 1,
+            "Vertical/Apparel": 1,
+            "Workplace": 1
+          }
+        },
+        "exhaustiveFacetsCount": true,
+        "exhaustiveNbHits": true,
+        "exhaustiveTypo": true,
+        "exhaustive": {
+          "facetsCount": true,
+          "nbHits": true,
+          "typo": true
+        },
+        "query": "",
+        "params": "analytics=false&clickAnalytics=false&facetFilters=%5B%22tags%3APartner%2FREI%22%5D&facets=tags&highlightPostTag=__%2Fais-highlight__&highlightPreTag=__ais-highlight__&hitsPerPage=0&maxValuesPerFacet=1000&page=0&query=",
+        "index": "dev_attn",
+        "renderingContent": {},
+        "processingTimeMS": 1
+      }
+    ]
+  },
+  "state": {
+    "facets": ["tags"],
+    "facetsRefinements": {
+      "tags": ["Partner/REI"]
+    }
+  }
+}
