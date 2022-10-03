@@ -413,7 +413,7 @@ test('value is escaped when it starts with `-`', function() {
 });
 
 
-test('escaped value is marked as refined', function() {
+test('escaped disjunctive facet value is marked as refined', function() {
   var fakeClient = {
     addAlgoliaAgent: function() {},
     searchForFacetValues: function() {
@@ -463,6 +463,53 @@ test('escaped value is marked as refined', function() {
           isRefined: true,
           escapedValue: '\\-20%',
           value: '-20%'
+        }
+      ]
+    });
+  });
+});
+
+test('escaped hierarchical facet value is marked as refined', function() {
+  var fakeClient = {
+    addAlgoliaAgent: function() {},
+    searchForFacetValues: function() {
+      return Promise.resolve([
+        {
+          exhaustiveFacetsCount: true,
+          facetHits: [
+            {
+              count: 318,
+              highlighted: 'beers > fancy ones',
+              value: 'beers > fancy ones'
+            }
+          ],
+          processingTimeMS: 3
+        }
+      ]);
+    }
+  };
+
+  var helper = algoliasearchHelper(fakeClient, 'index', {
+    hierarchicalFacets: [{
+      name: 'categories',
+      attributes: ['categories.lvl0', 'categories.lvl1']
+    }],
+    hierarchicalFacetsRefinements: {
+      categories: ['beers > fancy ones']
+    }
+  });
+
+  return helper.searchForFacetValues('categories', 'k', 1).then(function(content) {
+    expect(content).toEqual({
+      exhaustiveFacetsCount: true,
+      processingTimeMS: 3,
+      facetHits: [
+        {
+          count: 318,
+          highlighted: 'beers > fancy ones',
+          isRefined: true,
+          escapedValue: 'beers > fancy ones',
+          value: 'beers > fancy ones'
         }
       ]
     });

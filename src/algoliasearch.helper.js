@@ -343,6 +343,7 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
 
   var state = this.state.setQueryParameters(userState || {});
   var isDisjunctive = state.isDisjunctiveFacet(facet);
+  var isHierarchical = state.isHierarchicalFacet(facet);
   var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, maxFacetHits, state);
 
   this._currentNbQueries++;
@@ -390,9 +391,13 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
 
     content.facetHits.forEach(function(f) {
       f.escapedValue = escapeFacetValue(f.value);
-      f.isRefined = isDisjunctive
-        ? state.isDisjunctiveFacetRefined(facet, f.escapedValue)
-        : state.isFacetRefined(facet, f.escapedValue);
+      if (isDisjunctive) {
+        f.isRefined = state.isDisjunctiveFacetRefined(facet, f.escapedValue);
+      } else if (isHierarchical) {
+        f.isRefined = state.isHierarchicalFacetRefined(facet, f.escapedValue);
+      } else {
+        f.isRefined = state.isFacetRefined(facet, f.escapedValue);
+      }
     });
 
     return content;
