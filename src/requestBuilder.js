@@ -359,10 +359,14 @@ var requestBuilder = {
     return hierarchicalFacet.attributes.slice(0, parentLevel + 1);
   },
 
-  getSearchForFacetQuery: function(facetName, query, maxFacetHits, state) {
+  getSearchForFacetQuery: function(facetName, query, maxFacetHits, state, includeHierarchical) {
     // Clear the refinement state before searching for disjunctive or hierarchical facets, because we
     // want to search the entire list of facet values, not just the subset of refined ones.
-    var stateForSearchForFacetValues = state.isDisjunctiveFacet(facetName) || state.isHierarchicalFacet(facetName) ?
+    var shouldClear = includeHierarchical
+      ? state.isDisjunctiveFacet(facetName) || state.isHierarchicalFacet(facetName)
+      : state.isDisjunctiveFacet(facetName);
+
+    var stateForSearchForFacetValues = shouldClear ?
       state.clearRefinements(facetName) :
       state;
     var searchForFacetSearchParameters = {

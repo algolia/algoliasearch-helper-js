@@ -326,9 +326,10 @@ AlgoliaSearchHelper.prototype.findAnswers = function(options) {
  * @param {number} [maxFacetHits] the maximum number values returned. Should be > 0 and <= 100
  * @param {object} [userState] the set of custom parameters to use on top of the current state. Setting a property to `undefined` removes
  * it in the generated query.
+ * @param {boolean} [includeHierarchical] if true, the search will consider hierarchical facet refinements during the search.
  * @return {promise.<FacetSearchResult>} the results of the search
  */
-AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxFacetHits, userState) {
+AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxFacetHits, userState, includeHierarchical) {
   var clientHasSFFV = typeof this.client.searchForFacetValues === 'function';
   var clientHasInitIndex = typeof this.client.initIndex === 'function';
   if (
@@ -343,8 +344,8 @@ AlgoliaSearchHelper.prototype.searchForFacetValues = function(facet, query, maxF
 
   var state = this.state.setQueryParameters(userState || {});
   var isDisjunctive = state.isDisjunctiveFacet(facet);
-  var isHierarchical = state.isHierarchicalFacet(facet);
-  var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, maxFacetHits, state);
+  var isHierarchical = includeHierarchical && state.isHierarchicalFacet(facet);
+  var algoliaQuery = requestBuilder.getSearchForFacetQuery(facet, query, maxFacetHits, state, includeHierarchical);
 
   this._currentNbQueries++;
   var self = this;

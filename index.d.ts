@@ -165,13 +165,15 @@ declare namespace algoliasearchHelper {
      * @param [maxFacetHits] the maximum number values returned. Should be > 0 and <= 100
      * @param [userState] the set of custom parameters to use on top of the current state. Setting a property to `undefined` removes
      * it in the generated query.
+     * @param [includeHierarchical] if true, the search will consider hierarchical facet refinements during the search.
      * @return the results of the search
      */
     searchForFacetValues(
       facet: string,
       query: string,
       maxFacetHits: number,
-      userState?: PlainSearchParameters
+      userState?: PlainSearchParameters,
+      includeHierarchical?: boolean
     ): Promise<SearchForFacetValues.Result>;
 
     /**

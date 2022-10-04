@@ -504,7 +504,7 @@ test('escaped hierarchical facet value is marked as refined', function() {
     }
   });
 
-  return helper.searchForFacetValues('categories', 'k', 1).then(function(content) {
+  return helper.searchForFacetValues('categories', 'k', 1, {}, true).then(function(content) {
     expect(content).toEqual({
       exhaustiveFacetsCount: true,
       processingTimeMS: 3,
