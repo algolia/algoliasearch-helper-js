@@ -481,6 +481,11 @@ test('escaped hierarchical facet value is marked as refined', function() {
               count: 318,
               highlighted: 'beers > fancy ones',
               value: 'beers > fancy ones'
+            },
+            {
+              count: 1,
+              highlighted: '-20%',
+              value: '-20%'
             }
           ],
           processingTimeMS: 3
@@ -495,7 +500,7 @@ test('escaped hierarchical facet value is marked as refined', function() {
       attributes: ['categories.lvl0', 'categories.lvl1']
     }],
     hierarchicalFacetsRefinements: {
-      categories: ['beers > fancy ones']
+      categories: ['beers > fancy ones', '\\-20%']
     }
   });
 
@@ -510,6 +515,13 @@ test('escaped hierarchical facet value is marked as refined', function() {
           isRefined: true,
           escapedValue: 'beers > fancy ones',
           value: 'beers > fancy ones'
+        },
+        {
+          count: 1,
+          highlighted: '-20%',
+          isRefined: true,
+          escapedValue: '\\-20%',
+          value: '-20%'
         }
       ]
     });

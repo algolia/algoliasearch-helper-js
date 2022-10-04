@@ -1,8 +1,8 @@
 'use strict';
-
 var requestBuilder = require('../../src/requestBuilder.js');
 var SearchParameters = require('../../src/SearchParameters');
 var getQueries = requestBuilder._getQueries;
+var getSearchForFacetQuery = requestBuilder.getSearchForFacetQuery;
 
 test('The request builder should set analytics to subsequent queries', function() {
   var testData = require('../datasets/SearchParameters/search.dataset')();
@@ -236,5 +236,83 @@ describe('wildcard facets', function() {
     expect(queries.length).toBe(2);
     expect(queries[0].params.facets).toEqual(['*']);
     expect(queries[1].params.facets).toEqual('test_disjunctive');
+  });
+});
+
+describe('getSearchForFacetQuery', function() {
+  test('should clear disjunctive facet by name before searching within facet', function() {
+    var searchParams = new SearchParameters({
+      facets: ['test'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      disjunctiveFacetsRefinements: {
+        test_disjunctive: ['test_disjunctive_value']
+      },
+      numericRefinements: {
+        test_numeric: {
+          '>=': [10]
+        }
+      },
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}],
+      hierarchicalFacetsRefinements: {
+        test_hierarchical: ['item']
+      }
+    });
+
+    var searchRequest = getSearchForFacetQuery('test_disjunctive', '', 1, searchParams);
+
+    expect(searchRequest.facetFilters).toEqual([
+      ['whatever:item']
+    ]);
+  });
+
+  test('should clear hierarchical facet by name before searching within the facet', function() {
+    var searchParams = new SearchParameters({
+      facets: ['test'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      disjunctiveFacetsRefinements: {
+        test_disjunctive: ['test_disjunctive_value']
+      },
+      numericRefinements: {
+        test_numeric: {
+          '>=': [10]
+        }
+      },
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}],
+      hierarchicalFacetsRefinements: {
+        test_hierarchical: ['item']
+      }
+    });
+
+    var searchRequest = getSearchForFacetQuery('test_hierarchical', '', 1, searchParams);
+
+    expect(searchRequest.facetFilters).toEqual([
+      ['test_disjunctive:test_disjunctive_value']
+    ]);
+  });
+
+  test('should not clear facets if not disjunctive or hierarchical', function() {
+    var searchParams = new SearchParameters({
+      facets: ['test'],
+      disjunctiveFacets: ['test_disjunctive', 'test_numeric'],
+      disjunctiveFacetsRefinements: {
+        test_disjunctive: ['test_disjunctive_value']
+      },
+      numericRefinements: {
+        test_numeric: {
+          '>=': [10]
+        }
+      },
+      hierarchicalFacets: [{name: 'test_hierarchical', attributes: ['whatever']}],
+      hierarchicalFacetsRefinements: {
+        test_hierarchical: ['item']
+      }
+    });
+
+    var searchRequest = getSearchForFacetQuery('test', '', 1, searchParams);
+
+    expect(searchRequest.facetFilters).toEqual([
+      ['test_disjunctive:test_disjunctive_value'],
+      ['whatever:item']
+    ]);
   });
 });
