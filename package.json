@@ -83,7 +83,7 @@
     "metalsmith-webpack": "1.0.3",
     "mversion": "1.13.0",
     "onchange": "3.2.1",
-    "patch-package": "6.2.2",
+    "patch-package": "6.5.1",
     "pretty-bytes-cli": "2.0.0",
     "prompt": "1.0.0",
     "pug": "2.0.3",
