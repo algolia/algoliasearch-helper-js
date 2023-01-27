@@ -4274,10 +4274,10 @@ escope@^3.3.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-airbnb@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-0.0.8.tgz#770e689332e16f9da4b5074be51ef524a74e0bf8"
-  integrity sha1-dw5okzLhb52ktQdL5R71JKdOC/g=
+eslint-config-airbnb@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-7.0.0.tgz#ea20532459694b59a78e608fd2f62ba2b60a3d57"
+  integrity sha512-Q2K6kCTuFZwj8u0hrN3R2tFDQAZRMXDFTcd/hr4ByJ+i60/W2dAw6Gb+7UOSkARGw1dbAztISkaG8bQfTEx6Nw==
 
 eslint-config-algolia@3.0.0:
   version "3.0.0"
