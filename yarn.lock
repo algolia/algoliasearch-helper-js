@@ -2799,6 +2799,14 @@ collect-all@^1.0.2:
     stream-connect "^1.0.2"
     stream-via "^1.0.4"
 
+collect-all@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/collect-all/-/collect-all-1.0.4.tgz#50cd7119ac24b8e12a661f0f8c3aa0ea7222ddfc"
+  integrity sha512-RKZhRwJtJEP5FWul+gkSMEnaK6H3AGPTTWOiRimCcs+rc/OmQE3Yhy1Q7A7KsdkG3ZXVdZq68Y6ONSdvkeEcKA==
+  dependencies:
+    stream-connect "^1.0.2"
+    stream-via "^1.0.4"
+
 collect-all@~0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/collect-all/-/collect-all-0.2.1.tgz#7225fb4585c22d4ffac886f0abaf5abc563a1a6a"
@@ -2808,7 +2816,16 @@ collect-all@~0.2.1:
     stream-via "~0.1.0"
     typical "^2.3.0"
 
-collect-json@1.0.8, collect-json@^1.0.1, collect-json@^1.0.7, collect-json@^1.0.8:
+collect-json@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/collect-json/-/collect-json-1.0.9.tgz#eb9906ef3160899e46e8482fac13a5e591dae9ae"
+  integrity sha512-5sGzu8rjhY4uzm4FJOVsNtcAhNiyEsZ70Lz3xv+7mXuLfU41QikE0es3nn2N0knqEKg+r4K7TMFHFmR8OFGpFA==
+  dependencies:
+    collect-all "^1.0.4"
+    stream-connect "^1.0.2"
+    stream-via "^1.0.4"
+
+collect-json@^1.0.1, collect-json@^1.0.7, collect-json@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/collect-json/-/collect-json-1.0.8.tgz#aa2fa52b4d1d9444ce690f07a1e3617ab74bb827"
   integrity sha1-qi+lK00dlETOaQ8HoeNherdLuCc=
