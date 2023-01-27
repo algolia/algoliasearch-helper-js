@@ -1059,7 +1059,7 @@ async@^1.3.0, async@^1.4.0, async@^1.4.2, async@^1.5.2:
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
 
-async@^2.1.2, async@^2.1.4:
+async@^2.1.2:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.5.0.tgz#843190fd6b7357a0b9e1c956edddd5ec8462b54d"
   integrity sha512-e+lJAJeNWuPCNyxZKOBdaJGyLGHugXVQtrAwtuAe2vhxTYxFTKE73p8JuTmdH0qdQZtDvI4dhJwjZc5zsfIsYw==
@@ -1072,6 +1072,13 @@ async@^2.5.0:
   integrity sha512-fNEiL2+AZt6AlAw/29Cr0UDe4sRAHCpEHh54WMz+Bb7QfNcFw4h3loofyJpLeQs4Yx7yuqu/2dLgM5hKOs6HlQ==
   dependencies:
     lodash "^4.17.10"
+
+async@^2.6.0:
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.4.tgz#706b7ff6084664cd7eae713f6f965433b5504221"
+  integrity sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==
+  dependencies:
+    lodash "^4.17.14"
 
 async@^2.6.1:
   version "2.6.2"
@@ -7998,7 +8005,7 @@ lodash@^4.17.10, lodash@^4.17.11:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
-lodash@^4.17.15:
+lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -8313,13 +8320,13 @@ metalsmith-packagejson@1.1.0:
   dependencies:
     extend "^3.0.0"
 
-metalsmith-sass@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/metalsmith-sass/-/metalsmith-sass-1.4.0.tgz#589f95f3de6bb67b09e85fab5a63cc594428ee65"
-  integrity sha1-WJ+V895rtnsJ6F+rWmPMWUQo7mU=
+metalsmith-sass@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/metalsmith-sass/-/metalsmith-sass-1.7.0.tgz#bcef7be679405a416570ab5d90a5deefe5f42053"
+  integrity sha512-zM1JhUcKug6IPunD89gQftOuFdyTu+SfoWCFCKEOMo2BuYfshU2yeje1OyWyGFo+zV+HsZVwsVQzoISrM+FX7g==
   dependencies:
-    async "^2.1.4"
-    node-sass "^4.2.0"
+    async "^2.6.0"
+    node-sass "^4.13.0"
 
 metalsmith-serve@0.0.7:
   version "0.0.7"
@@ -8907,7 +8914,7 @@ node-pre-gyp@^0.6.36:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
-node-sass@4.14.1, node-sass@^3.4.2, node-sass@^4.2.0, node-sass@^4.9.0:
+node-sass@4.14.1, node-sass@^3.4.2, node-sass@^4.13.0, node-sass@^4.9.0:
   version "4.14.1"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.14.1.tgz#99c87ec2efb7047ed638fb4c9db7f3a42e2217b5"
   integrity sha512-sjCuOlvGyCJS40R8BscF5vhVlQjNN069NtQ1gSxyK1u9iqvn6tf7O1R4GNowVZfiZUCRt5MmMs1xd+4V/7Yr0g==
