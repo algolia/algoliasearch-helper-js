@@ -4274,10 +4274,17 @@ escope@^3.3.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-airbnb@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-0.0.8.tgz#770e689332e16f9da4b5074be51ef524a74e0bf8"
-  integrity sha1-dw5okzLhb52ktQdL5R71JKdOC/g=
+eslint-config-airbnb-base@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-1.0.4.tgz#bc5420890bc6442cf15277c9a4a281fc1317f8a6"
+  integrity sha512-qXLRG3Mnjeq8MMyNSZxih3yUgMK0aDy2eYEkfO2rMPX4vS83lGWKy216eSqJZJCklCo0iaI0AaHjO9zW5ZB0zg==
+
+eslint-config-airbnb@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-8.0.0.tgz#2e539826262e6367525960d5a0d53d32b263af90"
+  integrity sha512-zkMJ+aST0uL47bFNO5X4da2U8ktKFAKeoD2ATofJvGD4703Bgx+2zyeEvn8VA9m8YJRcSCON92MbzVW5VAHxTQ==
+  dependencies:
+    eslint-config-airbnb-base "^1.0.2"
 
 eslint-config-algolia@3.0.0:
   version "3.0.0"
