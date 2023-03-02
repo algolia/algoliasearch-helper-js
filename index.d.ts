@@ -1139,6 +1139,10 @@ declare namespace algoliasearchHelper {
      */
     query: string;
     /**
+     * A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty result set.
+     */
+    queryAfterRemoval?: string;
+    /**
      * The query as parsed by the engine given all the rules.
      */
     parsedQuery: string;
