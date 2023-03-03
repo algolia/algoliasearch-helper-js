@@ -86,7 +86,7 @@
     "patch-package": "6.2.2",
     "pretty-bytes-cli": "2.0.0",
     "prompt": "1.0.0",
-    "pug": "2.0.3",
+    "pug": "3.0.1",
     "semver": "5.3.0",
     "shelljs": "0.7.8",
     "st": "1.2.2",
