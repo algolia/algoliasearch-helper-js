@@ -50,22 +50,22 @@ customMarkedRenderer.heading = function(text, level) {
 var header = a.communityHeader({
   menu: {
     project: {
-      label: "algoliasearch-helper",
-      url: "https://community.algolia.com/algoliasearch-helper-js/"
+      label: 'algoliasearch-helper',
+      url: 'https://community.algolia.com/algoliasearch-helper-js/'
     }
   },
   sideMenu: [
-    { name: "Getting started", dropdownItems: null, url: "gettingstarted.html" },
-    { name: "Concepts", url: "concepts.html" },
-    { name: "Reference", url: "reference.html" },
-    { name: "Examples", url: "examples.html"},
-    { name: "Upgrade", url: "upgrade.html"}
+    {name: 'Getting started', dropdownItems: null, url: 'gettingstarted.html'},
+    {name: 'Concepts', url: 'concepts.html'},
+    {name: 'Reference', url: 'reference.html'},
+    {name: 'Examples', url: 'examples.html'},
+    {name: 'Upgrade', url: 'upgrade.html'}
   ],
   mobileMenu: [
-    { name: "Getting started", url: "gettingstarted.html" },
-    { name: "Concepts", url: "concepts.html" },
-    { name: "Reference", url: "reference.html" },
-    { name: "Examples", url: "examples.html"}
+    {name: 'Getting started', url: 'gettingstarted.html'},
+    {name: 'Concepts', url: 'concepts.html'},
+    {name: 'Reference', url: 'reference.html'},
+    {name: 'Examples', url: 'examples.html'}
   ],
   docSearch: null
 });
@@ -74,9 +74,9 @@ function makeMetalsmithBuilder() {
   var project = require('../package.json');
   var builder = metalsmith(projectRoot);
   return builder.metadata({
-      pkg: project,
-      header: header
-    })
+    pkg: project,
+    header: header
+  })
     .ignore('.*')
     .clean(false)
     .source(src.content)
@@ -170,12 +170,11 @@ gulp.task('doc:all:watch', ['doc:content', 'doc:js', 'doc:style'], function() {
 
 gulp.task('doc:server', function(done) {
   http.createServer(
-    st({ path: documentationRoot, index: 'index.html', cache: false })
+    st({path: documentationRoot, index: 'index.html', cache: false})
   ).listen(8083, done);
 });
 
 gulp.task('doc:watch', ['doc:content', 'doc:js', 'doc:style', 'doc:server', 'doc:all:watch'], function() {
-
-  console.log(" >>>> Go to http://localhost:8083 🚀");
+  console.log(' >>>> Go to http://localhost:8083 🚀');
 });
 gulp.task('doc', ['doc:content', 'doc:style', 'doc:js']);
