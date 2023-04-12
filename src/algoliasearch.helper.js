@@ -1276,7 +1276,9 @@ AlgoliaSearchHelper.prototype._search = function(options) {
 
   var derivedQueries = this.derivedHelpers.map(function(derivedHelper) {
     var derivedState = derivedHelper.getModifiedState(state);
-    var derivedStateQueries = requestBuilder._getQueries(derivedState.index, derivedState);
+    var derivedStateQueries = derivedState.index
+      ? requestBuilder._getQueries(derivedState.index, derivedState)
+      : [];
 
     states.push({
       state: derivedState,
@@ -1340,6 +1342,14 @@ AlgoliaSearchHelper.prototype._dispatchAlgoliaResponse = function(states, queryI
     var queriesCount = s.queriesCount;
     var helper = s.helper;
     var specificResults = results.splice(0, queriesCount);
+
+    if (!state.index) {
+      helper.emit('result', {
+        results: null,
+        state: state
+      });
+      return;
+    }
 
     var formattedResponse = helper.lastResults = new SearchResults(state, specificResults);
 
