@@ -1295,9 +1295,15 @@ AlgoliaSearchHelper.prototype._search = function(options) {
   });
 
   var queries = Array.prototype.concat.apply(mainQueries, derivedQueries);
-  var queryId = this._queryId++;
 
+  var queryId = this._queryId++;
   this._currentNbQueries++;
+
+  if (!queries.length) {
+    return Promise.resolve({results: []}).then(
+      this._dispatchAlgoliaResponse.bind(this, states, queryId)
+    );
+  }
 
   try {
     this.client.search(queries)
