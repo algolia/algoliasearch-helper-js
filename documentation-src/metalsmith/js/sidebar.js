@@ -24,14 +24,14 @@ function listenToChanges(originalParameters) {
 }
 
 function sidebarFollowScroll(sidebarContainer) {
-  const {height, navHeight, footerHeight, menuHeight, sidebarTop} = getPositionsKeyElements(sidebarContainer);
+  const {height, footerHeight, menuHeight, sidebarTop} = getPositionsKeyElements(sidebarContainer);
   const positionSidebar = () => {
 
     const currentScroll = window.pageYOffset;
-    if (currentScroll > sidebarTop - navHeight) {
+    if (currentScroll > sidebarTop) {
       const fold = height - footerHeight - menuHeight - 50;
       if (currentScroll > fold) {
-        sidebarContainer.style.top = (fold - currentScroll + navHeight) + 'px';
+        sidebarContainer.style.top = (fold - currentScroll) + 'px';
       } else {
         sidebarContainer.style.top = null;
       }
@@ -103,12 +103,10 @@ function getPositionsKeyElements(sidebar) {
   const bodyBBox = document.body.getBoundingClientRect();
   const sidebarTop = sidebarBBox.top - bodyBBox.top;
   const footer = document.querySelector('.ac-footer');
-  const navigation = document.querySelector('.ac-nav');
   const menu = document.querySelector('.sidebar > ul');
   const height = document.querySelector('html').getBoundingClientRect().height;
-  const navHeight = navigation.offsetHeight;
   const footerHeight = footer.offsetHeight;
   const menuHeight = menu.offsetHeight;
 
-  return {sidebarTop, height, navHeight, footerHeight, menuHeight};
+  return {sidebarTop, height, footerHeight, menuHeight};
 }
