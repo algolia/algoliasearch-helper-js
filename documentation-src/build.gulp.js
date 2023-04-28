@@ -21,8 +21,6 @@ var webpack = require('webpack-stream');
 
 var st = require('st');
 
-var a = require('algolia-frontend-components');
-
 var webpackConfig = require('./webpack.config.js');
 
 var src = {
@@ -47,35 +45,11 @@ customMarkedRenderer.heading = function(text, level) {
   return oldHeadingRenderer.apply(this, arguments);
 };
 
-var header = a.communityHeader({
-  menu: {
-    project: {
-      label: 'algoliasearch-helper',
-      url: 'https://community.algolia.com/algoliasearch-helper-js/'
-    }
-  },
-  sideMenu: [
-    {name: 'Getting started', dropdownItems: null, url: 'gettingstarted.html'},
-    {name: 'Concepts', url: 'concepts.html'},
-    {name: 'Reference', url: 'reference.html'},
-    {name: 'Examples', url: 'examples.html'},
-    {name: 'Upgrade', url: 'upgrade.html'}
-  ],
-  mobileMenu: [
-    {name: 'Getting started', url: 'gettingstarted.html'},
-    {name: 'Concepts', url: 'concepts.html'},
-    {name: 'Reference', url: 'reference.html'},
-    {name: 'Examples', url: 'examples.html'}
-  ],
-  docSearch: null
-});
-
 function makeMetalsmithBuilder() {
   var project = require('../package.json');
   var builder = metalsmith(projectRoot);
   return builder.metadata({
-    pkg: project,
-    header: header
+    pkg: project
   })
     .ignore('.*')
     .clean(false)
