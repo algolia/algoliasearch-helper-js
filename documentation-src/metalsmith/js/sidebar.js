@@ -1,26 +1,14 @@
 export default function sidebar(options) {
-  const {headersContainer, sidebarContainer, headerStartLevel} = options;
-  listenToChanges(options);
+  const {headersContainer, sidebarContainer} = options;
 
-  const headers = headersContainer.querySelectorAll('h2, h3');
-  //const select = document.createElement('select');
   const list = document.createElement('ul');
-  const startLevel = headerStartLevel; // we start at h2
   list.classList.add('no-mobile');
-  let currentList = list;
-  let currentLevel = startLevel;
-  
-  //select.addEventListener('change', e => window.location = e.target.value);
+
   sidebarContainer.appendChild(list);
-  //sidebarContainer.appendChild(select);
+
   sidebarFollowScroll(sidebarContainer.firstChild);
   activeLinks(sidebarContainer);
   scrollSpy(sidebarContainer, headersContainer);
-}
-
-function listenToChanges(originalParameters) {
-  const {headersContainer, sidebarContainer, headerStartLevel} = originalParameters;
-
 }
 
 function sidebarFollowScroll(sidebarContainer) {
