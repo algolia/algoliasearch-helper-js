@@ -87,7 +87,7 @@ jobs:
           name: Build documentation
           command: yarn doc
       - store_artifacts:
-          path: /documentation
+          path: documentation
 
 
 workflows:
