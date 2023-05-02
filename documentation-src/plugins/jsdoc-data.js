@@ -1,7 +1,7 @@
 'use strict';
 var jsdocParse = require('jsdoc-parse');
 var collectJson = require('collect-json');
-var keyBy = require('lodash/keyBy');
+var keyBy = require('lodash.keyby');
 
 module.exports = function(opts) {
   if (!opts.src) throw new Error('opts.src must be defined');
@@ -18,8 +18,6 @@ module.exports = function(opts) {
       else {
         metadata.jsdoc = metadata.jsdoc || {};
         metadata.jsdoc[namespace] = keyBy(filteredData, 'name');
-        // var map = require('lodash/map');
-        // console.log(JSON.stringify(map(metadata.jsdoc[namespace], 'id'), null, 2));
         // console.log(JSON.stringify(metadata.jsdoc, null, 2));
       }
       done();

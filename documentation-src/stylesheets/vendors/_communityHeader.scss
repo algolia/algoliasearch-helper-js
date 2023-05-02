@@ -193,10 +193,6 @@ $pre-color: #C2CCCC;
   @return $string;
 }
 
-@function em($pixels, $context: $browser-context) {
-  @return #{$pixels/$context}em;
-}
-
 $nav-height: 56px;
 $nav-z-index: 50;
 $nav-background: $deep-cove;
@@ -520,7 +516,7 @@ $nav-background-light: mix($nav-background, #fff, 92%);
   list-style-type: none;
   padding: 0;
   width: 450px;
-  padding: em(10) em(20);
+  padding: 0.625em 1.25em;
   margin: 0;
   background-color: $titan-white;
 
@@ -606,7 +602,7 @@ $nav-background-light: mix($nav-background, #fff, 92%);
 .algc-dropdownroot__links {
 
   list-style-type: none;
-  padding: em(10) em(20);
+  padding: 0.625em 1.25em;
   display: flex;
   flex-wrap: wrap;
   width: 290px;
@@ -617,7 +613,7 @@ $nav-background-light: mix($nav-background, #fff, 92%);
     display: flex;
     align-items: center;
     flex: 1 0 50%;
-    padding: em(10) em(10);
+    padding: 0.625em 0.625em;
 
     p {
       margin: 0;
