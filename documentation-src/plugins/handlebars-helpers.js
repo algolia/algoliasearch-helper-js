@@ -1,9 +1,6 @@
 'use strict';
 var Handlebars = require('handlebars');
-var marked = require('marked');
-marked.setOptions({
-  gfm: true
-});
+
 module.exports = function(requires) {
   requires.handlebars = Handlebars;
 
@@ -20,10 +17,6 @@ module.exports = function(requires) {
     if (value === state._switch_value_) {
       return options.fn(this);
     }
-  });
-
-  Handlebars.registerHelper('md', function(options) {
-    return new Handlebars.SafeString(marked(options.fn(this)));
   });
 
   var arrayRegexp = /^Array\.<(.+?)>$/;
