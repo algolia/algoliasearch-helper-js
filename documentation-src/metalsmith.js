@@ -29,6 +29,7 @@ var src = {
 var customMarkedRenderer = new marked.Renderer();
 var oldHeadingRenderer = customMarkedRenderer.heading;
 customMarkedRenderer.heading = function(text, level) {
+  // do not add id to h4+
   if (level > 3) {
     return '<h' + level + '>' + text + '</h' + level + '>';
   }

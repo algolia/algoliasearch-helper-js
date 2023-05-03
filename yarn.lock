@@ -2171,11 +2171,6 @@ debug@^4.1.0, debug@^4.1.1, debug@^4.3.4:
   dependencies:
     ms "2.1.2"
 
-debug@~0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-0.7.4.tgz#06e1ea8082c2cb14e39806e22e2f6f757f92af39"
-  integrity sha1-BuHqgILCyxTjmAbiLi9vdX+Srzk=
-
 debug@~2.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.1.3.tgz#ce8ab1b5ee8fbee2bfa3b633cab93d366b63418e"
@@ -5352,15 +5347,15 @@ marked-terminal@^3.0.0:
     node-emoji "^1.4.1"
     supports-hyperlinks "^1.0.1"
 
-marked@0.3.19, marked@~0.3.1:
-  version "0.3.19"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
-  integrity sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
-
 marked@^0.5.0:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.5.2.tgz#3efdb27b1fd0ecec4f5aba362bddcd18120e5ba9"
   integrity sha512-fdZvBa7/vSQIZCi4uuwo2N3q+7jJURpMVCcbaX0S1Mg65WZ5ilXvC67MviJAsdjqqgD+CEq4RKo5AYGgINkVAA==
+
+marked@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
+  integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
 
 marked@^4.0.10, marked@^4.2.3:
   version "4.3.0"
@@ -5439,13 +5434,13 @@ metalsmith-layouts@1.8.1:
     lodash.omit "^4.0.2"
     multimatch "^2.0.0"
 
-metalsmith-markdown@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/metalsmith-markdown/-/metalsmith-markdown-0.2.1.tgz#1a1feeb6c76d15407b75271da81509d07932d753"
-  integrity sha1-Gh/utsdtFUB7dScdqBUJ0Hky11M=
+metalsmith-markdown@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/metalsmith-markdown/-/metalsmith-markdown-1.3.0.tgz#c250da93d5eb48f91bb2bea7b943f46f0672dc83"
+  integrity sha512-wStYRbJIYwNTDtHmVfb6RjNfFB+DkloIoQr600pXT2QRnbqMsdnAdSVfPjXX+vP7upCulZmp/xlcYzfDxKpx1w==
   dependencies:
-    debug "~0.7.4"
-    marked "~0.3.1"
+    debug "^4.1.1"
+    marked "^0.7.0"
 
 metalsmith-metallic@1.0.0:
   version "1.0.0"

@@ -126,11 +126,9 @@ the first records ordered by the [custom ranking](https://www.algolia.com/doc/gu
 
 You now know:
 
-<ul>
-  <li>how to **instantiate** the helper</li>
-  <li>**listen** to the `result` event and **read the results** from Algolia</li>
-  <li>**trigger a search** to algolia</li>
-</ul>
+* how to **instantiate** the helper
+* **listen** to the `result` event and **read the results** from Algolia
+* **trigger a search** to algolia
 
 </div>
 
@@ -206,12 +204,10 @@ The object `_highlightResult` contains all the attributes that may be highlighte
 
 In this part, we have seen:
 
-<ul>
-  <li>how to **set the query** of the search</li>
-  <li>how to **trigger the search**</li>
-  <li>how to **display highlighting** to help our users</li>
-  <li>how to plug all these to make an interactive search</li>
-</ul>
+* how to **set the query** of the search
+* how to **trigger the search**
+* how to **display highlighting** to help our users
+* how to plug all these to make an interactive search
 
 </div>
 
@@ -299,11 +295,11 @@ kind of filtering that you can apply with the helper. You can also do:
 
 In this part, we have seen:
 
-<ul>
-  <li>how to **declare a facet** in the configuration of the helper</li>
-  <li>how to **display the facet values** computed by the API</li>
-  <li>how to **refine a facet**</li>
-</ul>
+
+* how to **declare a facet** in the configuration of the helper
+* how to **display the facet values** computed by the API
+* how to **refine a facet**
+
 
 </div>
 
