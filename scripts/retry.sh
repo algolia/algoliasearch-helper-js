@@ -5,7 +5,7 @@
 retries="$1"
 command="$2"
 
-echo tyring "$command", $retries retries left
+echo trying "$command", $retries retries left
 
 # Run the command, and save the exit code
 ($command)
