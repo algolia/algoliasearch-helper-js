@@ -407,7 +407,7 @@ test('getFacetValues(hierarchical) returns escaped facet values', function () {
   expect(facetValues).toEqual(expected);
 });
 
-test('getFacetValues(hierarchical) ignores `rootPath`', function () {
+test('getFacetValues(hierarchical) takes `rootPath` into account', function () {
   var searchParams = new SearchParameters({
     index: 'instant_search',
     hierarchicalFacets: [
