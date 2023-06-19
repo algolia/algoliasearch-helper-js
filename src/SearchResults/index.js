@@ -716,7 +716,11 @@ function extractNormalizedFacetValues(results, attribute) {
       results._state.getHierarchicalFacetByName(attribute);
     var currentRefinementSplit = unescapeFacetValue(
       results._state.getHierarchicalRefinement(attribute)[0] || ''
-    ).split(results._state._getHierarchicalFacetSeparator(hierarchicalFacet));
+    )
+      .split(results._state._getHierarchicalFacetSeparator(hierarchicalFacet))
+      .filter(function (name) {
+        return name !== hierarchicalFacet.rootPath;
+      });
     currentRefinementSplit.unshift(attribute);
 
     setIsRefined(hierarchicalFacetValues, currentRefinementSplit, 0);
