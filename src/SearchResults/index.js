@@ -720,7 +720,7 @@ function extractNormalizedFacetValues(results, attribute) {
       results._state.getHierarchicalRefinement(attribute)[0] || ''
     );
 
-    if (hierarchicalFacet.rootPath) {
+    if (currentRefinement.startsWith(hierarchicalFacet.rootPath)) {
       currentRefinement = currentRefinement.replace(
         hierarchicalFacet.rootPath + separator,
         ''
