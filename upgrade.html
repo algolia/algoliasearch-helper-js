@@ -18,38 +18,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </ul>
 <h3 id="events">Events</h3>
 <p>The event payload now always is an object, instead of multiple arguments:</p>
-<pre><code class="hljs js">helper.on(
-  <span class="hljs-string">"search"</span>,
-  ({ state: SearchParameters, results: SearchResults }) =&gt; {<span class="hljs-comment">/**/</span>}
-);
+<pre><code class="hljs js">helper.on(<span class="hljs-string">'search'</span>, ({ state: SearchParameters, results: SearchResults }) =&gt; {
+  <span class="hljs-comment">//</span>
+});
 helper.on(
-  <span class="hljs-string">"change"</span>,
+  <span class="hljs-string">'change'</span>,
   ({
     state: SearchParameters,
     results: SearchResults,
-    isPageReset: boolean 
-  }) =&gt; {<span class="hljs-comment">/**/</span>}
+    isPageReset: boolean,
+  }) =&gt; {
+    <span class="hljs-comment">//</span>
+  }
 );
 helper.on(
-  <span class="hljs-string">"searchForFacetValues"</span>,
-  ({ state: SearchParameters, facet: string, query: string }) =&gt; {<span class="hljs-comment">/**/</span>}
+  <span class="hljs-string">'searchForFacetValues'</span>,
+  ({ state: SearchParameters, facet: string, query: string }) =&gt; {
+    <span class="hljs-comment">//</span>
+  }
 );
-helper.on(
-  <span class="hljs-string">"searchOnce"</span>,
-  ({ state: SearchParameters }) =&gt; {<span class="hljs-comment">/**/</span>}
-);
-helper.on(
-  <span class="hljs-string">"result"</span>,
-  ({ results: SearchResults, state: SearchParameters }) =&gt; {<span class="hljs-comment">/**/</span>}
-);
-helper.on(
-  <span class="hljs-string">"error"</span>,
-  ({ error: <span class="hljs-built_in">Error</span> }) =&gt; {<span class="hljs-comment">/**/</span>}
-);
-helper.on(
-  <span class="hljs-string">"searchQueueEmpty"</span>,
-  () =&gt; {<span class="hljs-comment">/**/</span>}
-);</code></pre>
+helper.on(<span class="hljs-string">'searchOnce'</span>, ({ state: SearchParameters }) =&gt; {
+  <span class="hljs-comment">//</span>
+});
+helper.on(<span class="hljs-string">'result'</span>, ({ results: SearchResults, state: SearchParameters }) =&gt; {
+  <span class="hljs-comment">//</span>
+});
+helper.on(<span class="hljs-string">'error'</span>, ({ error: <span class="hljs-built_in">Error</span> }) =&gt; {
+  <span class="hljs-comment">//</span>
+});
+helper.on(<span class="hljs-string">'searchQueueEmpty'</span>, () =&gt; {
+  <span class="hljs-comment">//</span>
+});</code></pre>
 
 <h3 id="default-values">Default values</h3>
 <p>SearchParameters no longer contains a default value for the parameters, from the previous <code>undefined</code>, <code>&quot;&quot;</code> or <code>0</code>, we now have no more values on the object by default, this means an empty SearchParameters now looks like this:</p>
@@ -101,4 +100,4 @@ helper.<span class="hljs-keyword">state</span>.hitsPerPage;</code></pre>
 <li><p><code>helper.isRefined</code> -&gt; <code>helper.hasRefinements</code></p>
 </li>
 </ul>
-</div></div></section><section class="ac-footer"><div class="ac-footer-container"><p class="ac-footer-links">Code licensed under<a class="ac-footer-link-item" href="https://raw.githubusercontent.com/algolia/algoliasearch-helper-js/master/LICENSE">MIT</a><br><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js">GitHub</a><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js/issues">issues</a></p></div><div class="ac-footer-container ac-footer-brand"><p>This project is part of</p><img class="ac-footer-brand-icon" src="images/community-badge.svg"><figure><img class="ac-footer-brand-logo" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1484219849/algolia-community-logo-words-darkbg.svg"><figcaption>Algolia Community</figcaption></figure><a class="ac-footer-btn ac-footer-btn-cta" href="https://community.algolia.com/">See More</a><span class="ac-icon ac-icon-love-dark"></span></div><p class="ac-footer-version">Latest version: 3.13.2</p><div class="ac-footer-actions"><div class="footer-container"><p>Build unique search experiences with Algolia</p><a class="ac-footer-btn ac-footer-btn-ghost-grey" href="https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=why">See Why<span class="ac-icon-triangle"></span></a><a class="ac-footer-btn ac-footer-btn-ghost-pink" href="https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=get_started">Get Started For Free</a></div></div></section><script src="js/main.js"></script></body></html>
+</div></div></section><section class="ac-footer"><div class="ac-footer-container"><p class="ac-footer-links">Code licensed under<a class="ac-footer-link-item" href="https://raw.githubusercontent.com/algolia/algoliasearch-helper-js/master/LICENSE">MIT</a><br><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js">GitHub</a><a class="ac-footer-link-item" href="https://github.com/algolia/algoliasearch-helper-js/issues">issues</a></p></div><div class="ac-footer-container ac-footer-brand"><p>This project is part of</p><img class="ac-footer-brand-icon" src="images/community-badge.svg"><figure><img class="ac-footer-brand-logo" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1484219849/algolia-community-logo-words-darkbg.svg"><figcaption>Algolia Community</figcaption></figure><a class="ac-footer-btn ac-footer-btn-cta" href="https://community.algolia.com/">See More</a><span class="ac-icon ac-icon-love-dark"></span></div><p class="ac-footer-version">Latest version: 3.13.3</p><div class="ac-footer-actions"><div class="footer-container"><p>Build unique search experiences with Algolia</p><a class="ac-footer-btn ac-footer-btn-ghost-grey" href="https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=why">See Why<span class="ac-icon-triangle"></span></a><a class="ac-footer-btn ac-footer-btn-ghost-pink" href="https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=helper%20website&amp;utm_campaign=homepage&amp;utm_term=get_started">Get Started For Free</a></div></div></section><script src="js/main.js"></script></body></html>
