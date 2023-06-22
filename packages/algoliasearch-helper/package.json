@@ -9,15 +9,10 @@
     "build": "./scripts/build.sh",
     "lint": "eslint .",
     "doc": "node documentation-src/metalsmith.js",
-    "doc:publish": "yarn run doc && gh-pages -d documentation",
-    "doc:staging": "scripts/staging-doc.sh",
-    "readme:toc": "doctoc --notitle README.md --maxlevel 3",
     "test": "scripts/retry.sh 3 'scripts/test.sh'",
     "test:unit": "jest",
     "test:watch": "jest --watch",
-    "release": "./scripts/release.js",
-    "changelog:view-last": "conventional-changelog -u -n scripts/conventional-changelog/",
-    "changelog:update": "conventional-changelog -i CHANGELOG -s -u -n scripts/conventional-changelog/"
+    "release": "./scripts/release.js"
   },
   "author": {
     "name": "Algolia Inc.",
