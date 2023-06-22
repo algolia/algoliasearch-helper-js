@@ -1,0 +1,10 @@
+[build]
+  command=""" \
+    yarn build:ci && \
+    yarn website:storybook && \
+    yarn website:examples --concurrency=1
+    """
+  publish="website"
+
+[build.environment]
+  YARN_VERSION = "1.13.0"

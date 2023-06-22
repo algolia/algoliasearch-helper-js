@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ESNEXT",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "jsx": "react",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "isolatedModules": true
+  },
+  "exclude": [
+    "**/es",
+    "**/dist",
+    "tests/e2e",
+    "examples/react-hooks/next/next-env.d.ts",
+    // @TODO: we need to re-enable type checking in the React Native example
+    // when the RN types work with React 18.
+    "examples/react-hooks/react-native",
+    "packages/create-instantsearch-app/src/templates/**/*"
+  ]
+}
