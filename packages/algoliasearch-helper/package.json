@@ -17,8 +17,7 @@
     "test:watch": "jest --watch",
     "release": "./scripts/release.js",
     "changelog:view-last": "conventional-changelog -u -n scripts/conventional-changelog/",
-    "changelog:update": "conventional-changelog -i CHANGELOG -s -u -n scripts/conventional-changelog/",
-    "prepare": "patch-package"
+    "changelog:update": "conventional-changelog -i CHANGELOG -s -u -n scripts/conventional-changelog/"
   },
   "author": {
     "name": "Algolia Inc.",
@@ -39,28 +38,7 @@
   ],
   "devDependencies": {
     "@types/algoliasearch": "3.34.11",
-    "algoliasearch": "4.8.3",
-    "doctoc": "1.3.0",
-    "patch-package": "6.2.2",
-    "eslint": "6.8.0",
-    "eslint-config-algolia": "16.0.0",
-    "eslint-config-prettier": "6.15.0",
-    "eslint-import-resolver-typescript": "2.5.0",
-    "eslint-plugin-deprecation": "1.3.2",
-    "eslint-plugin-eslint-comments": "3.2.0",
-    "eslint-plugin-import": "2.24.2",
-    "eslint-plugin-jasmine": "4.1.0",
-    "eslint-plugin-jest": "27.0.4",
-    "eslint-plugin-prettier": "3.4.0",
-    "eslint-plugin-react": "7.26.0",
-    "eslint-plugin-react-hooks": "4.3.0",
-    "eslint-plugin-vue": "9.8.0",
-    "eslint-plugin-wdio": "5.11.0",
-    "@typescript-eslint/eslint-plugin": "5.38.1",
-    "@typescript-eslint/parser": "4.31.2",
-    "prettier": "2.4.1",
     "gh-pages": "1.0.0",
-    "jest": "24.7.1",
     "jest-watch-typeahead": "0.3.0",
     "browserify": "14.5.0",
     "exorcist": "1.0.1",
@@ -70,7 +48,6 @@
     "pretty-bytes-cli": "2.0.0",
     "prompt": "1.0.0",
     "semver": "5.3.0",
-    "shelljs": "0.7.8",
     "mversion": "1.13.0",
     "yargs": "13.2.4",
     "jsdoc-to-markdown": "8.0.0",
@@ -81,8 +58,7 @@
     "metalsmith-markdown": "1.3.0",
     "metalsmith-metallic": "1.0.0",
     "@metalsmith/sass": "1.4.0",
-    "pug": "2.0.3",
-    "typescript": "5.1.3"
+    "pug": "2.0.3"
   },
   "dependencies": {
     "@algolia/events": "^4.0.1"
